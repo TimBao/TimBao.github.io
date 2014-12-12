@@ -1,0 +1,4 @@
+name: Your New Jekyll Site
+markdown: kramdown
+pygments: true
+production_url: http://timbao.github.io
