@@ -1,4 +1,4 @@
 TimBao.github.io
 ================
 
-这是我用githb pages搭建到我到**静态博客**
+这是我用githb pages搭建到我到[静态博客](http://timbao.github.io)
