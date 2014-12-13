@@ -1,4 +1,3 @@
-TimBao.github.io
-================
+###主题介绍
 
-这是我用githb pages搭建到我到[静态博客](http://timbao.github.io)
+<a href="http://www.pizn.net/14-11-2012/theone-blog-theme/" title="theOne">Jekyll 博客主题 theOne</a>
