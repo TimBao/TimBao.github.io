@@ -1,3 +1,3 @@
-###主题介绍
+#我的博客
 
-<a href="http://www.pizn.net/14-11-2012/theone-blog-theme/" title="theOne">Jekyll 博客主题 theOne</a>
+这是我用*github pages*搭建的[博客](http://timbao.github.io)
