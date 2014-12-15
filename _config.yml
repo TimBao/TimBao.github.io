@@ -1,0 +1,6 @@
+markdown: rdiscount
+permalink: /:year/:month/:title/
+url: http://blog.timbao.com
+author: Tim
+pygments: true
+paginate: 24
