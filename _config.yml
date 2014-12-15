@@ -1,35 +1,33 @@
 markdown:         rdiscount
 pygments:         true
-paginate:         4
+paginate:         5
 
-title:            The One Theme
-url:              http://pizn.github.com/blogTheme
+title:            TBao
+url:              http://timbao.github.io
 feed:             /atom.xml
 author:
-    name:         PIZn
-    email:        pizner@gmail.com
-    description:  "The one theme is another web theme design by PIZn."
+    name:         Tim
+    email:        dabao0521@gmail.com
+    description:  "This is my blob built by github pages."
 
-about:            "I am PIZn.I love all kinds of design, attention to the Internet dynamic, dedicated web front development, learn UI and UED."
+about:            "The one theme is another web theme design by PIZn."
 follow:
-    email:        pizner@gmail.com
-    github:       https://github.com/pizn
+    email:        dabao0521@gmail.com
+    github:       https://github.com/TimBao
     twitter:      http://www.twitter.com/piznlin
-    google:       https://plus.google.com/107483619032085919305
+    google:       https://plus.google.com/110733701770280812098
     facebook:     http://facebook.com/zhanxinlin
 description:      Just another blog theme -- the One
 
-indexContent:     true
-imageLink:        http://www.pizn.net/static/images/20121109Monutain.jpg
+indexContent:     false
 
-
-style:            /css/style.css
-blogName:         theOne 
-blogDesc:         Just another theme
+style:            ./css/style.css
+blogName:         TBao
+blogDesc:         TimBao's blog
 favicon:          /favicon.ico
 theme:            default
 
-disqus:           piznblog
+disqus:           Tim Blog
 
-copyright:        Copyright © 2011-2012 PIZn All rights reserved.
+copyright:        Copyright © 2014-2015 Tim All rights reserved.
 test:             ok
