@@ -1,0 +1,691 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="从今天开始着重写对工作内容的分析和理解，穿插一些个人感受啥滴！！！ 通过对代码的继续阅读，不仅对已经了解的部分有了更深入的理解，而且发现这个工程实在是内容太丰富了，现在看到的仅仅是冰山一角，里面真的有好多内容可以学习。 这里面核心结构就是地图类，所有关于地图的信息处理，最终都是由它进行操作的。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://timbao.github.io/posts/9">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:timbao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/29/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E4%B9%9D)/">记录我的新工作(九)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-12-29T05:21:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>29</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>5:21 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  从今天开始着重写对工作内容的分析和理解，穿插一些个人感受啥滴！！！</p>
+
+<p>  通过对代码的继续阅读，不仅对已经了解的部分有了更深入的理解，而且发现这个工程实在是内容太丰富了，现在看到的仅仅是冰山一角，里面真的有好多内容可以学习。</p>
+
+<p>  这里面核心结构就是地图类，所有关于地图的信息处理，最终都是由它进行操作的。</p>
+
+<p>  今天对地图数据的请求又有了更深的理解，它里面封装了一个关于坐标的迭代器，用于叠加矩形和点集这两种结构的所有点，比如要申请一个矩形区域的所有地图图片，那么需要将矩形的每个点（行和列）进行迭代，取数据才行。根据点的坐标从服务器请求相应的地图图片过来。</p>
+
+<p>  搜索方面今天进行了一些跟地图有接口的部分的了解，搜索也是一个非常大的功能，里面涉及的内容非常多，用到的技术也非常多，不过各个部分直接的耦合性比较低，都是通过接口进行互操作，并将对内部调用的接口都封装层抽象类和代理实现类。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/28/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%85%AB)/">记录我的新工作(八)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-12-28T05:18:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>5:18 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  早晨就开始拉肚子，真的很郁闷，还好有地铁，又赶上了867，嘿嘿，正点到公司，木有迟到哦！</p>
+
+<p>  今天三个主要的任务：</p>
+
+<p>  1、将静态库.a跟UI层的交互给弄清楚。</p>
+
+<p>  2、将zoom的原理给弄清楚。</p>
+
+<p>  3、对tile的display的原理弄清楚。</p>
+
+<p>  花了一上午的时间，做了个DEMO，终于把静态库部分搞清楚了，嘿嘿，原理很简单，没有所谓的回调函数，只是将.a中的函数的实现放到了上层应用，因为是静态加载，在同一个进程空间，所以调用没有什么问题。而且.a对上层的接口可以放到任意一个头文件中。上层和静态库直接跟WINDOWS下的调用还是有点区别，更像是同一个程序。关于Unix下的编程还需要进一步学习。</p>
+
+<p>  顺便对编译选项中的GCC及llvm之间的区别，看我们的工程都选择的LLVM，原来它会对程序进行优化，提高编译速度。</p>
+
+<p>  在将ZOOM的流程捋顺的过程中，对CALayer和UIScrollView两个控件的原理有了更深刻的理解，通过对CALayer的显示的了解，对地图在UI的实现终于弄清楚了。哈哈，而ZOOM的UI就是UIScrollView的实现，对界面熟悉后，可以对底层有更深入的了解，这方面都是相辅相成的，哪点都不能放过。</p>
+
+<p>  每个程序只有一个窗口Window，都有一个根Layer负责显示层，layer可以有sublayer，每个地图的tile都是一个layer，有自己的Rect显示区域，将同一个zoomlevel的所有tiles都作为这个级别的layer的sublayer，并且按照顺序排列，就可以显示出地图来了。UIScrollView可以对它的content进行拖到和缩放，它将地图layer作为子视图来显示和拖动或者缩放，通过事件进行相应的位置调整或更新地图。ZoomAndSetCenter。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/27/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E4%B8%83)/">记录我的新工作(七)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-12-27T05:48:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>5:48 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  今天是2011年最后一周了，早起发了个微薄，为了新年奋斗最后一周！为了应付堵车，还是车上看书最好了，充分利用琐碎时间啊！哈哈，GTD没有白学。</p>
+
+<p>  早上竟然在公交车上遇到了新同事，竟然住的比我还远，太牛了哈哈。终于有熟悉了一个人了，哈哈，很兴奋啊，慢慢的融入团队了，虽然外企的团队不怎么样，嘿嘿但好歹也是个团队啊！</p>
+
+<p>  竟然可以报销餐补了，嘿嘿，多亏我把票都带着了，144元小CASE了。工资卡也办好了，嘿嘿，年前还能发半个月工资过年！</p>
+
+<p>  下午签字的时候顺便跟老大提了下我的MAC机器的问题，老大告诉我说老美那边休圣诞节，所以还得推迟两周，嘿嘿，不过J已经帮我把模拟器搞定了，终于可以看到界面了。耶！不过木有数据，很多功能没法跑起来。</p>
+
+<p>  原来是我的工程选择错了，他们有两个工程，一个是通用的，一个是给VZ定制的，通过一个宏来区分。不过后来因为一些原因，通用版和定制版无法区分了，代码都加在定制版本中了，通用版就没用了。可见是一大失败！外企对这方面的管理也是需要加强的啊！</p>
+
+<p>  关于地图逻辑还是有点乱，尤其是库中的回调函数的调用，很多地方都有，太乱了。不过整体逻辑划分还算清晰。下面简单的画下结构图：</p>
+
+<p>  UI层通过CALayer将地图数据以Image形式画到View上，层次之间主要是进行地图数据Tile的传递和维护，包括缩放，定位，导航等内容。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/24/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%85%AD)/">记录我的新工作(六)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-12-24T05:41:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>5:41 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  今天感觉head好胀啊，感觉知识真的能把脑袋给撑破了。</p>
+
+<p>  从早上7点40坐上公交车开始，就在车上看书，把第四章给看完了。通过这章的理解，终于的IOS的delegete模式弄清楚了，其实委托模式真的很简单，而且在Ios中随处可见，是用的最多的设计模式之一。故明其意也就是说是委托给其他对象来执行操作。可以简单的理解为回调函数。</p>
+
+<p>  UI层和SC层之间的调用流程也熟悉了下，但是对静态库中对UI的回调的实现还不太理解，需要详细研究下。</p>
+
+<p>  对CALayer的实现有了感性的理解，知道了它的实现方式和代码中如何实现地图的Layer。</p>
+
+<p>  妈的，CSDN真烂，写了一堆的东西，竟然自动给我删除没了，XXXXX的。没心情了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/23/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E4%BA%94)/">记录我的新工作(五)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-12-23T06:03:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>23</span><span class='date-suffix'>rd</span>, <span class='date-year'>2011</span></span> <span class='time'>6:03 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  早上将墨卡托投影又看了一遍，NND，搞了一些公式就行了，还理解个屁啊。有数学家呢。</p>
+
+<p>  花了半天的时间，把View都过了一遍，费了好大的劲，结果其实这些不重要。55555</p>
+
+<p>  快下班时找R给我讲讲map部分代码，还有文档可以看，晕了竟然不知道。不过看完也没太多的帮助，只是了解了下流程和大致层次划分，具体的实现没有设计文档。都得靠看代码了。555，悲催啊。好多内容需要学习，挑战啊！继续努力啊！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/22/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%9B%9B)/">记录我的新工作(四)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-12-22T05:34:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2011</span></span> <span class='time'>5:34 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  今天还算比较顺利，采用新线路上班，在起始站坐车，终于有座位了。哈哈，外面还有早餐卖，真开心，不用饿肚子上班了。</p>
+
+<p>  早上找了leader问了几个问题，leader忙完后给我解决了。哈哈，id搞定，架构分析搞定。原来外企的设计也就那么回事，后续文档也没有跟上。哎还得靠自己看代码啊。</p>
+
+<p>  最重要的学会build code，了解了2个Unix脚本。sh命令，执行shell，chmod命令，更改文件权限等。终于可以编译了，由于编译器还不是最新的，25个error，嘿嘿，也能大概解决了。编译终于过去了，不过还是出现了link的错误。下班是R过来问了下我现在的进度，给我简单的交代了两句，还得等具体设备来了后才能运行。我还得先view code啊。今天又掌握了2个概念，layer和墨托卡坐标。晚上学习下。明天rain讲解的时候得把问题都问一遍，抓住机会。哈哈</p>
+
+<p>  最后开会讨论了下年会的节目，嘿嘿没有那么大的压力，感觉大家还都基本比较喜欢做了，也没有那么多限制了。嘿嘿。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/21/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E4%B8%89)/">记录我的新工作(三)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-12-21T05:37:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2011</span></span> <span class='time'>5:37 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  昨天太忙了，忘了更新。昨天基本快要绝望了，晚上跟以前的同事ZJT聊天，同事的鼓励又给了我信心！嘿嘿。</p>
+
+<p>  今早还是堵车，路上堵了将近1.5个小时，9点10分才到公司。还算来的早的，嘻嘻。</p>
+
+<p>  同样早上第一件事是做计划，今天计划分为3部分：</p>
+
+<p>  1、将visio tool viewer 2007弄好，可以看系统架构。</p>
+
+<p>  2、将产品手册再全部看一遍，熟悉产品功能，特定术语等。</p>
+
+<p>  3、将代码浏览一遍，大致了解下程序工作原理，然后针对具体问题进行分析。</p>
+
+<p>  完成情况：</p>
+
+<p>  1、10点之前安装了个补丁就搞定了，终于可以看到全部的架构了。哈哈 里面的各层次还是比较清晰的，对每层的功能也有明确的划分。让我在整体上有了些认识。</p>
+
+<p>  2、一直看到下午3点30才大概全部看完一遍，这次是通读，对每个术语都详细了解了下，特别是缩略语。终于对产品有了感性的认识了，如果有实际操作就更好了。</p>
+
+<p>  3、代码问了下老B，知道看那块了。而且还把各个部分跟产品对应上了，总算不是没头绪了。对里面的各个层次还不是特别清晰，库的调用和UI的显示都不熟悉，弄了半天也没有能正确运行，估计是没有Device，但是老B说可以的。</p>
+
+<p>   把问题整理了下，明天早上准备问问leader。</p>
+
+<p>  明天计划：</p>
+
+<p>  1、讯问leader产品架构和代码运行等一些问题。</p>
+
+<p>  2、将代码运行起来，并且对UI要熟悉起来。</p>
+
+<p>  3、运用P4Win，熟悉下代码check in 和 check out等流程。</p>
+
+<p>  加油吧~~~！！！！！！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/16/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C%EF%BC%88%E4%BA%8C%EF%BC%89/">记录我的新工作（二）</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-12-16T05:47:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>5:47 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  2011.12.15  晴 大风</p>
+
+<p>  今天总体来说还是非常不错的。早上在麦大叔哪里吃了早餐，发现一条新的路线，竟然还能提前10分钟到公司，哈哈，不错的开始。</p>
+
+<p>  上午给自己订了下计划，将oc前7章再看一遍，对一些细节在VM中验证，花费了数个小时终于在下午3：30分时完成了学习，并且将疑问都已经解决，顺带还学习了很多XCode的使用。R也在快下班时指导了我重点，我有加了将近一个小时的班，将重点内容全部看完，收获颇大。还学习了新的版本管理工具P4V，这个东东感觉跟SVN基本一样，还好有SVN的经验，至少在理解方面没有啥问题。</p>
+
+<p>  再有就是今天连接了打印机，搞清了请假流程。原来还有带薪假一天办理手续的，还挺人性的。哈哈。通过老J，将MSN的人都导全了，部门人也认全了，嘿嘿，虽然还不都认识，但是名字至少是记住了。下班前老大发了一封email，对项目的总结，竟然没有怎么通过金山就看明白了，哈哈，这两天的培养已经有一定感觉啦，这个事情最让我激动了。</p>
+
+<p>  还有就是竟然还有熟人，只能无限感慨这个世界真是太小了。</p>
+
+<p>  下班就剩我和老J了，老J跟我介绍了下部门人员情况，还解答了几个我的问题。很好的一天！周末好好好整理下，下周就有自己的MAC和测试IPHONE喽！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/15/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C%EF%BC%88%E4%B8%80%EF%BC%89/">记录我的新工作（一）</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-12-15T06:10:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>6:10 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  今天 第一天入职，兴奋的同时也有点点担忧。7点起床，路上遭遇堵车，打了个的还差点迟到，幸好公司上班时间比较灵活，其他人还没有到，我还等了10几分钟。</p>
+
+<p>  IT带我到我的新工位，空空如野啊，就一台孤零零的电脑摆在那。桌子好脏好脏，搽了两张纸都没搽干净。老大给我介绍了下部门成员，10几个人，人数最少的部门，估计都是</p>
+
+<p>  精英。哈哈（我把自己也列为精英了！）</p>
+
+<p>  工作机开机，NND，竟然是全英文系统，软件都是英文，NB。我头都大了。IT给我配置了EMAIL后就不再管我了，我只好按照文档自己搞了，搞了个MSN，还不行，最后还是IT给搞定的。里面只有老大一个人，截止到下班才3个人。5555</p>
+
+<p>  根据老大的任务和安排的导师R和J两个，我开始了我的工作。R借给我两本书让我学习，又给我搞了个VM先凑合用，新机器过两天才能弄来。我只好按照老大的task list开始学习。</p>
+
+<p>  我把任务中的内容先大致浏览了一遍，时间比较充裕，全部完成需要20几天，但是内容也不少，比较英文有限，进度肯定不如看中文的快。需要把任务分类整理下。我把任务先简单分解为两大类：一：学习类，自己可以完成，有资料的。二、需要帮助类，需要同事帮忙指导的。第一天先把自己可以完成的做个任务，去掉已经学习的部分，剩余就不多了，可以尽快搞定。行动！</p>
+
+<p>  语言基础已经基本过一遍，这个就过了，可以放到休息时间看。规范类的内容可以看，C++编码规范，OBJC编码规范，code review process，startguide等等，看的头都大了。期间又办理了一些简单的手续。到下班了还差一个规范没看完。做了记录，简单整理下今天内容。也已经19点了，部门成员都已经走了，收拾东西果断走人。嘿嘿。遇到HR，还说我第一天就加班，(<em>^__^</em>) 嘻嘻……</p>
+
+<p>  加油！明天更好！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/13/C++11%E4%B8%AD%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E7%9A%84%E5%87%A0%E5%A4%A7%E5%8F%98%E5%8C%96/">C++11中值得关注的几大变化</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-12-13T17:15:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>5:15 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  C++11中值得关注的几大变化</p>
+
+<p>   ◆</p>
+
+<pre><code>Lambda表达式
+
+
+
+ ◆
+
+  自动类型推断和decltype
+
+
+
+   ◆
+
+    统一初始化语法
+
+
+
+     ◆
+
+      Deleted和Defaulted函数
+
+
+
+       ◆
+
+        nullptr
+
+
+
+         ◆
+
+          委托构造函数
+
+
+
+           ◆
+
+            右值引用
+
+
+
+
+              C++11标准库
+
+
+
+               C++于2003年以库技术报告1(TR1)的形式经历了重大改版，TR1包括新的容器类(unordered_set，unordered_map，unordered_multiset和unordered_multimap)和多个支撑正则表达式、元组和函数对象封装器等的新库。随着C++11标准获得通过，TR1和自它首次发布以来新增的库被正式纳入标准的C++标准，下面是C++11标准库的一些特性：
+
+
+
+                  线程库
+
+
+
+                   站在程序员的角度来看，C++11最重要的新功能毫无疑问是并行操作，C++11拥有一个代表执行线程的线程类，在并行环境中用于同步，async()函数模板启动并行任务，为线程独特的数据声明thread_local存储类型。如果你想找C++11线程库的快速教程，请阅读Anthony William的“C++0x中更简单的多线程”。
+
+
+
+                      新的智能指针类
+
+
+
+                       C++98只定义了一个智能指针类auto_ptr，它现在已经被废弃了，C++11引入了新的智能指针类shared_ptr和最近添加的unique_ptr，两者都兼容其它标准库组件，因此你可以在标准容器内安全保存这些智能指针，并使用标准算法操作它们。
+
+
+
+                          新的算法
+
+
+
+                           C++11标准库定义了新的算法模仿all_of()，any_of()和none_of()操作，下面列出适用于ispositive()到(first, first+n)范围，且使用all_of(), any_of() and none_of() 检查范围的属性的谓词：
+
+
+
+                              #include
+
+                               &lt;algorithm&gt;;
+
+
+
+                              //C++11 code
+
+
+                              //are all of the elements positive?
+
+
+                              all_of(first, first+n, ispositive()); //false
+
+
+                              //is there at least one positive element?
+
+
+                              any_of(first, first+n, ispositive());//true
+
+
+                              // are none of the elements positive?
+
+
+                              none_of(first, first+n, ispositive()); //false
+
+
+
+                             一种新型copy_n算法也可用了，使用copy_n()函数，复制一个包含5个元素的数组到另一个数组的代码如下：
+
+
+
+                                #include
+
+
+                                int source[5]={0,12,34,50,80};
+
+
+                                int target[5];
+
+
+                                //copy 5 elements from source to target
+
+
+                                copy_n(source,5,target);
+
+
+
+
+
+                               算法iota()创建了一个值顺序递增的范围，好像分配一个初始值给*first，然后使用前缀++使值递增，在下面的代码中，iota()分配连续值{10,11,12,13,14}给数组arr，并将{‘a’,’b’,’c’}分配给char数组c。
+
+
+
+                                  include
+
+                                   &lt;numeric&gt;;
+
+
+
+                                  int a[5]={0};
+
+
+                                  char c[3]={0};
+
+
+                                  iota(a, a+5, 10); //changes a to {10,11,12,13,14}
+
+
+                                  iota(c, c+3, 'a'); //{'a','b','c'}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/10">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/8">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

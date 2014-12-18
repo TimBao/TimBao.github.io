@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Std::string 与 Std::wstring 转换方法的效率比较 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="std::string 与 std::wstring 转换方法的效率比较">
+  <meta name="keywords" content="Windows 8">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://timbao.github.io/blog/2012/06/14/stdstring%20%E4%B8%8E%20stdwstring%20%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%88%E7%8E%87%E6%AF%94%E8%BE%83">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:timbao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Std::string 与 Std::wstring 转换方法的效率比较</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-06-14T21:18:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>9:18 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p> // Calls the provided work function and returns the number of milliseconds
+// that it takes to call that function.
+template <class Function>;
+<strong>int64 time_call(Function&amp;&amp; f)
+{
+    </strong>int64 begin = GetTickCount64();
+    f();
+    return GetTickCount64() - begin;
+}</p>
+
+<p>// Use WideCharToMultiByte and MultiByteToWideChar
+string WChar2Ansi(const wchar_t* pwszSrc)
+{
+    int nLen = WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, NULL, 0, NULL, NULL);</p>
+
+<pre><code>if (nLen&lt;= 0) return string("");
+
+char* pszDst = new char[nLen];
+if (NULL == pszDst) return string("");
+
+WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, pszDst, nLen, NULL, NULL);
+pszDst[nLen -1] = 0;
+
+string strTemp(pszDst);
+delete [] pszDst;
+
+return strTemp;
+</code></pre>
+
+<p>}</p>
+
+<p>wstring Ansi2WChar(const char* pszSrc, int nLen)
+{
+    int nSize = MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, 0, 0);
+    if(nSize &lt;= 0) return NULL;</p>
+
+<pre><code>wchar_t *pwszDst = new wchar_t[nSize+1];
+if( NULL == pwszDst) return NULL;
+
+MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, pwszDst, nSize);
+pwszDst[nSize] = 0;
+
+if( pwszDst[0] == 0xFEFF)                    // skip Oxfeff
+    for(int i = 0; i &lt; nSize; i ++) 
+        pwszDst[i] = pwszDst[i+1]; 
+
+wstring wcharString(pwszDst);
+delete pwszDst;
+
+return wcharString;
+</code></pre>
+
+<p>}</p>
+
+<p>// Use wcstombs_s and mbstowcs_s
+string ws2s(wstring ws)
+{
+    const wchar_t<em> Source = ws.c_str();
+    size_t size = 2 * ws.size() + 1;
+    char</em> Dest = new char[size];
+    memset(Dest,0, size);
+    size_t len = 0;
+    wcstombs(Dest, Source, size);
+    //wcstombs_s(&amp;len, Dest, size, Source, size);
+    string result = Dest;
+    delete [] Dest;</p>
+
+<pre><code>return result;
+</code></pre>
+
+<p>}</p>
+
+<p>wstring s2ws(string s)
+{
+    const char<em> Source = s.c_str();
+    size_t size = s.size() + 1;
+    wchar_t</em> Dest = new wchar_t[size];
+    wmemset(Dest, 0, size);
+    size_t len = 0;
+    mbstowcs(Dest, Source, size);
+    //mbstowcs_s(&amp;len, Dest, size, Source, size);
+    wstring result = Dest;
+    delete [] Dest;</p>
+
+<pre><code>return result;
+</code></pre>
+
+<p>}</p>
+
+<p>// Testing
+    __int64 elapsed;
+    string input = &ldquo;Hello, World.\XXX\XXX&rdquo;;
+    wstring winput = L&#8221;Hello, World.\XXX\XXX&#8221;;
+    wchar_t dest[1000];</p>
+
+<pre><code>int count = 10000;
+elapsed = time_call([input, &amp;count] 
+{
+    while (count)
+    {
+        Ansi2WChar(input.c_str(), input.length());
+        count--;
+    }
+});
+memset(dest, 0, 1000);
+_itow_s(elapsed, dest, 10);
+OutputDebugStringW(L"Time:");
+OutputDebugStringW(dest);
+OutputDebugStringW(L"ms\n");
+
+count = 10000;
+elapsed = 0;
+elapsed = time_call([input, &amp;count] 
+{
+    while (count)
+    {
+        s2ws(input);
+        count--;
+    }
+});
+memset(dest, 0, 1000);
+_itow_s(elapsed, dest, 10);
+OutputDebugStringW(L"Time:");
+OutputDebugStringW(dest);
+OutputDebugStringW(L"ms\n");
+
+count = 10000;
+elapsed = 0;
+elapsed = time_call([winput, &amp;count] 
+{
+    while (count)
+    {
+        WChar2Ansi(winput.c_str());
+        count--;
+    }
+});
+memset(dest, 0, 1000);
+_itow_s(elapsed, dest, 10);
+OutputDebugStringW(L"Time:");
+OutputDebugStringW(dest);
+OutputDebugStringW(L"ms\n");
+
+count = 10000;
+elapsed = 0;
+elapsed = time_call([winput, &amp;count] 
+{
+    while (count)
+    {
+        ws2s(winput);
+        count--;
+    }
+});
+memset(dest, 0, 1000);
+_itow_s(elapsed, dest, 10);
+OutputDebugStringW(L"Time:");
+OutputDebugStringW(dest);
+OutputDebugStringW(L"ms\n");
+</code></pre>
+
+<p>  输出：</p>
+
+<p>  Time:78ms</p>
+
+<p>  Time:94ms</p>
+
+<p>  Time:62ms</p>
+
+<p>  Time:109ms</p>
+
+<p>  从输出结果可以看出</p>
+
+<p>   WideCharToMultiByte</p>
+
+<p>   和</p>
+
+<p>   MultiByteToWideChar</p>
+
+<p>   转换效率要比</p>
+
+<p>   mbstowcs</p>
+
+<p>   和</p>
+
+<p>   wcstombs</p>
+
+<p>   高。</p>
+
+<p>   注意：如果使用</p>
+
+<p>   mbstowcs</p>
+
+<p>   则需要</p>
+
+<p>   Disable
+ Specific Warnings： 4996</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2012-06-14T21:18:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>9:18 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/windows-8/'>windows 8</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://timbao.github.io/blog/2012/06/14/stdstring%20%E4%B8%8E%20stdwstring%20%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%88%E7%8E%87%E6%AF%94%E8%BE%83/" data-via="" data-counturl="http://timbao.github.io/blog/2012/06/14/stdstring%20%E4%B8%8E%20stdwstring%20%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%88%E7%8E%87%E6%AF%94%E8%BE%83/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/06/14/%E5%A6%82%E4%BD%95%E5%B0%86Metro%20%E7%A8%8B%E5%BA%8F%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6%E5%8A%A0%E5%85%A5%E5%88%B0app%E8%BF%90%E8%A1%8C%E7%9B%AE%E5%BD%95%EF%BC%88AppX%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%EF%BC%89/" title="Previous Post: 如何将Metro 程序需要的文件加入到app运行目录（AppX文件夹中）">&laquo; 如何将Metro 程序需要的文件加入到app运行目录（AppX文件夹中）</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/06/19/%E8%B0%88Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/" title="Next Post: 谈Lambda表达式">谈Lambda表达式 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

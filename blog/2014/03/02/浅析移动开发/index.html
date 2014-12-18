@@ -1,0 +1,351 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>浅析移动开发 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="浅析移动开发">
+  <meta name="keywords" content="移动开发">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://timbao.github.io/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:timbao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">浅析移动开发</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-03-02T05:14:00+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>5:14 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>   这里只介绍笔者开发过的几个平台（iPhone, Android, Windows phone, Blackberry）。将从以下几个角度进行介绍：</p>
+
+<ol>
+<li>开发语言</li>
+<li>IDE</li>
+<li>模拟器</li>
+<li>编译及调试</li>
+<li><p>开发成本</p>
+
+<p>开发语言</p></li>
+</ol>
+
+
+<p>  ● <code>iPhone</code>：Object-C, C/C++
+● <code>Android</code>：XML, java, C/C++(NDK)
+● <code>WP</code>：XAML, C#, C++/CX
+● <code>BlackBerry</code>：KML, C/C++</p>
+
+<pre><code>可以分成两类：一是
+
+ iPhone
+
+；二是其他三种。前者是完全native开发，并且只能在Mac
+</code></pre>
+
+<p> OS X下开发（尽管现在有</p>
+
+<pre><code> Xamarin
+
+但其跟官方
+
+ API
+
+同步问题是个大问题）；而其他三类，可以看出来，前端都使用
+
+ 类XML
+
+的语言开发
+
+ UI
+
+，后端采用各自的开发语言，当然也可以使用native开发，但从目前来看对native的支持都不如原生语言支持的好。
+
+
+
+
+IDE
+</code></pre>
+
+<p>   ● <code>iPhone</code>： 首推<code>XCode</code>。
+● <code>Android</code>：<code>Eclipse</code>目前还是主流；谷歌目前推出的<code>Adroid Studio</code>市场还未打开，以后不好说。
+● <code>Widnows Phone</code>：<code>Visual Studio</code>是不二人选啊！
+● <code>BlackBerry</code>：自带IED，是将<code>Eclipse</code>及所需插件打包到一起的一个IDE，可以归到<code>Eclipse</code>一类。</p>
+
+<pre><code> 从IDE的易用性和功能性来看，
+
+  Visual
+</code></pre>
+
+<p> Studio</p>
+
+<pre><code> 是当之无愧的第一名，
+
+  xcode
+
+ 应该说是紧随其后，两个IDE都非常强大，但是
+
+  xcode
+
+ 会有随机的crash，稳定性上还是不如
+
+  Visual
+</code></pre>
+
+<p> Studio</p>
+
+<pre><code> ，而且VS可以调试C#和C/C++，而
+
+  eclipse
+
+ 调试
+
+  native
+
+ 上非常麻烦，不是三言两语可以说明白的，有感兴趣的童鞋可以去网上找找。至于
+
+  BlackBerry
+
+ 的
+
+  IDE
+
+ 集成的插件还可以，调试native代码也还行，功能也比较强大，但是在调试的速度上实在是无法忍受。
+
+
+
+
+ 模拟器
+
+xcode的模拟器和WP的模拟器安装都是随SDK安装的，使用起来非常方便。而android的模拟器和Blackberry的模拟器笔者没用过，但是BlackBerry的模拟器安装却非常麻烦，又得折腾VM使用起来还经常断开，所以说在后两者上有条件还是真机调试的比较好。
+
+
+  编译及调试
+
+ ● `XCode`：可以同时调试`Objective-C`和`C/C++`，编译速度还算比较快。
+</code></pre>
+
+<p>● <code>Visual Studio</code>：如此强大的IDE，同时调试<code>C#</code>和<code>C/C++</code>。
+● <code>Android</code>：如果是java代码，速度和调试都挺方便的，但是如果想编译和调试native代码，那就需要有足够的耐心了，尤其是调试，配置之麻烦当属第一。
+● <code>BlackBerry</code>：编译速度十分慢，调试启动也很慢，但是启动后调试还可以接受的，比起android来，省去了很多配置的麻烦。</p>
+
+<pre><code>   开发成本
+
+
+   ●
+
+    iPhone
+
+   ：投资比较大，光是注册开发者账号就需要99刀，而且还需要一台苹果设备，属于高富帅玩法。
+
+
+   ●
+
+    Windows
+</code></pre>
+
+<p> Phone</p>
+
+<pre><code>   ：投资一般，只用花注册的钱（如果要是用盗版VS的话），光VS的投资也不是小数。
+
+
+   ●
+
+    Adnroid
+
+   ：投资小，只需要一台PC和一台Android手机即可。可谓是专门给屌丝开发者准备的。
+
+
+   ●
+
+    BlackBerry
+
+   ：不熟悉，目前国内做的太少，而且BB10也没有在国内发售呢。
+
+
+   总的来说，做为一名移动开发者来说，如果没有一定的经济实力的话还是选择iPhone开发比较好，至少在经济收入上更可观一些；但是目前的情形上来说，安卓的市场是越来越大，说明做安卓的开发前途至少会越来越光明。至于WP，目前还需要观望；至于BB，就算了吧。
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2014-03-02T05:14:00+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>5:14 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/yi-dong-kai-fa/'>移动开发</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://timbao.github.io/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/" data-via="" data-counturl="http://timbao.github.io/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2014/01/16/%E5%BC%80%E6%BA%90%E5%B0%8F%E6%B8%B8%E6%88%8F-%E5%9F%BA%E4%BA%8Eandroid%20sample%20snake/" title="Previous Post: 开源小游戏-基于android sample snake">&laquo; 开源小游戏-基于android sample snake</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/" title="Next Post: 程序员不是操作工">程序员不是操作工 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

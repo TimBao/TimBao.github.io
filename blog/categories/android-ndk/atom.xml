@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Android Ndk | My Octopress Blog]]></title>
+  <link href="http://timbao.github.io/blog/categories/android-ndk/atom.xml" rel="self"/>
+  <link href="http://timbao.github.io/"/>
+  <updated>2014-12-18T17:33:48+08:00</updated>
+  <id>http://timbao.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Android NDK帮助文档的一个小错误]]></title>
+    <link href="http://timbao.github.io/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/"/>
+    <updated>2014-03-19T04:26:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2014/03/19/Android NDK帮助文档的一个小错误</id>
+    <content type="html"><![CDATA[<p>   刚刚在调试如何不安装</p>
+
+<pre><code>Cgywin
+</code></pre>
+
+<p>   的情况下，利用</p>
+
+<pre><code>NDK
+</code></pre>
+
+<p>   编译</p>
+
+<pre><code>cocos2d-x
+</code></pre>
+
+<p>   的</p>
+
+<pre><code>SampleGame
+</code></pre>
+
+<p>   .却机缘巧合的情况下发现了</p>
+
+<pre><code>android-ndk-r8d
+</code></pre>
+
+<p>   的</p>
+
+<pre><code>docs/IMPORT-MODULE.html
+</code></pre>
+
+<p>   下的一个小bug。</p>
+
+<p>  在</p>
+
+<p>   Eclipse</p>
+
+<p>  中导入工程后，工程目录如下：</p>
+
+<p>   将工程转换为C++工程。这步不会的可以google下。</p>
+
+<p>   设置ndk目录。</p>
+
+<p>   设置</p>
+
+<pre><code>NDK_MODULE_PATH
+</code></pre>
+
+<p>   环境变量。</p>
+
+<p>  在</p>
+
+<p>   docs/IMPORT-MODULE.html</p>
+
+<p>  中的介绍：</p>
+
+<ol type="a">
+<li><p>.</p>
+
+<p>NDK_MODULE_PATH</p></li>
+</ol>
+
+
+<p>   :</p>
+
+<p>   The</p>
+
+<pre><code>NDK_MODULE_PATH
+</code></pre>
+
+<p>   variable
+ must contain a list of directories.</p>
+
+<pre><code> Due to GNU Make limitations,
+
+  NDK_MODULE_PATH
+
+ must
+</code></pre>
+
+<p> not contain any space. The NDK will complain if this is not the case.</p>
+
+<pre><code>   Use
+</code></pre>
+
+<p> &lsquo;:&rsquo; as the path separator</p>
+
+<pre><code> .
+
+
+
+
+ On Windows, use '/' as the directory separator.
+</code></pre>
+
+<p>  这里面说的</p>
+
+<p>   Use
+ &lsquo;:&rsquo; as the path separator</p>
+
+<p>  ,经过实践验证在windows平台路径使用</p>
+
+<p>   ;</p>
+
+<p>  分割</p>
+]]></content>
+  </entry>
+  
+</feed>

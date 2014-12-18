@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Windows 8 | My Octopress Blog]]></title>
+  <link href="http://timbao.github.io/blog/categories/windows-8/atom.xml" rel="self"/>
+  <link href="http://timbao.github.io/"/>
+  <updated>2014-12-18T17:33:48+08:00</updated>
+  <id>http://timbao.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[ListBox刷新闪烁问题]]></title>
+    <link href="http://timbao.github.io/blog/2012/11/15/ListBox%E5%88%B7%E6%96%B0%E9%97%AA%E7%83%81%E9%97%AE%E9%A2%98/"/>
+    <updated>2012-11-15T03:27:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2012/11/15/ListBox刷新闪烁问题</id>
+    <content type="html"><![CDATA[<p> UI采用的是xaml，ListBox 的 ItemsSource 绑定 后台model 的IList，当list更新后，UI会出现闪烁。</p>
+
+<p>   原因竟然是出在Run属性的使用上，很奇怪。将run 去掉，改用多个TextBlock      闪烁消失。</p>
+
+<pre><code>&lt;StackPanel Orientation="Horizontal" HorizontalAlignment="Center"&gt;;
+ &lt;TextBlock&gt;;
+     &lt;Run Text="{Binding Path=DistanceText}"/&gt;;
+     &lt;Run Text=" " FontSize="2" /&gt;;
+     &lt;Run Text="{Binding Path=DistanceUnit}" /&gt;;
+ &lt;/TextBlock&gt;;
+</code></pre>
+
+<p></StackPanel>;</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Win 8 文件读写操作]]></title>
+    <link href="http://timbao.github.io/blog/2012/08/08/Win%208%20%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C/"/>
+    <updated>2012-08-08T00:41:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2012/08/08/Win 8 文件读写操作</id>
+    <content type="html"><![CDATA[<p>   啥也不说了，直接上代码。</p>
+
+<pre><code>#include &lt;windows.h&gt;;
+</code></pre>
+
+<h1>include &lt;ppltasks.h>;</h1>
+
+<p>using namespace Platform;
+using namespace Windows::Storage;
+using namespace Windows::Storage::Streams;
+using namespace Concurrency;</p>
+
+<p>StorageFile^ openFile(String^ fileName)
+{
+    StorageFile^ file = nullptr;
+    StorageFolder^ rootFolder = Windows::Storage::ApplicationData::Current->;LocalFolder;</p>
+
+<pre><code>task&lt;StorageFile^&gt;;(rootFolder-&gt;;GetFileAsync(fileName)).then([&amp;](task&lt;StorageFile^&gt;; getFileTask)
+{
+    try
+    {
+        file = getFileTask.get();
+    }
+    catch (Platform::Exception^ e)
+    {
+    }
+}).wait();
+
+return file;
+</code></pre>
+
+<p>}</p>
+
+<p>Array<byte>;^ getFileContent(String^ fileName)
+{
+    Array<byte>;^ data = nullptr;
+    StorageFile^ file = openFile(fileName);
+    if (file)
+    {
+        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::Read)).then([&amp;]</p>
+
+<p>(task&lt;IRandomAccessStream^>; getStream)
+        {<br/>
+            auto readStream = getStream.get();
+            DataReader^ dataReader=ref new DataReader(readStream);
+            int length = readStream->;Size;
+            if (length >; 0)
+            {
+                data = ref new Array<byte>;(length);
+                task<unsigned int>;(dataReader->;LoadAsync(readStream->;Size)).then([&amp;](task&lt;unsigned</p>
+
+<p>int>; loadTask) {
+                    loadTask.get();
+                    dataReader->;ReadBytes(data);
+                }).wait();
+            }
+        }).wait();
+    }</p>
+
+<pre><code>return data;
+</code></pre>
+
+<p>}</p>
+
+<p>bool setFileContent(String^ fileName, unsigned char* data, int size)
+{
+    size_t totalWritten = 0;
+    bool complete = false;
+    StorageFile^ file = openFile(fileName);
+    if (file)
+    {
+        IRandomAccessStream^ readStream = nullptr;
+        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::ReadWrite)).then([&amp;]</p>
+
+<p>(task&lt;IRandomAccessStream^>; getStream)
+        {<br/>
+            readStream = getStream.get();</p>
+
+<pre><code>        DataWriter^ dataWriter = ref new DataWriter(readStream);
+        Array&lt;unsigned char&gt;;^ arr = ref new Array&lt;unsigned char&gt;;(data, size);
+
+        dataWriter-&gt;;WriteBytes(arr);
+        task&lt;unsigned int&gt;;(dataWriter-&gt;;StoreAsync()).then([&amp;](task&lt;unsigned int&gt;; writeTask)
+        {
+            try
+            {
+                totalWritten = writeTask.get();
+            } catch (Platform::Exception^ ex) {}
+        }).wait();
+
+        task&lt;bool&gt;;(dataWriter-&gt;;FlushAsync()).then([&amp;](task&lt;bool&gt;; flushTask)
+        {
+            try
+            {
+                complete = flushTask.get();
+            } catch (Platform::Exception^ ex) {}
+        }).wait();
+
+        dataWriter-&gt;;DetachStream();
+
+    }).wait();
+}
+
+return complete;
+</code></pre>
+
+<p>}</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[将win32的lib库直接转为winRT静态库]]></title>
+    <link href="http://timbao.github.io/blog/2012/07/04/%E5%B0%86win32%E7%9A%84lib%E5%BA%93%E7%9B%B4%E6%8E%A5%E8%BD%AC%E4%B8%BAwinRT%E9%9D%99%E6%80%81%E5%BA%93/"/>
+    <updated>2012-07-04T22:38:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2012/07/04/将win32的lib库直接转为winRT静态库</id>
+    <content type="html"><![CDATA[<p> 将win32的lib库直接转为winRT静态库需要注意三点</p>
+
+<p>  1、打开/ZW开关，关闭/GM开关</p>
+
+<p>   2、忽略OLE32.LIB</p>
+
+<pre><code>3、手动使用命令/AI包含Windows.winmd(从工程中add new references无效)
+
+
+  /FU Platform.winmd /FU Windows.winmd /AI "$(VCInstallDir)vcpackages" /AI "$(WindowsSDK_MetadataPath)"
+
+
+
+
+  剩余的工作就是修改编译错误了
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Std::string 与 Std::wstring 转换方法的效率比较]]></title>
+    <link href="http://timbao.github.io/blog/2012/06/14/stdstring%20%E4%B8%8E%20stdwstring%20%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%88%E7%8E%87%E6%AF%94%E8%BE%83/"/>
+    <updated>2012-06-14T21:18:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2012/06/14/stdstring 与 stdwstring 转换方法的效率比较</id>
+    <content type="html"><![CDATA[<p> // Calls the provided work function and returns the number of milliseconds
+// that it takes to call that function.
+template <class Function>;
+<strong>int64 time_call(Function&amp;&amp; f)
+{
+    </strong>int64 begin = GetTickCount64();
+    f();
+    return GetTickCount64() - begin;
+}</p>
+
+<p>// Use WideCharToMultiByte and MultiByteToWideChar
+string WChar2Ansi(const wchar_t* pwszSrc)
+{
+    int nLen = WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, NULL, 0, NULL, NULL);</p>
+
+<pre><code>if (nLen&lt;= 0) return string("");
+
+char* pszDst = new char[nLen];
+if (NULL == pszDst) return string("");
+
+WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, pszDst, nLen, NULL, NULL);
+pszDst[nLen -1] = 0;
+
+string strTemp(pszDst);
+delete [] pszDst;
+
+return strTemp;
+</code></pre>
+
+<p>}</p>
+
+<p>wstring Ansi2WChar(const char* pszSrc, int nLen)
+{
+    int nSize = MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, 0, 0);
+    if(nSize &lt;= 0) return NULL;</p>
+
+<pre><code>wchar_t *pwszDst = new wchar_t[nSize+1];
+if( NULL == pwszDst) return NULL;
+
+MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, pwszDst, nSize);
+pwszDst[nSize] = 0;
+
+if( pwszDst[0] == 0xFEFF)                    // skip Oxfeff
+    for(int i = 0; i &lt; nSize; i ++) 
+        pwszDst[i] = pwszDst[i+1]; 
+
+wstring wcharString(pwszDst);
+delete pwszDst;
+
+return wcharString;
+</code></pre>
+
+<p>}</p>
+
+<p>// Use wcstombs_s and mbstowcs_s
+string ws2s(wstring ws)
+{
+    const wchar_t<em> Source = ws.c_str();
+    size_t size = 2 * ws.size() + 1;
+    char</em> Dest = new char[size];
+    memset(Dest,0, size);
+    size_t len = 0;
+    wcstombs(Dest, Source, size);
+    //wcstombs_s(&amp;len, Dest, size, Source, size);
+    string result = Dest;
+    delete [] Dest;</p>
+
+<pre><code>return result;
+</code></pre>
+
+<p>}</p>
+
+<p>wstring s2ws(string s)
+{
+    const char<em> Source = s.c_str();
+    size_t size = s.size() + 1;
+    wchar_t</em> Dest = new wchar_t[size];
+    wmemset(Dest, 0, size);
+    size_t len = 0;
+    mbstowcs(Dest, Source, size);
+    //mbstowcs_s(&amp;len, Dest, size, Source, size);
+    wstring result = Dest;
+    delete [] Dest;</p>
+
+<pre><code>return result;
+</code></pre>
+
+<p>}</p>
+
+<p>// Testing
+    __int64 elapsed;
+    string input = &ldquo;Hello, World.\XXX\XXX&rdquo;;
+    wstring winput = L&#8221;Hello, World.\XXX\XXX&#8221;;
+    wchar_t dest[1000];</p>
+
+<pre><code>int count = 10000;
+elapsed = time_call([input, &amp;count] 
+{
+    while (count)
+    {
+        Ansi2WChar(input.c_str(), input.length());
+        count--;
+    }
+});
+memset(dest, 0, 1000);
+_itow_s(elapsed, dest, 10);
+OutputDebugStringW(L"Time:");
+OutputDebugStringW(dest);
+OutputDebugStringW(L"ms\n");
+
+count = 10000;
+elapsed = 0;
+elapsed = time_call([input, &amp;count] 
+{
+    while (count)
+    {
+        s2ws(input);
+        count--;
+    }
+});
+memset(dest, 0, 1000);
+_itow_s(elapsed, dest, 10);
+OutputDebugStringW(L"Time:");
+OutputDebugStringW(dest);
+OutputDebugStringW(L"ms\n");
+
+count = 10000;
+elapsed = 0;
+elapsed = time_call([winput, &amp;count] 
+{
+    while (count)
+    {
+        WChar2Ansi(winput.c_str());
+        count--;
+    }
+});
+memset(dest, 0, 1000);
+_itow_s(elapsed, dest, 10);
+OutputDebugStringW(L"Time:");
+OutputDebugStringW(dest);
+OutputDebugStringW(L"ms\n");
+
+count = 10000;
+elapsed = 0;
+elapsed = time_call([winput, &amp;count] 
+{
+    while (count)
+    {
+        ws2s(winput);
+        count--;
+    }
+});
+memset(dest, 0, 1000);
+_itow_s(elapsed, dest, 10);
+OutputDebugStringW(L"Time:");
+OutputDebugStringW(dest);
+OutputDebugStringW(L"ms\n");
+</code></pre>
+
+<p>  输出：</p>
+
+<p>  Time:78ms</p>
+
+<p>  Time:94ms</p>
+
+<p>  Time:62ms</p>
+
+<p>  Time:109ms</p>
+
+<p>  从输出结果可以看出</p>
+
+<p>   WideCharToMultiByte</p>
+
+<p>   和</p>
+
+<p>   MultiByteToWideChar</p>
+
+<p>   转换效率要比</p>
+
+<p>   mbstowcs</p>
+
+<p>   和</p>
+
+<p>   wcstombs</p>
+
+<p>   高。</p>
+
+<p>   注意：如果使用</p>
+
+<p>   mbstowcs</p>
+
+<p>   则需要</p>
+
+<p>   Disable
+ Specific Warnings： 4996</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[如何将Metro 程序需要的文件加入到app运行目录（AppX文件夹中）]]></title>
+    <link href="http://timbao.github.io/blog/2012/06/14/%E5%A6%82%E4%BD%95%E5%B0%86Metro%20%E7%A8%8B%E5%BA%8F%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6%E5%8A%A0%E5%85%A5%E5%88%B0app%E8%BF%90%E8%A1%8C%E7%9B%AE%E5%BD%95%EF%BC%88AppX%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%EF%BC%89/"/>
+    <updated>2012-06-14T18:32:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2012/06/14/如何将Metro 程序需要的文件加入到app运行目录（AppX文件夹中）</id>
+    <content type="html"><![CDATA[<p>  1、将文件加到工程中</p>
+
+<p>  2、选中文件，右键属性->;Content->;True</p>
+]]></content>
+  </entry>
+  
+</feed>

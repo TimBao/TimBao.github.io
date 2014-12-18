@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Win 8 文件读写操作 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Win 8 文件读写操作">
+  <meta name="keywords" content="Windows 8">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://timbao.github.io/blog/2012/08/08/Win%208%20%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:timbao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Win 8 文件读写操作</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-08-08T00:41:00+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>12:41 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>   啥也不说了，直接上代码。</p>
+
+<pre><code>#include &lt;windows.h&gt;;
+</code></pre>
+
+<h1>include &lt;ppltasks.h>;</h1>
+
+<p>using namespace Platform;
+using namespace Windows::Storage;
+using namespace Windows::Storage::Streams;
+using namespace Concurrency;</p>
+
+<p>StorageFile^ openFile(String^ fileName)
+{
+    StorageFile^ file = nullptr;
+    StorageFolder^ rootFolder = Windows::Storage::ApplicationData::Current->;LocalFolder;</p>
+
+<pre><code>task&lt;StorageFile^&gt;;(rootFolder-&gt;;GetFileAsync(fileName)).then([&amp;](task&lt;StorageFile^&gt;; getFileTask)
+{
+    try
+    {
+        file = getFileTask.get();
+    }
+    catch (Platform::Exception^ e)
+    {
+    }
+}).wait();
+
+return file;
+</code></pre>
+
+<p>}</p>
+
+<p>Array<byte>;^ getFileContent(String^ fileName)
+{
+    Array<byte>;^ data = nullptr;
+    StorageFile^ file = openFile(fileName);
+    if (file)
+    {
+        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::Read)).then([&amp;]</p>
+
+<p>(task&lt;IRandomAccessStream^>; getStream)
+        {<br/>
+            auto readStream = getStream.get();
+            DataReader^ dataReader=ref new DataReader(readStream);
+            int length = readStream->;Size;
+            if (length >; 0)
+            {
+                data = ref new Array<byte>;(length);
+                task<unsigned int>;(dataReader->;LoadAsync(readStream->;Size)).then([&amp;](task&lt;unsigned</p>
+
+<p>int>; loadTask) {
+                    loadTask.get();
+                    dataReader->;ReadBytes(data);
+                }).wait();
+            }
+        }).wait();
+    }</p>
+
+<pre><code>return data;
+</code></pre>
+
+<p>}</p>
+
+<p>bool setFileContent(String^ fileName, unsigned char* data, int size)
+{
+    size_t totalWritten = 0;
+    bool complete = false;
+    StorageFile^ file = openFile(fileName);
+    if (file)
+    {
+        IRandomAccessStream^ readStream = nullptr;
+        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::ReadWrite)).then([&amp;]</p>
+
+<p>(task&lt;IRandomAccessStream^>; getStream)
+        {<br/>
+            readStream = getStream.get();</p>
+
+<pre><code>        DataWriter^ dataWriter = ref new DataWriter(readStream);
+        Array&lt;unsigned char&gt;;^ arr = ref new Array&lt;unsigned char&gt;;(data, size);
+
+        dataWriter-&gt;;WriteBytes(arr);
+        task&lt;unsigned int&gt;;(dataWriter-&gt;;StoreAsync()).then([&amp;](task&lt;unsigned int&gt;; writeTask)
+        {
+            try
+            {
+                totalWritten = writeTask.get();
+            } catch (Platform::Exception^ ex) {}
+        }).wait();
+
+        task&lt;bool&gt;;(dataWriter-&gt;;FlushAsync()).then([&amp;](task&lt;bool&gt;; flushTask)
+        {
+            try
+            {
+                complete = flushTask.get();
+            } catch (Platform::Exception^ ex) {}
+        }).wait();
+
+        dataWriter-&gt;;DetachStream();
+
+    }).wait();
+}
+
+return complete;
+</code></pre>
+
+<p>}</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2012-08-08T00:41:00+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>12:41 am</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/windows-8/'>windows 8</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://timbao.github.io/blog/2012/08/08/Win%208%20%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C/" data-via="" data-counturl="http://timbao.github.io/blog/2012/08/08/Win%208%20%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/07/21/%E3%80%8A%E9%87%8D%E6%9E%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%80/" title="Previous Post: 《重构》读书笔记一">&laquo; 《重构》读书笔记一</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/08/28/Python%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83%E4%B9%8B%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/" title="Next Post: Python编码规范之命名规范">Python编码规范之命名规范 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

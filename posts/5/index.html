@@ -1,0 +1,901 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="这两天看了一篇关于重构的博客，结合前段时间看完的《重构》，对程序员的工作行为有一点点感悟，记录下来跟大家分享一下。 如果老大给你分派了一个任务，在原系统中添加某某功能。作为一名员工，你需要做的就是将功能没有BUG的，高效的实现就可以了，并不需要关心系统其他的部分代码， &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://timbao.github.io/posts/5">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:timbao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/09/17/%E8%B0%88%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%A6%82%E4%BD%95%E5%AE%8C%E6%88%90%E4%BB%BB%E5%8A%A1/">谈程序员应该如何完成任务</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-09-17T19:11:00+08:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>7:11 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  这两天看了一篇关于重构的博客，结合前段时间看完的《重构》，对程序员的工作行为有一点点感悟，记录下来跟大家分享一下。</p>
+
+<p>  如果老大给你分派了一个任务，在原系统中添加某某功能。作为一名员工，你需要做的就是将功能没有BUG的，高效的实现就可以了，并不需要关心系统其他的部分代码，也有可能你在添加功能的时候阅读了一部分原有代码，也发现原有代码的一些问题，比如效率低，结构差等等，可是可能由于各种理由（工期紧，能良好运行，客户认可等等）并没有对这些问题进行修改，以后也不会对其进行修改。OK，可以说你按时，保质保量的完成了任务，还有可能得到表扬，但是作为一名程序员来说，你并不合格！同时你也丧失了一次自我提升的机会！</p>
+
+<p>  我决定作为程序员，不仅要对自己的程序负责，也要对产品的其他程序负责，既然看到了问题，就应该修改，或者记录下来，提供给决策者来进行后期重构或者升级时的修改项。如果是小改动，那么应该花费少量的时间直接修改过来。虽然花费了些许时间，但是对于产品来说，可能会有很大的性能提升，或者用户体验得到大大的改进，或者为以后维护提供了大大的便利；对于个人来讲也是对个人能力的展现，让后来维护人员对你的一种‘膜拜’。</p>
+
+<p>  所以，我认为简单的完成任务并不可取；在完成任务的同时，你应该可以获得更多东西！</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/30/%E4%BD%BF%E7%94%A8python%E5%81%B7%E5%81%B7%E5%8F%91%E9%82%AE%E4%BB%B6/">使用python偷偷发邮件</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-08-30T05:16:00+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>5:16 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  以前的公司上班上网或者收发邮件都得小心翼翼的，怕一不小心被有心人瞧见，又得被说说。为了能发邮件而不被发现，嘿嘿，我就用python写了个邮件发送程序，用控制台控制，不了解的人一定以为哥还在编程工作呢。哈哈。</p>
+
+<p>  下面简单介绍下如何使用python发送邮件，包括普通文本内容，也可以带附件，或者HTML内容的邮件。可以说有了python，一切都变得非常的容易。</p>
+
+<p>  smtplib 模块是用来发送email的标准module，另外配合email.mime内的几个module实现起来就非常的简单。</p>
+
+<p> def sendmail(message):
+    try:
+        smtp = smtplib.SMTP(EMAIL_HOST)
+        smtp.login(EMAIL_USER, EMAIL_PWD)<br/>
+        smtp.sendmail(EMAIL_USER+&ldquo;@&rdquo;+EMAIL_POSTFIX, TO_EMAIL, message)<br/>
+        smtp.quit()<br/>
+        print &lsquo;email send success.&rsquo;
+    except Exception ,e:
+        print e
+        print &lsquo;email send failed.&rsquo;
+ 首先要导入smtplib模块，加入import smtplib，初始化的时候直接连上邮箱服务器，也就是上面的EMAIL_HOST（我使用的是163邮箱，所以定义EMAIL_HOST = &lsquo;smtp.163.com&#8217;），由于目前的邮箱基本都需要登录才可以使用，所以要调用smtp.login()函数，输入用户和密码。</p>
+
+<p>  def sendwithoutattachment():
+    msg = MIMEText(getcontent(), &lsquo;plain&rsquo;,&lsquo;utf-8&rsquo;)
+    getheader(msg)</p>
+
+<pre><code>sendmail(msg.as_string())
+</code></pre>
+
+<p>   我将发送简单文本内容的邮件单独独立为一个函数，使用MIMEText生成，注意这里用到了utf-8，因为内容有可能是中文，所以要特别指定。如果要发送html内容，则讲plain更改为html即可。</p>
+
+<p>  def getheader(msg):
+    msg[&lsquo;From&rsquo;] = ME
+    msg[&lsquo;To&rsquo;] = &ldquo;;&rdquo;.join(TO_EMAIL)
+    msg[&lsquo;Subject&rsquo;] = EMAIL_HEADER
+    msg[&lsquo;Date&rsquo;] = formatdate(localtime=True)</p>
+
+<p>   getheader函数是用来设置发送者，接受者，主题和发送时间的。</p>
+
+<p>  def getcontent():
+    path = os.getcwd()
+    file = os.path.join(path, CONTENT_FILE_NAME)
+    content = open(file, &lsquo;rb&rsquo;)
+    data = content.read()
+    try:
+        data = data.decode(&lsquo;gbk&rsquo;)
+    except :
+        data = data.decode(&lsquo;gbk&rsquo;,&lsquo;ignore&rsquo;)
+    content.close()
+    return data
+  至于邮件正文，我是事先写到一个TXT文档中，读取出来。这样也比较隐蔽。：）要主意中文编码。</p>
+
+<p>  def getattachment(msg):
+    ctype, encoding = mimetypes.guess_type(ACCESSORY_FULLPATH)
+    if ctype is None or encoding is not None:<br/>
+        ctype = &lsquo;application/octet-stream&rsquo;<br/>
+    maintype, subtype = ctype.split(&lsquo;/&rsquo;, 1)</p>
+
+<pre><code>#Formating accessory data
+data = open(ACCESSORY_FULLPATH, 'rb')
+file_msg = MIMEBase(maintype, subtype)
+file_msg.set_payload(data.read( ))
+data.close( )
+encode_base64(file_msg) 
+#file_msg["Content-Type"] = ctype # if add type then return error 10054
+file_msg.add_header('Content-Disposition', 'attachment', filename = ACCESSORY_NAME)
+msg.attach(file_msg)
+</code></pre>
+
+<p>  附件同样独立为一个函数来创建，这里要注意的是不要指定“Content-Type”类型，否则无法发送邮件。这个问题还没有解决。</p>
+
+<p>  以上基本包括了发送邮件的主要几个函数，具体smtplib模块和MIME等内容，资料很多，这里就不详细讲解了，有感兴趣的可以上网search。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/28/Python%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83%E4%B9%8B%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/">Python编码规范之命名规范</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-08-28T22:57:00+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>10:57 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  1、不要使用小写字母&#8217;l&#8217;(el),大写字母&#8217;O&#8217;(oh),或者小写&#8217;i&#8217;作为单独变量名称。因为一些字体中，上诉字母和数字很难区分（比如：O和0，l和1）。</p>
+
+<p>  2、Module应该采用全小写，并且尽可能短的命名，可以在模块名中使用下划线以提高可读性。Package应该采用全部小写，并且也要尽可能短的命名，但不允许使用下划线。当一个用C 或C++ 写的扩展模块，有一个伴随的Python 模块来提供一个更高层(例如，更面向对象)的接口时，C/C++模块名有一个前导下划线(如：_socket)。</p>
+
+<p>  3、类名使用首字母大写单词串(CapWords) 的约定。 内部使用的类使用一个额外的前导下划线。</p>
+
+<p>  4、因为异常应该是类，故类命名约定也适用于异常。然而，你应该对异常名添加后缀&#8221;Error&#8221; (如果该异常的确是一个错误)。</p>
+
+<p>  5、对设计为通过&#8221;from M import &ldquo; 来使用的模块，应采用all 机制来防止导 出全局变量；或者使用旧的约定，为该类全局变量加一个前导下划线(可能你想表 明这些全局变量是&#8221;module non-public&rdquo;)。</p>
+
+<p>  6、函数名应该为小写，必要时可用下划线分隔单词以增加可读性。 混合大小写(mixedCase) 仅被允许用于这种风格已经占优势的上下文(如:threading.py)，以便保持向后兼容。</p>
+
+<p>  7、对实例的方法，总是用&#8217;self&#8217; 做第一个参数。对类的方法，总是用&#8217;cls&#8217; 做第一个参数。如果函数的参数名与保留关键字冲突，在参数名后加一个下划线，比用缩写、错误 的拼写要好。因此 &ldquo;_print&rdquo; 比 &ldquo;prnt&rdquo; 好。(也许使用同义词来避免冲突更好。)</p>
+
+<p>  8、方法名和实例变量：采用函数命名规则：小写单词，必要时可用下划线分隔单词以增加可读性。仅对non-public 方法和实例变量采用一个前导下划线。为避免与子类命名冲突，采用两个前导下划线来触发Python 的命名重整规则。Python用类名重整这些名字：如果类Foo 有一个属性名为<strong>a， 它不能以Foo.</strong>a 访问。(执著的用户还是可以通过Foo._Foo__a.得到访问权。)通常，双前导下划线仅被用来避免与基类的属性发生名字冲突。</p>
+
+<p>  9、常量定义全部为大写，必要时可用下划线分隔单词以增加可读性。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/08/08/Win%208%20%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C/">Win 8 文件读写操作</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-08-08T00:41:00+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>12:41 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>   啥也不说了，直接上代码。</p>
+
+<pre><code>#include &lt;windows.h&gt;;
+</code></pre>
+
+<h1>include &lt;ppltasks.h>;</h1>
+
+<p>using namespace Platform;
+using namespace Windows::Storage;
+using namespace Windows::Storage::Streams;
+using namespace Concurrency;</p>
+
+<p>StorageFile^ openFile(String^ fileName)
+{
+    StorageFile^ file = nullptr;
+    StorageFolder^ rootFolder = Windows::Storage::ApplicationData::Current->;LocalFolder;</p>
+
+<pre><code>task&lt;StorageFile^&gt;;(rootFolder-&gt;;GetFileAsync(fileName)).then([&amp;](task&lt;StorageFile^&gt;; getFileTask)
+{
+    try
+    {
+        file = getFileTask.get();
+    }
+    catch (Platform::Exception^ e)
+    {
+    }
+}).wait();
+
+return file;
+</code></pre>
+
+<p>}</p>
+
+<p>Array<byte>;^ getFileContent(String^ fileName)
+{
+    Array<byte>;^ data = nullptr;
+    StorageFile^ file = openFile(fileName);
+    if (file)
+    {
+        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::Read)).then([&amp;]</p>
+
+<p>(task&lt;IRandomAccessStream^>; getStream)
+        {<br/>
+            auto readStream = getStream.get();
+            DataReader^ dataReader=ref new DataReader(readStream);
+            int length = readStream->;Size;
+            if (length >; 0)
+            {
+                data = ref new Array<byte>;(length);
+                task<unsigned int>;(dataReader->;LoadAsync(readStream->;Size)).then([&amp;](task&lt;unsigned</p>
+
+<p>int>; loadTask) {
+                    loadTask.get();
+                    dataReader->;ReadBytes(data);
+                }).wait();
+            }
+        }).wait();
+    }</p>
+
+<pre><code>return data;
+</code></pre>
+
+<p>}</p>
+
+<p>bool setFileContent(String^ fileName, unsigned char* data, int size)
+{
+    size_t totalWritten = 0;
+    bool complete = false;
+    StorageFile^ file = openFile(fileName);
+    if (file)
+    {
+        IRandomAccessStream^ readStream = nullptr;
+        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::ReadWrite)).then([&amp;]</p>
+
+<p>(task&lt;IRandomAccessStream^>; getStream)
+        {<br/>
+            readStream = getStream.get();</p>
+
+<pre><code>        DataWriter^ dataWriter = ref new DataWriter(readStream);
+        Array&lt;unsigned char&gt;;^ arr = ref new Array&lt;unsigned char&gt;;(data, size);
+
+        dataWriter-&gt;;WriteBytes(arr);
+        task&lt;unsigned int&gt;;(dataWriter-&gt;;StoreAsync()).then([&amp;](task&lt;unsigned int&gt;; writeTask)
+        {
+            try
+            {
+                totalWritten = writeTask.get();
+            } catch (Platform::Exception^ ex) {}
+        }).wait();
+
+        task&lt;bool&gt;;(dataWriter-&gt;;FlushAsync()).then([&amp;](task&lt;bool&gt;; flushTask)
+        {
+            try
+            {
+                complete = flushTask.get();
+            } catch (Platform::Exception^ ex) {}
+        }).wait();
+
+        dataWriter-&gt;;DetachStream();
+
+    }).wait();
+}
+
+return complete;
+</code></pre>
+
+<p>}</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/21/%E3%80%8A%E9%87%8D%E6%9E%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%80/">《重构》读书笔记一</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-07-21T06:25:00+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2012</span></span> <span class='time'>6:25 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  一、重构之前一定要对原有代码有一套可靠的测试机制，并且测试要有自我检测能力。</p>
+
+<p>  第六章主要是讲的最简单的重构方法，就是对函数的重构。重构的目的就是要让函数更容易理解，思路更清晰。个人觉得重构的目的主要是针对开发者，能让维护者更容易理解而已。对函数的效率没有太多帮助，用作者的话来说就是应该放到优化中去做。有了易理解的函数，清晰的思路，优化起来那是事半功倍！</p>
+
+<p>  几个比较重要的重构的小方法：</p>
+
+<p>  1、Extract Methord：提取函数。将大函数分解为多个独立功能的小函数。小函数更容易阅读和理解。</p>
+
+<p>  2、Replace Temp with Quary：用查询函数替换局部变量。过多的局部变量会影响阅读。</p>
+
+<p>  3、Replace Methord with Methord Object：用函数对象替换函数。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/04/%E5%B0%86win32%E7%9A%84lib%E5%BA%93%E7%9B%B4%E6%8E%A5%E8%BD%AC%E4%B8%BAwinRT%E9%9D%99%E6%80%81%E5%BA%93/">将win32的lib库直接转为winRT静态库</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-07-04T22:38:00+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>10:38 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p> 将win32的lib库直接转为winRT静态库需要注意三点</p>
+
+<p>  1、打开/ZW开关，关闭/GM开关</p>
+
+<p>   2、忽略OLE32.LIB</p>
+
+<pre><code>3、手动使用命令/AI包含Windows.winmd(从工程中add new references无效)
+
+
+  /FU Platform.winmd /FU Windows.winmd /AI "$(VCInstallDir)vcpackages" /AI "$(WindowsSDK_MetadataPath)"
+
+
+
+
+  剩余的工作就是修改编译错误了
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/06/22/Windows%20Runtime%20Component%E7%90%86%E8%A7%A3/">Windows Runtime Component理解</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-06-22T01:40:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2012</span></span> <span class='time'>1:40 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  WinRT类型的动态库，可以认为导出的是类，应用通过创建类的实例来引用该导出类的功能即接口。</p>
+
+<p>  这里需要注意的是导出类的public成员只能是接口（成员变量是不可以为public），这样就避免了暴露类结构，并且接口中的参数不能为native type(例如：void* dd就不可以作为参数)。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/06/19/%E8%B0%88Lambda%E8%A1%A8%E8%BE%BE%E5%BC%8F/">谈Lambda表达式</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-06-19T06:31:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>6:31 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  最近由于再开发Win 8 metro程序和准备开发Win Phone 8 App，学习了下WinRT开发，包括一些C++ 11新标准内容，最初对Lamdba表达式的表达很是头疼，对以往的编程认识非常不同，这也就让我对它产生了浓厚的兴趣，找了很多资料来学习它，并且写了好多程序去测试它，慢慢发现其实Lamdba表达式真的很有趣！</p>
+
+<p>  其实对Lambda表达式不必有任何的畏惧心里，通过仔细的分析它，我发现其实Lambda表达式就是一个函数，是一个匿名的函数，是一个可以自己执行的自己的函数。就这么简单！下面我们来看一个例子：</p>
+
+<p>  #include <functional>;</p>
+
+<h1>include <iostream>;</h1>
+
+<p>using namespace std;</p>
+
+<p>int main(int argc, char argv[])
+{
+    int number = 2;
+    int menber = 2;
+    // []表示要使用到的作用域外的变量
+    // ()传入的参数
+    // mutable： 对number 来说，number是值传递，如果要修改的话,需要mutable标记，否则可以使用引用传递.
+    // throw：抛出异常
+    // ->; 后跟返回值
+    // {} 函数题
+    auto f1 = [number, &amp;menber] (int x, int y) mutable throw() ->; int {
+        ++number;
+        ++menber;
+        return x + y;
+    };
+    //Lambda表达式执行之前
+    cout &lt;&lt; &ldquo;number:&rdquo; &lt;&lt; number &lt;&lt; &ldquo; menber:&rdquo; &lt;&lt; menber &lt;&lt; endl;</p>
+
+<pre><code>//执行Lambda表达式
+f1(3, 4);
+
+//Lambda表达式执行之后
+cout &lt;&lt; "number:" &lt;&lt; number &lt;&lt; " menber:" &lt;&lt; menber &lt;&lt; endl;
+
+//自我执行
+cout &lt;&lt; [] (int x, int y) { return x + y; }(2, 3) &lt;&lt; endl;
+
+// auto类型其实就是 function&lt;int (int, int)&gt;;.
+function&lt;int (int, int)&gt;; f2 = [] (int x, int y) { return x + y; };
+
+cout &lt;&lt; f2(3,4) &lt;&lt; f1(3, 4) &lt;&lt; endl;
+
+system("pause");
+
+return 0;
+</code></pre>
+
+<p>}</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/06/14/stdstring%20%E4%B8%8E%20stdwstring%20%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%88%E7%8E%87%E6%AF%94%E8%BE%83/">Std::string 与 Std::wstring 转换方法的效率比较</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-06-14T21:18:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>9:18 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p> // Calls the provided work function and returns the number of milliseconds
+// that it takes to call that function.
+template <class Function>;
+<strong>int64 time_call(Function&amp;&amp; f)
+{
+    </strong>int64 begin = GetTickCount64();
+    f();
+    return GetTickCount64() - begin;
+}</p>
+
+<p>// Use WideCharToMultiByte and MultiByteToWideChar
+string WChar2Ansi(const wchar_t* pwszSrc)
+{
+    int nLen = WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, NULL, 0, NULL, NULL);</p>
+
+<pre><code>if (nLen&lt;= 0) return string("");
+
+char* pszDst = new char[nLen];
+if (NULL == pszDst) return string("");
+
+WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, pszDst, nLen, NULL, NULL);
+pszDst[nLen -1] = 0;
+
+string strTemp(pszDst);
+delete [] pszDst;
+
+return strTemp;
+</code></pre>
+
+<p>}</p>
+
+<p>wstring Ansi2WChar(const char* pszSrc, int nLen)
+{
+    int nSize = MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, 0, 0);
+    if(nSize &lt;= 0) return NULL;</p>
+
+<pre><code>wchar_t *pwszDst = new wchar_t[nSize+1];
+if( NULL == pwszDst) return NULL;
+
+MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, pwszDst, nSize);
+pwszDst[nSize] = 0;
+
+if( pwszDst[0] == 0xFEFF)                    // skip Oxfeff
+    for(int i = 0; i &lt; nSize; i ++) 
+        pwszDst[i] = pwszDst[i+1]; 
+
+wstring wcharString(pwszDst);
+delete pwszDst;
+
+return wcharString;
+</code></pre>
+
+<p>}</p>
+
+<p>// Use wcstombs_s and mbstowcs_s
+string ws2s(wstring ws)
+{
+    const wchar_t<em> Source = ws.c_str();
+    size_t size = 2 * ws.size() + 1;
+    char</em> Dest = new char[size];
+    memset(Dest,0, size);
+    size_t len = 0;
+    wcstombs(Dest, Source, size);
+    //wcstombs_s(&amp;len, Dest, size, Source, size);
+    string result = Dest;
+    delete [] Dest;</p>
+
+<pre><code>return result;
+</code></pre>
+
+<p>}</p>
+
+<p>wstring s2ws(string s)
+{
+    const char<em> Source = s.c_str();
+    size_t size = s.size() + 1;
+    wchar_t</em> Dest = new wchar_t[size];
+    wmemset(Dest, 0, size);
+    size_t len = 0;
+    mbstowcs(Dest, Source, size);
+    //mbstowcs_s(&amp;len, Dest, size, Source, size);
+    wstring result = Dest;
+    delete [] Dest;</p>
+
+<pre><code>return result;
+</code></pre>
+
+<p>}</p>
+
+<p>// Testing
+    __int64 elapsed;
+    string input = &ldquo;Hello, World.\XXX\XXX&rdquo;;
+    wstring winput = L&#8221;Hello, World.\XXX\XXX&#8221;;
+    wchar_t dest[1000];</p>
+
+<pre><code>int count = 10000;
+elapsed = time_call([input, &amp;count] 
+{
+    while (count)
+    {
+        Ansi2WChar(input.c_str(), input.length());
+        count--;
+    }
+});
+memset(dest, 0, 1000);
+_itow_s(elapsed, dest, 10);
+OutputDebugStringW(L"Time:");
+OutputDebugStringW(dest);
+OutputDebugStringW(L"ms\n");
+
+count = 10000;
+elapsed = 0;
+elapsed = time_call([input, &amp;count] 
+{
+    while (count)
+    {
+        s2ws(input);
+        count--;
+    }
+});
+memset(dest, 0, 1000);
+_itow_s(elapsed, dest, 10);
+OutputDebugStringW(L"Time:");
+OutputDebugStringW(dest);
+OutputDebugStringW(L"ms\n");
+
+count = 10000;
+elapsed = 0;
+elapsed = time_call([winput, &amp;count] 
+{
+    while (count)
+    {
+        WChar2Ansi(winput.c_str());
+        count--;
+    }
+});
+memset(dest, 0, 1000);
+_itow_s(elapsed, dest, 10);
+OutputDebugStringW(L"Time:");
+OutputDebugStringW(dest);
+OutputDebugStringW(L"ms\n");
+
+count = 10000;
+elapsed = 0;
+elapsed = time_call([winput, &amp;count] 
+{
+    while (count)
+    {
+        ws2s(winput);
+        count--;
+    }
+});
+memset(dest, 0, 1000);
+_itow_s(elapsed, dest, 10);
+OutputDebugStringW(L"Time:");
+OutputDebugStringW(dest);
+OutputDebugStringW(L"ms\n");
+</code></pre>
+
+<p>  输出：</p>
+
+<p>  Time:78ms</p>
+
+<p>  Time:94ms</p>
+
+<p>  Time:62ms</p>
+
+<p>  Time:109ms</p>
+
+<p>  从输出结果可以看出</p>
+
+<p>   WideCharToMultiByte</p>
+
+<p>   和</p>
+
+<p>   MultiByteToWideChar</p>
+
+<p>   转换效率要比</p>
+
+<p>   mbstowcs</p>
+
+<p>   和</p>
+
+<p>   wcstombs</p>
+
+<p>   高。</p>
+
+<p>   注意：如果使用</p>
+
+<p>   mbstowcs</p>
+
+<p>   则需要</p>
+
+<p>   Disable
+ Specific Warnings： 4996</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/06/14/%E5%A6%82%E4%BD%95%E5%B0%86Metro%20%E7%A8%8B%E5%BA%8F%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6%E5%8A%A0%E5%85%A5%E5%88%B0app%E8%BF%90%E8%A1%8C%E7%9B%AE%E5%BD%95%EF%BC%88AppX%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%EF%BC%89/">如何将Metro 程序需要的文件加入到app运行目录（AppX文件夹中）</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-06-14T18:32:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>6:32 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  1、将文件加到工程中</p>
+
+<p>  2、选中文件，右键属性->;Content->;True</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/6">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/4">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

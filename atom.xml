@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://timbao.github.io/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-18T16:05:19+08:00</updated>
+  <updated>2014-12-18T17:33:48+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -12,5 +12,1074 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[工欲善其事，必先利其器]]></title>
+    <link href="http://timbao.github.io/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/"/>
+    <updated>2014-11-06T00:07:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2014/11/06/工欲善其事，必先利其器</id>
+    <content type="html"><![CDATA[<pre><code>  工欲善其事
+
+
+
+
+  ，必先利其器
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  背景：最近一直在写些
+
+
+
+
+  python
+
+
+
+
+  脚本，同事
+
+
+
+
+  review
+
+
+
+
+  完发现一处地方不符合
+
+
+
+
+  pep8
+
+
+
+
+  规范，建议修改。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 虽说是一处小小的改动，只要一分钟就可以搞定。但是我想下次会不会还犯这种错误？如何能一劳永逸解决这个问题？由于本人用vim作为python IDE，所以就去
+
+
+
+
+ google
+
+
+
+
+ 了下是否有对
+
+
+
+
+ python
+
+
+
+
+
+
+ 规范检查的插件，结果果然如我所料！万能的
+
+
+
+
+ vim
+
+
+
+
+ 插件无所不能啊
+
+
+ ！
+
+
+
+
+
+
+
+
+
+
+ 因为早先已经用了
+
+
+
+
+ syntastic
+
+
+
+
+ 插件检测语法，所以还是选择使用它来搭配
+
+
+
+
+ pep8
+
+
+
+
+ 检测python规范。具体方法网上很多，这里不详细描述，感兴趣的可以自行
+
+
+
+
+ google
+
+
+
+
+ 。
+
+
+
+可以参考：
+
+ 点击打开链接
+
+
+
+
+
+
+
+
+
+
+ 花了几个小时搞定好配置后，果然效果不错！为后面大量代码改动节约了不少时间，而且代码质量也提高不少！花费时间完全值得！这就是所谓的
+
+
+
+
+ 磨刀不误砍柴工
+
+
+
+
+
+  。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     有对vim感兴趣的同学，可以去我的
+
+      github
+
+     看看我的配置。欢迎交流。
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[字符串相关函数整理]]></title>
+    <link href="http://timbao.github.io/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/"/>
+    <updated>2014-10-30T00:34:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2014/10/30/字符串相关函数整理</id>
+    <content type="html"><![CDATA[<p> string.h 中字符串相关函数</p>
+
+<p>  按功能分类:</p>
+
+<pre><code>字符串连接:
+
+ strcat : char* strcat(char* destination, const char* source);
+
+
+   strncat : char* strcat(char* destination, const char* source, size_t num);
+
+
+     cat 意思是catenate，连接的意思。
+
+
+       strncp 是strcat的安全版本，可以防止越界。
+
+
+         从定义上可以看出带是将const的字符串连接到不带const的字符串上。
+
+
+           字符/字符串查找:
+
+            strchr : char* strchr(const char* str, int character); char* strchr(char* str, int character);
+
+
+              查找字符character在str中第一次出现的位置，返回一个指针指向该字符到字符串结尾。
+
+
+                由于'\0'也是字符串的一部分，故该函数也可以查找结束符。
+
+
+                  chr意思应该是character。
+
+
+                    strrchr : char* strchr(const char* str, int character); char* strchr(char* str, int character);
+
+
+                      最后一次出现的位置。 'r'应该是right的意思，也就是从右开始搜索。
+
+
+                        strpbrk : const char* strpbrk(const char* str1,const char* str2); char* strpbrk(char* str1,const char* str2);
+
+
+                          查找str2中任意字符在str1中第一次出现的位置，返回从整个位置到str1最后的字符串。不包含结束符。
+
+
+                            strcspn : size_t strcspn(const char* str1, const char* str2);
+
+
+                              返回的是str1第一次出现str2中任意字符的位置。搜索包含null结束符，所以函数可以返回str1字符串的长度当没有任何匹配的时候。
+
+
+                                strstr : const char* strstr(const char* str1, const char* str2); char* strstr(char* str1, const char* str2);
+
+
+                                  匹配完整字符串
+
+
+                                    字符串比较:
+
+                                     strcmp: int strcmp(const char* str1, const char* str2);
+
+
+                                       strncmp: int strcmp(const char* str1, const char* str2, size_t num);
+
+
+                                         strcoll: int strcoll(const char* str1, const char* str2);
+
+
+                                           根据LC_COLIATE比较str1和str2。
+
+
+                                             字符串拷贝:
+
+                                              strcpy : char* strcpy(char* destination, const char* source);
+
+
+                                                strncpy : char* strcpy(char* destination, const char* source, size_t num);
+
+
+                                                  拷贝source到destination中去。遇到'\0'停止copy。
+
+
+                                                    获取字符串长度:
+
+                                                     strlen: size_t strlen(const char* str);
+
+
+                                                       拆分字符串:
+
+                                                        strtok: char* strtok(char* str, const char* delimiters);
+
+
+                                                          tok的意思是token，该函数就是将str根据delimiter拆分。
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android NDK帮助文档的一个小错误]]></title>
+    <link href="http://timbao.github.io/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/"/>
+    <updated>2014-03-19T04:26:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2014/03/19/Android NDK帮助文档的一个小错误</id>
+    <content type="html"><![CDATA[<p>   刚刚在调试如何不安装</p>
+
+<pre><code>Cgywin
+</code></pre>
+
+<p>   的情况下，利用</p>
+
+<pre><code>NDK
+</code></pre>
+
+<p>   编译</p>
+
+<pre><code>cocos2d-x
+</code></pre>
+
+<p>   的</p>
+
+<pre><code>SampleGame
+</code></pre>
+
+<p>   .却机缘巧合的情况下发现了</p>
+
+<pre><code>android-ndk-r8d
+</code></pre>
+
+<p>   的</p>
+
+<pre><code>docs/IMPORT-MODULE.html
+</code></pre>
+
+<p>   下的一个小bug。</p>
+
+<p>  在</p>
+
+<p>   Eclipse</p>
+
+<p>  中导入工程后，工程目录如下：</p>
+
+<p>   将工程转换为C++工程。这步不会的可以google下。</p>
+
+<p>   设置ndk目录。</p>
+
+<p>   设置</p>
+
+<pre><code>NDK_MODULE_PATH
+</code></pre>
+
+<p>   环境变量。</p>
+
+<p>  在</p>
+
+<p>   docs/IMPORT-MODULE.html</p>
+
+<p>  中的介绍：</p>
+
+<ol type="a">
+<li><p>.</p>
+
+<p>NDK_MODULE_PATH</p></li>
+</ol>
+
+
+<p>   :</p>
+
+<p>   The</p>
+
+<pre><code>NDK_MODULE_PATH
+</code></pre>
+
+<p>   variable
+ must contain a list of directories.</p>
+
+<pre><code> Due to GNU Make limitations,
+
+  NDK_MODULE_PATH
+
+ must
+</code></pre>
+
+<p> not contain any space. The NDK will complain if this is not the case.</p>
+
+<pre><code>   Use
+</code></pre>
+
+<p> &lsquo;:&rsquo; as the path separator</p>
+
+<pre><code> .
+
+
+
+
+ On Windows, use '/' as the directory separator.
+</code></pre>
+
+<p>  这里面说的</p>
+
+<p>   Use
+ &lsquo;:&rsquo; as the path separator</p>
+
+<p>  ,经过实践验证在windows平台路径使用</p>
+
+<p>   ;</p>
+
+<p>  分割</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[程序员不是操作工]]></title>
+    <link href="http://timbao.github.io/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/"/>
+    <updated>2014-03-09T18:35:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2014/03/09/程序员不是操作工</id>
+    <content type="html"><![CDATA[<p>   程序员不是操作工</p>
+
+<pre><code>故事的背景是这样的，我的一个朋友跟我聊天中说到他前几天加班到凌晨，手都疼了。我就问问加班干什么呢？他说就光
+
+ Ctrl-C
+
+和
+
+ Ctrl-V
+
+的弄了
+
+ 3000
+
+多次！我的天啊！怪不得手指头都疼了呢！
+
+
+
+
+
+ 真正的程序员真的不是代码工人，是靠脑力而不是靠体力，是赚智慧的钱，而不是赚苦力的钱。那么真正的程序员应该怎么做呢？
+
+
+
+
+
+  避免重复劳动
+
+ ，遇到类似需要大量
+
+  Ctrl-C
+
+ 和
+
+  Ctrl-V
+
+ 的情况，一定是程序架构出了问题，该做的公司是要思考为什么会出现这种不合理的情况？要从根本上杜绝这类情况的出现。
+
+
+
+  善于利用脚本
+
+ ，脚本语言的简单和易用性是程序员工作中不可缺少的好帮手。善于用脚本创造各种工具来帮助程序员提高工作效率。上述情况完全可以写个脚本来做这些重复的工作。而且后期可以将脚本完善，做成个通用的工具，分享给同事，即利己也利团队，更可以增加你在领导眼里的不可替代性。
+
+
+
+
+
+  现在的程序员门槛已经非常低了，但是不能因为门槛低就对自己要求降低。程序员不是码农，不是代码蓝领！我们是在改变世界，是高科技工程师！让我们做真正的程序员，而不是代码操作工！
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[浅析移动开发]]></title>
+    <link href="http://timbao.github.io/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/"/>
+    <updated>2014-03-02T05:14:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2014/03/02/浅析移动开发</id>
+    <content type="html"><![CDATA[<p>   这里只介绍笔者开发过的几个平台（iPhone, Android, Windows phone, Blackberry）。将从以下几个角度进行介绍：</p>
+
+<ol>
+<li>开发语言</li>
+<li>IDE</li>
+<li>模拟器</li>
+<li>编译及调试</li>
+<li><p>开发成本</p>
+
+<p>开发语言</p></li>
+</ol>
+
+
+<p>  ● <code>iPhone</code>：Object-C, C/C++
+● <code>Android</code>：XML, java, C/C++(NDK)
+● <code>WP</code>：XAML, C#, C++/CX
+● <code>BlackBerry</code>：KML, C/C++</p>
+
+<pre><code>可以分成两类：一是
+
+ iPhone
+
+；二是其他三种。前者是完全native开发，并且只能在Mac
+</code></pre>
+
+<p> OS X下开发（尽管现在有</p>
+
+<pre><code> Xamarin
+
+但其跟官方
+
+ API
+
+同步问题是个大问题）；而其他三类，可以看出来，前端都使用
+
+ 类XML
+
+的语言开发
+
+ UI
+
+，后端采用各自的开发语言，当然也可以使用native开发，但从目前来看对native的支持都不如原生语言支持的好。
+
+
+
+
+IDE
+</code></pre>
+
+<p>   ● <code>iPhone</code>： 首推<code>XCode</code>。
+● <code>Android</code>：<code>Eclipse</code>目前还是主流；谷歌目前推出的<code>Adroid Studio</code>市场还未打开，以后不好说。
+● <code>Widnows Phone</code>：<code>Visual Studio</code>是不二人选啊！
+● <code>BlackBerry</code>：自带IED，是将<code>Eclipse</code>及所需插件打包到一起的一个IDE，可以归到<code>Eclipse</code>一类。</p>
+
+<pre><code> 从IDE的易用性和功能性来看，
+
+  Visual
+</code></pre>
+
+<p> Studio</p>
+
+<pre><code> 是当之无愧的第一名，
+
+  xcode
+
+ 应该说是紧随其后，两个IDE都非常强大，但是
+
+  xcode
+
+ 会有随机的crash，稳定性上还是不如
+
+  Visual
+</code></pre>
+
+<p> Studio</p>
+
+<pre><code> ，而且VS可以调试C#和C/C++，而
+
+  eclipse
+
+ 调试
+
+  native
+
+ 上非常麻烦，不是三言两语可以说明白的，有感兴趣的童鞋可以去网上找找。至于
+
+  BlackBerry
+
+ 的
+
+  IDE
+
+ 集成的插件还可以，调试native代码也还行，功能也比较强大，但是在调试的速度上实在是无法忍受。
+
+
+
+
+ 模拟器
+
+xcode的模拟器和WP的模拟器安装都是随SDK安装的，使用起来非常方便。而android的模拟器和Blackberry的模拟器笔者没用过，但是BlackBerry的模拟器安装却非常麻烦，又得折腾VM使用起来还经常断开，所以说在后两者上有条件还是真机调试的比较好。
+
+
+  编译及调试
+
+ ● `XCode`：可以同时调试`Objective-C`和`C/C++`，编译速度还算比较快。
+</code></pre>
+
+<p>● <code>Visual Studio</code>：如此强大的IDE，同时调试<code>C#</code>和<code>C/C++</code>。
+● <code>Android</code>：如果是java代码，速度和调试都挺方便的，但是如果想编译和调试native代码，那就需要有足够的耐心了，尤其是调试，配置之麻烦当属第一。
+● <code>BlackBerry</code>：编译速度十分慢，调试启动也很慢，但是启动后调试还可以接受的，比起android来，省去了很多配置的麻烦。</p>
+
+<pre><code>   开发成本
+
+
+   ●
+
+    iPhone
+
+   ：投资比较大，光是注册开发者账号就需要99刀，而且还需要一台苹果设备，属于高富帅玩法。
+
+
+   ●
+
+    Windows
+</code></pre>
+
+<p> Phone</p>
+
+<pre><code>   ：投资一般，只用花注册的钱（如果要是用盗版VS的话），光VS的投资也不是小数。
+
+
+   ●
+
+    Adnroid
+
+   ：投资小，只需要一台PC和一台Android手机即可。可谓是专门给屌丝开发者准备的。
+
+
+   ●
+
+    BlackBerry
+
+   ：不熟悉，目前国内做的太少，而且BB10也没有在国内发售呢。
+
+
+   总的来说，做为一名移动开发者来说，如果没有一定的经济实力的话还是选择iPhone开发比较好，至少在经济收入上更可观一些；但是目前的情形上来说，安卓的市场是越来越大，说明做安卓的开发前途至少会越来越光明。至于WP，目前还需要观望；至于BB，就算了吧。
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[开源小游戏-基于android Sample Snake]]></title>
+    <link href="http://timbao.github.io/blog/2014/01/16/%E5%BC%80%E6%BA%90%E5%B0%8F%E6%B8%B8%E6%88%8F-%E5%9F%BA%E4%BA%8Eandroid%20sample%20snake/"/>
+    <updated>2014-01-16T00:51:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2014/01/16/开源小游戏-基于android sample snake</id>
+    <content type="html"><![CDATA[<p>  最近利用业余时间学校android应用的开发，发现android sdk的sample中有个snake的小游戏，感觉不错，但是由于该游戏不能在触摸屏上玩，所以就萌生了自己动手的想法。利用2天时间又增加了用户排名和帮助等功能。程序已经托管到github上面，咱也玩吧开源。</p>
+
+<p>  地址：<a href="https://github.com/TimBao/Android_Snake">https://github.com/TimBao/Android_Snake</a></p>
+
+<p>  有感兴趣的朋友可以一同开发噢！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[对比国内外的git开源项目]]></title>
+    <link href="http://timbao.github.io/blog/2013/11/01/%E5%AF%B9%E6%AF%94%E5%9B%BD%E5%86%85%E5%A4%96%E7%9A%84git%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/"/>
+    <updated>2013-11-01T04:53:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/11/01/对比国内外的git开源项目</id>
+    <content type="html"><![CDATA[<p> 最近看到CSDN也有了自己的code(git)，而且开源中国比之还早有git@ocs，这两个基本是跟github差不多，或者说是copy github。这里不说他们到底是谁copy谁，只单单谈谈里面到项目。浏览里一边C/C++的项目，发现CSDN到大多说都是垃圾项目，而且基本都不怎么维护，着实让人失望。相比ocs到还好一点，但多数项目也是为了凑数，维护人员基本都没有维护，真是很可惜。开源在中国这个土壤上说的比做的好，唱的比干到好！失望！失望！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Android NDK之JNI陷阱]]></title>
+    <link href="http://timbao.github.io/blog/2013/10/01/Android%20NDK%E4%B9%8BJNI%E9%99%B7%E9%98%B1/"/>
+    <updated>2013-10-01T05:54:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/10/01/Android NDK之JNI陷阱</id>
+    <content type="html"><![CDATA[<p>  背景： 最近一个月一直在做移植库的工作，将c代码到share library移植到Android平台。这就涉及到Android NDK(native develop kit)内容。这里只想记录下JNI(java native interface)经常遇到到问题。</p>
+
+<p>  问题1.  忘记delete local reference。带New到方法(如：NewByteArray)这样到方法比较好辨认，需要手动调用DeleteLocalRef()来释放(返回值除外)。比较特殊的一个方法是：GetByteArrayELement必须要调用ReleaseByteArrayElements进行释放。当然如果你只是取bytearray中到byte，那么完全可以用GetByteArrayRegion实现。</p>
+
+<p>  问题2. 没有NewGlobalRef。 在不同线程调用java方法，需要保存jobject对象，这时需要对jobject对象做全局引用，否则会失效。</p>
+
+<p>  问题3.  jbytearray的length。在JNI layer获取到jbytearray到长度是不对到，应该由java获取byte[]的length再传给C layer。否则C layer有可能获得到是乱码。</p>
+
+<p>  问题4.  线程问题。 不同线程使用JNIEnv*对象，需要AttachCurrentThread将env挂到当前线程，否则无法使用env。</p>
+
+<p>  问题5.  javap 命令是对java的class文件操作；而javah命令需要在包名到上一层路径运行才行，否则无法生成.h文件。</p>
+
+<p>  问题6. 尽量避免频繁调用JNI或者是使用JNI传输大量到数据。</p>
+
+<p>  问题7. Reference Table overflow (max=1024) 或者是 Reference Table overflow (max=512)一定是因为忘记释放global reference或者local reference，请仔细检查代码。</p>
+
+<p>  问题8. 不要在windows下使用cygwin编译NDK code，那样会遇到arguments too long问题，因为windows路径长度有限制导致。虽然可以使用subst将路径映射为短路径，但是在编译时间和调试上，windows到孩子都是伤不起。同样到build，在windows下要15分钟左右，而在mac下只要5分多，相差3倍。调试JNI 代码到速度更是不用提了，差太多。</p>
+
+<p>  总结，JNI代码量其实不是很多，JNI作为一个数据传输层，它到作用仅仅是java和c直接到桥梁，但是如果处理不好将会是灾难，调试和找bug非常困难。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Std::vector 两种操作的比较]]></title>
+    <link href="http://timbao.github.io/blog/2013/07/07/stdvector%20%E4%B8%A4%E7%A7%8D%E6%93%8D%E4%BD%9C%E7%9A%84%E6%AF%94%E8%BE%83/"/>
+    <updated>2013-07-07T01:27:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/07/07/stdvector 两种操作的比较</id>
+    <content type="html"><![CDATA[<p>   swap</p>
+
+<p>   assign</p>
+
+<p>  这里只想说明这三种操作的用处和效率。swap和assign都可以用在将一个vector的内容全部复制给另外一个vector，区别是swap会改变源vector，而assign会清空目的vector后再将源vector的值全部插入到目的vector中。就效率而言，swap只是交换vector的头指针，时间复杂度是常数；而assigin时间复杂度则是线性。</p>
+
+<p>  #include <vector>;</p>
+
+<h1>include &ldquo;DebugUtility.h&rdquo;</h1>
+
+<h1>include <iostream>;</h1>
+
+<h1>include <algorithm>;</h1>
+
+<h1>include <string>;</h1>
+
+<p>using namespace std;</p>
+
+<p>void print(int x)
+{
+    cout &lt;&lt; x &lt;&lt; endl;
+}</p>
+
+<p>void Swap(vector<string>;&amp; source, vector<string>;&amp; dest)
+{
+    DebugUtility temp;
+    dest.swap(source);
+}</p>
+
+<p>void Assign(vector<string>;&amp; source, vector<string>;&amp; dest)
+{
+    DebugUtility temp;
+    dest.assign(source.begin(), source.end());
+}</p>
+
+<p>int main(int argc, const char *argv[])
+{
+    vector<string>; source(900000, &ldquo;90&rdquo;);
+    vector<string>; destination(1, &ldquo;abc&rdquo;);</p>
+
+<pre><code>Swap(source, destination);
+//source.clear();
+//for_each(destination.begin(), destination.end(), print);
+
+//Assign(source, destination);
+//source.clear();
+//for_each(destination.begin(), destination.end(), print);
+
+return 0;
+</code></pre>
+
+<p>}</p>
+
+<p>   结果：</p>
+
+<p>  Total time elapsed : 1 us
+900000</p>
+
+<p>Total time elapsed : 12391 us
+900000</p>
+
+<p>   DebugUtility.h  大家可以从<a href="https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82">https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Gvim Use Wmctrl in Ubuntu]]></title>
+    <link href="http://timbao.github.io/blog/2013/06/21/gvim%20use%20wmctrl%20in%20ubuntu/"/>
+    <updated>2013-06-21T03:35:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/06/21/gvim use wmctrl in ubuntu</id>
+    <content type="html"><![CDATA[<p>  Use the wmctrl tools could maximize the windows of gvim in ubuntu. But I find a small issue for that.</p>
+
+<p>  Here is the wrong script:</p>
+
+<p>  if has(&ldquo;win32&rdquo;)
+    au GUIEnter * simalt ~x
+else
+    au GUIEnter * call MaximizeWindow()
+endif</p>
+
+<p>function! MaximizeWindow()
+    silent !wmctrl -r :ACTIVE: -b add, maximized_vert,maximized_horz
+endfunction</p>
+
+<p>   You could see that between &ldquo;,&rdquo; and &ldquo;maximized_vert&rdquo; on line 8, there is a blank. It&rsquo;s the reason why the script can&rsquo;t works. So I remove the blank and it woks fine. So strange, because this scripts works well on my mac mini.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to Use Terminal in Vim]]></title>
+    <link href="http://timbao.github.io/blog/2013/04/11/How%20to%20use%20Terminal%20in%20Vim/"/>
+    <updated>2013-04-11T05:14:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/04/11/How to use Terminal in Vim</id>
+    <content type="html"><![CDATA[<p>  这篇文章虽然叫做“如何在Vim中使用Terminal”，但是我这里要说的是在Windows下使用。</p>
+
+<p>  OS： Windows 8 64bit</p>
+
+<p>  Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通信来操作terminal command的。插件是使用python写的）</p>
+
+<p>  Python：2.7</p>
+
+<p>  Vim：7.3</p>
+
+<p>  在我的Linux下使用ConqueTerm一点问题都没有，非常好用，我的32位的Window7 上面也没有问题，只有在64位windows 8工作机上才会出现无法在vim中找到python接口。也就是说 echo has(&lsquo;python&rsquo;) = 0。通过查看vim的verison，发现已经打开了python/dyn。这个问题一连搞了一天也没有解决，果断放弃。这段时间vim的学习又有了突破，才又想起解决这个问题，通过大量的google search，终于在stackflow上面看到某人也有类似的问题，解决方法也是让我没有想到，重装vim或者python？为什么呢？原来是版本不匹配，我的机器安装的是64位的python，而vim确是32位的，果断下载一个64位的Vim，重新测试。OK，一切正常！</p>
+
+<p>  通过这个问题，我的收获就是当一个问题陷入死胡同的时候，不应该去放弃；可以暂时先放下，调整下心情状态，或者过段时间再来解决，很有可能就会柳暗花明又一村！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Pasting Code With Syntax Coloring in Emails Use VIM]]></title>
+    <link href="http://timbao.github.io/blog/2013/04/09/Pasting%20code%20with%20syntax%20coloring%20in%20emails%20use%20VIM/"/>
+    <updated>2013-04-09T05:24:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/04/09/Pasting code with syntax coloring in emails use VIM</id>
+    <content type="html"><![CDATA[<p>  今天跟T又学了一招，当邮件中包含code时，可以将code转换为html格式再发送，这样既整齐，又美观！不过T使用Emacs来制作的，偶Emacs不会，想用VIM来实现类似的功能，上网找到了这篇文章，原来VIM早就有了这种插件了。看来是我out了，要学习的东西还是太多啊！抓紧时间，持续学习，每天进步一点点，累计起来也是非常巨大的。就像最近微薄中有个公式：</p>
+
+<p> 1.01<sup>365</sup>=37.78
+0.99<sup>365</sup>=0.0255</p>
+
+<p>  每天一点，一年后的变化差距有多大啊！！！！</p>
+
+<p>  Addr：<a href="http://vim.wikia.com/wiki/Pasting_code_with_syntax_coloring_in_emails">http://vim.wikia.com/wiki/Pasting_code_with_syntax_coloring_in_emails</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[阅读代码的方法]]></title>
+    <link href="http://timbao.github.io/blog/2013/03/13/%E9%98%85%E8%AF%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95/"/>
+    <updated>2013-03-13T06:16:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/03/13/阅读代码的方法</id>
+    <content type="html"><![CDATA[<p>  过完年，工作有所调整，一下子忙了起来，要去接触全新的一块内容，最近一段时间是不停的trainings、read documents、watch codes。尽管每天都非常忙，回到家后还要坚持study English， 练习听力（因为每周要跟美国那边开会，所以英语听说已经是非常迫在眉睫了！）还要坚持锻炼身体，毕竟好身体是所有这些的前提。</p>
+
+<p>  先说说每天的时间安排吧：</p>
+
+<p>  9：00 &mdash; 到公司后，一边吃早餐，一遍浏览下新闻和微博。</p>
+
+<p>  9：30 &mdash; 开始看文档和代码。</p>
+
+<p>  12：00 &mdash; 午饭</p>
+
+<p>  1：00  &mdash;继续看代码和文档。</p>
+
+<p>  2：00 &mdash;有可能有培训。</p>
+
+<p>  6：00 &mdash; 下班回家</p>
+
+<p>  9：00 &mdash; 听英语（看网易公开课或者是美剧，无字幕）训练英语（《千万不要学英语》中学来的方法）</p>
+
+<p>  10：00 &mdash; 仰卧起坐或者俯卧撑锻炼。</p>
+
+<p>  目前的问题是，看代码的效率比较低，注意力集中基本在30分钟左右，而且没有什么条理。培训的内容加上自学的内容太多会导致有很多遗忘，或者是没有深入下去，过段时间又忘了。</p>
+
+<p>  今天抽出了一点时间好好思考了下到底应该如何去学习包括看代码才是高效的呢？</p>
+
+<p>  首先就是要有个整体的计划，虽然计划不如变化快，但大体方向不能变太大。</p>
+
+<p>  其次对代码要先总体再细节的看，1）将整体功能和单元文件都熟悉，包括大概流程；2）将代码划分几个部分（例如我从纵向区分把接口按照调用顺序从上到下进行分类），这点得益于代码命名的比较规范 3）一部分一部分看，看完后要对自己问问题，这点最重要，只有通过问题才能了解自己是否掌握了。这点我也是在训练中。</p>
+
+<p>  最后，要及时总结和记录，这样利于回顾和复习。这点我做的不是特别好。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[More Effective C++读书笔记19]]></title>
+    <link href="http://timbao.github.io/blog/2013/01/27/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B019/"/>
+    <updated>2013-01-27T01:51:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/01/27/More Effective C++读书笔记19</id>
+    <content type="html"><![CDATA[<p>  Item 21：通过重载避免隐式类型转换</p>
+
+<pre><code>如果是自定义类型进行隐式的类型转换，肯定会调用构造和析构函数，这样就一定会有一定的开销，那么如何避免这类隐式类型转换呢？21小节给出一个方式就是通过重载函数避免进行隐式类型转换。
+
+
+class UInt 
+</code></pre>
+
+<p>{
+public:
+    const UInt operator+(const UInt&amp; lrs, const UInt&amp; hrs);
+};</p>
+
+<p>UInt a, b, c;
+a = b + 10;
+    在计算b+10的时候，编译器会将10隐式的转为UInt类型进行计算，这种情况下可以通过重载操作法来避免出现隐式转换的开销。当然是必要时候才会采取这种方法，如果不是性能瓶颈，那么有可能造成重载函数过多，而维护起来会很不方便。</p>
+
+<pre><code>注意一种情况const UPInt operator+(int lhs, int rhs);   这种情况是错误的。在C++中有一条规则是每一个重载的operator必须带有一个用户定义类型（user-defined type）的参数。
+
+
+
+ Item 22：考虑用运算符的赋值形式（op=）取代其单独形式（op）
+
+
+
+在这一小节我个人来说学到了一点，那就是操作符重载中尽量能让实现能“集成”，不要所有实现都重新实现一遍，这样可以减少维护费用。
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[More Effective C++读书笔记18]]></title>
+    <link href="http://timbao.github.io/blog/2013/01/20/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B018/"/>
+    <updated>2013-01-20T00:29:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/01/20/More Effective C++读书笔记18</id>
+    <content type="html"><![CDATA[<p>   Item 20：协助完成返回值优化</p>
+
+<p>  返回对象时的开销会比较大，会调用对象的构造和析构函数，但是当一个函数必须要返回对象时，这种构造和析构造成的开销是无法消除的。那么还能优化么？</p>
+
+<p>   以某种方法返回对象，能让编译器消除临时对象的开销，这样编写函数通常是很普遍的。这种技巧是返回constructor argument而不是直接返回对象。你可以这样做：</p>
+
+<pre><code>const Rational operator*(const Rational&amp; lhs, const Rational&amp; rhs)
+</code></pre>
+
+<p>{
+    return Rational(lhs.numerator() * rhs.numerator(),
+                  lhs.denominator() * rhs.denominator());
+}
+    仔细观察被返回的表达式。它看上去好象正在调用Rational的构造函数，实际上确是这样。你通过这个表达式建立一个临时的Rational对象，</p>
+
+<pre><code> Rational(lhs.numerator() * rhs.numerator(),  lhs.denominator() * rhs.denominator());
+
+  并且这是一个临时对象，函数把它拷贝给函数的返回值。
+
+   返回constructor argument而不出现局部对象，这种方法还会给你带来很多开销，因为你仍旧必须为在函数内临时对象的构造和释放而付出代价，你仍旧必须为函数返回对象的构造和释放而付出代价。但是你已经获得了好处。C++规则允许编译器优化不出现的临时对象（temporary objects out of existence）。因此如果你在如下的环境里调用operator*：
+
+    Rational a = 10;
+
+     Rational b(1, 2);
+
+      Rational c = a * b;                          // 在这里调用operator*
+
+       编译器就会被允许消除在operator*内的临时变量和operator*返回的临时变量。它们能在为目标c分配的内存里构造return表达式定义的对象。如果你的编译器这样去做，调用operator*的临时对象的开销就是零：没有建立临时对象。你的代价就是调用一个构造函数――建立c时调用的构造函数。而且你不能比这做得更好了，因为c是命名对象，命名对象不能被消除（参见条款M22）。不过你还可以通过把函数声明为inline来消除operator*的调用开销。
+</code></pre>
+
+<p>  看完这篇突然认识到，理解编译器优化是非常重要的，对编译器了解构思，代码的效率自然有保证。路漫漫其修远兮，吾将上下而求索！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[More Effective C++读书笔记17]]></title>
+    <link href="http://timbao.github.io/blog/2013/01/17/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B017/"/>
+    <updated>2013-01-17T17:55:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/01/17/More Effective C++读书笔记17</id>
+    <content type="html"><![CDATA[<p>  这里提到一个概念Over-eager evaluation，可以理解为超前计算，主要有两种方法caching和 prefething，都是以空间换时间来提高效率。</p>
+
+<p> 看到这章，让我想起了我以前做的两个项目，一个是给某直辖市做的全市联网XX系统，一个是给某发电厂做的监控环境系统。</p>
+
+<p>  1.全市联网系统，由于数据量非常大，导致的性能瓶颈就是每次查询数据库都会很慢，导致用户体验非常不好，而实际情况是数据库中的内容并不是总是频繁改变，所以我采用了catching方式，将数据库中内容预存到内存中，每次读取先从catch中查询，如果有就直接返回，如果没有则再查询数据库，通过这种方式，大大提高了查询效率，这是一个典型的用空间换取时间的方案。</p>
+
+<p>   2.发电厂的监控项目是一个需要频繁查询的系统，要实时的更新系统数据，并计算出当时的最大值，最小值和平均值，还要将采集到的数据记录到数据库中以备查询。这里没最麻烦的是计算max，min和ave，因为这些值会根据时长不停的变化，每次查询时都要重新计算，有可能还需要查询数据库，这就导致程序运行非常慢，当时提出一个方案是采用catching方式，提前计算出来结果，并实时更新这些结果，需要的时候，可以直接取。这个方案实施起来非常麻烦，所以我改了下将每次采集的数值计算好，将这些值直接保存到数据库中，然后每次查询都直接读取，效率提高了很多。这种方式可以归结为上述的prefetching方式里。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[More Effective C++读书笔记16]]></title>
+    <link href="http://timbao.github.io/blog/2013/01/16/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B016/"/>
+    <updated>2013-01-16T18:13:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/01/16/More Effective C++读书笔记16</id>
+    <content type="html"><![CDATA[<p>   Item 17：考虑使用lazy evaluation（懒惰计算法）</p>
+
+<p>  首先说说使用lazy evaluation的优点，主要是能提高程序效率。延时计算，有可能避免不必要的计算，或者是只需用计算部分结果，而不需要全部结果，这些都可以称为lazy evaluation。C++本身是early evaluation，它需要程序员自己实现lazy evaluation，这样大大增加了程序员的灵活性，可以根据实际情况使用lazy evaluation。</p>
+
+<p>  书中提到可以在具体4个地方使用lazy evaluation：</p>
+
+<p>   1.引用计数</p>
+
+<p>  class string {};</p>
+
+<p>  string s1 = &ldquo;hello&rdquo;;</p>
+
+<p>  string s2 = s1;</p>
+
+<p>  s2=s1，这句应该调用string的拷贝构造函数，通过重新分配内存，拷贝字符串到s2实现。但是有可能s2根本不会被修改，只是用作输出，这样就可以使用lazy evaluatin，不用分配内存和拷贝字符串，而只要将s2指向s1同一个内存空间即可。</p>
+
+<p>   2.区别对待读取和写入</p>
+
+<p>  同上一个例子</p>
+
+<p>   3.Lazy Fetching（懒惰提取）</p>
+
+<p>  如一个类有很多成员，不一定要在构造函数中获取全部的成员变量的初值，尤其是需要I/O操作的成员，延后到使用时在读取不失为一个提高效率的解决方案。</p>
+
+<p>   4.Lazy Expression Evaluation(懒惰表达式计算)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[More Effective C++读书笔记15]]></title>
+    <link href="http://timbao.github.io/blog/2013/01/15/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B015/"/>
+    <updated>2013-01-15T18:00:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/01/15/More Effective C++读书笔记15</id>
+    <content type="html"><![CDATA[<p>  Item 16：牢记 80－20 准则（80－20 rule）</p>
+
+<p>   80－20 准则说的是大约 20％的代码使用了 80％的程序资源；大约 20%的代码耗用了大约 80％的运行时间；大约 20％的代码使用了 80％的内存；大约 20％的代码执行 80％的磁盘访问；80％的维护投入于大约 20％的代码上；通过无数台机器、操作系统和应用程序上的实验这条准则已经被再三地验证过。80－20 准则不只是一条好记的惯用语，它更是一条有关系统性能的指导方针，它有着广泛的适用性和坚实的实验基础。</p>
+
+<pre><code> 当想到 80－20 准则时，不要在具体数字上纠缠不清，一些人喜欢更严格的 90－10 准则，而且也有一些试验证据支持它。不管准确地数字是多少，基本的观点是一样的：软件整体的性能取决于代码组成中的一小部分。
+
+
+   本章主要讲解如何找到影响性能瓶颈的20%的代码的位置。提高效率并不难，难得是如何找到性能的正确瓶颈。方法不外乎有两种，一是猜测或屏经验判断，二是通过profile工具准确测算，这两种方法，当然是第二种方法更科学，更可信。利用好profile工具，提供最有效的数据进行测试，找到程序的瓶颈是一个程序员需要掌握的高级技巧之一。
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[More Effective C++读书笔记14]]></title>
+    <link href="http://timbao.github.io/blog/2013/01/12/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B014/"/>
+    <updated>2013-01-12T19:39:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/01/12/More Effective C++读书笔记14</id>
+    <content type="html"><![CDATA[<p>   Item 14：审慎使用异常规格(exception specifications)</p>
+
+<p>  何为异常规格，通俗的理解就是对异常的规范的说明。它明确地描述了一个函数可以抛出什么样的异常。但是它不只是一个有趣的注释。编译器在编译时有时能够检测到异常规格的不一致。而且如果一个函数抛出一个不在异常规格范围里的异常，系统在运行时能够检测出这个错误，然后一个特殊函数unexpected将被自动地调用。异常规格既可以做为一个指导性文档同时也是异常使用的强制约束机制。</p>
+
+<p>  不过在通常情况下，美貌只是一层皮，外表的美丽并不代表其内在的素质。函数unexpected缺省的行为是调用函数terminate，而terminate缺省的行为是调用函数abort，所以一个违反异常规格的程序其缺省的行为就是halt（停止运行）。在激活的栈中的局部变量没有被释放，因为abort在关闭程序时不进行这样的清除操作。对异常规格的触犯变成了一场并不应该发生的灾难。</p>
+
+<p>  一个函数调用了另一个函数，并且后者可能抛出一个违反前者异常规格的异常，（A函数调用B函数，但因为B函数可能抛出一个不在A函数异常规格之内的异常，所以这个函数调用就违反了A函数的异常规格  译者注）编译器不对此种情况进行检测，并且语言标准也禁止编译器拒绝这种调用方式（尽管可以显示警告信息）。</p>
+
+<p>  虽然防止抛出unexpected异常是不现实的，但是C++允许你用其它不同的异常类型替换unexpected异常，你能够利用这个特性。例如你希望所有的unexpected异常都被替换为UnexpectedException对象。你能这样编写代码：</p>
+
+<p>  class UnexpectedException {};          // 所有的unexpected异常对象被
+                                       //替换为这种类型对象
+void convertUnexpected()               // 如果一个unexpected异常被
+{                                      // 抛出，这个函数被调用
+    throw UnexpectedException();<br/>
+}
+set_unexpected(convertUnexpected);
+  通过用convertUnexpected函数替换缺省的unexpected函数，来使上述代码开始运行。</p>
+
+<p>  下面看另外一个书中例子：</p>
+
+<p>  class Session {
+public:
+    ~Session();
+  &hellip;
+private:
+    static void logDestruction(Session *objAddr) throw();
+};
+Session::~Session()
+{
+   try
+   {
+       logDestruction(this);
+   }
+   catch (&hellip;) {  }
+}
+  session的析构函数调用logDestruction记录有关session对象被释放的信息，它明确地要捕获从logDestruction抛出的所有异常。但是logDestruction的异常规格表示其不抛出任何异常。现在假设被logDestruction调用的函数抛出了一个异常，而logDestruction没有捕获。我们不会期望发生这样的事情，但正如我们所见，很容易就会写出违反异常规格的代码。当这个异常通过logDestruction传递出来，unexpected将被调用，缺省情况下将导致程序终止执行。这是一个正确的行为，但这是session析构函数的作者所希望的行为么？作者想处理所有可能的异常，所以好像不应该不给session析构函数里的catch块执行的机会就终止程序。如果logDestruction没有异常规格，这种事情就不会发生（一种防止的方法是如上所描述的那样替换unexpected）。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[More Effective C++读书笔记13]]></title>
+    <link href="http://timbao.github.io/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B013/"/>
+    <updated>2013-01-11T19:47:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2013/01/11/More Effective C++读书笔记13</id>
+    <content type="html"><![CDATA[<p>  Item 13：通过引用（reference）捕获异常</p>
+
+<p>   为什么要通过引用捕获异常，引用捕获异常相对值和指针捕获有何优点？</p>
+
+<pre><code>通过Item12学习可以看到首先，值捕获异常会调用拷贝构造函数2次，而引用捕获只有一次，效率方面，引用要高于值。可以按效率高低进行下排序，由高到低：指针-&gt;;引用-&gt;;值。
+
+ 其次值传递在继承体系中会导致slice问题，即子类会被切割为基类。通过这两点就可以完全排除值捕获异常的可能性了。那么指针和引用相比，为什么要采用引用呢？
+
+  如果要是通过指针捕获异常的话，那么传递过来的指针是堆栈分配的？还是静态指针？还是栈对象的取地址操作获取的指针？根据不同的情况，会有不同的结果。如果是堆栈分配的指针，那么需要释放内存，如果通过局部对象的地址获取的指针，有可能在捕获到后，已经超过作用域，而指向一个已经销毁的对象，所以对catch来说，通过指针捕获异常，对异常的处理要复杂得多，也难以保持统一。而通过引用捕获异常却没有这些问题，所以当然最终选择最优的方案，通过引用捕获异常。
+</code></pre>
+]]></content>
+  </entry>
   
 </feed>
