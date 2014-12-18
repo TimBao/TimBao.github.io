@@ -546,14 +546,19 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>http://timbao.github.io/blog/2009/10/26/%E5%A4%A9%E6%B4%A5%20Windows%207%E5%8F%91%E5%B8%83%E6%B4%BB%E5%8A%A8/</loc>
+    <lastmod>2009-10-26T05:58:00+08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>http://timbao.github.io/blog/archives/</loc>
-    <lastmod>2014-12-18T17:33:48+08:00</lastmod>
+    <lastmod>2014-12-18T18:00:31+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>http://timbao.github.io/</loc>
-    <lastmod>2014-12-18T17:33:48+08:00</lastmod>
+    <lastmod>2014-12-18T18:00:31+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
