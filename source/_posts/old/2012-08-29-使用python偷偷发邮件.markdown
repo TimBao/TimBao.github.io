@@ -1,0 +1,113 @@
+---
+layout: post
+title: "使用python偷偷发邮件"
+date: 2012-08-29 21:16:00 
+comments: true
+categories: [Python]
+tags: [Python]
+description: "使用python偷偷发邮件"
+keywords: Python
+---
+
+
+ 
+  以前的公司上班上网或者收发邮件都得小心翼翼的，怕一不小心被有心人瞧见，又得被说说。为了能发邮件而不被发现，嘿嘿，我就用python写了个邮件发送程序，用控制台控制，不了解的人一定以为哥还在编程工作呢。哈哈。
+ 
+ 
+  下面简单介绍下如何使用python发送邮件，包括普通文本内容，也可以带附件，或者HTML内容的邮件。可以说有了python，一切都变得非常的容易。
+ 
+ 
+  smtplib 模块是用来发送email的标准module，另外配合email.mime内的几个module实现起来就非常的简单。
+ 
+ def sendmail(message):
+    try:
+        smtp = smtplib.SMTP(EMAIL_HOST)
+        smtp.login(EMAIL_USER, EMAIL_PWD)  
+        smtp.sendmail(EMAIL_USER+"@"+EMAIL_POSTFIX, TO_EMAIL, message)  
+        smtp.quit()  
+        print 'email send success.'
+    except Exception ,e:
+        print e
+        print 'email send failed.'
+ 首先要导入smtplib模块，加入import smtplib，初始化的时候直接连上邮箱服务器，也就是上面的EMAIL_HOST（我使用的是163邮箱，所以定义EMAIL_HOST = 'smtp.163.com'），由于目前的邮箱基本都需要登录才可以使用，所以要调用smtp.login()函数，输入用户和密码。
+ 
+ 
+ 
+ 
+ 
+  def sendwithoutattachment():
+    msg = MIMEText(getcontent(), 'plain','utf-8')
+    getheader(msg)
+    
+    sendmail(msg.as_string())
+  
+   我将发送简单文本内容的邮件单独独立为一个函数，使用MIMEText生成，注意这里用到了utf-8，因为内容有可能是中文，所以要特别指定。如果要发送html内容，则讲plain更改为html即可。
+  
+ 
+ 
+ 
+ 
+ 
+ 
+  def getheader(msg):
+    msg['From'] = ME
+    msg['To'] = ";".join(TO_EMAIL)
+    msg['Subject'] = EMAIL_HEADER
+    msg['Date'] = formatdate(localtime=True)
+  
+   getheader函数是用来设置发送者，接受者，主题和发送时间的。
+  
+ 
+ 
+ 
+ 
+ 
+ 
+  def getcontent():
+    path = os.getcwd()
+    file = os.path.join(path, CONTENT_FILE_NAME)
+    content = open(file, 'rb')
+    data = content.read()
+    try:
+        data = data.decode('gbk')
+    except :
+        data = data.decode('gbk','ignore')
+    content.close()
+    return data
+  至于邮件正文，我是事先写到一个TXT文档中，读取出来。这样也比较隐蔽。：）要主意中文编码。
+ 
+ 
+ 
+ 
+ 
+ 
+  def getattachment(msg):
+    ctype, encoding = mimetypes.guess_type(ACCESSORY_FULLPATH)
+    if ctype is None or encoding is not None:  
+        ctype = 'application/octet-stream'  
+    maintype, subtype = ctype.split('/', 1)
+
+    #Formating accessory data
+    data = open(ACCESSORY_FULLPATH, 'rb')
+    file_msg = MIMEBase(maintype, subtype)
+    file_msg.set_payload(data.read( ))
+    data.close( )
+    encode_base64(file_msg) 
+    #file_msg["Content-Type"] = ctype # if add type then return error 10054
+    file_msg.add_header('Content-Disposition', 'attachment', filename = ACCESSORY_NAME)
+    msg.attach(file_msg)
+  附件同样独立为一个函数来创建，这里要注意的是不要指定“Content-Type”类型，否则无法发送邮件。这个问题还没有解决。
+ 
+ 
+ 
+ 
+ 
+ 
+  
+  
+ 
+ 
+  以上基本包括了发送邮件的主要几个函数，具体smtplib模块和MIME等内容，资料很多，这里就不详细讲解了，有感兴趣的可以上网search。
+ 
+
+

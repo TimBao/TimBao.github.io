@@ -1,0 +1,70 @@
+---
+layout: post
+title: "分享一个日志函数"
+date: 2012-04-13 13:24:00 
+comments: true
+categories: [C++技术]
+tags: [C++技术]
+description: "分享一个日志函数"
+keywords: C++技术
+---
+
+
+ #include <stdio.h>;
+ 
+  #include <stdarg.h>;
+  
+   
+    void logTest(const char* content, ...)
+    
+     {
+     
+      FILE* logfile = fopen("log.txt", "a");
+      
+       if(logfile)
+       
+        {
+        
+         fprintf(logfile, "########## NEW LOG ########\n");
+         
+          
+           va_list arg;
+           
+            va_start(arg, content);
+            
+             vfprintf(logfile, content, arg);
+             
+              va_end(arg);
+              
+               
+                int status = fflush(logfile);
+                
+                 
+                  fclose(logfile);
+                  
+                   }
+                   
+                    }
+                    
+                    
+                   
+                  
+                 
+                
+               
+              
+             
+            
+           
+          
+         
+        
+       
+      
+     
+    
+   
+  
+ 
+
+

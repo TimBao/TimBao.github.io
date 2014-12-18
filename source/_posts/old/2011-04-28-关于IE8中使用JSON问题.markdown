@@ -1,0 +1,26 @@
+---
+layout: post
+title: "关于IE8中使用JSON问题"
+date: 2011-04-28 16:36:00 
+comments: true
+categories: [其他技术问题]
+tags: [其他技术问题]
+description: "关于IE8中使用JSON问题"
+keywords: 其他技术问题
+---
+
+
+ 
+  某日开始测试IE8的兼容性，原本在IE6下运行的好好的程序突然出现了一堆的问题，其中以JSON串问题最为头痛，现在将解决过程呈现给大家，希望能有所帮助。
+ 
+ 
+  IE将一字符串以JSON形式传递给ActiveX插件，插件进行解析获取该字符串内容。遇到中文发现中文解析出来为空；而如果传递的是“”，则解析出的字符串为“null”。怪哉。遂google，这次发现原因是JSON再搞鬼。
+ 
+ 
+  原来是IE8中增加了对JSON的原生支持，而该JSON对中文解析和编码的时候会将中文转为UTF-8编码，ActiveX再解析时无法解析UTF-8，结果直接过滤掉了中文。
+ 
+ 
+  解决方法：非常简单，不用IE8的原生JSON，使用将原程序中的JSON.js改名为JSON2.js，这样调用：JSON2.stringify()。搞定！
+ 
+
+

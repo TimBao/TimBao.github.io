@@ -1,0 +1,60 @@
+---
+layout: post
+title: "在类中定义引用类型成员变量"
+date: 2012-06-11 11:13:00 
+comments: true
+categories: [C++技术]
+tags: [C++技术]
+description: "在类中定义引用类型成员变量"
+keywords: C++技术
+---
+
+
+ 
+  在类中可以定义引用类型的成员变量，但是必须在构造函数之前完成初始化，也就是必须在构造函数的初始化列表中完成初始化。
+ 
+ class Functor
+{
+public:
+    // The constructor.
+    explicit Functor(int& evenCount) 
+        : _evenCount(evenCount)
+    {
+        //_evenCount = evenCount;
+    }
+
+    // The function-call operator prints whether the number is
+    // even or odd. If the number is even, this method updates
+    // the counter.
+    void operator()(int n)
+    {
+        cout << n;
+
+        if (n % 2 == 0) 
+        {
+            cout << " is even " << endl;
+
+            // Increment the counter.
+            _evenCount++;
+        }
+        else 
+        {
+            cout << " is odd " << endl;
+        }
+    }
+
+private:
+    int& _evenCount; // the number of even variables in the vector
+};
+ 
+  
+   注意如果将初始化列表去掉，改为在构造函数中初始化，则编译器会提示：
+  
+  
+   error C2758: 'Functor::_evenCount' : must be initialized in constructor base/member initializer list
+   
+   
+  
+ 
+
+

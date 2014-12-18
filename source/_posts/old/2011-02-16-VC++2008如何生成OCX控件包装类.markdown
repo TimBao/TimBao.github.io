@@ -1,0 +1,26 @@
+---
+layout: post
+title: "VC++2008如何生成OCX控件包装类"
+date: 2011-02-16 16:22:00 
+comments: true
+categories: [MFC学习]
+tags: [MFC学习]
+description: "VC++2008如何生成OCX控件包装类"
+keywords: MFC学习
+---
+
+
+ 
+  1、将OCX控件注册。
+ 
+ 
+  方法：使用recsvr32命令注册。
+ 
+ 
+  2、随便建立一个MFC工程，在对话框上右键，Insert Activex Control，选择注册的OCX控件。
+ 
+ 
+  3、为2步添加的控件添加变量，VC会自动生成该OCX的包装类。
+ 
+
+

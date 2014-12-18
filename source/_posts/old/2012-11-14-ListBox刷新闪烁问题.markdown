@@ -1,0 +1,33 @@
+---
+layout: post
+title: "ListBox刷新闪烁问题"
+date: 2012-11-14 19:27:00 
+comments: true
+categories: [Windows 8]
+tags: [Windows 8]
+description: "ListBox刷新闪烁问题"
+keywords: Windows 8
+---
+
+
+ UI采用的是xaml，ListBox 的 ItemsSource 绑定 后台model 的IList，当list更新后，UI会出现闪烁。
+ 
+  
+   原因竟然是出在Run属性的使用上，很奇怪。将run 去掉，改用多个TextBlock      闪烁消失。
+   
+    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">;
+     <TextBlock>;
+         <Run Text="{Binding Path=DistanceText}"/>;
+         <Run Text=" " FontSize="2" />;
+         <Run Text="{Binding Path=DistanceUnit}" />;
+     </TextBlock>;
+</StackPanel>;
+    
+    
+   
+  
+  
+  
+ 
+
+

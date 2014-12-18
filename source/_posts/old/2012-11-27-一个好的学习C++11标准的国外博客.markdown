@@ -1,0 +1,17 @@
+---
+layout: post
+title: "一个好的学习C++11标准的国外博客"
+date: 2012-11-27 17:50:00 
+comments: true
+categories: [C++技术]
+tags: [C++技术]
+description: "一个好的学习C++11标准的国外博客"
+keywords: C++技术
+---
+
+
+ http://solarianprogrammer.com/categories/C++11/
+ 
+ 
+
+

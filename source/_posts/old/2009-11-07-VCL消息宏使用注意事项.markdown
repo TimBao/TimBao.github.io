@@ -1,0 +1,128 @@
+---
+layout: post
+title: "VCL消息宏使用注意事项"
+date: 2009-11-07 21:53:00 
+comments: true
+categories: [BCB学习]
+tags: [BCB学习]
+description: "VCL消息宏使用注意事项"
+keywords: BCB学习
+---
+
+
+ 
+ 
+ 
+  
+   
+    ATL
+   
+   
+    定义
+   
+   
+    "MESSAGE_HANDLER"
+   
+   
+    宏与
+   
+   
+    VCL
+   
+   
+    中的宏相冲突。
+   
+   
+    VCL
+   
+   
+    中的宏被重命名为
+   
+   
+    "VCL_MESSAGE_HANDLER"
+   
+   
+    ，如果没有使用
+   
+   
+    ATL
+   
+   
+    ，则
+   
+   
+    "MESSAGE_HANDLER"
+   
+   
+    被定义在
+   
+   
+    BCB
+   
+   
+    的旧版本中。
+   
+  
+ 
+ 
+ 
+ 
+  
+   #if
+  
+  
+   ！
+  
+  
+   defined
+  
+  
+   （
+  
+  
+   USING_ATL
+  
+  
+   ）
+  
+  
+   && !defined(USING_ATLVCL)
+&& !defined(INC_ATL_HEADERS)
+  
+ 
+ 
+  #define MESSAGE_HANDLER VCL_MESSAGE_HANDLER
+ 
+ 
+  #endif
+ 
+ 
+ 
+ 
+  
+   所以在写消息处理时，要写
+  
+  
+   "VCL_MESSAGE_HANDLER"
+  
+  
+   而不要写
+  
+  
+   "MESSAGE_HANDLER"
+  
+  
+   ，
+  
+  
+   否则如果使用到了
+  
+  
+   ATL
+  
+  
+   的话就会有问题。
+  
+ 
+
+

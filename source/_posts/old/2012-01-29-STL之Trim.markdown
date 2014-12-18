@@ -1,0 +1,48 @@
+---
+layout: post
+title: "STL之Trim"
+date: 2012-01-29 22:09:00 
+comments: true
+categories: [C++技术]
+tags: [C++技术]
+description: "STL之Trim"
+keywords: C++技术
+---
+
+
+ 
+  今天无意之间看到了通用类的三个函数，是用STL实现字符串去掉首尾空格，方法用的颇为简洁，记录下来分享和学习下。
+ 
+ 
+ 
+  1#include <string>;
+ 2#include <algorithm>;   
+ 3   
+ 4using namespace std;
+ 5
+ 6
+ 7string&  lTrim(string   &ss)   
+8{   
+9    string::iterator   p=find_if(ss.begin(),ss.end(),not1(ptr_fun(isspace)));   
+10    ss.erase(ss.begin(),p);   
+11    return  ss;   
+12}   
+13
+14string&  rTrim(string   &ss)   
+15{   
+16    string::reverse_iterator  p=find_if(ss.rbegin(),ss.rend(),not1(ptr_fun(isspace)));   
+17    ss.erase(p.base(),ss.end());   
+18    return   ss;   
+19}   
+20
+21string&   trim(string   &st)   
+22{   
+23    lTrim(rTrim(st));   
+24    return   st;   
+25} 
+ 
+  
+  
+ 
+
+

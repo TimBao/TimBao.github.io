@@ -1,0 +1,48 @@
+---
+layout: post
+title: "记录我的新工作(十二)"
+date: 2011-12-31 22:08:00 
+comments: true
+categories: [记事]
+tags: [记事]
+description: "记录我的新工作(十二)"
+keywords: 记事
+---
+
+
+ 
+  2011年的最后一天，依然继续努力的工作着，不管2012怎么样，至少我是努力了，奋斗了，无悔！
+ 
+ 
+  晒晒今天学到的内容吧
+  
+ 
+ 
+  1、四个库函数：round是取最近的整数值，五舍六入，如果想要取大整数，可以roundf(X+0.5);
+ 
+ 
+  floor(x)，向下取整，return the lastest integral value that is not greater than X。
+ 
+ 
+  log2f是以2为底的对数。
+ 
+ 
+  powf(x, y);是X的Y次幂。
+ 
+ 
+  这四个函数都跟UIScrollView的zoom和pan的计算有关。
+ 
+ 
+  2、在Quartz和OpenGL两种方式下，坐标系是不一样的。Quartz的坐标系跟windows基本一致，左上角为原点，横向为X轴，向右为正；纵向为Y轴，向下为正。而OpenGL中，左下角为原点。
+ 
+ 
+  3、UIScrollView的Offset的计算，是以偏移后矩形的左上角（原点）与原始左上角（0，0）点的差得到的。view的frame和bounds在scrollview下也是不同的。frame是父的rect，而bounds是本身的rect。
+ 
+ 
+  4、关于对齐矩形视图的计算，是将屏幕视图的边根tile的bounds对齐，如果不够一个tile，则补全。哈哈，看了快2天，终于完全弄清楚了。
+ 
+ 
+  这两天对矩形的偏移和放大的计算有点进入误区了，抽象意识还是不够，将图形画出来，想了半天才搞清楚，差点有点要放弃的感觉，有时候觉得自己是不是真的不适合干程序员！但是坚持过来，一切都好转了，没有过不去的坎！下面还需要加快进度，对search部分的placemark还没有将细节弄清楚，节后1天搞清楚，尽快将task给finish了。
+ 
+
+

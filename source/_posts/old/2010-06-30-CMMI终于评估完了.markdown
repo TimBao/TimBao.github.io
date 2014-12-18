@@ -1,0 +1,20 @@
+---
+layout: post
+title: "CMMI终于评估完了"
+date: 2010-06-30 19:03:00 
+comments: true
+categories: [CMMI实施]
+tags: [CMMI实施]
+description: "CMMI终于评估完了"
+keywords: CMMI实施
+---
+
+
+ 
+  2010年6月29日，经过了16个月的CMMI实施和审查，公司终于通过了CMMI三级。而作为ATM的我也终于松了一口气！
+ 
+ 
+  好开心，虽然这个过程经历了这么长时间，中间也有过很多的故事，但是总算是坚持过来了。明天就是庆功会了，呵呵疯狂吃去！
+ 
+
+
