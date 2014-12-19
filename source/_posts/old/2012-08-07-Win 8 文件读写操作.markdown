@@ -9,23 +9,17 @@ description: "Win 8 文件读写操作"
 keywords: Windows 8
 ---
 
-
- 
-  
    啥也不说了，直接上代码。
-   
     #include <windows.h>;
 #include <ppltasks.h>;
 using namespace Platform;
 using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
 using namespace Concurrency;
-
 StorageFile^ openFile(String^ fileName)
 {
     StorageFile^ file = nullptr;
     StorageFolder^ rootFolder = Windows::Storage::ApplicationData::Current->;LocalFolder;
-
     task<StorageFile^>;(rootFolder->;GetFileAsync(fileName)).then([&](task<StorageFile^>; getFileTask)
     {
         try
@@ -36,10 +30,8 @@ StorageFile^ openFile(String^ fileName)
         {
         }
     }).wait();
-
     return file;
 }
-
 Array<byte>;^ getFileContent(String^ fileName)
 {
     Array<byte>;^ data = nullptr;
@@ -47,7 +39,6 @@ Array<byte>;^ getFileContent(String^ fileName)
     if (file)
     {
         task<IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::Read)).then([&]
-
 (task<IRandomAccessStream^>; getStream)
         {  
             auto readStream = getStream.get();
@@ -57,7 +48,6 @@ Array<byte>;^ getFileContent(String^ fileName)
             {
                 data = ref new Array<byte>;(length);
                 task<unsigned int>;(dataReader->;LoadAsync(readStream->;Size)).then([&](task<unsigned 
-
 int>; loadTask) {
                     loadTask.get();
                     dataReader->;ReadBytes(data);
@@ -65,10 +55,8 @@ int>; loadTask) {
             }
         }).wait();
     }
-
     return data;
 }
-
 bool setFileContent(String^ fileName, unsigned char* data, int size)
 {
     size_t totalWritten = 0;
@@ -78,14 +66,11 @@ bool setFileContent(String^ fileName, unsigned char* data, int size)
     {
         IRandomAccessStream^ readStream = nullptr;
         task<IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::ReadWrite)).then([&]
-
 (task<IRandomAccessStream^>; getStream)
         {  
             readStream = getStream.get();
-
             DataWriter^ dataWriter = ref new DataWriter(readStream);
             Array<unsigned char>;^ arr = ref new Array<unsigned char>;(data, size);
-
             dataWriter->;WriteBytes(arr);
             task<unsigned int>;(dataWriter->;StoreAsync()).then([&](task<unsigned int>; writeTask)
             {
@@ -94,7 +79,6 @@ bool setFileContent(String^ fileName, unsigned char* data, int size)
                     totalWritten = writeTask.get();
                 } catch (Platform::Exception^ ex) {}
             }).wait();
-
             task<bool>;(dataWriter->;FlushAsync()).then([&](task<bool>; flushTask)
             {
                 try
@@ -102,20 +86,8 @@ bool setFileContent(String^ fileName, unsigned char* data, int size)
                     complete = flushTask.get();
                 } catch (Platform::Exception^ ex) {}
             }).wait();
-
             dataWriter->;DetachStream();
-
         }).wait();
     }
-
     return complete;
 }
-    
-     
-     
-    
-   
-  
- 
-
-

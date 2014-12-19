@@ -9,12 +9,7 @@ description: "STL之Trim"
 keywords: C++技术
 ---
 
-
- 
   今天无意之间看到了通用类的三个函数，是用STL实现字符串去掉首尾空格，方法用的颇为简洁，记录下来分享和学习下。
- 
- 
- 
   1#include <string>;
  2#include <algorithm>;   
  3   
@@ -40,9 +35,3 @@ keywords: C++技术
 23    lTrim(rTrim(st));   
 24    return   st;   
 25} 
- 
-  
-  
- 
-
-

@@ -9,193 +9,48 @@ description: "C++11中值得关注的几大变化"
 keywords: C++技术
 ---
 
-
- 
   C++11中值得关注的几大变化
- 
- 
-  
    ◆
-   
     Lambda表达式
-   
-   
-    
      ◆
-     
       自动类型推断和decltype
-     
-     
-      
        ◆
-       
         统一初始化语法
-       
-       
-        
          ◆
-         
           Deleted和Defaulted函数
-         
-         
-          
            ◆
-           
             nullptr
-           
-           
-            
              ◆
-             
               委托构造函数
-             
-             
-              
                ◆
-               
                 右值引用
-               
-               
-                
-                 
                   C++11标准库
-                 
-                 
-                  
                    C++于2003年以库技术报告1(TR1)的形式经历了重大改版，TR1包括新的容器类(unordered_set，unordered_map，unordered_multiset和unordered_multimap)和多个支撑正则表达式、元组和函数对象封装器等的新库。随着C++11标准获得通过，TR1和自它首次发布以来新增的库被正式纳入标准的C++标准，下面是C++11标准库的一些特性：
-                   
-                    
-                     
                       线程库
-                     
-                     
-                      
                        站在程序员的角度来看，C++11最重要的新功能毫无疑问是并行操作，C++11拥有一个代表执行线程的线程类，在并行环境中用于同步，async()函数模板启动并行任务，为线程独特的数据声明thread_local存储类型。如果你想找C++11线程库的快速教程，请阅读Anthony William的“C++0x中更简单的多线程”。
-                       
-                        
-                         
                           新的智能指针类
-                         
-                         
-                          
                            C++98只定义了一个智能指针类auto_ptr，它现在已经被废弃了，C++11引入了新的智能指针类shared_ptr和最近添加的unique_ptr，两者都兼容其它标准库组件，因此你可以在标准容器内安全保存这些智能指针，并使用标准算法操作它们。
-                           
-                            
-                             
                               新的算法
-                             
-                             
-                              
                                C++11标准库定义了新的算法模仿all_of()，any_of()和none_of()操作，下面列出适用于ispositive()到(first, first+n)范围，且使用all_of(), any_of() and none_of() 检查范围的属性的谓词：
-                               
-                                
-                                 
                                   #include
-                                  
                                    <algorithm>;
-                                  
-                                 
-                                 
                                   //C++11 code
-                                 
-                                 
                                   //are all of the elements positive?
-                                 
-                                 
                                   all_of(first, first+n, ispositive()); //false
-                                 
-                                 
                                   //is there at least one positive element?
-                                 
-                                 
                                   any_of(first, first+n, ispositive());//true
-                                 
-                                 
                                   // are none of the elements positive?
-                                 
-                                 
                                   none_of(first, first+n, ispositive()); //false
-                                 
-                                
-                                
                                  一种新型copy_n算法也可用了，使用copy_n()函数，复制一个包含5个元素的数组到另一个数组的代码如下：
-                                 
-                                  
-                                   
                                     #include
-                                   
-                                   
                                     int source[5]={0,12,34,50,80};
-                                   
-                                   
                                     int target[5];
-                                   
-                                   
                                     //copy 5 elements from source to target
-                                   
-                                   
                                     copy_n(source,5,target);
-                                   
-                                   
-                                   
-                                  
-                                  
                                    算法iota()创建了一个值顺序递增的范围，好像分配一个初始值给*first，然后使用前缀++使值递增，在下面的代码中，iota()分配连续值{10,11,12,13,14}给数组arr，并将{‘a’,’b’,’c’}分配给char数组c。
-                                   
-                                    
-                                     
                                       include
-                                      
                                        <numeric>;
-                                      
-                                     
-                                     
                                       int a[5]={0};
-                                     
-                                     
                                       char c[3]={0};
-                                     
-                                     
                                       iota(a, a+5, 10); //changes a to {10,11,12,13,14}
-                                     
-                                     
                                       iota(c, c+3, 'a'); //{'a','b','c'}
-                                     
-                                    
-                                   
-                                  
-                                 
-                                
-                               
-                              
-                             
-                            
-                           
-                          
-                         
-                        
-                       
-                      
-                     
-                    
-                   
-                  
-                 
-                
-               
-              
-             
-            
-           
-          
-         
-        
-       
-      
-     
-    
-   
-  
- 
-
-

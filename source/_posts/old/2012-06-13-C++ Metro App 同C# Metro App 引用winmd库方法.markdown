@@ -9,27 +9,7 @@ description: "C++ Metro App 同C# Metro App 引用winmd库方法"
 keywords: Windows 8
 ---
 
-
- 
   1、 C++ Metro App ：AddReference
- 
- 
   Project ->; Properties ->;Common Properties ->; Framework and References ->; Add new Reference…
- 
- 
-  
- 
- 
- 
- 
   2、 C# Metro App ：AddReference
- 
- 
   Right click References folder orRight click Project ->; Add Reference
- 
- 
-  
-  
- 
-
-

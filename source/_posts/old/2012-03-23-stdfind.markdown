@@ -9,7 +9,4 @@ description: "std:find"
 keywords: C++技术
 ---
 
-
  把之前使用iterator 进行循环检测的方法都改成使用find方法进行查找，更快，代码更简洁，清晰。
-
-

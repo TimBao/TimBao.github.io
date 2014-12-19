@@ -9,18 +9,7 @@ description: "20120130工作小结"
 keywords: Iphone/Objective-C
 ---
 
-
- 
   除了checked_delete外，今天还学习了两点内容：
- 
- 
   1、char* strdup(char* s); 函数，使用malloc方法，拷贝一个新的s，返回，需要使用free释放；还有类似的strndup等。
- 
- 
   2、bundle：Iphone开发中bundle是一个目录，其中包含了程序会使用到的资源，这些资源包括了图像，声音，编译好的代码，nib文件（用户也会把bundle称为plug-in），cocoa框架提供了NSBundle类来对
-  
    其进行操作。
-  
- 
-
-

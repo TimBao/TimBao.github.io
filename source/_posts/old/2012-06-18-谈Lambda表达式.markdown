@@ -9,19 +9,11 @@ description: "谈Lambda表达式"
 keywords: C++技术
 ---
 
-
- 
   最近由于再开发Win 8 metro程序和准备开发Win Phone 8 App，学习了下WinRT开发，包括一些C++ 11新标准内容，最初对Lamdba表达式的表达很是头疼，对以往的编程认识非常不同，这也就让我对它产生了浓厚的兴趣，找了很多资料来学习它，并且写了好多程序去测试它，慢慢发现其实Lamdba表达式真的很有趣！
- 
- 
   其实对Lambda表达式不必有任何的畏惧心里，通过仔细的分析它，我发现其实Lambda表达式就是一个函数，是一个匿名的函数，是一个可以自己执行的自己的函数。就这么简单！下面我们来看一个例子：
- 
- 
   #include <functional>;
 #include <iostream>;
-
 using namespace std;
-
 int main(int argc, char argv[])
 {
     int number = 2;
@@ -39,25 +31,15 @@ int main(int argc, char argv[])
     };
     //Lambda表达式执行之前
     cout << "number:" << number << " menber:" << menber << endl;
-    
     //执行Lambda表达式
     f1(3, 4);
-
     //Lambda表达式执行之后
     cout << "number:" << number << " menber:" << menber << endl;
-
     //自我执行
     cout << [] (int x, int y) { return x + y; }(2, 3) << endl;
-
     // auto类型其实就是 function<int (int, int)>;.
     function<int (int, int)>; f2 = [] (int x, int y) { return x + y; };
-
     cout << f2(3,4) << f1(3, 4) << endl;
-
     system("pause");
-
     return 0;
 }
- 
-
-
