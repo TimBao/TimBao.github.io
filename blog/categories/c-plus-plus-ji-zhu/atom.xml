@@ -4,7 +4,7 @@
   <title><![CDATA[Category: C++技术 | My Octopress Blog]]></title>
   <link href="http://timbao.github.io/blog/categories/c-plus-plus-ji-zhu/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-18T18:00:31+08:00</updated>
+  <updated>2014-12-19T17:47:35+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -18,25 +18,16 @@
     <link href="http://timbao.github.io/blog/2013/10/01/Android%20NDK%E4%B9%8BJNI%E9%99%B7%E9%98%B1/"/>
     <updated>2013-10-01T05:54:00+08:00</updated>
     <id>http://timbao.github.io/blog/2013/10/01/Android NDK之JNI陷阱</id>
-    <content type="html"><![CDATA[<p>  背景： 最近一个月一直在做移植库的工作，将c代码到share library移植到Android平台。这就涉及到Android NDK(native develop kit)内容。这里只想记录下JNI(java native interface)经常遇到到问题。</p>
-
-<p>  问题1.  忘记delete local reference。带New到方法(如：NewByteArray)这样到方法比较好辨认，需要手动调用DeleteLocalRef()来释放(返回值除外)。比较特殊的一个方法是：GetByteArrayELement必须要调用ReleaseByteArrayElements进行释放。当然如果你只是取bytearray中到byte，那么完全可以用GetByteArrayRegion实现。</p>
-
-<p>  问题2. 没有NewGlobalRef。 在不同线程调用java方法，需要保存jobject对象，这时需要对jobject对象做全局引用，否则会失效。</p>
-
-<p>  问题3.  jbytearray的length。在JNI layer获取到jbytearray到长度是不对到，应该由java获取byte[]的length再传给C layer。否则C layer有可能获得到是乱码。</p>
-
-<p>  问题4.  线程问题。 不同线程使用JNIEnv*对象，需要AttachCurrentThread将env挂到当前线程，否则无法使用env。</p>
-
-<p>  问题5.  javap 命令是对java的class文件操作；而javah命令需要在包名到上一层路径运行才行，否则无法生成.h文件。</p>
-
-<p>  问题6. 尽量避免频繁调用JNI或者是使用JNI传输大量到数据。</p>
-
-<p>  问题7. Reference Table overflow (max=1024) 或者是 Reference Table overflow (max=512)一定是因为忘记释放global reference或者local reference，请仔细检查代码。</p>
-
-<p>  问题8. 不要在windows下使用cygwin编译NDK code，那样会遇到arguments too long问题，因为windows路径长度有限制导致。虽然可以使用subst将路径映射为短路径，但是在编译时间和调试上，windows到孩子都是伤不起。同样到build，在windows下要15分钟左右，而在mac下只要5分多，相差3倍。调试JNI 代码到速度更是不用提了，差太多。</p>
-
-<p>  总结，JNI代码量其实不是很多，JNI作为一个数据传输层，它到作用仅仅是java和c直接到桥梁，但是如果处理不好将会是灾难，调试和找bug非常困难。</p>
+    <content type="html"><![CDATA[<p>  背景： 最近一个月一直在做移植库的工作，将c代码到share library移植到Android平台。这就涉及到Android NDK(native develop kit)内容。这里只想记录下JNI(java native interface)经常遇到到问题。
+  问题1.  忘记delete local reference。带New到方法(如：NewByteArray)这样到方法比较好辨认，需要手动调用DeleteLocalRef()来释放(返回值除外)。比较特殊的一个方法是：GetByteArrayELement必须要调用ReleaseByteArrayElements进行释放。当然如果你只是取bytearray中到byte，那么完全可以用GetByteArrayRegion实现。
+  问题2. 没有NewGlobalRef。 在不同线程调用java方法，需要保存jobject对象，这时需要对jobject对象做全局引用，否则会失效。
+  问题3.  jbytearray的length。在JNI layer获取到jbytearray到长度是不对到，应该由java获取byte[]的length再传给C layer。否则C layer有可能获得到是乱码。
+  问题4.  线程问题。 不同线程使用JNIEnv*对象，需要AttachCurrentThread将env挂到当前线程，否则无法使用env。
+  问题5.  javap 命令是对java的class文件操作；而javah命令需要在包名到上一层路径运行才行，否则无法生成.h文件。
+  问题6. 尽量避免频繁调用JNI或者是使用JNI传输大量到数据。
+  问题7. Reference Table overflow (max=1024) 或者是 Reference Table overflow (max=512)一定是因为忘记释放global reference或者local reference，请仔细检查代码。
+  问题8. 不要在windows下使用cygwin编译NDK code，那样会遇到arguments too long问题，因为windows路径长度有限制导致。虽然可以使用subst将路径映射为短路径，但是在编译时间和调试上，windows到孩子都是伤不起。同样到build，在windows下要15分钟左右，而在mac下只要5分多，相差3倍。调试JNI 代码到速度更是不用提了，差太多。
+  总结，JNI代码量其实不是很多，JNI作为一个数据传输层，它到作用仅仅是java和c直接到桥梁，但是如果处理不好将会是灾难，调试和找bug非常困难。</p>
 ]]></content>
   </entry>
   
@@ -45,13 +36,10 @@
     <link href="http://timbao.github.io/blog/2013/07/07/stdvector%20%E4%B8%A4%E7%A7%8D%E6%93%8D%E4%BD%9C%E7%9A%84%E6%AF%94%E8%BE%83/"/>
     <updated>2013-07-07T01:27:00+08:00</updated>
     <id>http://timbao.github.io/blog/2013/07/07/stdvector 两种操作的比较</id>
-    <content type="html"><![CDATA[<p>   swap</p>
-
-<p>   assign</p>
-
-<p>  这里只想说明这三种操作的用处和效率。swap和assign都可以用在将一个vector的内容全部复制给另外一个vector，区别是swap会改变源vector，而assign会清空目的vector后再将源vector的值全部插入到目的vector中。就效率而言，swap只是交换vector的头指针，时间复杂度是常数；而assigin时间复杂度则是线性。</p>
-
-<p>  #include <vector>;</p>
+    <content type="html"><![CDATA[<p>   swap
+   assign
+  这里只想说明这三种操作的用处和效率。swap和assign都可以用在将一个vector的内容全部复制给另外一个vector，区别是swap会改变源vector，而assign会清空目的vector后再将源vector的值全部插入到目的vector中。就效率而言，swap只是交换vector的头指针，时间复杂度是常数；而assigin时间复杂度则是线性。
+  #include <vector>;</p>
 
 <h1>include &ldquo;DebugUtility.h&rdquo;</h1>
 
@@ -61,52 +49,39 @@
 
 <h1>include <string>;</h1>
 
-<p>using namespace std;</p>
-
-<p>void print(int x)
+<p>using namespace std;
+void print(int x)
 {
     cout &lt;&lt; x &lt;&lt; endl;
-}</p>
-
-<p>void Swap(vector<string>;&amp; source, vector<string>;&amp; dest)
+}
+void Swap(vector<string>;&amp; source, vector<string>;&amp; dest)
 {
     DebugUtility temp;
     dest.swap(source);
-}</p>
-
-<p>void Assign(vector<string>;&amp; source, vector<string>;&amp; dest)
+}
+void Assign(vector<string>;&amp; source, vector<string>;&amp; dest)
 {
     DebugUtility temp;
     dest.assign(source.begin(), source.end());
-}</p>
-
-<p>int main(int argc, const char *argv[])
+}
+int main(int argc, const char *argv[])
 {
     vector<string>; source(900000, &ldquo;90&rdquo;);
-    vector<string>; destination(1, &ldquo;abc&rdquo;);</p>
-
-<pre><code>Swap(source, destination);
-//source.clear();
-//for_each(destination.begin(), destination.end(), print);
-
-//Assign(source, destination);
-//source.clear();
-//for_each(destination.begin(), destination.end(), print);
-
-return 0;
-</code></pre>
-
-<p>}</p>
-
-<p>   结果：</p>
-
-<p>  Total time elapsed : 1 us
-900000</p>
-
-<p>Total time elapsed : 12391 us
-900000</p>
-
-<p>   DebugUtility.h  大家可以从<a href="https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82">https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82</a></p>
+    vector<string>; destination(1, &ldquo;abc&rdquo;);
+    Swap(source, destination);
+    //source.clear();
+    //for_each(destination.begin(), destination.end(), print);
+    //Assign(source, destination);
+    //source.clear();
+    //for_each(destination.begin(), destination.end(), print);
+    return 0;
+}
+   结果：
+  Total time elapsed : 1 us
+900000
+Total time elapsed : 12391 us
+900000
+   DebugUtility.h  大家可以从<a href="https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82">https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82</a></p>
 ]]></content>
   </entry>
   
@@ -115,33 +90,19 @@ return 0;
     <link href="http://timbao.github.io/blog/2013/01/27/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B019/"/>
     <updated>2013-01-27T01:51:00+08:00</updated>
     <id>http://timbao.github.io/blog/2013/01/27/More Effective C++读书笔记19</id>
-    <content type="html"><![CDATA[<p>  Item 21：通过重载避免隐式类型转换</p>
-
-<pre><code>如果是自定义类型进行隐式的类型转换，肯定会调用构造和析构函数，这样就一定会有一定的开销，那么如何避免这类隐式类型转换呢？21小节给出一个方式就是通过重载函数避免进行隐式类型转换。
-
-
-class UInt 
-</code></pre>
-
-<p>{
+    <content type="html"><![CDATA[<p>  Item 21：通过重载避免隐式类型转换
+    如果是自定义类型进行隐式的类型转换，肯定会调用构造和析构函数，这样就一定会有一定的开销，那么如何避免这类隐式类型转换呢？21小节给出一个方式就是通过重载函数避免进行隐式类型转换。
+    class UInt
+{
 public:
     const UInt operator+(const UInt&amp; lrs, const UInt&amp; hrs);
-};</p>
-
-<p>UInt a, b, c;
+};
+UInt a, b, c;
 a = b + 10;
-    在计算b+10的时候，编译器会将10隐式的转为UInt类型进行计算，这种情况下可以通过重载操作法来避免出现隐式转换的开销。当然是必要时候才会采取这种方法，如果不是性能瓶颈，那么有可能造成重载函数过多，而维护起来会很不方便。</p>
-
-<pre><code>注意一种情况const UPInt operator+(int lhs, int rhs);   这种情况是错误的。在C++中有一条规则是每一个重载的operator必须带有一个用户定义类型（user-defined type）的参数。
-
-
-
- Item 22：考虑用运算符的赋值形式（op=）取代其单独形式（op）
-
-
-
-在这一小节我个人来说学到了一点，那就是操作符重载中尽量能让实现能“集成”，不要所有实现都重新实现一遍，这样可以减少维护费用。
-</code></pre>
+    在计算b+10的时候，编译器会将10隐式的转为UInt类型进行计算，这种情况下可以通过重载操作法来避免出现隐式转换的开销。当然是必要时候才会采取这种方法，如果不是性能瓶颈，那么有可能造成重载函数过多，而维护起来会很不方便。
+    注意一种情况const UPInt operator+(int lhs, int rhs);   这种情况是错误的。在C++中有一条规则是每一个重载的operator必须带有一个用户定义类型（user-defined type）的参数。
+     Item 22：考虑用运算符的赋值形式（op=）取代其单独形式（op）
+    在这一小节我个人来说学到了一点，那就是操作符重载中尽量能让实现能“集成”，不要所有实现都重新实现一遍，这样可以减少维护费用。</p>
 ]]></content>
   </entry>
   
@@ -150,37 +111,23 @@ a = b + 10;
     <link href="http://timbao.github.io/blog/2013/01/20/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B018/"/>
     <updated>2013-01-20T00:29:00+08:00</updated>
     <id>http://timbao.github.io/blog/2013/01/20/More Effective C++读书笔记18</id>
-    <content type="html"><![CDATA[<p>   Item 20：协助完成返回值优化</p>
-
-<p>  返回对象时的开销会比较大，会调用对象的构造和析构函数，但是当一个函数必须要返回对象时，这种构造和析构造成的开销是无法消除的。那么还能优化么？</p>
-
-<p>   以某种方法返回对象，能让编译器消除临时对象的开销，这样编写函数通常是很普遍的。这种技巧是返回constructor argument而不是直接返回对象。你可以这样做：</p>
-
-<pre><code>const Rational operator*(const Rational&amp; lhs, const Rational&amp; rhs)
-</code></pre>
-
-<p>{
+    <content type="html"><![CDATA[<p>   Item 20：协助完成返回值优化
+  返回对象时的开销会比较大，会调用对象的构造和析构函数，但是当一个函数必须要返回对象时，这种构造和析构造成的开销是无法消除的。那么还能优化么？
+   以某种方法返回对象，能让编译器消除临时对象的开销，这样编写函数通常是很普遍的。这种技巧是返回constructor argument而不是直接返回对象。你可以这样做：
+    const Rational operator<em>(const Rational&amp; lhs, const Rational&amp; rhs)
+{
     return Rational(lhs.numerator() * rhs.numerator(),
                   lhs.denominator() * rhs.denominator());
 }
-    仔细观察被返回的表达式。它看上去好象正在调用Rational的构造函数，实际上确是这样。你通过这个表达式建立一个临时的Rational对象，</p>
-
-<pre><code> Rational(lhs.numerator() * rhs.numerator(),  lhs.denominator() * rhs.denominator());
-
-  并且这是一个临时对象，函数把它拷贝给函数的返回值。
-
-   返回constructor argument而不出现局部对象，这种方法还会给你带来很多开销，因为你仍旧必须为在函数内临时对象的构造和释放而付出代价，你仍旧必须为函数返回对象的构造和释放而付出代价。但是你已经获得了好处。C++规则允许编译器优化不出现的临时对象（temporary objects out of existence）。因此如果你在如下的环境里调用operator*：
-
-    Rational a = 10;
-
-     Rational b(1, 2);
-
-      Rational c = a * b;                          // 在这里调用operator*
-
-       编译器就会被允许消除在operator*内的临时变量和operator*返回的临时变量。它们能在为目标c分配的内存里构造return表达式定义的对象。如果你的编译器这样去做，调用operator*的临时对象的开销就是零：没有建立临时对象。你的代价就是调用一个构造函数――建立c时调用的构造函数。而且你不能比这做得更好了，因为c是命名对象，命名对象不能被消除（参见条款M22）。不过你还可以通过把函数声明为inline来消除operator*的调用开销。
-</code></pre>
-
-<p>  看完这篇突然认识到，理解编译器优化是非常重要的，对编译器了解构思，代码的效率自然有保证。路漫漫其修远兮，吾将上下而求索！</p>
+    仔细观察被返回的表达式。它看上去好象正在调用Rational的构造函数，实际上确是这样。你通过这个表达式建立一个临时的Rational对象，
+     Rational(lhs.numerator() * rhs.numerator(),  lhs.denominator() * rhs.denominator());
+      并且这是一个临时对象，函数把它拷贝给函数的返回值。
+       返回constructor argument而不出现局部对象，这种方法还会给你带来很多开销，因为你仍旧必须为在函数内临时对象的构造和释放而付出代价，你仍旧必须为函数返回对象的构造和释放而付出代价。但是你已经获得了好处。C++规则允许编译器优化不出现的临时对象（temporary objects out of existence）。因此如果你在如下的环境里调用operator</em>：
+        Rational a = 10;
+         Rational b(1, 2);
+          Rational c = a * b;                          // 在这里调用operator<em>
+           编译器就会被允许消除在operator</em>内的临时变量和operator<em>返回的临时变量。它们能在为目标c分配的内存里构造return表达式定义的对象。如果你的编译器这样去做，调用operator</em>的临时对象的开销就是零：没有建立临时对象。你的代价就是调用一个构造函数――建立c时调用的构造函数。而且你不能比这做得更好了，因为c是命名对象，命名对象不能被消除（参见条款M22）。不过你还可以通过把函数声明为inline来消除operator*的调用开销。
+  看完这篇突然认识到，理解编译器优化是非常重要的，对编译器了解构思，代码的效率自然有保证。路漫漫其修远兮，吾将上下而求索！</p>
 ]]></content>
   </entry>
   
@@ -189,13 +136,10 @@ a = b + 10;
     <link href="http://timbao.github.io/blog/2013/01/17/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B017/"/>
     <updated>2013-01-17T17:55:00+08:00</updated>
     <id>http://timbao.github.io/blog/2013/01/17/More Effective C++读书笔记17</id>
-    <content type="html"><![CDATA[<p>  这里提到一个概念Over-eager evaluation，可以理解为超前计算，主要有两种方法caching和 prefething，都是以空间换时间来提高效率。</p>
-
-<p> 看到这章，让我想起了我以前做的两个项目，一个是给某直辖市做的全市联网XX系统，一个是给某发电厂做的监控环境系统。</p>
-
-<p>  1.全市联网系统，由于数据量非常大，导致的性能瓶颈就是每次查询数据库都会很慢，导致用户体验非常不好，而实际情况是数据库中的内容并不是总是频繁改变，所以我采用了catching方式，将数据库中内容预存到内存中，每次读取先从catch中查询，如果有就直接返回，如果没有则再查询数据库，通过这种方式，大大提高了查询效率，这是一个典型的用空间换取时间的方案。</p>
-
-<p>   2.发电厂的监控项目是一个需要频繁查询的系统，要实时的更新系统数据，并计算出当时的最大值，最小值和平均值，还要将采集到的数据记录到数据库中以备查询。这里没最麻烦的是计算max，min和ave，因为这些值会根据时长不停的变化，每次查询时都要重新计算，有可能还需要查询数据库，这就导致程序运行非常慢，当时提出一个方案是采用catching方式，提前计算出来结果，并实时更新这些结果，需要的时候，可以直接取。这个方案实施起来非常麻烦，所以我改了下将每次采集的数值计算好，将这些值直接保存到数据库中，然后每次查询都直接读取，效率提高了很多。这种方式可以归结为上述的prefetching方式里。</p>
+    <content type="html"><![CDATA[<p>  这里提到一个概念Over-eager evaluation，可以理解为超前计算，主要有两种方法caching和 prefething，都是以空间换时间来提高效率。
+ 看到这章，让我想起了我以前做的两个项目，一个是给某直辖市做的全市联网XX系统，一个是给某发电厂做的监控环境系统。
+  1.全市联网系统，由于数据量非常大，导致的性能瓶颈就是每次查询数据库都会很慢，导致用户体验非常不好，而实际情况是数据库中的内容并不是总是频繁改变，所以我采用了catching方式，将数据库中内容预存到内存中，每次读取先从catch中查询，如果有就直接返回，如果没有则再查询数据库，通过这种方式，大大提高了查询效率，这是一个典型的用空间换取时间的方案。
+   2.发电厂的监控项目是一个需要频繁查询的系统，要实时的更新系统数据，并计算出当时的最大值，最小值和平均值，还要将采集到的数据记录到数据库中以备查询。这里没最麻烦的是计算max，min和ave，因为这些值会根据时长不停的变化，每次查询时都要重新计算，有可能还需要查询数据库，这就导致程序运行非常慢，当时提出一个方案是采用catching方式，提前计算出来结果，并实时更新这些结果，需要的时候，可以直接取。这个方案实施起来非常麻烦，所以我改了下将每次采集的数值计算好，将这些值直接保存到数据库中，然后每次查询都直接读取，效率提高了很多。这种方式可以归结为上述的prefetching方式里。</p>
 ]]></content>
   </entry>
   

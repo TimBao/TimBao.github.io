@@ -84,96 +84,49 @@
   </header>
 
 
-<div class="entry-content"><p>  std::swap             function template     <algorithm>;</p>
-
-<p>  template <class T>; void swap ( T&amp; a, T&amp; b );</p>
-
-<p>   Exchange values of two objects(交换两个对象的值)</p>
-
-<p>  Assigns the content of a to b and the content of b to a.</p>
-
-<p>   （将a的内容给b，将b的内容给a。）</p>
-
-<p>  The behavior of this function template is equivalent to:</p>
-
-<p>   （该函数模板的实现如下：）</p>
-
-<pre><code>template &lt;class T&gt;; void swap ( T&amp; a, T&amp; b )
-
- {
-
-  T c(a); a=b; b=c;
-
+<div class="entry-content"><p>  std::swap             function template     <algorithm>;
+  template <class T>; void swap ( T&amp; a, T&amp; b );
+   Exchange values of two objects(交换两个对象的值)
+  Assigns the content of a to b and the content of b to a.
+   （将a的内容给b，将b的内容给a。）
+  The behavior of this function template is equivalent to:
+   （该函数模板的实现如下：）
+    template <class T>; void swap ( T&amp; a, T&amp; b )
+     {
+      T c(a); a=b; b=c;
+       }
+   Notice how this function involves a copy construction and two assignment operations, which may not be the most efficient way of swapping the contents of classes that store large quantities of data, since each of these operations generally operate in linear
+ time on their size.
+    （注意，该函数是通过调用一个拷贝构造函数和两个赋值操作来交换两个对象的内容，这并不是最高效的交换方法对大数据来说，因为每个操作时间都是跟对象大小的成正比的线性时间关系。）
+  Because this function template is used as a primitive operation by many other algorithms, it is highly recommended that large data types overload their own specialization of this function. Notably, all STL containers define such specializations (at least
+ for the standard allocator), in such a way that instead of swapping their entire data content, only the values of a few internal pointers are swapped, making this operation to operate in real constant time with them.
+   Parameters
+    a, b
+     Two objects, whose contents are swapped.
+      The type must be copy constructible and support assignment operations. （类型T必须包含拷贝构造和支持赋值操作。）
+   Return value
+    none
+   Example
+    // swap algorithm example
+     #include <iostream>;
+      #include <algorithm>;
+       #include <vector>;
+        using namespace std;
+  int main () {
+  int x=10, y=20;                         // x:10 y:20
+   swap(x,y);                              // x:20 y:10
+  vector<int>; first (4,x), second (6,y);  // first:4x20 second:6x10
+   swap(first,second);                     // first:6x10 second:4x20
+  cout &lt;&lt; &ldquo;first contains:&rdquo;;
+   for (vector<int>;::iterator it=first.begin(); it!=first.end(); ++it)
+    cout &lt;&lt; &ldquo; &rdquo; &lt;&lt; *it;
+  cout &lt;&lt; endl;
+  return 0;
    }
-</code></pre>
-
-<p>   Notice how this function involves a copy construction and two assignment operations, which may not be the most efficient way of swapping the contents of classes that store large quantities of data, since each of these operations generally operate in linear
- time on their size.</p>
-
-<pre><code>（注意，该函数是通过调用一个拷贝构造函数和两个赋值操作来交换两个对象的内容，这并不是最高效的交换方法对大数据来说，因为每个操作时间都是跟对象大小的成正比的线性时间关系。）
-</code></pre>
-
-<p>  Because this function template is used as a primitive operation by many other algorithms, it is highly recommended that large data types overload their own specialization of this function. Notably, all STL containers define such specializations (at least
- for the standard allocator), in such a way that instead of swapping their entire data content, only the values of a few internal pointers are swapped, making this operation to operate in real constant time with them.</p>
-
-<p>   Parameters</p>
-
-<pre><code>a, b
-
- Two objects, whose contents are swapped.
-
-  The type must be copy constructible and support assignment operations. （类型T必须包含拷贝构造和支持赋值操作。）
-</code></pre>
-
-<p>   Return value</p>
-
-<pre><code>none
-</code></pre>
-
-<p>   Example</p>
-
-<pre><code>// swap algorithm example
-
- #include &lt;iostream&gt;;
-
-  #include &lt;algorithm&gt;;
-
-   #include &lt;vector&gt;;
-
-    using namespace std;
-</code></pre>
-
-<p>  int main () {</p>
-
-<p>  int x=10, y=20;                         // x:10 y:20</p>
-
-<p>   swap(x,y);                              // x:20 y:10</p>
-
-<p>  vector<int>; first (4,x), second (6,y);  // first:4x20 second:6x10</p>
-
-<p>   swap(first,second);                     // first:6x10 second:4x20</p>
-
-<p>  cout &lt;&lt; &ldquo;first contains:&rdquo;;</p>
-
-<p>   for (vector<int>;::iterator it=first.begin(); it!=first.end(); ++it)</p>
-
-<pre><code>cout &lt;&lt; " " &lt;&lt; *it;
-</code></pre>
-
-<p>  cout &lt;&lt; endl;</p>
-
-<p>  return 0;</p>
-
-<p>   }</p>
-
-<p>  Output:</p>
-
-<p>  first contains: 10 10 10 10 10 10</p>
-
-<p>   Complexity</p>
-
-<pre><code>Constant: Performs exactly one copy construction and two assignments (although notice that each of these operations works on its own complexity).
-</code></pre>
+  Output:
+  first contains: 10 10 10 10 10 10
+   Complexity
+    Constant: Performs exactly one copy construction and two assignments (although notice that each of these operations works on its own complexity).</p>
 </div>
 
 

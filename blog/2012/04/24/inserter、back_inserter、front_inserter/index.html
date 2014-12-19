@@ -84,12 +84,9 @@
   </header>
 
 
-<div class="entry-content"><p> inserter、back_inserter、front_inserter</p>
-
-<p>  分别返回三种类型的iterator：insert_iterator,back_insert_iterator,front_insert_iterator。这三种iterator被设计成允许不同的算法重写elements(例如copy方法)去替代插入操作。</p>
-
-<pre><code>// inserter example
-</code></pre>
+<div class="entry-content"><p> inserter、back_inserter、front_inserter
+  分别返回三种类型的iterator：insert_iterator,back_insert_iterator,front_insert_iterator。这三种iterator被设计成允许不同的算法重写elements(例如copy方法)去替代插入操作。
+    // inserter example</p>
 
 <h1>include <iostream>;</h1>
 
@@ -97,32 +94,22 @@
 
 <h1>include <list>;</h1>
 
-<p>using namespace std;</p>
-
-<p>int main () {
+<p>using namespace std;
+int main () {
   list<int>; firstlist, secondlist;
   for (int i=1; i&lt;=5; i++)
-  { firstlist.push_back(i); secondlist.push_back(i*10); }</p>
-
-<p>  list<int>;::iterator it;
-  it = firstlist.begin(); advance (it,3);</p>
-
-<p>  copy (secondlist.begin(),secondlist.end(),inserter(firstlist,it));</p>
-
-<p>  for ( it = firstlist.begin(); it!= firstlist.end(); ++it )
-      cout &lt;&lt; *it &lt;&lt; &ldquo; &rdquo;;
-  cout &lt;&lt; endl;</p>
-
-<p>  return 0;
-}</p>
-
-<pre><code>   Output:
-
-    1 2 3 10 20 30 40 50 4 5
-
-
-      必须要提到的一点是，这三种迭代器是对容器有要求的，分别要求容器提供insert，push_back，push_front方法才行。
-</code></pre>
+  { firstlist.push_back(i); secondlist.push_back(i<em>10); }
+  list<int>;::iterator it;
+  it = firstlist.begin(); advance (it,3);
+  copy (secondlist.begin(),secondlist.end(),inserter(firstlist,it));
+  for ( it = firstlist.begin(); it!= firstlist.end(); ++it )
+      cout &lt;&lt; </em>it &lt;&lt; &ldquo; &rdquo;;
+  cout &lt;&lt; endl;
+  return 0;
+}
+       Output:
+        1 2 3 10 20 30 40 50 4 5
+          必须要提到的一点是，这三种迭代器是对容器有要求的，分别要求容器提供insert，push_back，push_front方法才行。</p>
 </div>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Bcb学习 | My Octopress Blog]]></title>
   <link href="http://timbao.github.io/blog/categories/bcbxue-xi/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-18T18:00:31+08:00</updated>
+  <updated>2014-12-19T17:47:35+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -19,105 +19,20 @@
     <updated>2010-06-05T23:05:00+08:00</updated>
     <id>http://timbao.github.io/blog/2010/06/05/编程新手编写代码注意事项</id>
     <content type="html"><![CDATA[<pre><code> 1、
-
-
-
-
-
-
-
-
  new
-
-
-
 对象后，要马上判断是否创建成功。
-
-
-
-
-
-
-
  2、
-
-
-
-
-
-
-
-
  delete
-
-
-
 对象前，一定要判断对象是否已经被释放。
-
-
-
-
-
-
-
  3、
-
-
-
-
-
-
-
 写的每行代码都要遵循代码规范，不要因为是简单的测试代码就放松对自己的要求。
-
-
-
-
-
-
 4、
-
  Do it right at first time.(
-
-
  第一次就把事情做好！
-
-
  )
-
-
-
-
-
-
-
-
  5、if之后马上加上{}，防止if之后不经意的加上；号。这样的错误找起来非常麻烦。
-
-
-
-
-
-
-
-
  记得自己的第一份工作，再培训的时候Leader一再强调做任何事情都要
-
   第一次就把事情做好，当时给我们举的例子好像是：两个人在规定的时间写代码，第一个由于时间比较紧就没按照规范写，而是怎么规范就怎么写；测试没问题后再根据规范修改代码；第二个人写的时候就遵照规范来写；结果当然是第二个人先完成，并且代码质量高，规范好；而第一个人就有没有改到的地方。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   联想到最近带的一个新人，写代码就想上面的第一个人那样；出现的很多错误都是因为最简单的几个原因。看来看似最基本的东西，最重要。：）
 </code></pre>
 ]]></content>
@@ -129,87 +44,41 @@
     <updated>2009-11-08T05:53:00+08:00</updated>
     <id>http://timbao.github.io/blog/2009/11/08/VCL消息宏使用注意事项</id>
     <content type="html"><![CDATA[<pre><code>ATL
-
-
 定义
-
-
 "MESSAGE_HANDLER"
-
-
 宏与
-
-
 VCL
-
-
 中的宏相冲突。
-
-
 VCL
-
-
 中的宏被重命名为
-
-
 "VCL_MESSAGE_HANDLER"
-
-
 ，如果没有使用
-
-
 ATL
-
-
 ，则
-
-
 "MESSAGE_HANDLER"
-
-
 被定义在
-
-
 BCB
-
-
 的旧版本中。
 </code></pre>
 
-<p>   #if</p>
-
-<p>   ！</p>
-
-<p>   defined</p>
-
-<p>   （</p>
-
-<p>   USING_ATL</p>
-
-<p>   ）</p>
-
-<p>   &amp;&amp; !defined(USING_ATLVCL)
-&amp;&amp; !defined(INC_ATL_HEADERS)</p>
-
-<p>  #define MESSAGE_HANDLER VCL_MESSAGE_HANDLER</p>
-
-<p>  #endif</p>
-
-<p>   所以在写消息处理时，要写</p>
-
-<p>   &ldquo;VCL_MESSAGE_HANDLER&rdquo;</p>
-
-<p>   而不要写</p>
-
-<p>   &ldquo;MESSAGE_HANDLER&rdquo;</p>
-
-<p>   ，</p>
-
-<p>   否则如果使用到了</p>
-
-<p>   ATL</p>
-
-<p>   的话就会有问题。</p>
+<p>   #if
+   ！
+   defined
+   （
+   USING_ATL
+   ）
+   &amp;&amp; !defined(USING_ATLVCL)
+&amp;&amp; !defined(INC_ATL_HEADERS)
+  #define MESSAGE_HANDLER VCL_MESSAGE_HANDLER
+  #endif
+   所以在写消息处理时，要写
+   &ldquo;VCL_MESSAGE_HANDLER&rdquo;
+   而不要写
+   &ldquo;MESSAGE_HANDLER&rdquo;
+   ，
+   否则如果使用到了
+   ATL
+   的话就会有问题。</p>
 ]]></content>
   </entry>
   

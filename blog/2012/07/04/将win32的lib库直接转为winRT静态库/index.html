@@ -84,22 +84,12 @@
   </header>
 
 
-<div class="entry-content"><p> 将win32的lib库直接转为winRT静态库需要注意三点</p>
-
-<p>  1、打开/ZW开关，关闭/GM开关</p>
-
-<p>   2、忽略OLE32.LIB</p>
-
-<pre><code>3、手动使用命令/AI包含Windows.winmd(从工程中add new references无效)
-
-
-  /FU Platform.winmd /FU Windows.winmd /AI "$(VCInstallDir)vcpackages" /AI "$(WindowsSDK_MetadataPath)"
-
-
-
-
-  剩余的工作就是修改编译错误了
-</code></pre>
+<div class="entry-content"><p> 将win32的lib库直接转为winRT静态库需要注意三点
+  1、打开/ZW开关，关闭/GM开关
+   2、忽略OLE32.LIB
+    3、手动使用命令/AI包含Windows.winmd(从工程中add new references无效)
+      /FU Platform.winmd /FU Windows.winmd /AI &ldquo;$(VCInstallDir)vcpackages&rdquo; /AI &ldquo;$(WindowsSDK_MetadataPath)&rdquo;
+      剩余的工作就是修改编译错误了</p>
 </div>
 
 

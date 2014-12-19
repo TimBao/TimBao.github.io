@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Iphone/objective-c | My Octopress Blog]]></title>
   <link href="http://timbao.github.io/blog/categories/iphone-slash-objective-c/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-18T18:00:31+08:00</updated>
+  <updated>2014-12-19T17:47:35+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -23,190 +23,107 @@ NSMutableArray</em> array2 = [[NSMutableArray alloc] init];
 - (void)pushs:(NSInteger)VALUE {
     BOOL find = NO;
     [array2 removeAllObjects];
-    for (NSNumber* item in array1) {
+    for (NSNumber<em> item in array1) {
         NSInteger value = [item intValue];
         if (value == VALUE) {
-            [array1 removeAllObjects];</p>
-
-<pre><code>        [array1 addObjectsFromArray: array2];
-        [array1 addObject: item];
-        find = YES;
-        break;
+            [array1 removeAllObjects];
+            [array1 addObjectsFromArray: array2];
+            [array1 addObject: item];
+            find = YES;
+            break;
+        }
+        else {
+            [array2 addObject: item];
+        }
     }
-    else {
-        [array2 addObject: item];
+    if (!find) {
+        NSNumber</em> newItem = [NSNumber numberWithInt: VALUE];
+        [viewTypeArray addObject:newItem];
     }
 }
-if (!find) {
-    NSNumber* newItem = [NSNumber numberWithInt: VALUE];
-    [viewTypeArray addObject:newItem];
-}
-</code></pre>
-
-<p>}</p>
-
-<p>   当</p>
-
-<p>   进</p>
-
-<p>   入</p>
-
-<p>  if (value == VALUE)</p>
-
-<p>   后，</p>
-
-<p>  [array1
- addObject: value];</p>
-
-<p>   执行</p>
-
-<p>   完</p>
-
-<p>   毕</p>
-
-<p>   后，</p>
-
-<p>   查</p>
-
-<p>   看array1中的元素类型</p>
-
-<p>   发现</p>
-
-<p>   已</p>
-
-<p>   经</p>
-
-<p>   不再</p>
-
-<p>   是</p>
-
-<p>  NSNumber*</p>
-
-<p>   而是</p>
-
-<p>   变为</p>
-
-<p>  NSobject*</p>
-
-<p>   ,
- 取出使用</p>
-
-<p>   报错</p>
-
-<p>   ，bad access。</p>
-
-<p>   该问题</p>
-
-<p>   出</p>
-
-<p>   现</p>
-
-<p>   的</p>
-
-<p>   几率比较随机。单独使用没有任何问题，放到整个工程中就出现问题。</p>
-
-<p>  通</p>
-
-<p>   过查</p>
-
-<p>  看内存，</p>
-
-<p>   发现</p>
-
-<p>   NSMutableArray</p>
-
-<p>  中存</p>
-
-<p>   储</p>
-
-<p>  的</p>
-
-<p>   为</p>
-
-<p>   NSNumber</p>
-
-<p>  指</p>
-
-<p>   针</p>
-
-<p>  ，array1和array2中指</p>
-
-<p>   针</p>
-
-<p>  地址一致，有可能是当</p>
-
-<p>   [array1
- removeAllObjects];</p>
-
-<p>  后，</p>
-
-<p>   item</p>
-
-<p>  有可能被自</p>
-
-<p>   动销毁</p>
-
-<p>  ，</p>
-
-<p>   导</p>
-
-<p>  致加入到array1中的</p>
-
-<p>   值</p>
-
-<p>  出</p>
-
-<p>   现错误。修改为：</p>
-
-<p>  NSNumber* topItem = [NSNumber numberWithInt: value];</p>
-
-<p>  [array1 addObject:topItem];</p>
-
-<p>   问题</p>
-
-<p>  解决。</p>
-
-<p>   这</p>
-
-<p>  个</p>
-
-<p>   问题</p>
-
-<p>  的根本原因</p>
-
-<p>   还</p>
-
-<p>  是内存的</p>
-
-<p>   问题</p>
-
-<p>  ，objective-c的内存管理比</p>
-
-<p>   较</p>
-
-<p>  特殊，有很多</p>
-
-<p>   隐藏</p>
-
-<p>  的内存分配和自</p>
-
-<p>   动</p>
-
-<p>  回收，个人</p>
-
-<p>   怀</p>
-
-<p>  疑</p>
-
-<p>   numberWithInt</p>
-
-<p>  方法返回的</p>
-
-<p>   NSNumber*</p>
-
-<p>   对象为</p>
-
-<p>  autorelease。</p>
+   当
+   进
+   入
+  if (value == VALUE)
+   后，
+  [array1
+ addObject: value];
+   执行
+   完
+   毕
+   后，
+   查
+   看array1中的元素类型
+   发现
+   已
+   经
+   不再
+   是
+  NSNumber<em>
+   而是
+   变为
+  NSobject</em>
+   ,
+ 取出使用
+   报错
+   ，bad access。
+   该问题
+   出
+   现
+   的
+   几率比较随机。单独使用没有任何问题，放到整个工程中就出现问题。
+  通
+   过查
+  看内存，
+   发现
+   NSMutableArray
+  中存
+   储
+  的
+   为
+   NSNumber
+  指
+   针
+  ，array1和array2中指
+   针
+  地址一致，有可能是当
+   [array1
+ removeAllObjects];
+  后，
+   item
+  有可能被自
+   动销毁
+  ，
+   导
+  致加入到array1中的
+   值
+  出
+   现错误。修改为：
+  NSNumber<em> topItem = [NSNumber numberWithInt: value];
+  [array1 addObject:topItem];
+   问题
+  解决。
+   这
+  个
+   问题
+  的根本原因
+   还
+  是内存的
+   问题
+  ，objective-c的内存管理比
+   较
+  特殊，有很多
+   隐藏
+  的内存分配和自
+   动
+  回收，个人
+   怀
+  疑
+   numberWithInt
+  方法返回的
+   NSNumber</em>
+   对象为
+  autorelease。</p>
 ]]></content>
   </entry>
   
@@ -215,13 +132,10 @@ if (!find) {
     <link href="http://timbao.github.io/blog/2012/02/01/20120130%E5%B7%A5%E4%BD%9C%E5%B0%8F%E7%BB%93/"/>
     <updated>2012-02-01T04:56:00+08:00</updated>
     <id>http://timbao.github.io/blog/2012/02/01/20120130工作小结</id>
-    <content type="html"><![CDATA[<p>  除了checked_delete外，今天还学习了两点内容：</p>
-
-<p>  1、char<em> strdup(char</em> s); 函数，使用malloc方法，拷贝一个新的s，返回，需要使用free释放；还有类似的strndup等。</p>
-
-<p>  2、bundle：Iphone开发中bundle是一个目录，其中包含了程序会使用到的资源，这些资源包括了图像，声音，编译好的代码，nib文件（用户也会把bundle称为plug-in），cocoa框架提供了NSBundle类来对</p>
-
-<p>   其进行操作。</p>
+    <content type="html"><![CDATA[<p>  除了checked_delete外，今天还学习了两点内容：
+  1、char<em> strdup(char</em> s); 函数，使用malloc方法，拷贝一个新的s，返回，需要使用free释放；还有类似的strndup等。
+  2、bundle：Iphone开发中bundle是一个目录，其中包含了程序会使用到的资源，这些资源包括了图像，声音，编译好的代码，nib文件（用户也会把bundle称为plug-in），cocoa框架提供了NSBundle类来对
+   其进行操作。</p>
 ]]></content>
   </entry>
   
@@ -230,20 +144,14 @@ if (!find) {
     <link href="http://timbao.github.io/blog/2012/01/31/20120130%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/"/>
     <updated>2012-01-31T03:58:00+08:00</updated>
     <id>http://timbao.github.io/blog/2012/01/31/20120130工作记录</id>
-    <content type="html"><![CDATA[<p>  plist文件的作用还真是不少，今天就接触到两点：</p>
-
-<p>  1、设置App启动界面，在plist中add row，name=Launch Image，Value=XXX.png。</p>
-
-<p>  2、设置status bar样式，name=status bar style，value=opaque black sytle等三种。</p>
-
-<p>  等同于代码[application setStatusBarStyle:UIStatusBarStyleBlackOpaque];</p>
-
-<p>  UINavigationController：使用堆栈方式来管理UIViewController。适用与层次化工作流。</p>
-
-<p> [self.navigationController pushViewChontroller:nextController animated:YES];
-[self.navigationController popViewControllerAnimated:YES];</p>
-
-<p>   UITabBarController：适用与各部分相对比较对立的情况。</p>
+    <content type="html"><![CDATA[<p>  plist文件的作用还真是不少，今天就接触到两点：
+  1、设置App启动界面，在plist中add row，name=Launch Image，Value=XXX.png。
+  2、设置status bar样式，name=status bar style，value=opaque black sytle等三种。
+  等同于代码[application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
+  UINavigationController：使用堆栈方式来管理UIViewController。适用与层次化工作流。
+ [self.navigationController pushViewChontroller:nextController animated:YES];
+[self.navigationController popViewControllerAnimated:YES];
+   UITabBarController：适用与各部分相对比较对立的情况。</p>
 ]]></content>
   </entry>
   
@@ -252,34 +160,21 @@ if (!find) {
     <link href="http://timbao.github.io/blog/2012/01/17/20120116%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/"/>
     <updated>2012-01-17T05:59:00+08:00</updated>
     <id>http://timbao.github.io/blog/2012/01/17/20120116工作记录</id>
-    <content type="html"><![CDATA[<p>  今天老大没来，我今天的考核又泡汤了，哈哈，也好有时间可以再深入学习下。把自己几百块的餐票都给了j，嘿嘿，团队就是要相互帮助。</p>
-
-<p>  今天继续对上周的疑问进行攻克，编写DEMO深入进去，对UI进行了解，也对Objective-C进行深入了解。</p>
-
-<p>  UIScrollView的几个属性和委托方法：</p>
-
-<p>  1、zoomscale：当前缩放倍数。初始值设置，只有在将contentView加为sub view后才起作用。</p>
-
-<p>  2、contentSize：内容的大小，如果想要scrollview进行缩放和平移，那么contensize的大小需要设置为scrollview内容的的最大值。</p>
-
-<p>  3、contentoffset：这个属性是指内容视图相对于scrollview的frame的顶点的偏移量，通过它可以计算当前视图的center point。这个属性非常关键。</p>
-
-<p>  center.x = contentOffset.x + frame.width/2; center.y = contentOffset.y + frame.height/2;</p>
-
-<p>  4、需要遵守 <UIScrollVewDeledate>;协议，并设置代理scrollView.delegate = self;</p>
-
-<p>  5、要想缩放必须设置 maximumZoomScale和minumZoomScale必须设置为不同的值，才能进行缩放。</p>
-
-<p>  缩放过程中进行拖动和放缩的是scrollview的subview，而不是scrollview本身。</p>
-
-<p>  6、必须实现委托方法viewForZoomingInScrollView，返回放缩的view，才可以进行放缩。如果想要控制放缩，可以实现委托方法scrollViewDidEndZooming:withView:atScale:方法。</p>
-
-<p>  7、如果是实现双击或者单击操作，可以实现UITapGestureCognizer作为scrollview的子类，并通过selector关联到相应的单击或双击方法中。</p>
-
-<p>  IOS的坐标系跟WINDOWS坐标系一致，左上角为origin point，向右横向为X轴正放向，向下竖向为Y轴正方向；view的Frame，bounds和center各不相同，其中frame是对父视图的坐标系而言，bounds是对自身的坐标系而言，所以bounds的原点永远都是(0,0)，两者的width和height相同，而center者可以通过两者算出来；center是CGPoint一点，是视图中心相对父视图原点的坐标，所以是bounds.width/2 + frame.X， bounds.Height/2
- + frame.Y。</p>
-
-<p>  这些内容熟练掌握后，对地图界面的理解有容易多了。</p>
+    <content type="html"><![CDATA[<p>  今天老大没来，我今天的考核又泡汤了，哈哈，也好有时间可以再深入学习下。把自己几百块的餐票都给了j，嘿嘿，团队就是要相互帮助。
+  今天继续对上周的疑问进行攻克，编写DEMO深入进去，对UI进行了解，也对Objective-C进行深入了解。
+  UIScrollView的几个属性和委托方法：
+  1、zoomscale：当前缩放倍数。初始值设置，只有在将contentView加为sub view后才起作用。
+  2、contentSize：内容的大小，如果想要scrollview进行缩放和平移，那么contensize的大小需要设置为scrollview内容的的最大值。
+  3、contentoffset：这个属性是指内容视图相对于scrollview的frame的顶点的偏移量，通过它可以计算当前视图的center point。这个属性非常关键。
+  center.x = contentOffset.x + frame.width/2; center.y = contentOffset.y + frame.height/2;
+  4、需要遵守 <UIScrollVewDeledate>;协议，并设置代理scrollView.delegate = self;
+  5、要想缩放必须设置 maximumZoomScale和minumZoomScale必须设置为不同的值，才能进行缩放。
+  缩放过程中进行拖动和放缩的是scrollview的subview，而不是scrollview本身。
+  6、必须实现委托方法viewForZoomingInScrollView，返回放缩的view，才可以进行放缩。如果想要控制放缩，可以实现委托方法scrollViewDidEndZooming:withView:atScale:方法。
+  7、如果是实现双击或者单击操作，可以实现UITapGestureCognizer作为scrollview的子类，并通过selector关联到相应的单击或双击方法中。
+  IOS的坐标系跟WINDOWS坐标系一致，左上角为origin point，向右横向为X轴正放向，向下竖向为Y轴正方向；view的Frame，bounds和center各不相同，其中frame是对父视图的坐标系而言，bounds是对自身的坐标系而言，所以bounds的原点永远都是(0,0)，两者的width和height相同，而center者可以通过两者算出来；center是CGPoint一点，是视图中心相对父视图原点的坐标，所以是bounds.width/2 + frame.X， bounds.Height/2
+ + frame.Y。
+  这些内容熟练掌握后，对地图界面的理解有容易多了。</p>
 ]]></content>
   </entry>
   

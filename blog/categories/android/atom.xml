@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Android | My Octopress Blog]]></title>
   <link href="http://timbao.github.io/blog/categories/android/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-18T18:00:31+08:00</updated>
+  <updated>2014-12-19T17:47:35+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -18,11 +18,9 @@
     <link href="http://timbao.github.io/blog/2014/01/16/%E5%BC%80%E6%BA%90%E5%B0%8F%E6%B8%B8%E6%88%8F-%E5%9F%BA%E4%BA%8Eandroid%20sample%20snake/"/>
     <updated>2014-01-16T00:51:00+08:00</updated>
     <id>http://timbao.github.io/blog/2014/01/16/开源小游戏-基于android sample snake</id>
-    <content type="html"><![CDATA[<p>  最近利用业余时间学校android应用的开发，发现android sdk的sample中有个snake的小游戏，感觉不错，但是由于该游戏不能在触摸屏上玩，所以就萌生了自己动手的想法。利用2天时间又增加了用户排名和帮助等功能。程序已经托管到github上面，咱也玩吧开源。</p>
-
-<p>  地址：<a href="https://github.com/TimBao/Android_Snake">https://github.com/TimBao/Android_Snake</a></p>
-
-<p>  有感兴趣的朋友可以一同开发噢！</p>
+    <content type="html"><![CDATA[<p>  最近利用业余时间学校android应用的开发，发现android sdk的sample中有个snake的小游戏，感觉不错，但是由于该游戏不能在触摸屏上玩，所以就萌生了自己动手的想法。利用2天时间又增加了用户排名和帮助等功能。程序已经托管到github上面，咱也玩吧开源。
+  地址：<a href="https://github.com/TimBao/Android_Snake">https://github.com/TimBao/Android_Snake</a>
+  有感兴趣的朋友可以一同开发噢！</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Vim | My Octopress Blog]]></title>
   <link href="http://timbao.github.io/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-18T18:00:31+08:00</updated>
+  <updated>2014-12-19T17:47:35+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -18,21 +18,17 @@
     <link href="http://timbao.github.io/blog/2013/06/21/gvim%20use%20wmctrl%20in%20ubuntu/"/>
     <updated>2013-06-21T03:35:00+08:00</updated>
     <id>http://timbao.github.io/blog/2013/06/21/gvim use wmctrl in ubuntu</id>
-    <content type="html"><![CDATA[<p>  Use the wmctrl tools could maximize the windows of gvim in ubuntu. But I find a small issue for that.</p>
-
-<p>  Here is the wrong script:</p>
-
-<p>  if has(&ldquo;win32&rdquo;)
+    <content type="html"><![CDATA[<p>  Use the wmctrl tools could maximize the windows of gvim in ubuntu. But I find a small issue for that.
+  Here is the wrong script:
+  if has(&ldquo;win32&rdquo;)
     au GUIEnter * simalt ~x
 else
     au GUIEnter * call MaximizeWindow()
-endif</p>
-
-<p>function! MaximizeWindow()
+endif
+function! MaximizeWindow()
     silent !wmctrl -r :ACTIVE: -b add, maximized_vert,maximized_horz
-endfunction</p>
-
-<p>   You could see that between &ldquo;,&rdquo; and &ldquo;maximized_vert&rdquo; on line 8, there is a blank. It&rsquo;s the reason why the script can&rsquo;t works. So I remove the blank and it woks fine. So strange, because this scripts works well on my mac mini.</p>
+endfunction
+   You could see that between &ldquo;,&rdquo; and &ldquo;maximized_vert&rdquo; on line 8, there is a blank. It&rsquo;s the reason why the script can&rsquo;t works. So I remove the blank and it woks fine. So strange, because this scripts works well on my mac mini.</p>
 ]]></content>
   </entry>
   
@@ -41,19 +37,13 @@ endfunction</p>
     <link href="http://timbao.github.io/blog/2013/04/11/How%20to%20use%20Terminal%20in%20Vim/"/>
     <updated>2013-04-11T05:14:00+08:00</updated>
     <id>http://timbao.github.io/blog/2013/04/11/How to use Terminal in Vim</id>
-    <content type="html"><![CDATA[<p>  这篇文章虽然叫做“如何在Vim中使用Terminal”，但是我这里要说的是在Windows下使用。</p>
-
-<p>  OS： Windows 8 64bit</p>
-
-<p>  Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通信来操作terminal command的。插件是使用python写的）</p>
-
-<p>  Python：2.7</p>
-
-<p>  Vim：7.3</p>
-
-<p>  在我的Linux下使用ConqueTerm一点问题都没有，非常好用，我的32位的Window7 上面也没有问题，只有在64位windows 8工作机上才会出现无法在vim中找到python接口。也就是说 echo has(&lsquo;python&rsquo;) = 0。通过查看vim的verison，发现已经打开了python/dyn。这个问题一连搞了一天也没有解决，果断放弃。这段时间vim的学习又有了突破，才又想起解决这个问题，通过大量的google search，终于在stackflow上面看到某人也有类似的问题，解决方法也是让我没有想到，重装vim或者python？为什么呢？原来是版本不匹配，我的机器安装的是64位的python，而vim确是32位的，果断下载一个64位的Vim，重新测试。OK，一切正常！</p>
-
-<p>  通过这个问题，我的收获就是当一个问题陷入死胡同的时候，不应该去放弃；可以暂时先放下，调整下心情状态，或者过段时间再来解决，很有可能就会柳暗花明又一村！</p>
+    <content type="html"><![CDATA[<p>  这篇文章虽然叫做“如何在Vim中使用Terminal”，但是我这里要说的是在Windows下使用。
+  OS： Windows 8 64bit
+  Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通信来操作terminal command的。插件是使用python写的）
+  Python：2.7
+  Vim：7.3
+  在我的Linux下使用ConqueTerm一点问题都没有，非常好用，我的32位的Window7 上面也没有问题，只有在64位windows 8工作机上才会出现无法在vim中找到python接口。也就是说 echo has(&lsquo;python&rsquo;) = 0。通过查看vim的verison，发现已经打开了python/dyn。这个问题一连搞了一天也没有解决，果断放弃。这段时间vim的学习又有了突破，才又想起解决这个问题，通过大量的google search，终于在stackflow上面看到某人也有类似的问题，解决方法也是让我没有想到，重装vim或者python？为什么呢？原来是版本不匹配，我的机器安装的是64位的python，而vim确是32位的，果断下载一个64位的Vim，重新测试。OK，一切正常！
+  通过这个问题，我的收获就是当一个问题陷入死胡同的时候，不应该去放弃；可以暂时先放下，调整下心情状态，或者过段时间再来解决，很有可能就会柳暗花明又一村！</p>
 ]]></content>
   </entry>
   

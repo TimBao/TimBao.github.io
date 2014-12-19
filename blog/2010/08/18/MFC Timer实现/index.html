@@ -84,43 +84,25 @@
   </header>
 
 
-<div class="entry-content"><p>  1、在Dialog类的头文件中增加定时器消息处理函数：</p>
-
-<p>  afx_msg void OnTimer(UINT nIDEvent);</p>
-
-<p>  2、在Dialog类的CPP文件的消息映射中增加WM_TIMER消息处理</p>
-
-<p>  ON_WM_TIMER()</p>
-
-<p>  3、启动定时器</p>
-
-<p>  UINT uiTimerID = SetTiemr(1/<em>nIDEvent</em>/, 1000/<em>时间间隔</em>/, NULL);</p>
-
-<p>  4、杀死定时器</p>
-
-<p>  KillTiemr(uiTimerID );</p>
-
-<p>  4、定时器处理函数</p>
-
-<p>  void CTestDlg::OnTimer(UINT nIDEvent)</p>
-
-<p>  {</p>
-
-<p>  switch (nIDEvent)</p>
-
-<p>  {</p>
-
-<p>  case 1:</p>
-
-<p>  //你的消息处理函数</p>
-
-<p>  break;</p>
-
-<p>  }</p>
-
-<p>  CDialog::OnTimer(nIDEvent);</p>
-
-<p>  }</p>
+<div class="entry-content"><p>  1、在Dialog类的头文件中增加定时器消息处理函数：
+  afx_msg void OnTimer(UINT nIDEvent);
+  2、在Dialog类的CPP文件的消息映射中增加WM_TIMER消息处理
+  ON_WM_TIMER()
+  3、启动定时器
+  UINT uiTimerID = SetTiemr(1/<em>nIDEvent</em>/, 1000/<em>时间间隔</em>/, NULL);
+  4、杀死定时器
+  KillTiemr(uiTimerID );
+  4、定时器处理函数
+  void CTestDlg::OnTimer(UINT nIDEvent)
+  {
+  switch (nIDEvent)
+  {
+  case 1:
+  //你的消息处理函数
+  break;
+  }
+  CDialog::OnTimer(nIDEvent);
+  }</p>
 </div>
 
 

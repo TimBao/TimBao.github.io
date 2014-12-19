@@ -84,41 +84,22 @@
   </header>
 
 
-<div class="entry-content"><p> #include &lt;stdio.h>;</p>
-
-<p>  #include &lt;stdarg.h>;</p>
-
-<pre><code>void logTest(const char* content, ...)
-
- {
-
-  FILE* logfile = fopen("log.txt", "a");
-
-   if(logfile)
-
-    {
-
-     fprintf(logfile, "########## NEW LOG ########\n");
-
-
-       va_list arg;
-
-        va_start(arg, content);
-
-         vfprintf(logfile, content, arg);
-
-          va_end(arg);
-
-
-            int status = fflush(logfile);
-
-
-              fclose(logfile);
-
-               }
-
-                }
-</code></pre>
+<div class="entry-content"><p> #include &lt;stdio.h>;
+  #include &lt;stdarg.h>;
+    void logTest(const char<em> content, &hellip;)
+     {
+      FILE</em> logfile = fopen(&ldquo;log.txt&rdquo;, &ldquo;a&rdquo;);
+       if(logfile)
+        {
+         fprintf(logfile, &ldquo;########## NEW LOG ########\n&rdquo;);
+           va_list arg;
+            va_start(arg, content);
+             vfprintf(logfile, content, arg);
+              va_end(arg);
+                int status = fflush(logfile);
+                  fclose(logfile);
+                   }
+                    }</p>
 </div>
 
 

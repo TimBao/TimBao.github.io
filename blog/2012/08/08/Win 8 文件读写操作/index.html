@@ -84,48 +84,39 @@
   </header>
 
 
-<div class="entry-content"><p>   啥也不说了，直接上代码。</p>
-
-<pre><code>#include &lt;windows.h&gt;;
-</code></pre>
+<div class="entry-content"><p>   啥也不说了，直接上代码。
+    #include &lt;windows.h>;</p>
 
 <h1>include &lt;ppltasks.h>;</h1>
 
 <p>using namespace Platform;
 using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
-using namespace Concurrency;</p>
-
-<p>StorageFile^ openFile(String^ fileName)
+using namespace Concurrency;
+StorageFile^ openFile(String^ fileName)
 {
     StorageFile^ file = nullptr;
-    StorageFolder^ rootFolder = Windows::Storage::ApplicationData::Current->;LocalFolder;</p>
-
-<pre><code>task&lt;StorageFile^&gt;;(rootFolder-&gt;;GetFileAsync(fileName)).then([&amp;](task&lt;StorageFile^&gt;; getFileTask)
-{
-    try
+    StorageFolder^ rootFolder = Windows::Storage::ApplicationData::Current->;LocalFolder;
+    task&lt;StorageFile^>;(rootFolder->;GetFileAsync(fileName)).then(<a href="task&lt;StorageFile^>;%20getFileTask&#8221;>&amp;</a>
     {
-        file = getFileTask.get();
-    }
-    catch (Platform::Exception^ e)
-    {
-    }
-}).wait();
-
-return file;
-</code></pre>
-
-<p>}</p>
-
-<p>Array<byte>;^ getFileContent(String^ fileName)
+        try
+        {
+            file = getFileTask.get();
+        }
+        catch (Platform::Exception^ e)
+        {
+        }
+    }).wait();
+    return file;
+}
+Array<byte>;^ getFileContent(String^ fileName)
 {
     Array<byte>;^ data = nullptr;
     StorageFile^ file = openFile(fileName);
     if (file)
     {
-        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::Read)).then([&amp;]</p>
-
-<p>(task&lt;IRandomAccessStream^>; getStream)
+        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::Read)).then([&amp;]
+(task&lt;IRandomAccessStream^>; getStream)
         {<br/>
             auto readStream = getStream.get();
             DataReader^ dataReader=ref new DataReader(readStream);
@@ -133,22 +124,16 @@ return file;
             if (length >; 0)
             {
                 data = ref new Array<byte>;(length);
-                task<unsigned int>;(dataReader->;LoadAsync(readStream->;Size)).then([&amp;](task&lt;unsigned</p>
-
-<p>int>; loadTask) {
+                task<unsigned int>;(dataReader->;LoadAsync(readStream->;Size)).then(<a href="task&lt;unsigned%0Aint>;%20loadTask&#8221;>&amp;</a> {
                     loadTask.get();
                     dataReader->;ReadBytes(data);
                 }).wait();
             }
         }).wait();
-    }</p>
-
-<pre><code>return data;
-</code></pre>
-
-<p>}</p>
-
-<p>bool setFileContent(String^ fileName, unsigned char* data, int size)
+    }
+    return data;
+}
+bool setFileContent(String^ fileName, unsigned char* data, int size)
 {
     size_t totalWritten = 0;
     bool complete = false;
@@ -156,41 +141,32 @@ return file;
     if (file)
     {
         IRandomAccessStream^ readStream = nullptr;
-        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::ReadWrite)).then([&amp;]</p>
-
-<p>(task&lt;IRandomAccessStream^>; getStream)
+        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::ReadWrite)).then([&amp;]
+(task&lt;IRandomAccessStream^>; getStream)
         {<br/>
-            readStream = getStream.get();</p>
-
-<pre><code>        DataWriter^ dataWriter = ref new DataWriter(readStream);
-        Array&lt;unsigned char&gt;;^ arr = ref new Array&lt;unsigned char&gt;;(data, size);
-
-        dataWriter-&gt;;WriteBytes(arr);
-        task&lt;unsigned int&gt;;(dataWriter-&gt;;StoreAsync()).then([&amp;](task&lt;unsigned int&gt;; writeTask)
-        {
-            try
+            readStream = getStream.get();
+            DataWriter^ dataWriter = ref new DataWriter(readStream);
+            Array<unsigned char>;^ arr = ref new Array<unsigned char>;(data, size);
+            dataWriter->;WriteBytes(arr);
+            task<unsigned int>;(dataWriter->;StoreAsync()).then(<a href="task&lt;unsigned%20int>;%20writeTask&#8221;>&amp;</a>
             {
-                totalWritten = writeTask.get();
-            } catch (Platform::Exception^ ex) {}
-        }).wait();
-
-        task&lt;bool&gt;;(dataWriter-&gt;;FlushAsync()).then([&amp;](task&lt;bool&gt;; flushTask)
-        {
-            try
+                try
+                {
+                    totalWritten = writeTask.get();
+                } catch (Platform::Exception^ ex) {}
+            }).wait();
+            task<bool>;(dataWriter->;FlushAsync()).then(<a href="task&lt;bool>;%20flushTask&#8221;>&amp;</a>
             {
-                complete = flushTask.get();
-            } catch (Platform::Exception^ ex) {}
+                try
+                {
+                    complete = flushTask.get();
+                } catch (Platform::Exception^ ex) {}
+            }).wait();
+            dataWriter->;DetachStream();
         }).wait();
-
-        dataWriter-&gt;;DetachStream();
-
-    }).wait();
-}
-
-return complete;
-</code></pre>
-
-<p>}</p>
+    }
+    return complete;
+}</p>
 </div>
 
 

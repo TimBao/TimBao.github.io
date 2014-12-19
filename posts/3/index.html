@@ -87,51 +87,33 @@
   </header>
 
 
-  <div class="entry-content"><p>  Item 12：理解“抛出一个异常”与“传递一个参数”或“调用一个虚函数”间的差异</p>
-
-<p>   你调用函数时，程序的控制权最终还会返回到函数的调用处，但是当你抛出一个异常时，控制权永远不会回到抛出异常的地方。</p>
-
-<pre><code>把一个对象传递给函数或一个对象调用虚拟函数与把一个对象做为异常抛出，这之间有三个主要区别。
-
- 第一、异常对象在传递时总被进行拷贝；当通过传值方式捕获时，异常对象被拷贝了两次。对象做为参数传递给函数时不一定需要被拷贝。第二、对象做为异常被抛出与做为参数传递给函数相比，前者类型转换比后者要少（前者只有两种转换形式）。
-
-
-   最后一点，catch 子句进行异常类型匹配的顺序是它们在源代码中出现的顺序，第一个类型匹配成功的 catch 将被用来执行。当一个对象调用一个虚拟函数时，被选择的函数位于与对象类型匹配最佳的类里，即使该类不是在源代码的最前头。
-
-  #include &lt;iostream&gt;;
-</code></pre>
-
-<p>using namespace std;</p>
-
-<p>class Base
+  <div class="entry-content"><p>  Item 12：理解“抛出一个异常”与“传递一个参数”或“调用一个虚函数”间的差异
+   你调用函数时，程序的控制权最终还会返回到函数的调用处，但是当你抛出一个异常时，控制权永远不会回到抛出异常的地方。
+    把一个对象传递给函数或一个对象调用虚拟函数与把一个对象做为异常抛出，这之间有三个主要区别。
+     第一、异常对象在传递时总被进行拷贝；当通过传值方式捕获时，异常对象被拷贝了两次。对象做为参数传递给函数时不一定需要被拷贝。第二、对象做为异常被抛出与做为参数传递给函数相比，前者类型转换比后者要少（前者只有两种转换形式）。
+       最后一点，catch 子句进行异常类型匹配的顺序是它们在源代码中出现的顺序，第一个类型匹配成功的 catch 将被用来执行。当一个对象调用一个虚拟函数时，被选择的函数位于与对象类型匹配最佳的类里，即使该类不是在源代码的最前头。
+      #include <iostream>;
+using namespace std;
+class Base
 {
 public:
     Base() { cout &lt;&lt; &ldquo;constructor&rdquo; &lt;&lt; endl; }
-    ~Base()  { cout &lt;&lt; &ldquo;destructor&rdquo; &lt;&lt; endl; }</p>
-
-<pre><code>Base(const Base&amp; m) { cout &lt;&lt; "copy constructor" &lt;&lt; endl; pInt = m.pInt; }
-void Message() {cout &lt;&lt; "Base::Message" &lt;&lt;endl;}
-</code></pre>
-
-<p>private:
+    ~Base()  { cout &lt;&lt; &ldquo;destructor&rdquo; &lt;&lt; endl; }
+    Base(const Base&amp; m) { cout &lt;&lt; &ldquo;copy constructor&rdquo; &lt;&lt; endl; pInt = m.pInt; }
+    void Message() {cout &lt;&lt; &ldquo;Base::Message&rdquo; &lt;&lt;endl;}
+private:
     int pInt;
-};</p>
-
-<p>class SubClass: public Base
+};
+class SubClass: public Base
 {
 public:
     SubClass() { cout &lt;&lt; &ldquo;constructor_sub&rdquo; &lt;&lt; endl; }
     ~SubClass(){ cout &lt;&lt; &ldquo;destructor_sub&rdquo; &lt;&lt; endl; }
-    SubClass(const SubClass&amp; ) { cout &lt;&lt; &ldquo;copy constructor_sub&rdquo; &lt;&lt; endl; }</p>
-
-<pre><code>void Message() {cout &lt;&lt; "SubClass::Message" &lt;&lt;endl;}
-</code></pre>
-
-<p>private:</p>
-
-<p>};</p>
-
-<p>int main() {
+    SubClass(const SubClass&amp; ) { cout &lt;&lt; &ldquo;copy constructor_sub&rdquo; &lt;&lt; endl; }
+    void Message() {cout &lt;&lt; &ldquo;SubClass::Message&rdquo; &lt;&lt;endl;}
+private:
+};
+int main() {
     int iTemp = 0;
     try
     {
@@ -144,51 +126,46 @@ public:
     catch (int i)
     {
         cout &lt;&lt; &ldquo;int&rdquo; &lt;&lt; endl;
-    }</p>
-
-<pre><code>int* piTemp = NULL;
-try
-{
-    throw piTemp;
-}
-catch (void* e)
-{
-    cout &lt;&lt; "void*" &lt;&lt; endl;
-}
-catch (int* i)
-{
-    cout &lt;&lt; "int* " &lt;&lt; endl;
-}
-
-SubClass n;
-try
-{
-    throw n;
-}
-catch (Base&amp; e)
-{
-    e.Message();
-    //throw;
-    //throw e;
-}
-catch (SubClass&amp; ex)
-{
-    e.Message();
-}
-
-Base m;
-//Base* m = new Base（）；
-try
-{
-    throw m;
-}
-catch (Base e)
-{
-    cout &lt;&lt; "Base" &lt;&lt; endl;
-}
-</code></pre>
-
-<p>//    catch (Base&amp; e)
+    }
+    int<em> piTemp = NULL;
+    try
+    {
+        throw piTemp;
+    }
+    catch (void</em> e)
+    {
+        cout &lt;&lt; &ldquo;void<em>&rdquo; &lt;&lt; endl;
+    }
+    catch (int</em> i)
+    {
+        cout &lt;&lt; &ldquo;int<em> &rdquo; &lt;&lt; endl;
+    }
+    SubClass n;
+    try
+    {
+        throw n;
+    }
+    catch (Base&amp; e)
+    {
+        e.Message();
+        //throw;
+        //throw e;
+    }
+    catch (SubClass&amp; ex)
+    {
+        e.Message();
+    }
+    Base m;
+    //Base</em> m = new Base（）；
+    try
+    {
+        throw m;
+    }
+    catch (Base e)
+    {
+        cout &lt;&lt; &ldquo;Base&rdquo; &lt;&lt; endl;
+    }
+//    catch (Base&amp; e)
 //    {
 //        cout &lt;&lt; &ldquo;Base&amp;&rdquo; &lt;&lt; endl;
 //    }
@@ -196,42 +173,26 @@ catch (Base e)
 //    {
 //        cout &lt;&lt; &ldquo;const Base&amp;&rdquo; &lt;&lt; endl;
 //    }
-//    catch (Base* e)
+//    catch (Base<em> e)
 //    {
 //        e->;Message();
 //        delete e;
 //    }
-}</p>
-
-<pre><code>   第一部分throw iTemp;输出：cout &lt;&lt; "int" &lt;&lt; endl; 对应上面的第二种情况，异常传递的类型如果是基础类型的话不能进行隐式转换。
-
-    第二部分throw piTemp;输出：cout &lt;&lt; "void*" &lt;&lt; endl;对应上面的第二种情况，说明如果是异常抛出指针的话，catch参数可以被隐式转换为void*指针。
-
-     第三部分throw n;输出：
-
-      constructor
-
-       constructor_sub
-
-        constructor
-
-         copy constructor_sub
-
-          Base::Message
-
-           destructor_sub
-
-            destructor
-
-             对应上面的第二种情况，说明在异常捕获中，子类异常可以通过基类参数捕获到。
-
-              对应上面的第三种情况，说明捕获的顺序是代码中出现的顺序。
-
-               把注释掉的//throw; //throw e;两句分别打开，运行结果确是一样的，跟书中描述不尽相同。理论上讲throw应该抛出的时subclass类型的异常。
-
-
-                 最后一部分主要是验证异常参数传值，传引用和传指针的区别。通过程序结果可以看出，不论是传值还是传引用，都会进行拷贝构造，不同之处为传值会进行两次拷贝构造。不过在传指针时，确没有进行拷贝构造函数的调用。和函数参数穿指针一样。但是需要注意的是，异常处理有可能会跟异常抛出位置不是同一个作用域，那样抛指针异常的时候，有可能会造成异常泄露，所以我在最后显示调用delete e；释放资源。
-</code></pre>
+}
+       第一部分throw iTemp;输出：cout &lt;&lt; &ldquo;int&rdquo; &lt;&lt; endl; 对应上面的第二种情况，异常传递的类型如果是基础类型的话不能进行隐式转换。
+        第二部分throw piTemp;输出：cout &lt;&lt; &ldquo;void</em>&rdquo; &lt;&lt; endl;对应上面的第二种情况，说明如果是异常抛出指针的话，catch参数可以被隐式转换为void*指针。
+         第三部分throw n;输出：
+          constructor
+           constructor_sub
+            constructor
+             copy constructor_sub
+              Base::Message
+               destructor_sub
+                destructor
+                 对应上面的第二种情况，说明在异常捕获中，子类异常可以通过基类参数捕获到。
+                  对应上面的第三种情况，说明捕获的顺序是代码中出现的顺序。
+                   把注释掉的//throw; //throw e;两句分别打开，运行结果确是一样的，跟书中描述不尽相同。理论上讲throw应该抛出的时subclass类型的异常。
+                     最后一部分主要是验证异常参数传值，传引用和传指针的区别。通过程序结果可以看出，不论是传值还是传引用，都会进行拷贝构造，不同之处为传值会进行两次拷贝构造。不过在传指针时，确没有进行拷贝构造函数的调用。和函数参数穿指针一样。但是需要注意的是，异常处理有可能会跟异常抛出位置不是同一个作用域，那样抛指针异常的时候，有可能会造成异常泄露，所以我在最后显示调用delete e；释放资源。</p>
 </div>
   
   
@@ -260,19 +221,12 @@ catch (Base e)
   </header>
 
 
-  <div class="entry-content"><p>  Item 11：禁止异常信息（exceptions）传递到析构函数外</p>
-
-<p>   书中所言，会有两种情况调用析构函数。第一种是在正常情况下删除一个对象，例如对象超出作用域或者显示delete。第二种是异常传递的堆栈辗转开解（stack-unwinding）过程中，由异常处理系统删除一个对象。在一个异常被激活的同时，析构函数也抛出异常，并导致程序控制权转移到析构函数外，C++将调用 terminate 函数。</p>
-
-<pre><code> 为什么要防止在析构函数中的异常传递到函数外，除了上面说的第二种情况外，还有就是将异常传递出去后，程序转到异常处理程序，析构函数中异常之后的程序将不会再被执行，这有可能会导致资源的泄露。
-
-
-   这里对stack unwinding说明下，堆栈展开是C++的一个概念，每个函数都回有它的堆栈，调用函数时会对函数参数和局部成员进行入栈，而函数结束时会按入栈相反的顺序进行出栈。举个例子说下的上面的第二种情况：
-
-    void func（string s）
-</code></pre>
-
-<p>{
+  <div class="entry-content"><p>  Item 11：禁止异常信息（exceptions）传递到析构函数外
+   书中所言，会有两种情况调用析构函数。第一种是在正常情况下删除一个对象，例如对象超出作用域或者显示delete。第二种是异常传递的堆栈辗转开解（stack-unwinding）过程中，由异常处理系统删除一个对象。在一个异常被激活的同时，析构函数也抛出异常，并导致程序控制权转移到析构函数外，C++将调用 terminate 函数。
+     为什么要防止在析构函数中的异常传递到函数外，除了上面说的第二种情况外，还有就是将异常传递出去后，程序转到异常处理程序，析构函数中异常之后的程序将不会再被执行，这有可能会导致资源的泄露。
+       这里对stack unwinding说明下，堆栈展开是C++的一个概念，每个函数都回有它的堆栈，调用函数时会对函数参数和局部成员进行入栈，而函数结束时会按入栈相反的顺序进行出栈。举个例子说下的上面的第二种情况：
+        void func（string s）
+{
     object obj（s）；
     obj.dosomething();
 }
@@ -305,31 +259,24 @@ catch (Base e)
   </header>
 
 
-  <div class="entry-content"><p>  Item 10：在构造函数中防止资源泄漏</p>
-
-<p>   该条款讲述的内容跟上一条款很相似，应该都可以归属为编写异常安全代码范畴。在构造函数中尽量处理简单的代码，防止抛异常，因为C++并没有对构造函数异常做析构的动作，并不会在构造函数发生异常的情况下，调用析构函数去释放资源。这是考虑到效率问题。</p>
-
-<pre><code>我们还是举个例子更直观的描述如何在构造函数中编写异常安全的代码，要做个通讯录类，内容包括姓名，地址，图片和一段声音。
-
- class Image
-</code></pre>
-
-<p>{
+  <div class="entry-content"><p>  Item 10：在构造函数中防止资源泄漏
+   该条款讲述的内容跟上一条款很相似，应该都可以归属为编写异常安全代码范畴。在构造函数中尽量处理简单的代码，防止抛异常，因为C++并没有对构造函数异常做析构的动作，并不会在构造函数发生异常的情况下，调用析构函数去释放资源。这是考虑到效率问题。
+    我们还是举个例子更直观的描述如何在构造函数中编写异常安全的代码，要做个通讯录类，内容包括姓名，地址，图片和一段声音。
+     class Image
+{
 public:
     Image(string name);
 private:
     string imageName;
-}；</p>
-
-<p>class Audio
+}；
+class Audio
 {
 public:
     Audio(string name);
 private:
     string audioName;
-};</p>
-
-<p>class BookEntry
+};
+class BookEntry
 {
 public:
     BookEntry(string name, string adress, Image<em> image, Audio</em> audio);
@@ -339,11 +286,9 @@ private:
     string m_adress;
     Image<em> m_image;
     Audio</em> m_audio;
-};</p>
-
-<dl>
-<dt>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)</dt>
-<dd><p>m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
+};
+BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+: m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
 {
    m_image = new Image(imageName);
    m_audio = new Audio(audioName);
@@ -352,61 +297,42 @@ BookEntry::~BookEntry()
 {
     delete m_image;
     delete m_audio;
-}</p>
-
-<pre><code>因为C++ delete删除空指针是不做任何操作的，所以析构函数中并没有对指针进行判断。
-
-
-  我们考虑正常情况下构造函数全部指向完毕（完全构造），当销毁BookEntry的时候，会调用析构函数释放资源，没有任何问题。但是如果是构造函数中出现异常情况怎么办？最简单的办法就是万能的try catch。
-
-   BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
-</code></pre></dd>
-<dd><p>m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
-{
-  try
-  {
-      m_image = new Image(imageName);
-      m_audio = new Audio(audioName);
-  }
-  catch(&hellip;)
-  {
-      delete m_image；
-      delete m_audio;
-  }
-}</p>
-
-<pre><code>     OK, 没有问题了，但是看起来catch中的代码跟析构函数的代码一样，OK，利用refactoring method我们可以合并代码，abstract a public method。
-
-      那么如果我们再修改下代码，将成员变量改为const常量
-
-       Image* const m_image;
-</code></pre>
-
-<p>Audio* const m_audio;</p>
-
-<pre><code>        那么就只能在成员初始化列表中对指针进行初始化了。
-
+}
+      因为C++ delete删除空指针是不做任何操作的，所以析构函数中并没有对指针进行判断。
+        我们考虑正常情况下构造函数全部指向完毕（完全构造），当销毁BookEntry的时候，会调用析构函数释放资源，没有任何问题。但是如果是构造函数中出现异常情况怎么办？最简单的办法就是万能的try catch。
          BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
-</code></pre></dd>
-<dd><p>m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
-{}</p>
-
-<pre><code>          在成员初始化函数列表中，是不可以包含语句的，只能使用表达式，那么try catch就无法再使用了，那么该如何解决呢？估计看过前一章的一定会想到的，对就是使用智能指针。
-
-           const share_ptr&lt;Image&gt;; m_image;
-</code></pre></dd>
-<dt>const share_ptr<Audio>; m_audio;</dt>
-<dt>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)</dt>
-<dd><p>m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
+: m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
+{
+    try
+    {
+        m_image = new Image(imageName);
+        m_audio = new Audio(audioName);
+    }
+    catch(&hellip;)
+    {
+        delete m_image；
+        delete m_audio;
+    }
+}
+           OK, 没有问题了，但是看起来catch中的代码跟析构函数的代码一样，OK，利用refactoring method我们可以合并代码，abstract a public method。
+            那么如果我们再修改下代码，将成员变量改为const常量
+             Image<em> const m_image;
+Audio</em> const m_audio;
+              那么就只能在成员初始化列表中对指针进行初始化了。
+               BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+: m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
+{}
+                在成员初始化函数列表中，是不可以包含语句的，只能使用表达式，那么try catch就无法再使用了，那么该如何解决呢？估计看过前一章的一定会想到的，对就是使用智能指针。
+                 const share_ptr<Image>; m_image;
+const share_ptr<Audio>; m_audio;
+BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+: m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
 {
 }
 BookEntry::~BookEntry()
 {
-}</p>
-
-<pre><code>            连析构函数也省了。
-</code></pre></dd>
-</dl>
+}
+                  连析构函数也省了。</p>
 </div>
   
   
@@ -435,32 +361,21 @@ BookEntry::~BookEntry()
   </header>
 
 
-  <div class="entry-content"><p>  Item 9：使用析构函数防止资源泄漏</p>
-
-<p>   这一章我觉得可以算作是异常安全处理的一种情况，也就是说在异常发生的情况下，保证资源能被正确释放。</p>
-
-<pre><code>这里分为两种情况来讨论，
-
- 一是指针操作
-
-  举个例子：
-
-   void myFucntion()
-</code></pre>
-
-<p>{
-    Object* obj = getBack();
+  <div class="entry-content"><p>  Item 9：使用析构函数防止资源泄漏
+   这一章我觉得可以算作是异常安全处理的一种情况，也就是说在异常发生的情况下，保证资源能被正确释放。
+    这里分为两种情况来讨论，
+     一是指针操作
+      举个例子：
+       void myFucntion()
+{
+    Object<em> obj = getBack();
     obj->;doSomething();
     delete obj；
-}</p>
-
-<pre><code>     如果在obj-&gt;;doSomething()中发生异常，那么delete obj将不会执行，这是个很显然的泄露问题。想到的第一解决方法基本都是加上try...catch（），Ok那么让我们重新整理代码。
-
-      void myFucntion()
-</code></pre>
-
-<p>{
-    Object* obj = getBack();
+}
+         如果在obj->;doSomething()中发生异常，那么delete obj将不会执行，这是个很显然的泄露问题。想到的第一解决方法基本都是加上try&hellip;catch（），Ok那么让我们重新整理代码。
+          void myFucntion()
+{
+    Object</em> obj = getBack();
     try
     {<br/>
         obj->;doSomething();
@@ -470,15 +385,11 @@ BookEntry::~BookEntry()
         delete obj；
     }
     delete obj；
-}</p>
-
-<pre><code>        好吧，我承认，程序很丑陋，代码重复，那么继续改进。
-
-         void myFucntion()
-</code></pre>
-
-<p>{
-    Object* obj = getBack();
+}
+            好吧，我承认，程序很丑陋，代码重复，那么继续改进。
+             void myFucntion()
+{
+    Object<em> obj = getBack();
     try
     {<br/>
         obj->;doSomething();
@@ -491,29 +402,18 @@ BookEntry::~BookEntry()
     {
         delete obj；
     }
-}</p>
-
-<pre><code>           Ok，问题已经解决。但是还不要高兴，满篇的try catch，如果有很多地方都需要加try catch，那么工作量也是非常惊人的，当然你也可以这样写，但是我觉得作为程序员就是要有“懒惰”的思想，要简化，越简单越好，代码越少出错的地方也就越少。那么你一定想到了，利用智能指针auto_ptr或者share_ptr来解决问题。Ok，尽管不推荐auto_ptr，但是老的代码中还是会出现的。
-
-            void myFucntion()
-</code></pre>
-
-<p>{
-    share_ptr&lt;Object*>; obj(getBack());
+}
+               Ok，问题已经解决。但是还不要高兴，满篇的try catch，如果有很多地方都需要加try catch，那么工作量也是非常惊人的，当然你也可以这样写，但是我觉得作为程序员就是要有“懒惰”的思想，要简化，越简单越好，代码越少出错的地方也就越少。那么你一定想到了，利用智能指针auto_ptr或者share_ptr来解决问题。Ok，尽管不推荐auto_ptr，但是老的代码中还是会出现的。
+                void myFucntion()
+{
+    share_ptr&lt;Object</em>>; obj(getBack());
     obj->;doSomething();
-}</p>
-
-<pre><code>              Perfect!
-
-
-                二是对象操作
-
-                 最常见的问题时windows中的各种handler的关闭泄露问题，我们可以针对handler进行一个封装，在析构函数中释放handler。
-
-                  class WindowHandle
-</code></pre>
-
-<p>{
+}
+                  Perfect!
+                    二是对象操作
+                     最常见的问题时windows中的各种handler的关闭泄露问题，我们可以针对handler进行一个封装，在析构函数中释放handler。
+                      class WindowHandle
+{
 public:
     WindowHandle(WINDOW_HANDLE handle): w(handle) {}
     ~WindowHandle() { destroyWindow(w); }
@@ -551,41 +451,22 @@ private:
   </header>
 
 
-  <div class="entry-content"><p> Item 8：理解各种不同含义的new和delete</p>
-
-<p>   new操作符在C++中做了两件事，1是在堆上分配足够的内存，2是调用类的构造函数。new操作法的这种行为是程序员无法改变的，唯一程序员可以去做的就是按自己的需求来修改内存分配，通过重载operator new函数（void* operator new（size_t size））来自定义内存的分配，但是在调用构造函数上面是由编译器来决定的。如果要重载自己的operator new函数，第一个参数必须为size_t。</p>
-
-<pre><code>例如： Obeject* obj = new Object（）；
-
- 被编译器解析：
-
-  1.allocate memory
-
-   2.call Object（）构造函数
-
-
-     关于placement new，就是在已经分配的内存上创建对象，例如：
-
-      void* placementnewSample（void* buffer， size_t）
-</code></pre>
-
-<p>{
+  <div class="entry-content"><p> Item 8：理解各种不同含义的new和delete
+   new操作符在C++中做了两件事，1是在堆上分配足够的内存，2是调用类的构造函数。new操作法的这种行为是程序员无法改变的，唯一程序员可以去做的就是按自己的需求来修改内存分配，通过重载operator new函数（void<em> operator new（size_t size））来自定义内存的分配，但是在调用构造函数上面是由编译器来决定的。如果要重载自己的operator new函数，第一个参数必须为size_t。
+    例如： Obeject</em> obj = new Object（）；
+     被编译器解析：
+      1.allocate memory
+       2.call Object（）构造函数
+         关于placement new，就是在已经分配的内存上创建对象，例如：
+          void<em> placementnewSample（void</em> buffer， size_t）
+{
     return new （buffer） Object();
-}</p>
-
-<pre><code>        注意，如果是调用的placement new，则对应的一定不要调用delete操作符，因为该对象是在buffer中分配的。可以直接调用对象的析构函数。
-
-
-          数组的new操作符表现形式不同单个对象的new，但是做的事情是一样的。只不过是需要将所有数组元素都分配内存并依次调用构造函数。
-
-           void* operator new[](size_t size)； 为new数组分配内存函数，可以被重载。
-
-
-             delete操作符作为new操作符对应的相反行为，做的事情自然跟new相反，1调用析构函数，2释放已经分配的内存。如果你重载了operator new，则你必须重载operator delete来对应，否则有可能导致new和delete行为的不一致性。什么样的new对应什么样的delete，即单个对象的new对应单个对象的delete，new[]对应delete[]。
-
-
-               注意，尽量不要重载全局的new和delete，这样会造成程序的不兼容性，除非这是你想要的结果。
-</code></pre>
+}
+            注意，如果是调用的placement new，则对应的一定不要调用delete操作符，因为该对象是在buffer中分配的。可以直接调用对象的析构函数。
+              数组的new操作符表现形式不同单个对象的new，但是做的事情是一样的。只不过是需要将所有数组元素都分配内存并依次调用构造函数。
+               void* operator new<a href="size_t%20size"></a>； 为new数组分配内存函数，可以被重载。
+                 delete操作符作为new操作符对应的相反行为，做的事情自然跟new相反，1调用析构函数，2释放已经分配的内存。如果你重载了operator new，则你必须重载operator delete来对应，否则有可能导致new和delete行为的不一致性。什么样的new对应什么样的delete，即单个对象的new对应单个对象的delete，new[]对应delete[]。
+                   注意，尽量不要重载全局的new和delete，这样会造成程序的不兼容性，除非这是你想要的结果。</p>
 </div>
   
   
@@ -614,11 +495,9 @@ private:
   </header>
 
 
-  <div class="entry-content"><p>   Item 7：不要重载“&amp;&amp;”,“||”, 或“,”</p>
-
-<p> C/C++中“&amp;&amp;”和“||”操作符是采用短路计算法的，而且是有顺序的。即从左往右计算，如果一旦确认表达式的值，那么后面的表达式或计算不再执行。而重载运算符本质上是函数重载，即运算符操作为函数操作。operator &amp;&amp;()有两种情况，一是全局重载，二是作为类成员函数；如果是全局重载，那么调用本质为 &ldquo;operator &amp;&amp;（expression1， expression2）&rdquo;,而C++并没有规定参数的计算顺序，所以没有办法保证重载的&amp;&amp;保持原意不变。成员函数形式为expression1.operator&amp;&amp;(expression2)，跟全局问题一样，所以“&amp;&amp;”和“||”操作符适合重载。“，”运算符也是相同的原因，这里不再赘述。</p>
-
-<p>   操作符重载的目的是为了程序更容易阅读，理解和书写。</p>
+  <div class="entry-content"><p>   Item 7：不要重载“&amp;&amp;”,“||”, 或“,”
+ C/C++中“&amp;&amp;”和“||”操作符是采用短路计算法的，而且是有顺序的。即从左往右计算，如果一旦确认表达式的值，那么后面的表达式或计算不再执行。而重载运算符本质上是函数重载，即运算符操作为函数操作。operator &amp;&amp;()有两种情况，一是全局重载，二是作为类成员函数；如果是全局重载，那么调用本质为 &ldquo;operator &amp;&amp;（expression1， expression2）&rdquo;,而C++并没有规定参数的计算顺序，所以没有办法保证重载的&amp;&amp;保持原意不变。成员函数形式为expression1.operator&amp;&amp;(expression2)，跟全局问题一样，所以“&amp;&amp;”和“||”操作符适合重载。“，”运算符也是相同的原因，这里不再赘述。
+   操作符重载的目的是为了程序更容易阅读，理解和书写。</p>
 </div>
   
   
@@ -647,9 +526,8 @@ private:
   </header>
 
 
-  <div class="entry-content"><p>   Item 6：自增(increment)、自减(decrement)操作符前缀形式与后缀形式的区别</p>
-
-<p> class UPInt
+  <div class="entry-content"><p>   Item 6：自增(increment)、自减(decrement)操作符前缀形式与后缀形式的区别
+ class UPInt
 {
 public:
     &hellip;
@@ -657,36 +535,25 @@ public:
     const UPInt operator++(int); //后缀形式
     UPInt&amp; operator&ndash;();         //前缀形式
     const UPInt operator&ndash;(int); //后缀形式
-};</p>
-
-<p>UPInt&amp; UPInt::operator++()
+};
+UPInt&amp; UPInt::operator++()
 {
     <em>this += 1；
     return </em>this；
-}</p>
-
-<p>const UPInt UPInt::operator++(int)
+}
+const UPInt UPInt::operator++(int)
 {
     UPInt temp = <em>this;
     ++(</em>this);
     return temp;
 }
-&hellip;</p>
-
-<p>  从代码中可以看到，</p>
-
-<ol>
-<li><p>. 前缀是先增加再返回，而后缀是先返回再增加。</p>
-
-<ol>
-<li><p>前缀和后缀在表现形式上就有所不同，是通过参数来区分的，这是C++语言规范规定的区别标准。</p></li>
-<li><p>二者在返回值上也不相同，前缀形式返回类型的引用，而后缀则返回const 类型。为什么二者返回类型不相同，是为了防止出现 UPInt u； u++++；（在基础类型中不合法）。为了保持和基础类型一致而采取的考虑。</p></li>
-<li><p> 不管是前缀形式还是后缀形式，二者最终行为都是一致的（即增1），后缀实现采用前缀实现，这样就缩小改变，只需用改变前缀的实现就可以二者都改变。</p></li>
-<li><p>. 从实现上可以看出，后缀形式比前缀形式多了一个临时对象temp，而临时对象会造成构造和析构的时间开销，空间方面也会有开销，这就导致前缀形式的效率会比后缀要高，所以能使用前缀形式就要使用前缀形式。</p></li>
-</ol>
-</li>
-</ol>
-
+&hellip;
+  从代码中可以看到，
+   1. 前缀是先增加再返回，而后缀是先返回再增加。
+    2. 前缀和后缀在表现形式上就有所不同，是通过参数来区分的，这是C++语言规范规定的区别标准。
+     3. 二者在返回值上也不相同，前缀形式返回类型的引用，而后缀则返回const 类型。为什么二者返回类型不相同，是为了防止出现 UPInt u； u++++；（在基础类型中不合法）。为了保持和基础类型一致而采取的考虑。
+      4. 不管是前缀形式还是后缀形式，二者最终行为都是一致的（即增1），后缀实现采用前缀实现，这样就缩小改变，只需用改变前缀的实现就可以二者都改变。
+       5. 从实现上可以看出，后缀形式比前缀形式多了一个临时对象temp，而临时对象会造成构造和析构的时间开销，空间方面也会有开销，这就导致前缀形式的效率会比后缀要高，所以能使用前缀形式就要使用前缀形式。</p>
 </div>
   
   
@@ -715,46 +582,27 @@ public:
   </header>
 
 
-  <div class="entry-content"><p>  Item 5：谨慎定义类型转换函数</p>
-
-<p>   隐式类型转换时在编译期间由编译器来执行的。除了C/C++默认的基本类型的隐式类型转换外，用户自定义类型的隐式转换方式有两种：</p>
-
-<pre><code>1.定义隐式类型转换运算符
-
- 2.单参数构造函数或者多参数构造函数，但第一个参数以后的参数都有默认值。
-
-
-   隐式类型转换运算符例子：
-
-    class Rational
-</code></pre>
-
-<p>{
+  <div class="entry-content"><p>  Item 5：谨慎定义类型转换函数
+   隐式类型转换时在编译期间由编译器来执行的。除了C/C++默认的基本类型的隐式类型转换外，用户自定义类型的隐式转换方式有两种：
+    1.定义隐式类型转换运算符
+     2.单参数构造函数或者多参数构造函数，但第一个参数以后的参数都有默认值。
+       隐式类型转换运算符例子：
+        class Rational
+{
 public:
     Rational（int numerator = 0, int denominator = 1）；
     operator double() const;   //不需要返回类型，函数名称就是返回类型
-};</p>
-
-<p>Rational r（1， 2）；
-double d = 0.5 * r; //r 转换为double类型</p>
-
-<pre><code>      标题是要谨慎定义类型转换函数，为什么要谨慎呢，就是说这些定义的类型转换函数有可能会产生不是你想要的结果，比如你不想进行转换的时候，却给你转换了。如下情况：
-
-       cout &lt;&lt; r；  //Rational并没有定义operator &lt;&lt; 运算符，但是，编译器会找到operator double()转换函数，将r转换为double输出。但这并不是你想要的结果。
-
-        解决方法是用不使用语法关键字的等同的函数来替代转换运算符。如定义一个toDouble()函数来代替operator double()转换函数。STL中的string就提供了一个c_str()函数来转换到char*。
-
-
-          通过单参数构造函数进行隐式类型转换更难消除。而且在很多情况下这些函数所导致的
-
-           问题要甚于隐式类型转换运算符。
-
-            我们来看一个例子：
-
-             temlplate&lt;typename T&gt;;
-</code></pre>
-
-<p>class Array
+};
+Rational r（1， 2）；
+double d = 0.5 * r; //r 转换为double类型
+          标题是要谨慎定义类型转换函数，为什么要谨慎呢，就是说这些定义的类型转换函数有可能会产生不是你想要的结果，比如你不想进行转换的时候，却给你转换了。如下情况：
+           cout &lt;&lt; r；  //Rational并没有定义operator &lt;&lt; 运算符，但是，编译器会找到operator double()转换函数，将r转换为double输出。但这并不是你想要的结果。
+            解决方法是用不使用语法关键字的等同的函数来替代转换运算符。如定义一个toDouble()函数来代替operator double()转换函数。STL中的string就提供了一个c_str()函数来转换到char*。
+              通过单参数构造函数进行隐式类型转换更难消除。而且在很多情况下这些函数所导致的
+               问题要甚于隐式类型转换运算符。
+                我们来看一个例子：
+                 temlplate<typename T>;
+class Array
 {
 public:
     Array(int lowBound, int hightBound);
@@ -774,15 +622,10 @@ for (int i = 0; i &lt; 10; ++i)
     {
         do something for when they&rsquo;re not;
     }
-}</p>
-
-<pre><code>              我们的编译器注意到它能通过调用 Array&lt;int&gt;;构造函数能转换 int 类型到 Array&lt;int&gt;;类型，这个构造函数只有一个 int 类型的参数。然后编译器如此去编译，生成的代码就象这样：
-
-               if (a == static_cast&lt; Array&lt;int&gt;; &gt;;(b[i]))
-
-
-                 解决方案是利用一个最新编译器的特性，explicit 关键字。
-</code></pre>
+}
+                  我们的编译器注意到它能通过调用 Array<int>;构造函数能转换 int 类型到 Array<int>;类型，这个构造函数只有一个 int 类型的参数。然后编译器如此去编译，生成的代码就象这样：
+                   if (a == static_cast&lt; Array<int>; >;(b[i]))
+                     解决方案是利用一个最新编译器的特性，explicit 关键字。</p>
 </div>
   
   
@@ -811,19 +654,13 @@ for (int i = 0; i &lt; 10; ++i)
   </header>
 
 
-  <div class="entry-content"><p>   Item 4：避免无用的缺省构造函数</p>
-
-<p>   没有缺省构造函数会导致：</p>
-
-<p>  1.无法创建该类的数组形式。</p>
-
-<p>  2.无法在许多基于模板的容器类里使用。</p>
-
-<p>   设计虚基类时所面临的要提供缺省构造函数还是不提供缺省构造函数的两难决策：</p>
-
-<p>  1.不提供缺省构造函数的虚基类，很难与其进行合作。因为几乎所有的派生类在实例化时都必须给虚基类构造函数提供参数。</p>
-
-<p>  2.提供无意义的缺省构造函数也会影响类的工作效率。</p>
+  <div class="entry-content"><p>   Item 4：避免无用的缺省构造函数
+   没有缺省构造函数会导致：
+  1.无法创建该类的数组形式。
+  2.无法在许多基于模板的容器类里使用。
+   设计虚基类时所面临的要提供缺省构造函数还是不提供缺省构造函数的两难决策：
+  1.不提供缺省构造函数的虚基类，很难与其进行合作。因为几乎所有的派生类在实例化时都必须给虚基类构造函数提供参数。
+  2.提供无意义的缺省构造函数也会影响类的工作效率。</p>
 </div>
   
   
@@ -852,32 +689,19 @@ for (int i = 0; i &lt; 10; ++i)
   </header>
 
 
-  <div class="entry-content"><p>  Item 3: 不要对数组使用多态</p>
-
-<p>   语言规范中说通过一个基类指针来删除一个含有派生类对象的数组，结果将是不确定的。</p>
-
-<pre><code> class BST { ... };
-</code></pre>
-
-<p>class BalancedBST: public BST { &hellip; };</p>
-
-<p>void printBSTArray(ostream&amp; s,const BST array[], int numElements)
+  <div class="entry-content"><p>  Item 3: 不要对数组使用多态
+   语言规范中说通过一个基类指针来删除一个含有派生类对象的数组，结果将是不确定的。
+     class BST { &hellip; };
+class BalancedBST: public BST { &hellip; };
+void printBSTArray(ostream&amp; s,const BST array[], int numElements)
 {
     for (int i = 0; i &lt; numElements; )
     {
         s &lt;&lt; array[i]; //假设 BST 类重载了操作符&lt;&lt;
     }
-}</p>
-
-<pre><code>    编译器原先已经假设数组中元素与 BST 对象的大小一致，但是现在数组中每一个对象大小却与 BalancedBST 一致。派生类的长度通常都比基类要长。我们料想 BalancedBST 对象长度的比 BST 长。如果如此的话，printBSTArray 函数生成的指针算法将是错误的，没有人知道如果用 BalancedBST 数组来执行 printBSTArray 函数将会发生什么样的后果。不论是什么后果都是令人不愉快的。
-
-
-
-
-
-
-    值得注意的是如果你不从一个具体类（concrete classes） （例如 BST）派生出另一个具体类（例如 BalancedBST），那么你就不太可能犯这种使用多态性数组的错误。
-</code></pre>
+}
+        编译器原先已经假设数组中元素与 BST 对象的大小一致，但是现在数组中每一个对象大小却与 BalancedBST 一致。派生类的长度通常都比基类要长。我们料想 BalancedBST 对象长度的比 BST 长。如果如此的话，printBSTArray 函数生成的指针算法将是错误的，没有人知道如果用 BalancedBST 数组来执行 printBSTArray 函数将会发生什么样的后果。不论是什么后果都是令人不愉快的。
+        值得注意的是如果你不从一个具体类（concrete classes） （例如 BST）派生出另一个具体类（例如 BalancedBST），那么你就不太可能犯这种使用多态性数组的错误。</p>
 </div>
   
   

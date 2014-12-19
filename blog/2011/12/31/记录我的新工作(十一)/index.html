@@ -84,34 +84,25 @@
   </header>
 
 
-<div class="entry-content"><p>  又是一天的代码，眼干头大，今天主要将前几天的内容总体在捋顺一遍，深挖代码的细节，不断的提问，不断的解决问题，通过这个过程达到深入。这几天一直通过这样的努力来学习，发现有很大帮助。首先是看代码有了明确的目标，每次将问题解决，都有小小的成就感，可以促进继续下去。人老了，记性不好了，但是方法确是更多了，更有效了，这也是工作年限的一种附加值吧！</p>
-
-<p>  第一个细节点就是CALayer的方法andSubLayer，可以添加重复的layer，不会重复，只是将该层置前！</p>
-
-<p>  第二个细节点是关于C/C++的左移运算，</p>
-
-<p>   笨死了，查了资料才发现原来是对左边的表达式或值进行左移，移动位数为右值，以前一直理解的是相反的。NND</p>
-
-<p>  第三通过跟踪运行，对pickerview控件的数据源的加载了解了实现原理。通过&lt;UIPickerViewDelegate, UIPickerViewDataSource>;协议的方法的重写，自动实现对数据的读入。</p>
-
-<ul>
-<li>(NSInteger) pickerView: (UIPickerView *)pickerView
+<div class="entry-content"><p>  又是一天的代码，眼干头大，今天主要将前几天的内容总体在捋顺一遍，深挖代码的细节，不断的提问，不断的解决问题，通过这个过程达到深入。这几天一直通过这样的努力来学习，发现有很大帮助。首先是看代码有了明确的目标，每次将问题解决，都有小小的成就感，可以促进继续下去。人老了，记性不好了，但是方法确是更多了，更有效了，这也是工作年限的一种附加值吧！
+  第一个细节点就是CALayer的方法andSubLayer，可以添加重复的layer，不会重复，只是将该层置前！
+  第二个细节点是关于C/C++的左移运算，
+   笨死了，查了资料才发现原来是对左边的表达式或值进行左移，移动位数为右值，以前一直理解的是相反的。NND
+  第三通过跟踪运行，对pickerview控件的数据源的加载了解了实现原理。通过&lt;UIPickerViewDelegate, UIPickerViewDataSource>;协议的方法的重写，自动实现对数据的读入。
+ - (NSInteger) pickerView: (UIPickerView *)pickerView
 numberOfRowsInComponent: (NSInteger) component
 {
- return [pickerData count];
-}</li>
-</ul>
-
+    return [pickerData count];
+}</p>
 
 <h1>pragma mark Picker Delegate Methods</h1>
 
 <ul>
-<li><p>(NSString <em>) pickerView:(UIPickerView </em>)pickerView titleForRow:(NSInteger) row
+<li>(NSString <em>) pickerView:(UIPickerView </em>)pickerView titleForRow:(NSInteger) row
            forComponent:(NSInteger) component{
   return [pickerData objectAtIndex:row];
-}</p>
-
-<p> 然后就是对地图数据的显示和处理的深入了解了，目前对于所有流程都很清楚，但是在对平移和缩放的时候，地图数据的计算上面还有点小疑问需要明天继续，争取2012年来到之前把这块全部解决掉。</p></li>
+}
+ 然后就是对地图数据的显示和处理的深入了解了，目前对于所有流程都很清楚，但是在对平移和缩放的时候，地图数据的计算上面还有点小疑问需要明天继续，争取2012年来到之前把这块全部解决掉。</li>
 </ul>
 
 </div>

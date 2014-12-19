@@ -92,53 +92,36 @@ template <class Function>;
     </strong>int64 begin = GetTickCount64();
     f();
     return GetTickCount64() - begin;
-}</p>
-
-<p>// Use WideCharToMultiByte and MultiByteToWideChar
-string WChar2Ansi(const wchar_t* pwszSrc)
+}
+// Use WideCharToMultiByte and MultiByteToWideChar
+string WChar2Ansi(const wchar_t<em> pwszSrc)
 {
-    int nLen = WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, NULL, 0, NULL, NULL);</p>
-
-<pre><code>if (nLen&lt;= 0) return string("");
-
-char* pszDst = new char[nLen];
-if (NULL == pszDst) return string("");
-
-WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, pszDst, nLen, NULL, NULL);
-pszDst[nLen -1] = 0;
-
-string strTemp(pszDst);
-delete [] pszDst;
-
-return strTemp;
-</code></pre>
-
-<p>}</p>
-
-<p>wstring Ansi2WChar(const char* pszSrc, int nLen)
+    int nLen = WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, NULL, 0, NULL, NULL);
+    if (nLen&lt;= 0) return string(&ldquo;&rdquo;);
+    char</em> pszDst = new char[nLen];
+    if (NULL == pszDst) return string(&ldquo;&rdquo;);
+    WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, pszDst, nLen, NULL, NULL);
+    pszDst[nLen -1] = 0;
+    string strTemp(pszDst);
+    delete [] pszDst;
+    return strTemp;
+}
+wstring Ansi2WChar(const char<em> pszSrc, int nLen)
 {
     int nSize = MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, 0, 0);
-    if(nSize &lt;= 0) return NULL;</p>
-
-<pre><code>wchar_t *pwszDst = new wchar_t[nSize+1];
-if( NULL == pwszDst) return NULL;
-
-MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, pwszDst, nSize);
-pwszDst[nSize] = 0;
-
-if( pwszDst[0] == 0xFEFF)                    // skip Oxfeff
-    for(int i = 0; i &lt; nSize; i ++) 
-        pwszDst[i] = pwszDst[i+1]; 
-
-wstring wcharString(pwszDst);
-delete pwszDst;
-
-return wcharString;
-</code></pre>
-
-<p>}</p>
-
-<p>// Use wcstombs_s and mbstowcs_s
+    if(nSize &lt;= 0) return NULL;
+    wchar_t </em>pwszDst = new wchar_t[nSize+1];
+    if( NULL == pwszDst) return NULL;
+    MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, pwszDst, nSize);
+    pwszDst[nSize] = 0;
+    if( pwszDst[0] == 0xFEFF)                    // skip Oxfeff
+        for(int i = 0; i &lt; nSize; i ++)
+            pwszDst[i] = pwszDst[i+1];
+    wstring wcharString(pwszDst);
+    delete pwszDst;
+    return wcharString;
+}
+// Use wcstombs_s and mbstowcs_s
 string ws2s(wstring ws)
 {
     const wchar_t<em> Source = ws.c_str();
@@ -149,14 +132,10 @@ string ws2s(wstring ws)
     wcstombs(Dest, Source, size);
     //wcstombs_s(&amp;len, Dest, size, Source, size);
     string result = Dest;
-    delete [] Dest;</p>
-
-<pre><code>return result;
-</code></pre>
-
-<p>}</p>
-
-<p>wstring s2ws(string s)
+    delete [] Dest;
+    return result;
+}
+wstring s2ws(string s)
 {
     const char<em> Source = s.c_str();
     size_t size = s.size() + 1;
@@ -166,118 +145,91 @@ string ws2s(wstring ws)
     mbstowcs(Dest, Source, size);
     //mbstowcs_s(&amp;len, Dest, size, Source, size);
     wstring result = Dest;
-    delete [] Dest;</p>
-
-<pre><code>return result;
-</code></pre>
-
-<p>}</p>
-
-<p>// Testing
-    __int64 elapsed;
+    delete [] Dest;
+    return result;
+}
+// Testing
+    <em><em>int64 elapsed;
     string input = &ldquo;Hello, World.\XXX\XXX&rdquo;;
     wstring winput = L&#8221;Hello, World.\XXX\XXX&#8221;;
-    wchar_t dest[1000];</p>
-
-<pre><code>int count = 10000;
-elapsed = time_call([input, &amp;count] 
-{
-    while (count)
+    wchar_t dest[1000];
+    int count = 10000;
+    elapsed = time_call([input, &amp;count]
     {
-        Ansi2WChar(input.c_str(), input.length());
-        count--;
-    }
-});
-memset(dest, 0, 1000);
-_itow_s(elapsed, dest, 10);
-OutputDebugStringW(L"Time:");
-OutputDebugStringW(dest);
-OutputDebugStringW(L"ms\n");
-
-count = 10000;
-elapsed = 0;
-elapsed = time_call([input, &amp;count] 
-{
-    while (count)
+        while (count)
+        {
+            Ansi2WChar(input.c_str(), input.length());
+            count&ndash;;
+        }
+    });
+    memset(dest, 0, 1000);
+    </em>itow_s(elapsed, dest, 10);
+    OutputDebugStringW(L&#8221;Time:&ldquo;);
+    OutputDebugStringW(dest);
+    OutputDebugStringW(L&#8221;ms\n&rdquo;);
+    count = 10000;
+    elapsed = 0;
+    elapsed = time_call([input, &amp;count]
     {
-        s2ws(input);
-        count--;
-    }
-});
-memset(dest, 0, 1000);
-_itow_s(elapsed, dest, 10);
-OutputDebugStringW(L"Time:");
-OutputDebugStringW(dest);
-OutputDebugStringW(L"ms\n");
-
-count = 10000;
-elapsed = 0;
-elapsed = time_call([winput, &amp;count] 
-{
-    while (count)
+        while (count)
+        {
+            s2ws(input);
+            count&ndash;;
+        }
+    });
+    memset(dest, 0, 1000);
+    </em>itow_s(elapsed, dest, 10);
+    OutputDebugStringW(L&#8221;Time:&ldquo;);
+    OutputDebugStringW(dest);
+    OutputDebugStringW(L&#8221;ms\n&rdquo;);
+    count = 10000;
+    elapsed = 0;
+    elapsed = time_call([winput, &amp;count]
     {
-        WChar2Ansi(winput.c_str());
-        count--;
-    }
-});
-memset(dest, 0, 1000);
-_itow_s(elapsed, dest, 10);
-OutputDebugStringW(L"Time:");
-OutputDebugStringW(dest);
-OutputDebugStringW(L"ms\n");
-
-count = 10000;
-elapsed = 0;
-elapsed = time_call([winput, &amp;count] 
-{
-    while (count)
+        while (count)
+        {
+            WChar2Ansi(winput.c_str());
+            count&ndash;;
+        }
+    });
+    memset(dest, 0, 1000);
+    <em>itow_s(elapsed, dest, 10);
+    OutputDebugStringW(L&#8221;Time:&ldquo;);
+    OutputDebugStringW(dest);
+    OutputDebugStringW(L&#8221;ms\n&rdquo;);
+    count = 10000;
+    elapsed = 0;
+    elapsed = time_call([winput, &amp;count]
     {
-        ws2s(winput);
-        count--;
-    }
-});
-memset(dest, 0, 1000);
-_itow_s(elapsed, dest, 10);
-OutputDebugStringW(L"Time:");
-OutputDebugStringW(dest);
-OutputDebugStringW(L"ms\n");
-</code></pre>
-
-<p>  输出：</p>
-
-<p>  Time:78ms</p>
-
-<p>  Time:94ms</p>
-
-<p>  Time:62ms</p>
-
-<p>  Time:109ms</p>
-
-<p>  从输出结果可以看出</p>
-
-<p>   WideCharToMultiByte</p>
-
-<p>   和</p>
-
-<p>   MultiByteToWideChar</p>
-
-<p>   转换效率要比</p>
-
-<p>   mbstowcs</p>
-
-<p>   和</p>
-
-<p>   wcstombs</p>
-
-<p>   高。</p>
-
-<p>   注意：如果使用</p>
-
-<p>   mbstowcs</p>
-
-<p>   则需要</p>
-
-<p>   Disable
+        while (count)
+        {
+            ws2s(winput);
+            count&ndash;;
+        }
+    });
+    memset(dest, 0, 1000);
+    </em>itow_s(elapsed, dest, 10);
+    OutputDebugStringW(L&#8221;Time:&ldquo;);
+    OutputDebugStringW(dest);
+    OutputDebugStringW(L&#8221;ms\n&rdquo;);
+  输出：
+  Time:78ms
+  Time:94ms
+  Time:62ms
+  Time:109ms
+  从输出结果可以看出
+   WideCharToMultiByte
+   和
+   MultiByteToWideChar
+   转换效率要比
+   mbstowcs
+   和
+   wcstombs
+   高。
+   注意：如果使用
+   mbstowcs
+   则需要
+   Disable
  Specific Warnings： 4996</p>
 </div>
 

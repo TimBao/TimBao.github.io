@@ -84,13 +84,10 @@
   </header>
 
 
-<div class="entry-content"><p>   swap</p>
-
-<p>   assign</p>
-
-<p>  这里只想说明这三种操作的用处和效率。swap和assign都可以用在将一个vector的内容全部复制给另外一个vector，区别是swap会改变源vector，而assign会清空目的vector后再将源vector的值全部插入到目的vector中。就效率而言，swap只是交换vector的头指针，时间复杂度是常数；而assigin时间复杂度则是线性。</p>
-
-<p>  #include <vector>;</p>
+<div class="entry-content"><p>   swap
+   assign
+  这里只想说明这三种操作的用处和效率。swap和assign都可以用在将一个vector的内容全部复制给另外一个vector，区别是swap会改变源vector，而assign会清空目的vector后再将源vector的值全部插入到目的vector中。就效率而言，swap只是交换vector的头指针，时间复杂度是常数；而assigin时间复杂度则是线性。
+  #include <vector>;</p>
 
 <h1>include &ldquo;DebugUtility.h&rdquo;</h1>
 
@@ -100,52 +97,39 @@
 
 <h1>include <string>;</h1>
 
-<p>using namespace std;</p>
-
-<p>void print(int x)
+<p>using namespace std;
+void print(int x)
 {
     cout &lt;&lt; x &lt;&lt; endl;
-}</p>
-
-<p>void Swap(vector<string>;&amp; source, vector<string>;&amp; dest)
+}
+void Swap(vector<string>;&amp; source, vector<string>;&amp; dest)
 {
     DebugUtility temp;
     dest.swap(source);
-}</p>
-
-<p>void Assign(vector<string>;&amp; source, vector<string>;&amp; dest)
+}
+void Assign(vector<string>;&amp; source, vector<string>;&amp; dest)
 {
     DebugUtility temp;
     dest.assign(source.begin(), source.end());
-}</p>
-
-<p>int main(int argc, const char *argv[])
+}
+int main(int argc, const char *argv[])
 {
     vector<string>; source(900000, &ldquo;90&rdquo;);
-    vector<string>; destination(1, &ldquo;abc&rdquo;);</p>
-
-<pre><code>Swap(source, destination);
-//source.clear();
-//for_each(destination.begin(), destination.end(), print);
-
-//Assign(source, destination);
-//source.clear();
-//for_each(destination.begin(), destination.end(), print);
-
-return 0;
-</code></pre>
-
-<p>}</p>
-
-<p>   结果：</p>
-
-<p>  Total time elapsed : 1 us
-900000</p>
-
-<p>Total time elapsed : 12391 us
-900000</p>
-
-<p>   DebugUtility.h  大家可以从<a href="https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82">https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82</a></p>
+    vector<string>; destination(1, &ldquo;abc&rdquo;);
+    Swap(source, destination);
+    //source.clear();
+    //for_each(destination.begin(), destination.end(), print);
+    //Assign(source, destination);
+    //source.clear();
+    //for_each(destination.begin(), destination.end(), print);
+    return 0;
+}
+   结果：
+  Total time elapsed : 1 us
+900000
+Total time elapsed : 12391 us
+900000
+   DebugUtility.h  大家可以从<a href="https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82">https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82</a></p>
 </div>
 
 

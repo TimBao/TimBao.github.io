@@ -84,21 +84,17 @@
   </header>
 
 
-<div class="entry-content"><p>  Use the wmctrl tools could maximize the windows of gvim in ubuntu. But I find a small issue for that.</p>
-
-<p>  Here is the wrong script:</p>
-
-<p>  if has(&ldquo;win32&rdquo;)
+<div class="entry-content"><p>  Use the wmctrl tools could maximize the windows of gvim in ubuntu. But I find a small issue for that.
+  Here is the wrong script:
+  if has(&ldquo;win32&rdquo;)
     au GUIEnter * simalt ~x
 else
     au GUIEnter * call MaximizeWindow()
-endif</p>
-
-<p>function! MaximizeWindow()
+endif
+function! MaximizeWindow()
     silent !wmctrl -r :ACTIVE: -b add, maximized_vert,maximized_horz
-endfunction</p>
-
-<p>   You could see that between &ldquo;,&rdquo; and &ldquo;maximized_vert&rdquo; on line 8, there is a blank. It&rsquo;s the reason why the script can&rsquo;t works. So I remove the blank and it woks fine. So strange, because this scripts works well on my mac mini.</p>
+endfunction
+   You could see that between &ldquo;,&rdquo; and &ldquo;maximized_vert&rdquo; on line 8, there is a blank. It&rsquo;s the reason why the script can&rsquo;t works. So I remove the blank and it woks fine. So strange, because this scripts works well on my mac mini.</p>
 </div>
 
 

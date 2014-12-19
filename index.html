@@ -88,217 +88,36 @@
 
 
   <div class="entry-content"><pre><code>  工欲善其事
-
-
-
-
   ，必先利其器
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   背景：最近一直在写些
-
-
-
-
   python
-
-
-
-
   脚本，同事
-
-
-
-
   review
-
-
-
-
   完发现一处地方不符合
-
-
-
-
   pep8
-
-
-
-
   规范，建议修改。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  虽说是一处小小的改动，只要一分钟就可以搞定。但是我想下次会不会还犯这种错误？如何能一劳永逸解决这个问题？由于本人用vim作为python IDE，所以就去
-
-
-
-
  google
-
-
-
-
  了下是否有对
-
-
-
-
  python
-
-
-
-
-
-
  规范检查的插件，结果果然如我所料！万能的
-
-
-
-
  vim
-
-
-
-
  插件无所不能啊
-
-
  ！
-
-
-
-
-
-
-
-
-
-
  因为早先已经用了
-
-
-
-
  syntastic
-
-
-
-
  插件检测语法，所以还是选择使用它来搭配
-
-
-
-
  pep8
-
-
-
-
  检测python规范。具体方法网上很多，这里不详细描述，感兴趣的可以自行
-
-
-
-
  google
-
-
-
-
  。
-
-
-
 可以参考：
-
  点击打开链接
-
-
-
-
-
-
-
-
-
-
  花了几个小时搞定好配置后，果然效果不错！为后面大量代码改动节约了不少时间，而且代码质量也提高不少！花费时间完全值得！这就是所谓的
-
-
-
-
  磨刀不误砍柴工
-
-
-
-
-
   。
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
      有对vim感兴趣的同学，可以去我的
-
       github
-
      看看我的配置。欢迎交流。
 </code></pre>
 </div>
@@ -329,102 +148,41 @@
   </header>
 
 
-  <div class="entry-content"><p> string.h 中字符串相关函数</p>
-
-<p>  按功能分类:</p>
-
-<pre><code>字符串连接:
-
- strcat : char* strcat(char* destination, const char* source);
-
-
-   strncat : char* strcat(char* destination, const char* source, size_t num);
-
-
-     cat 意思是catenate，连接的意思。
-
-
-       strncp 是strcat的安全版本，可以防止越界。
-
-
-         从定义上可以看出带是将const的字符串连接到不带const的字符串上。
-
-
-           字符/字符串查找:
-
-            strchr : char* strchr(const char* str, int character); char* strchr(char* str, int character);
-
-
-              查找字符character在str中第一次出现的位置，返回一个指针指向该字符到字符串结尾。
-
-
-                由于'\0'也是字符串的一部分，故该函数也可以查找结束符。
-
-
-                  chr意思应该是character。
-
-
-                    strrchr : char* strchr(const char* str, int character); char* strchr(char* str, int character);
-
-
-                      最后一次出现的位置。 'r'应该是right的意思，也就是从右开始搜索。
-
-
-                        strpbrk : const char* strpbrk(const char* str1,const char* str2); char* strpbrk(char* str1,const char* str2);
-
-
-                          查找str2中任意字符在str1中第一次出现的位置，返回从整个位置到str1最后的字符串。不包含结束符。
-
-
-                            strcspn : size_t strcspn(const char* str1, const char* str2);
-
-
-                              返回的是str1第一次出现str2中任意字符的位置。搜索包含null结束符，所以函数可以返回str1字符串的长度当没有任何匹配的时候。
-
-
-                                strstr : const char* strstr(const char* str1, const char* str2); char* strstr(char* str1, const char* str2);
-
-
-                                  匹配完整字符串
-
-
-                                    字符串比较:
-
-                                     strcmp: int strcmp(const char* str1, const char* str2);
-
-
-                                       strncmp: int strcmp(const char* str1, const char* str2, size_t num);
-
-
-                                         strcoll: int strcoll(const char* str1, const char* str2);
-
-
-                                           根据LC_COLIATE比较str1和str2。
-
-
-                                             字符串拷贝:
-
-                                              strcpy : char* strcpy(char* destination, const char* source);
-
-
-                                                strncpy : char* strcpy(char* destination, const char* source, size_t num);
-
-
-                                                  拷贝source到destination中去。遇到'\0'停止copy。
-
-
-                                                    获取字符串长度:
-
-                                                     strlen: size_t strlen(const char* str);
-
-
-                                                       拆分字符串:
-
-                                                        strtok: char* strtok(char* str, const char* delimiters);
-
-
-                                                          tok的意思是token，该函数就是将str根据delimiter拆分。
-</code></pre>
+  <div class="entry-content"><p> string.h 中字符串相关函数
+  按功能分类:
+    字符串连接:
+     strcat : char<em> strcat(char</em> destination, const char<em> source);
+       strncat : char</em> strcat(char<em> destination, const char</em> source, size_t num);
+         cat 意思是catenate，连接的意思。
+           strncp 是strcat的安全版本，可以防止越界。
+             从定义上可以看出带是将const的字符串连接到不带const的字符串上。
+               字符/字符串查找:
+                strchr : char<em> strchr(const char</em> str, int character); char<em> strchr(char</em> str, int character);
+                  查找字符character在str中第一次出现的位置，返回一个指针指向该字符到字符串结尾。
+                    由于&#8217;\0&#8217;也是字符串的一部分，故该函数也可以查找结束符。
+                      chr意思应该是character。
+                        strrchr : char<em> strchr(const char</em> str, int character); char<em> strchr(char</em> str, int character);
+                          最后一次出现的位置。 &lsquo;r&#8217;应该是right的意思，也就是从右开始搜索。
+                            strpbrk : const char<em> strpbrk(const char</em> str1,const char<em> str2); char</em> strpbrk(char<em> str1,const char</em> str2);
+                              查找str2中任意字符在str1中第一次出现的位置，返回从整个位置到str1最后的字符串。不包含结束符。
+                                strcspn : size_t strcspn(const char<em> str1, const char</em> str2);
+                                  返回的是str1第一次出现str2中任意字符的位置。搜索包含null结束符，所以函数可以返回str1字符串的长度当没有任何匹配的时候。
+                                    strstr : const char<em> strstr(const char</em> str1, const char<em> str2); char</em> strstr(char<em> str1, const char</em> str2);
+                                      匹配完整字符串
+                                        字符串比较:
+                                         strcmp: int strcmp(const char<em> str1, const char</em> str2);
+                                           strncmp: int strcmp(const char<em> str1, const char</em> str2, size_t num);
+                                             strcoll: int strcoll(const char<em> str1, const char</em> str2);
+                                               根据LC_COLIATE比较str1和str2。
+                                                 字符串拷贝:
+                                                  strcpy : char<em> strcpy(char</em> destination, const char<em> source);
+                                                    strncpy : char</em> strcpy(char<em> destination, const char</em> source, size_t num);
+                                                      拷贝source到destination中去。遇到&rsquo;\0&#8217;停止copy。
+                                                        获取字符串长度:
+                                                         strlen: size_t strlen(const char<em> str);
+                                                           拆分字符串:
+                                                            strtok: char</em> strtok(char<em> str, const char</em> delimiters);
+                                                              tok的意思是token，该函数就是将str根据delimiter拆分。</p>
 </div>
   
   
@@ -453,110 +211,51 @@
   </header>
 
 
-  <div class="entry-content"><p>   刚刚在调试如何不安装</p>
-
-<pre><code>Cgywin
-</code></pre>
-
-<p>   的情况下，利用</p>
-
-<pre><code>NDK
-</code></pre>
-
-<p>   编译</p>
-
-<pre><code>cocos2d-x
-</code></pre>
-
-<p>   的</p>
-
-<pre><code>SampleGame
-</code></pre>
-
-<p>   .却机缘巧合的情况下发现了</p>
-
-<pre><code>android-ndk-r8d
-</code></pre>
-
-<p>   的</p>
-
-<pre><code>docs/IMPORT-MODULE.html
-</code></pre>
-
-<p>   下的一个小bug。</p>
-
-<p>  在</p>
-
-<p>   Eclipse</p>
-
-<p>  中导入工程后，工程目录如下：</p>
-
-<p>   将工程转换为C++工程。这步不会的可以google下。</p>
-
-<p>   设置ndk目录。</p>
-
-<p>   设置</p>
-
-<pre><code>NDK_MODULE_PATH
-</code></pre>
-
-<p>   环境变量。</p>
-
-<p>  在</p>
-
-<p>   docs/IMPORT-MODULE.html</p>
-
-<p>  中的介绍：</p>
-
-<ol type="a">
-<li><p>.</p>
-
-<p>NDK_MODULE_PATH</p></li>
-</ol>
-
-
-<p>   :</p>
-
-<p>   The</p>
-
-<pre><code>NDK_MODULE_PATH
-</code></pre>
-
-<p>   variable
- must contain a list of directories.</p>
-
-<pre><code> Due to GNU Make limitations,
-
-  NDK_MODULE_PATH
-
- must
-</code></pre>
-
-<p> not contain any space. The NDK will complain if this is not the case.</p>
-
-<pre><code>   Use
-</code></pre>
-
-<p> &lsquo;:&rsquo; as the path separator</p>
-
-<pre><code> .
-
-
-
-
- On Windows, use '/' as the directory separator.
-</code></pre>
-
-<p>  这里面说的</p>
-
-<p>   Use
- &lsquo;:&rsquo; as the path separator</p>
-
-<p>  ,经过实践验证在windows平台路径使用</p>
-
-<p>   ;</p>
-
-<p>  分割</p>
+  <div class="entry-content"><p>   刚刚在调试如何不安装
+    Cgywin
+   的情况下，利用
+    NDK
+   编译
+    cocos2d-x
+   的
+    SampleGame
+   .却机缘巧合的情况下发现了
+    android-ndk-r8d
+   的
+    docs/IMPORT-MODULE.html
+   下的一个小bug。
+  在
+   Eclipse
+  中导入工程后，工程目录如下：
+   将工程转换为C++工程。这步不会的可以google下。
+   设置ndk目录。
+   设置
+    NDK_MODULE_PATH
+   环境变量。
+  在
+   docs/IMPORT-MODULE.html
+  中的介绍：
+   I.
+    NDK_MODULE_PATH
+   :
+   The
+    NDK_MODULE_PATH
+   variable
+ must contain a list of directories.
+     Due to GNU Make limitations,
+      NDK_MODULE_PATH
+     must
+ not contain any space. The NDK will complain if this is not the case.
+       Use
+ &lsquo;:&rsquo; as the path separator
+     .
+     On Windows, use &lsquo;/&rsquo; as the directory separator.
+  这里面说的
+   Use
+ &lsquo;:&rsquo; as the path separator
+  ,经过实践验证在windows平台路径使用
+   ;
+  分割</p>
 </div>
   
   
@@ -585,56 +284,24 @@
   </header>
 
 
-  <div class="entry-content"><p>   程序员不是操作工</p>
-
-<pre><code>故事的背景是这样的，我的一个朋友跟我聊天中说到他前几天加班到凌晨，手都疼了。我就问问加班干什么呢？他说就光
-
- Ctrl-C
-
-和
-
- Ctrl-V
-
-的弄了
-
- 3000
-
-多次！我的天啊！怪不得手指头都疼了呢！
-
-
-
-
-
- 真正的程序员真的不是代码工人，是靠脑力而不是靠体力，是赚智慧的钱，而不是赚苦力的钱。那么真正的程序员应该怎么做呢？
-
-
-
-
-
-  避免重复劳动
-
- ，遇到类似需要大量
-
-  Ctrl-C
-
- 和
-
-  Ctrl-V
-
- 的情况，一定是程序架构出了问题，该做的公司是要思考为什么会出现这种不合理的情况？要从根本上杜绝这类情况的出现。
-
-
-
-  善于利用脚本
-
- ，脚本语言的简单和易用性是程序员工作中不可缺少的好帮手。善于用脚本创造各种工具来帮助程序员提高工作效率。上述情况完全可以写个脚本来做这些重复的工作。而且后期可以将脚本完善，做成个通用的工具，分享给同事，即利己也利团队，更可以增加你在领导眼里的不可替代性。
-
-
-
-
-
-  现在的程序员门槛已经非常低了，但是不能因为门槛低就对自己要求降低。程序员不是码农，不是代码蓝领！我们是在改变世界，是高科技工程师！让我们做真正的程序员，而不是代码操作工！
-</code></pre>
+  <div class="entry-content"><p>   程序员不是操作工
+    故事的背景是这样的，我的一个朋友跟我聊天中说到他前几天加班到凌晨，手都疼了。我就问问加班干什么呢？他说就光
+     Ctrl-C
+    和
+     Ctrl-V
+    的弄了
+     3000
+    多次！我的天啊！怪不得手指头都疼了呢！
+     真正的程序员真的不是代码工人，是靠脑力而不是靠体力，是赚智慧的钱，而不是赚苦力的钱。那么真正的程序员应该怎么做呢？
+      避免重复劳动
+     ，遇到类似需要大量
+      Ctrl-C
+     和
+      Ctrl-V
+     的情况，一定是程序架构出了问题，该做的公司是要思考为什么会出现这种不合理的情况？要从根本上杜绝这类情况的出现。
+      善于利用脚本
+     ，脚本语言的简单和易用性是程序员工作中不可缺少的好帮手。善于用脚本创造各种工具来帮助程序员提高工作效率。上述情况完全可以写个脚本来做这些重复的工作。而且后期可以将脚本完善，做成个通用的工具，分享给同事，即利己也利团队，更可以增加你在领导眼里的不可替代性。
+      现在的程序员门槛已经非常低了，但是不能因为门槛低就对自己要求降低。程序员不是码农，不是代码蓝领！我们是在改变世界，是高科技工程师！让我们做真正的程序员，而不是代码操作工！</p>
 </div>
   
   
@@ -663,153 +330,75 @@
   </header>
 
 
-  <div class="entry-content"><p>   这里只介绍笔者开发过的几个平台（iPhone, Android, Windows phone, Blackberry）。将从以下几个角度进行介绍：</p>
-
-<ol>
-<li>开发语言</li>
-<li>IDE</li>
-<li>模拟器</li>
-<li>编译及调试</li>
-<li><p>开发成本</p>
-
-<p>开发语言</p></li>
-</ol>
-
-
-<p>  ● <code>iPhone</code>：Object-C, C/C++
+  <div class="entry-content"><p>   这里只介绍笔者开发过的几个平台（iPhone, Android, Windows phone, Blackberry）。将从以下几个角度进行介绍：
+ 1. 开发语言
+2. IDE
+3. 模拟器
+4. 编译及调试
+5. 开发成本
+   开发语言
+  ● <code>iPhone</code>：Object-C, C/C++
 ● <code>Android</code>：XML, java, C/C++(NDK)
 ● <code>WP</code>：XAML, C#, C++/CX
-● <code>BlackBerry</code>：KML, C/C++</p>
-
-<pre><code>可以分成两类：一是
-
- iPhone
-
-；二是其他三种。前者是完全native开发，并且只能在Mac
-</code></pre>
-
-<p> OS X下开发（尽管现在有</p>
-
-<pre><code> Xamarin
-
-但其跟官方
-
- API
-
-同步问题是个大问题）；而其他三类，可以看出来，前端都使用
-
- 类XML
-
-的语言开发
-
- UI
-
-，后端采用各自的开发语言，当然也可以使用native开发，但从目前来看对native的支持都不如原生语言支持的好。
-
-
-
-
-IDE
-</code></pre>
-
-<p>   ● <code>iPhone</code>： 首推<code>XCode</code>。
+● <code>BlackBerry</code>：KML, C/C++
+    可以分成两类：一是
+     iPhone
+    ；二是其他三种。前者是完全native开发，并且只能在Mac
+ OS X下开发（尽管现在有
+     Xamarin
+    但其跟官方
+     API
+    同步问题是个大问题）；而其他三类，可以看出来，前端都使用
+     类XML
+    的语言开发
+     UI
+    ，后端采用各自的开发语言，当然也可以使用native开发，但从目前来看对native的支持都不如原生语言支持的好。
+    IDE
+   ● <code>iPhone</code>： 首推<code>XCode</code>。
 ● <code>Android</code>：<code>Eclipse</code>目前还是主流；谷歌目前推出的<code>Adroid Studio</code>市场还未打开，以后不好说。
 ● <code>Widnows Phone</code>：<code>Visual Studio</code>是不二人选啊！
-● <code>BlackBerry</code>：自带IED，是将<code>Eclipse</code>及所需插件打包到一起的一个IDE，可以归到<code>Eclipse</code>一类。</p>
-
-<pre><code> 从IDE的易用性和功能性来看，
-
-  Visual
-</code></pre>
-
-<p> Studio</p>
-
-<pre><code> 是当之无愧的第一名，
-
-  xcode
-
- 应该说是紧随其后，两个IDE都非常强大，但是
-
-  xcode
-
- 会有随机的crash，稳定性上还是不如
-
-  Visual
-</code></pre>
-
-<p> Studio</p>
-
-<pre><code> ，而且VS可以调试C#和C/C++，而
-
-  eclipse
-
- 调试
-
-  native
-
- 上非常麻烦，不是三言两语可以说明白的，有感兴趣的童鞋可以去网上找找。至于
-
-  BlackBerry
-
- 的
-
-  IDE
-
- 集成的插件还可以，调试native代码也还行，功能也比较强大，但是在调试的速度上实在是无法忍受。
-
-
-
-
- 模拟器
-
-xcode的模拟器和WP的模拟器安装都是随SDK安装的，使用起来非常方便。而android的模拟器和Blackberry的模拟器笔者没用过，但是BlackBerry的模拟器安装却非常麻烦，又得折腾VM使用起来还经常断开，所以说在后两者上有条件还是真机调试的比较好。
-
-
-  编译及调试
-
- ● `XCode`：可以同时调试`Objective-C`和`C/C++`，编译速度还算比较快。
-</code></pre>
-
-<p>● <code>Visual Studio</code>：如此强大的IDE，同时调试<code>C#</code>和<code>C/C++</code>。
+● <code>BlackBerry</code>：自带IED，是将<code>Eclipse</code>及所需插件打包到一起的一个IDE，可以归到<code>Eclipse</code>一类。
+     从IDE的易用性和功能性来看，
+      Visual
+ Studio
+     是当之无愧的第一名，
+      xcode
+     应该说是紧随其后，两个IDE都非常强大，但是
+      xcode
+     会有随机的crash，稳定性上还是不如
+      Visual
+ Studio
+     ，而且VS可以调试C#和C/C++，而
+      eclipse
+     调试
+      native
+     上非常麻烦，不是三言两语可以说明白的，有感兴趣的童鞋可以去网上找找。至于
+      BlackBerry
+     的
+      IDE
+     集成的插件还可以，调试native代码也还行，功能也比较强大，但是在调试的速度上实在是无法忍受。
+     模拟器
+    xcode的模拟器和WP的模拟器安装都是随SDK安装的，使用起来非常方便。而android的模拟器和Blackberry的模拟器笔者没用过，但是BlackBerry的模拟器安装却非常麻烦，又得折腾VM使用起来还经常断开，所以说在后两者上有条件还是真机调试的比较好。
+      编译及调试
+     ● <code>XCode</code>：可以同时调试<code>Objective-C</code>和<code>C/C++</code>，编译速度还算比较快。
+● <code>Visual Studio</code>：如此强大的IDE，同时调试<code>C#</code>和<code>C/C++</code>。
 ● <code>Android</code>：如果是java代码，速度和调试都挺方便的，但是如果想编译和调试native代码，那就需要有足够的耐心了，尤其是调试，配置之麻烦当属第一。
-● <code>BlackBerry</code>：编译速度十分慢，调试启动也很慢，但是启动后调试还可以接受的，比起android来，省去了很多配置的麻烦。</p>
-
-<pre><code>   开发成本
-
-
-   ●
-
-    iPhone
-
-   ：投资比较大，光是注册开发者账号就需要99刀，而且还需要一台苹果设备，属于高富帅玩法。
-
-
-   ●
-
-    Windows
-</code></pre>
-
-<p> Phone</p>
-
-<pre><code>   ：投资一般，只用花注册的钱（如果要是用盗版VS的话），光VS的投资也不是小数。
-
-
-   ●
-
-    Adnroid
-
-   ：投资小，只需要一台PC和一台Android手机即可。可谓是专门给屌丝开发者准备的。
-
-
-   ●
-
-    BlackBerry
-
-   ：不熟悉，目前国内做的太少，而且BB10也没有在国内发售呢。
-
-
-   总的来说，做为一名移动开发者来说，如果没有一定的经济实力的话还是选择iPhone开发比较好，至少在经济收入上更可观一些；但是目前的情形上来说，安卓的市场是越来越大，说明做安卓的开发前途至少会越来越光明。至于WP，目前还需要观望；至于BB，就算了吧。
-</code></pre>
+● <code>BlackBerry</code>：编译速度十分慢，调试启动也很慢，但是启动后调试还可以接受的，比起android来，省去了很多配置的麻烦。
+       开发成本
+       ●
+        iPhone
+       ：投资比较大，光是注册开发者账号就需要99刀，而且还需要一台苹果设备，属于高富帅玩法。
+       ●
+        Windows
+ Phone
+       ：投资一般，只用花注册的钱（如果要是用盗版VS的话），光VS的投资也不是小数。
+       ●
+        Adnroid
+       ：投资小，只需要一台PC和一台Android手机即可。可谓是专门给屌丝开发者准备的。
+       ●
+        BlackBerry
+       ：不熟悉，目前国内做的太少，而且BB10也没有在国内发售呢。
+       总的来说，做为一名移动开发者来说，如果没有一定的经济实力的话还是选择iPhone开发比较好，至少在经济收入上更可观一些；但是目前的情形上来说，安卓的市场是越来越大，说明做安卓的开发前途至少会越来越光明。至于WP，目前还需要观望；至于BB，就算了吧。</p>
 </div>
   
   
@@ -838,11 +427,9 @@ xcode的模拟器和WP的模拟器安装都是随SDK安装的，使用起来非�
   </header>
 
 
-  <div class="entry-content"><p>  最近利用业余时间学校android应用的开发，发现android sdk的sample中有个snake的小游戏，感觉不错，但是由于该游戏不能在触摸屏上玩，所以就萌生了自己动手的想法。利用2天时间又增加了用户排名和帮助等功能。程序已经托管到github上面，咱也玩吧开源。</p>
-
-<p>  地址：<a href="https://github.com/TimBao/Android_Snake">https://github.com/TimBao/Android_Snake</a></p>
-
-<p>  有感兴趣的朋友可以一同开发噢！</p>
+  <div class="entry-content"><p>  最近利用业余时间学校android应用的开发，发现android sdk的sample中有个snake的小游戏，感觉不错，但是由于该游戏不能在触摸屏上玩，所以就萌生了自己动手的想法。利用2天时间又增加了用户排名和帮助等功能。程序已经托管到github上面，咱也玩吧开源。
+  地址：<a href="https://github.com/TimBao/Android_Snake">https://github.com/TimBao/Android_Snake</a>
+  有感兴趣的朋友可以一同开发噢！</p>
 </div>
   
   
@@ -900,25 +487,16 @@ xcode的模拟器和WP的模拟器安装都是随SDK安装的，使用起来非�
   </header>
 
 
-  <div class="entry-content"><p>  背景： 最近一个月一直在做移植库的工作，将c代码到share library移植到Android平台。这就涉及到Android NDK(native develop kit)内容。这里只想记录下JNI(java native interface)经常遇到到问题。</p>
-
-<p>  问题1.  忘记delete local reference。带New到方法(如：NewByteArray)这样到方法比较好辨认，需要手动调用DeleteLocalRef()来释放(返回值除外)。比较特殊的一个方法是：GetByteArrayELement必须要调用ReleaseByteArrayElements进行释放。当然如果你只是取bytearray中到byte，那么完全可以用GetByteArrayRegion实现。</p>
-
-<p>  问题2. 没有NewGlobalRef。 在不同线程调用java方法，需要保存jobject对象，这时需要对jobject对象做全局引用，否则会失效。</p>
-
-<p>  问题3.  jbytearray的length。在JNI layer获取到jbytearray到长度是不对到，应该由java获取byte[]的length再传给C layer。否则C layer有可能获得到是乱码。</p>
-
-<p>  问题4.  线程问题。 不同线程使用JNIEnv*对象，需要AttachCurrentThread将env挂到当前线程，否则无法使用env。</p>
-
-<p>  问题5.  javap 命令是对java的class文件操作；而javah命令需要在包名到上一层路径运行才行，否则无法生成.h文件。</p>
-
-<p>  问题6. 尽量避免频繁调用JNI或者是使用JNI传输大量到数据。</p>
-
-<p>  问题7. Reference Table overflow (max=1024) 或者是 Reference Table overflow (max=512)一定是因为忘记释放global reference或者local reference，请仔细检查代码。</p>
-
-<p>  问题8. 不要在windows下使用cygwin编译NDK code，那样会遇到arguments too long问题，因为windows路径长度有限制导致。虽然可以使用subst将路径映射为短路径，但是在编译时间和调试上，windows到孩子都是伤不起。同样到build，在windows下要15分钟左右，而在mac下只要5分多，相差3倍。调试JNI 代码到速度更是不用提了，差太多。</p>
-
-<p>  总结，JNI代码量其实不是很多，JNI作为一个数据传输层，它到作用仅仅是java和c直接到桥梁，但是如果处理不好将会是灾难，调试和找bug非常困难。</p>
+  <div class="entry-content"><p>  背景： 最近一个月一直在做移植库的工作，将c代码到share library移植到Android平台。这就涉及到Android NDK(native develop kit)内容。这里只想记录下JNI(java native interface)经常遇到到问题。
+  问题1.  忘记delete local reference。带New到方法(如：NewByteArray)这样到方法比较好辨认，需要手动调用DeleteLocalRef()来释放(返回值除外)。比较特殊的一个方法是：GetByteArrayELement必须要调用ReleaseByteArrayElements进行释放。当然如果你只是取bytearray中到byte，那么完全可以用GetByteArrayRegion实现。
+  问题2. 没有NewGlobalRef。 在不同线程调用java方法，需要保存jobject对象，这时需要对jobject对象做全局引用，否则会失效。
+  问题3.  jbytearray的length。在JNI layer获取到jbytearray到长度是不对到，应该由java获取byte[]的length再传给C layer。否则C layer有可能获得到是乱码。
+  问题4.  线程问题。 不同线程使用JNIEnv*对象，需要AttachCurrentThread将env挂到当前线程，否则无法使用env。
+  问题5.  javap 命令是对java的class文件操作；而javah命令需要在包名到上一层路径运行才行，否则无法生成.h文件。
+  问题6. 尽量避免频繁调用JNI或者是使用JNI传输大量到数据。
+  问题7. Reference Table overflow (max=1024) 或者是 Reference Table overflow (max=512)一定是因为忘记释放global reference或者local reference，请仔细检查代码。
+  问题8. 不要在windows下使用cygwin编译NDK code，那样会遇到arguments too long问题，因为windows路径长度有限制导致。虽然可以使用subst将路径映射为短路径，但是在编译时间和调试上，windows到孩子都是伤不起。同样到build，在windows下要15分钟左右，而在mac下只要5分多，相差3倍。调试JNI 代码到速度更是不用提了，差太多。
+  总结，JNI代码量其实不是很多，JNI作为一个数据传输层，它到作用仅仅是java和c直接到桥梁，但是如果处理不好将会是灾难，调试和找bug非常困难。</p>
 </div>
   
   
@@ -947,13 +525,10 @@ xcode的模拟器和WP的模拟器安装都是随SDK安装的，使用起来非�
   </header>
 
 
-  <div class="entry-content"><p>   swap</p>
-
-<p>   assign</p>
-
-<p>  这里只想说明这三种操作的用处和效率。swap和assign都可以用在将一个vector的内容全部复制给另外一个vector，区别是swap会改变源vector，而assign会清空目的vector后再将源vector的值全部插入到目的vector中。就效率而言，swap只是交换vector的头指针，时间复杂度是常数；而assigin时间复杂度则是线性。</p>
-
-<p>  #include <vector>;</p>
+  <div class="entry-content"><p>   swap
+   assign
+  这里只想说明这三种操作的用处和效率。swap和assign都可以用在将一个vector的内容全部复制给另外一个vector，区别是swap会改变源vector，而assign会清空目的vector后再将源vector的值全部插入到目的vector中。就效率而言，swap只是交换vector的头指针，时间复杂度是常数；而assigin时间复杂度则是线性。
+  #include <vector>;</p>
 
 <h1>include &ldquo;DebugUtility.h&rdquo;</h1>
 
@@ -963,52 +538,39 @@ xcode的模拟器和WP的模拟器安装都是随SDK安装的，使用起来非�
 
 <h1>include <string>;</h1>
 
-<p>using namespace std;</p>
-
-<p>void print(int x)
+<p>using namespace std;
+void print(int x)
 {
     cout &lt;&lt; x &lt;&lt; endl;
-}</p>
-
-<p>void Swap(vector<string>;&amp; source, vector<string>;&amp; dest)
+}
+void Swap(vector<string>;&amp; source, vector<string>;&amp; dest)
 {
     DebugUtility temp;
     dest.swap(source);
-}</p>
-
-<p>void Assign(vector<string>;&amp; source, vector<string>;&amp; dest)
+}
+void Assign(vector<string>;&amp; source, vector<string>;&amp; dest)
 {
     DebugUtility temp;
     dest.assign(source.begin(), source.end());
-}</p>
-
-<p>int main(int argc, const char *argv[])
+}
+int main(int argc, const char *argv[])
 {
     vector<string>; source(900000, &ldquo;90&rdquo;);
-    vector<string>; destination(1, &ldquo;abc&rdquo;);</p>
-
-<pre><code>Swap(source, destination);
-//source.clear();
-//for_each(destination.begin(), destination.end(), print);
-
-//Assign(source, destination);
-//source.clear();
-//for_each(destination.begin(), destination.end(), print);
-
-return 0;
-</code></pre>
-
-<p>}</p>
-
-<p>   结果：</p>
-
-<p>  Total time elapsed : 1 us
-900000</p>
-
-<p>Total time elapsed : 12391 us
-900000</p>
-
-<p>   DebugUtility.h  大家可以从<a href="https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82">https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82</a></p>
+    vector<string>; destination(1, &ldquo;abc&rdquo;);
+    Swap(source, destination);
+    //source.clear();
+    //for_each(destination.begin(), destination.end(), print);
+    //Assign(source, destination);
+    //source.clear();
+    //for_each(destination.begin(), destination.end(), print);
+    return 0;
+}
+   结果：
+  Total time elapsed : 1 us
+900000
+Total time elapsed : 12391 us
+900000
+   DebugUtility.h  大家可以从<a href="https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82">https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82</a></p>
 </div>
   
   
@@ -1037,21 +599,17 @@ return 0;
   </header>
 
 
-  <div class="entry-content"><p>  Use the wmctrl tools could maximize the windows of gvim in ubuntu. But I find a small issue for that.</p>
-
-<p>  Here is the wrong script:</p>
-
-<p>  if has(&ldquo;win32&rdquo;)
+  <div class="entry-content"><p>  Use the wmctrl tools could maximize the windows of gvim in ubuntu. But I find a small issue for that.
+  Here is the wrong script:
+  if has(&ldquo;win32&rdquo;)
     au GUIEnter * simalt ~x
 else
     au GUIEnter * call MaximizeWindow()
-endif</p>
-
-<p>function! MaximizeWindow()
+endif
+function! MaximizeWindow()
     silent !wmctrl -r :ACTIVE: -b add, maximized_vert,maximized_horz
-endfunction</p>
-
-<p>   You could see that between &ldquo;,&rdquo; and &ldquo;maximized_vert&rdquo; on line 8, there is a blank. It&rsquo;s the reason why the script can&rsquo;t works. So I remove the blank and it woks fine. So strange, because this scripts works well on my mac mini.</p>
+endfunction
+   You could see that between &ldquo;,&rdquo; and &ldquo;maximized_vert&rdquo; on line 8, there is a blank. It&rsquo;s the reason why the script can&rsquo;t works. So I remove the blank and it woks fine. So strange, because this scripts works well on my mac mini.</p>
 </div>
   
   

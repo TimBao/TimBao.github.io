@@ -84,9 +84,8 @@
   </header>
 
 
-<div class="entry-content"><p>  在类中可以定义引用类型的成员变量，但是必须在构造函数之前完成初始化，也就是必须在构造函数的初始化列表中完成初始化。</p>
-
-<p> class Functor
+<div class="entry-content"><p>  在类中可以定义引用类型的成员变量，但是必须在构造函数之前完成初始化，也就是必须在构造函数的初始化列表中完成初始化。
+ class Functor
 {
 public:
     // The constructor.
@@ -94,36 +93,29 @@ public:
         : <em>evenCount(evenCount)
     {
         //</em>evenCount = evenCount;
-    }</p>
-
-<pre><code>// The function-call operator prints whether the number is
-// even or odd. If the number is even, this method updates
-// the counter.
-void operator()(int n)
-{
-    cout &lt;&lt; n;
-
-    if (n % 2 == 0) 
-    {
-        cout &lt;&lt; " is even " &lt;&lt; endl;
-
-        // Increment the counter.
-        _evenCount++;
     }
-    else 
+    // The function-call operator prints whether the number is
+    // even or odd. If the number is even, this method updates
+    // the counter.
+    void operator()(int n)
     {
-        cout &lt;&lt; " is odd " &lt;&lt; endl;
+        cout &lt;&lt; n;
+        if (n % 2 == 0)
+        {
+            cout &lt;&lt; &ldquo; is even &rdquo; &lt;&lt; endl;
+            // Increment the counter.
+            <em>evenCount++;
+        }
+        else
+        {
+            cout &lt;&lt; &ldquo; is odd &rdquo; &lt;&lt; endl;
+        }
     }
-}
-</code></pre>
-
-<p>private:
-    int&amp; _evenCount; // the number of even variables in the vector
-};</p>
-
-<p>   注意如果将初始化列表去掉，改为在构造函数中初始化，则编译器会提示：</p>
-
-<p>   error C2758: &lsquo;Functor::_evenCount&rsquo; : must be initialized in constructor base/member initializer list</p>
+private:
+    int&amp; </em>evenCount; // the number of even variables in the vector
+};
+   注意如果将初始化列表去掉，改为在构造函数中初始化，则编译器会提示：
+   error C2758: &lsquo;Functor::_evenCount&rsquo; : must be initialized in constructor base/member initializer list</p>
 </div>
 
 

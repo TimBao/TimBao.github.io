@@ -87,13 +87,10 @@
   </header>
 
 
-  <div class="entry-content"><p>  这两天看了一篇关于重构的博客，结合前段时间看完的《重构》，对程序员的工作行为有一点点感悟，记录下来跟大家分享一下。</p>
-
-<p>  如果老大给你分派了一个任务，在原系统中添加某某功能。作为一名员工，你需要做的就是将功能没有BUG的，高效的实现就可以了，并不需要关心系统其他的部分代码，也有可能你在添加功能的时候阅读了一部分原有代码，也发现原有代码的一些问题，比如效率低，结构差等等，可是可能由于各种理由（工期紧，能良好运行，客户认可等等）并没有对这些问题进行修改，以后也不会对其进行修改。OK，可以说你按时，保质保量的完成了任务，还有可能得到表扬，但是作为一名程序员来说，你并不合格！同时你也丧失了一次自我提升的机会！</p>
-
-<p>  我决定作为程序员，不仅要对自己的程序负责，也要对产品的其他程序负责，既然看到了问题，就应该修改，或者记录下来，提供给决策者来进行后期重构或者升级时的修改项。如果是小改动，那么应该花费少量的时间直接修改过来。虽然花费了些许时间，但是对于产品来说，可能会有很大的性能提升，或者用户体验得到大大的改进，或者为以后维护提供了大大的便利；对于个人来讲也是对个人能力的展现，让后来维护人员对你的一种‘膜拜’。</p>
-
-<p>  所以，我认为简单的完成任务并不可取；在完成任务的同时，你应该可以获得更多东西！</p>
+  <div class="entry-content"><p>  这两天看了一篇关于重构的博客，结合前段时间看完的《重构》，对程序员的工作行为有一点点感悟，记录下来跟大家分享一下。
+  如果老大给你分派了一个任务，在原系统中添加某某功能。作为一名员工，你需要做的就是将功能没有BUG的，高效的实现就可以了，并不需要关心系统其他的部分代码，也有可能你在添加功能的时候阅读了一部分原有代码，也发现原有代码的一些问题，比如效率低，结构差等等，可是可能由于各种理由（工期紧，能良好运行，客户认可等等）并没有对这些问题进行修改，以后也不会对其进行修改。OK，可以说你按时，保质保量的完成了任务，还有可能得到表扬，但是作为一名程序员来说，你并不合格！同时你也丧失了一次自我提升的机会！
+  我决定作为程序员，不仅要对自己的程序负责，也要对产品的其他程序负责，既然看到了问题，就应该修改，或者记录下来，提供给决策者来进行后期重构或者升级时的修改项。如果是小改动，那么应该花费少量的时间直接修改过来。虽然花费了些许时间，但是对于产品来说，可能会有很大的性能提升，或者用户体验得到大大的改进，或者为以后维护提供了大大的便利；对于个人来讲也是对个人能力的展现，让后来维护人员对你的一种‘膜拜’。
+  所以，我认为简单的完成任务并不可取；在完成任务的同时，你应该可以获得更多东西！</p>
 </div>
   
   
@@ -122,13 +119,10 @@
   </header>
 
 
-  <div class="entry-content"><p>  以前的公司上班上网或者收发邮件都得小心翼翼的，怕一不小心被有心人瞧见，又得被说说。为了能发邮件而不被发现，嘿嘿，我就用python写了个邮件发送程序，用控制台控制，不了解的人一定以为哥还在编程工作呢。哈哈。</p>
-
-<p>  下面简单介绍下如何使用python发送邮件，包括普通文本内容，也可以带附件，或者HTML内容的邮件。可以说有了python，一切都变得非常的容易。</p>
-
-<p>  smtplib 模块是用来发送email的标准module，另外配合email.mime内的几个module实现起来就非常的简单。</p>
-
-<p> def sendmail(message):
+  <div class="entry-content"><p>  以前的公司上班上网或者收发邮件都得小心翼翼的，怕一不小心被有心人瞧见，又得被说说。为了能发邮件而不被发现，嘿嘿，我就用python写了个邮件发送程序，用控制台控制，不了解的人一定以为哥还在编程工作呢。哈哈。
+  下面简单介绍下如何使用python发送邮件，包括普通文本内容，也可以带附件，或者HTML内容的邮件。可以说有了python，一切都变得非常的容易。
+  smtplib 模块是用来发送email的标准module，另外配合email.mime内的几个module实现起来就非常的简单。
+ def sendmail(message):
     try:
         smtp = smtplib.SMTP(EMAIL_HOST)
         smtp.login(EMAIL_USER, EMAIL_PWD)<br/>
@@ -138,26 +132,19 @@
     except Exception ,e:
         print e
         print &lsquo;email send failed.&rsquo;
- 首先要导入smtplib模块，加入import smtplib，初始化的时候直接连上邮箱服务器，也就是上面的EMAIL_HOST（我使用的是163邮箱，所以定义EMAIL_HOST = &lsquo;smtp.163.com&#8217;），由于目前的邮箱基本都需要登录才可以使用，所以要调用smtp.login()函数，输入用户和密码。</p>
-
-<p>  def sendwithoutattachment():
-    msg = MIMEText(getcontent(), &lsquo;plain&rsquo;,&lsquo;utf-8&rsquo;)
-    getheader(msg)</p>
-
-<pre><code>sendmail(msg.as_string())
-</code></pre>
-
-<p>   我将发送简单文本内容的邮件单独独立为一个函数，使用MIMEText生成，注意这里用到了utf-8，因为内容有可能是中文，所以要特别指定。如果要发送html内容，则讲plain更改为html即可。</p>
-
-<p>  def getheader(msg):
+ 首先要导入smtplib模块，加入import smtplib，初始化的时候直接连上邮箱服务器，也就是上面的EMAIL_HOST（我使用的是163邮箱，所以定义EMAIL_HOST = &lsquo;smtp.163.com&#8217;），由于目前的邮箱基本都需要登录才可以使用，所以要调用smtp.login()函数，输入用户和密码。
+  def sendwithoutattachment():
+    msg = MIMEText(getcontent(), &#8216;plain&rsquo;,&lsquo;utf-8&rsquo;)
+    getheader(msg)
+    sendmail(msg.as_string())
+   我将发送简单文本内容的邮件单独独立为一个函数，使用MIMEText生成，注意这里用到了utf-8，因为内容有可能是中文，所以要特别指定。如果要发送html内容，则讲plain更改为html即可。
+  def getheader(msg):
     msg[&lsquo;From&rsquo;] = ME
     msg[&lsquo;To&rsquo;] = &ldquo;;&rdquo;.join(TO_EMAIL)
     msg[&lsquo;Subject&rsquo;] = EMAIL_HEADER
-    msg[&lsquo;Date&rsquo;] = formatdate(localtime=True)</p>
-
-<p>   getheader函数是用来设置发送者，接受者，主题和发送时间的。</p>
-
-<p>  def getcontent():
+    msg[&lsquo;Date&rsquo;] = formatdate(localtime=True)
+   getheader函数是用来设置发送者，接受者，主题和发送时间的。
+  def getcontent():
     path = os.getcwd()
     file = os.path.join(path, CONTENT_FILE_NAME)
     content = open(file, &lsquo;rb&rsquo;)
@@ -168,28 +155,23 @@
         data = data.decode(&lsquo;gbk&rsquo;,&lsquo;ignore&rsquo;)
     content.close()
     return data
-  至于邮件正文，我是事先写到一个TXT文档中，读取出来。这样也比较隐蔽。：）要主意中文编码。</p>
-
-<p>  def getattachment(msg):
+  至于邮件正文，我是事先写到一个TXT文档中，读取出来。这样也比较隐蔽。：）要主意中文编码。
+  def getattachment(msg):
     ctype, encoding = mimetypes.guess_type(ACCESSORY_FULLPATH)
     if ctype is None or encoding is not None:<br/>
         ctype = &lsquo;application/octet-stream&rsquo;<br/>
-    maintype, subtype = ctype.split(&lsquo;/&rsquo;, 1)</p>
-
-<pre><code>#Formating accessory data
-data = open(ACCESSORY_FULLPATH, 'rb')
-file_msg = MIMEBase(maintype, subtype)
-file_msg.set_payload(data.read( ))
-data.close( )
-encode_base64(file_msg) 
-#file_msg["Content-Type"] = ctype # if add type then return error 10054
-file_msg.add_header('Content-Disposition', 'attachment', filename = ACCESSORY_NAME)
-msg.attach(file_msg)
-</code></pre>
-
-<p>  附件同样独立为一个函数来创建，这里要注意的是不要指定“Content-Type”类型，否则无法发送邮件。这个问题还没有解决。</p>
-
-<p>  以上基本包括了发送邮件的主要几个函数，具体smtplib模块和MIME等内容，资料很多，这里就不详细讲解了，有感兴趣的可以上网search。</p>
+    maintype, subtype = ctype.split(&lsquo;/&rsquo;, 1)
+    #Formating accessory data
+    data = open(ACCESSORY_FULLPATH, &lsquo;rb&rsquo;)
+    file_msg = MIMEBase(maintype, subtype)
+    file_msg.set_payload(data.read( ))
+    data.close( )
+    encode_base64(file_msg)
+    #file_msg[&ldquo;Content-Type&rdquo;] = ctype # if add type then return error 10054
+    file_msg.add_header(&lsquo;Content-Disposition&rsquo;, &lsquo;attachment&rsquo;, filename = ACCESSORY_NAME)
+    msg.attach(file_msg)
+  附件同样独立为一个函数来创建，这里要注意的是不要指定“Content-Type”类型，否则无法发送邮件。这个问题还没有解决。
+  以上基本包括了发送邮件的主要几个函数，具体smtplib模块和MIME等内容，资料很多，这里就不详细讲解了，有感兴趣的可以上网search。</p>
 </div>
   
   
@@ -218,23 +200,15 @@ msg.attach(file_msg)
   </header>
 
 
-  <div class="entry-content"><p>  1、不要使用小写字母&#8217;l&#8217;(el),大写字母&#8217;O&#8217;(oh),或者小写&#8217;i&#8217;作为单独变量名称。因为一些字体中，上诉字母和数字很难区分（比如：O和0，l和1）。</p>
-
-<p>  2、Module应该采用全小写，并且尽可能短的命名，可以在模块名中使用下划线以提高可读性。Package应该采用全部小写，并且也要尽可能短的命名，但不允许使用下划线。当一个用C 或C++ 写的扩展模块，有一个伴随的Python 模块来提供一个更高层(例如，更面向对象)的接口时，C/C++模块名有一个前导下划线(如：_socket)。</p>
-
-<p>  3、类名使用首字母大写单词串(CapWords) 的约定。 内部使用的类使用一个额外的前导下划线。</p>
-
-<p>  4、因为异常应该是类，故类命名约定也适用于异常。然而，你应该对异常名添加后缀&#8221;Error&#8221; (如果该异常的确是一个错误)。</p>
-
-<p>  5、对设计为通过&#8221;from M import &ldquo; 来使用的模块，应采用all 机制来防止导 出全局变量；或者使用旧的约定，为该类全局变量加一个前导下划线(可能你想表 明这些全局变量是&#8221;module non-public&rdquo;)。</p>
-
-<p>  6、函数名应该为小写，必要时可用下划线分隔单词以增加可读性。 混合大小写(mixedCase) 仅被允许用于这种风格已经占优势的上下文(如:threading.py)，以便保持向后兼容。</p>
-
-<p>  7、对实例的方法，总是用&#8217;self&#8217; 做第一个参数。对类的方法，总是用&#8217;cls&#8217; 做第一个参数。如果函数的参数名与保留关键字冲突，在参数名后加一个下划线，比用缩写、错误 的拼写要好。因此 &ldquo;_print&rdquo; 比 &ldquo;prnt&rdquo; 好。(也许使用同义词来避免冲突更好。)</p>
-
-<p>  8、方法名和实例变量：采用函数命名规则：小写单词，必要时可用下划线分隔单词以增加可读性。仅对non-public 方法和实例变量采用一个前导下划线。为避免与子类命名冲突，采用两个前导下划线来触发Python 的命名重整规则。Python用类名重整这些名字：如果类Foo 有一个属性名为<strong>a， 它不能以Foo.</strong>a 访问。(执著的用户还是可以通过Foo._Foo__a.得到访问权。)通常，双前导下划线仅被用来避免与基类的属性发生名字冲突。</p>
-
-<p>  9、常量定义全部为大写，必要时可用下划线分隔单词以增加可读性。</p>
+  <div class="entry-content"><p>  1、不要使用小写字母&#8217;l&#8217;(el),大写字母&#8217;O&#8217;(oh),或者小写&#8217;i&#8217;作为单独变量名称。因为一些字体中，上诉字母和数字很难区分（比如：O和0，l和1）。
+  2、Module应该采用全小写，并且尽可能短的命名，可以在模块名中使用下划线以提高可读性。Package应该采用全部小写，并且也要尽可能短的命名，但不允许使用下划线。当一个用C 或C++ 写的扩展模块，有一个伴随的Python 模块来提供一个更高层(例如，更面向对象)的接口时，C/C++模块名有一个前导下划线(如：<em>socket)。
+  3、类名使用首字母大写单词串(CapWords) 的约定。 内部使用的类使用一个额外的前导下划线。
+  4、因为异常应该是类，故类命名约定也适用于异常。然而，你应该对异常名添加后缀&#8221;Error&#8221; (如果该异常的确是一个错误)。
+  5、对设计为通过&#8221;from M import &ldquo; 来使用的模块，应采用all 机制来防止导 出全局变量；或者使用旧的约定，为该类全局变量加一个前导下划线(可能你想表 明这些全局变量是&#8221;module non-public&rdquo;)。
+  6、函数名应该为小写，必要时可用下划线分隔单词以增加可读性。 混合大小写(mixedCase) 仅被允许用于这种风格已经占优势的上下文(如:threading.py)，以便保持向后兼容。
+  7、对实例的方法，总是用&#8217;self&#8217; 做第一个参数。对类的方法，总是用&#8217;cls&#8217; 做第一个参数。如果函数的参数名与保留关键字冲突，在参数名后加一个下划线，比用缩写、错误 的拼写要好。因此 &ldquo;</em>print&rdquo; 比 &ldquo;prnt&rdquo; 好。(也许使用同义词来避免冲突更好。)
+  8、方法名和实例变量：采用函数命名规则：小写单词，必要时可用下划线分隔单词以增加可读性。仅对non-public 方法和实例变量采用一个前导下划线。为避免与子类命名冲突，采用两个前导下划线来触发Python 的命名重整规则。Python用类名重整这些名字：如果类Foo 有一个属性名为<strong>a， 它不能以Foo.</strong>a 访问。(执著的用户还是可以通过Foo._Foo__a.得到访问权。)通常，双前导下划线仅被用来避免与基类的属性发生名字冲突。
+  9、常量定义全部为大写，必要时可用下划线分隔单词以增加可读性。</p>
 </div>
   
   
@@ -263,48 +237,39 @@ msg.attach(file_msg)
   </header>
 
 
-  <div class="entry-content"><p>   啥也不说了，直接上代码。</p>
-
-<pre><code>#include &lt;windows.h&gt;;
-</code></pre>
+  <div class="entry-content"><p>   啥也不说了，直接上代码。
+    #include &lt;windows.h>;</p>
 
 <h1>include &lt;ppltasks.h>;</h1>
 
 <p>using namespace Platform;
 using namespace Windows::Storage;
 using namespace Windows::Storage::Streams;
-using namespace Concurrency;</p>
-
-<p>StorageFile^ openFile(String^ fileName)
+using namespace Concurrency;
+StorageFile^ openFile(String^ fileName)
 {
     StorageFile^ file = nullptr;
-    StorageFolder^ rootFolder = Windows::Storage::ApplicationData::Current->;LocalFolder;</p>
-
-<pre><code>task&lt;StorageFile^&gt;;(rootFolder-&gt;;GetFileAsync(fileName)).then([&amp;](task&lt;StorageFile^&gt;; getFileTask)
-{
-    try
+    StorageFolder^ rootFolder = Windows::Storage::ApplicationData::Current->;LocalFolder;
+    task&lt;StorageFile^>;(rootFolder->;GetFileAsync(fileName)).then(<a href="task&lt;StorageFile^>;%20getFileTask&#8221;>&amp;</a>
     {
-        file = getFileTask.get();
-    }
-    catch (Platform::Exception^ e)
-    {
-    }
-}).wait();
-
-return file;
-</code></pre>
-
-<p>}</p>
-
-<p>Array<byte>;^ getFileContent(String^ fileName)
+        try
+        {
+            file = getFileTask.get();
+        }
+        catch (Platform::Exception^ e)
+        {
+        }
+    }).wait();
+    return file;
+}
+Array<byte>;^ getFileContent(String^ fileName)
 {
     Array<byte>;^ data = nullptr;
     StorageFile^ file = openFile(fileName);
     if (file)
     {
-        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::Read)).then([&amp;]</p>
-
-<p>(task&lt;IRandomAccessStream^>; getStream)
+        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::Read)).then([&amp;]
+(task&lt;IRandomAccessStream^>; getStream)
         {<br/>
             auto readStream = getStream.get();
             DataReader^ dataReader=ref new DataReader(readStream);
@@ -312,22 +277,16 @@ return file;
             if (length >; 0)
             {
                 data = ref new Array<byte>;(length);
-                task<unsigned int>;(dataReader->;LoadAsync(readStream->;Size)).then([&amp;](task&lt;unsigned</p>
-
-<p>int>; loadTask) {
+                task<unsigned int>;(dataReader->;LoadAsync(readStream->;Size)).then(<a href="task&lt;unsigned%0Aint>;%20loadTask&#8221;>&amp;</a> {
                     loadTask.get();
                     dataReader->;ReadBytes(data);
                 }).wait();
             }
         }).wait();
-    }</p>
-
-<pre><code>return data;
-</code></pre>
-
-<p>}</p>
-
-<p>bool setFileContent(String^ fileName, unsigned char* data, int size)
+    }
+    return data;
+}
+bool setFileContent(String^ fileName, unsigned char* data, int size)
 {
     size_t totalWritten = 0;
     bool complete = false;
@@ -335,41 +294,32 @@ return file;
     if (file)
     {
         IRandomAccessStream^ readStream = nullptr;
-        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::ReadWrite)).then([&amp;]</p>
-
-<p>(task&lt;IRandomAccessStream^>; getStream)
+        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::ReadWrite)).then([&amp;]
+(task&lt;IRandomAccessStream^>; getStream)
         {<br/>
-            readStream = getStream.get();</p>
-
-<pre><code>        DataWriter^ dataWriter = ref new DataWriter(readStream);
-        Array&lt;unsigned char&gt;;^ arr = ref new Array&lt;unsigned char&gt;;(data, size);
-
-        dataWriter-&gt;;WriteBytes(arr);
-        task&lt;unsigned int&gt;;(dataWriter-&gt;;StoreAsync()).then([&amp;](task&lt;unsigned int&gt;; writeTask)
-        {
-            try
+            readStream = getStream.get();
+            DataWriter^ dataWriter = ref new DataWriter(readStream);
+            Array<unsigned char>;^ arr = ref new Array<unsigned char>;(data, size);
+            dataWriter->;WriteBytes(arr);
+            task<unsigned int>;(dataWriter->;StoreAsync()).then(<a href="task&lt;unsigned%20int>;%20writeTask&#8221;>&amp;</a>
             {
-                totalWritten = writeTask.get();
-            } catch (Platform::Exception^ ex) {}
-        }).wait();
-
-        task&lt;bool&gt;;(dataWriter-&gt;;FlushAsync()).then([&amp;](task&lt;bool&gt;; flushTask)
-        {
-            try
+                try
+                {
+                    totalWritten = writeTask.get();
+                } catch (Platform::Exception^ ex) {}
+            }).wait();
+            task<bool>;(dataWriter->;FlushAsync()).then(<a href="task&lt;bool>;%20flushTask&#8221;>&amp;</a>
             {
-                complete = flushTask.get();
-            } catch (Platform::Exception^ ex) {}
+                try
+                {
+                    complete = flushTask.get();
+                } catch (Platform::Exception^ ex) {}
+            }).wait();
+            dataWriter->;DetachStream();
         }).wait();
-
-        dataWriter-&gt;;DetachStream();
-
-    }).wait();
-}
-
-return complete;
-</code></pre>
-
-<p>}</p>
+    }
+    return complete;
+}</p>
 </div>
   
   
@@ -398,17 +348,12 @@ return complete;
   </header>
 
 
-  <div class="entry-content"><p>  一、重构之前一定要对原有代码有一套可靠的测试机制，并且测试要有自我检测能力。</p>
-
-<p>  第六章主要是讲的最简单的重构方法，就是对函数的重构。重构的目的就是要让函数更容易理解，思路更清晰。个人觉得重构的目的主要是针对开发者，能让维护者更容易理解而已。对函数的效率没有太多帮助，用作者的话来说就是应该放到优化中去做。有了易理解的函数，清晰的思路，优化起来那是事半功倍！</p>
-
-<p>  几个比较重要的重构的小方法：</p>
-
-<p>  1、Extract Methord：提取函数。将大函数分解为多个独立功能的小函数。小函数更容易阅读和理解。</p>
-
-<p>  2、Replace Temp with Quary：用查询函数替换局部变量。过多的局部变量会影响阅读。</p>
-
-<p>  3、Replace Methord with Methord Object：用函数对象替换函数。</p>
+  <div class="entry-content"><p>  一、重构之前一定要对原有代码有一套可靠的测试机制，并且测试要有自我检测能力。
+  第六章主要是讲的最简单的重构方法，就是对函数的重构。重构的目的就是要让函数更容易理解，思路更清晰。个人觉得重构的目的主要是针对开发者，能让维护者更容易理解而已。对函数的效率没有太多帮助，用作者的话来说就是应该放到优化中去做。有了易理解的函数，清晰的思路，优化起来那是事半功倍！
+  几个比较重要的重构的小方法：
+  1、Extract Methord：提取函数。将大函数分解为多个独立功能的小函数。小函数更容易阅读和理解。
+  2、Replace Temp with Quary：用查询函数替换局部变量。过多的局部变量会影响阅读。
+  3、Replace Methord with Methord Object：用函数对象替换函数。</p>
 </div>
   
   
@@ -437,22 +382,12 @@ return complete;
   </header>
 
 
-  <div class="entry-content"><p> 将win32的lib库直接转为winRT静态库需要注意三点</p>
-
-<p>  1、打开/ZW开关，关闭/GM开关</p>
-
-<p>   2、忽略OLE32.LIB</p>
-
-<pre><code>3、手动使用命令/AI包含Windows.winmd(从工程中add new references无效)
-
-
-  /FU Platform.winmd /FU Windows.winmd /AI "$(VCInstallDir)vcpackages" /AI "$(WindowsSDK_MetadataPath)"
-
-
-
-
-  剩余的工作就是修改编译错误了
-</code></pre>
+  <div class="entry-content"><p> 将win32的lib库直接转为winRT静态库需要注意三点
+  1、打开/ZW开关，关闭/GM开关
+   2、忽略OLE32.LIB
+    3、手动使用命令/AI包含Windows.winmd(从工程中add new references无效)
+      /FU Platform.winmd /FU Windows.winmd /AI &ldquo;$(VCInstallDir)vcpackages&rdquo; /AI &ldquo;$(WindowsSDK_MetadataPath)&rdquo;
+      剩余的工作就是修改编译错误了</p>
 </div>
   
   
@@ -481,9 +416,8 @@ return complete;
   </header>
 
 
-  <div class="entry-content"><p>  WinRT类型的动态库，可以认为导出的是类，应用通过创建类的实例来引用该导出类的功能即接口。</p>
-
-<p>  这里需要注意的是导出类的public成员只能是接口（成员变量是不可以为public），这样就避免了暴露类结构，并且接口中的参数不能为native type(例如：void* dd就不可以作为参数)。</p>
+  <div class="entry-content"><p>  WinRT类型的动态库，可以认为导出的是类，应用通过创建类的实例来引用该导出类的功能即接口。
+  这里需要注意的是导出类的public成员只能是接口（成员变量是不可以为public），这样就避免了暴露类结构，并且接口中的参数不能为native type(例如：void* dd就不可以作为参数)。</p>
 </div>
   
   
@@ -512,17 +446,14 @@ return complete;
   </header>
 
 
-  <div class="entry-content"><p>  最近由于再开发Win 8 metro程序和准备开发Win Phone 8 App，学习了下WinRT开发，包括一些C++ 11新标准内容，最初对Lamdba表达式的表达很是头疼，对以往的编程认识非常不同，这也就让我对它产生了浓厚的兴趣，找了很多资料来学习它，并且写了好多程序去测试它，慢慢发现其实Lamdba表达式真的很有趣！</p>
-
-<p>  其实对Lambda表达式不必有任何的畏惧心里，通过仔细的分析它，我发现其实Lambda表达式就是一个函数，是一个匿名的函数，是一个可以自己执行的自己的函数。就这么简单！下面我们来看一个例子：</p>
-
-<p>  #include <functional>;</p>
+  <div class="entry-content"><p>  最近由于再开发Win 8 metro程序和准备开发Win Phone 8 App，学习了下WinRT开发，包括一些C++ 11新标准内容，最初对Lamdba表达式的表达很是头疼，对以往的编程认识非常不同，这也就让我对它产生了浓厚的兴趣，找了很多资料来学习它，并且写了好多程序去测试它，慢慢发现其实Lamdba表达式真的很有趣！
+  其实对Lambda表达式不必有任何的畏惧心里，通过仔细的分析它，我发现其实Lambda表达式就是一个函数，是一个匿名的函数，是一个可以自己执行的自己的函数。就这么简单！下面我们来看一个例子：
+  #include <functional>;</p>
 
 <h1>include <iostream>;</h1>
 
-<p>using namespace std;</p>
-
-<p>int main(int argc, char argv[])
+<p>using namespace std;
+int main(int argc, char argv[])
 {
     int number = 2;
     int menber = 2;
@@ -538,28 +469,19 @@ return complete;
         return x + y;
     };
     //Lambda表达式执行之前
-    cout &lt;&lt; &ldquo;number:&rdquo; &lt;&lt; number &lt;&lt; &ldquo; menber:&rdquo; &lt;&lt; menber &lt;&lt; endl;</p>
-
-<pre><code>//执行Lambda表达式
-f1(3, 4);
-
-//Lambda表达式执行之后
-cout &lt;&lt; "number:" &lt;&lt; number &lt;&lt; " menber:" &lt;&lt; menber &lt;&lt; endl;
-
-//自我执行
-cout &lt;&lt; [] (int x, int y) { return x + y; }(2, 3) &lt;&lt; endl;
-
-// auto类型其实就是 function&lt;int (int, int)&gt;;.
-function&lt;int (int, int)&gt;; f2 = [] (int x, int y) { return x + y; };
-
-cout &lt;&lt; f2(3,4) &lt;&lt; f1(3, 4) &lt;&lt; endl;
-
-system("pause");
-
-return 0;
-</code></pre>
-
-<p>}</p>
+    cout &lt;&lt; &ldquo;number:&rdquo; &lt;&lt; number &lt;&lt; &ldquo; menber:&rdquo; &lt;&lt; menber &lt;&lt; endl;
+    //执行Lambda表达式
+    f1(3, 4);
+    //Lambda表达式执行之后
+    cout &lt;&lt; &ldquo;number:&rdquo; &lt;&lt; number &lt;&lt; &ldquo; menber:&rdquo; &lt;&lt; menber &lt;&lt; endl;
+    //自我执行
+    cout &lt;&lt; [] (int x, int y) { return x + y; }(2, 3) &lt;&lt; endl;
+    // auto类型其实就是 function<int (int, int)>;.
+    function<int (int, int)>; f2 = [] (int x, int y) { return x + y; };
+    cout &lt;&lt; f2(3,4) &lt;&lt; f1(3, 4) &lt;&lt; endl;
+    system(&ldquo;pause&rdquo;);
+    return 0;
+}</p>
 </div>
   
   
@@ -596,53 +518,36 @@ template <class Function>;
     </strong>int64 begin = GetTickCount64();
     f();
     return GetTickCount64() - begin;
-}</p>
-
-<p>// Use WideCharToMultiByte and MultiByteToWideChar
-string WChar2Ansi(const wchar_t* pwszSrc)
+}
+// Use WideCharToMultiByte and MultiByteToWideChar
+string WChar2Ansi(const wchar_t<em> pwszSrc)
 {
-    int nLen = WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, NULL, 0, NULL, NULL);</p>
-
-<pre><code>if (nLen&lt;= 0) return string("");
-
-char* pszDst = new char[nLen];
-if (NULL == pszDst) return string("");
-
-WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, pszDst, nLen, NULL, NULL);
-pszDst[nLen -1] = 0;
-
-string strTemp(pszDst);
-delete [] pszDst;
-
-return strTemp;
-</code></pre>
-
-<p>}</p>
-
-<p>wstring Ansi2WChar(const char* pszSrc, int nLen)
+    int nLen = WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, NULL, 0, NULL, NULL);
+    if (nLen&lt;= 0) return string(&ldquo;&rdquo;);
+    char</em> pszDst = new char[nLen];
+    if (NULL == pszDst) return string(&ldquo;&rdquo;);
+    WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, pszDst, nLen, NULL, NULL);
+    pszDst[nLen -1] = 0;
+    string strTemp(pszDst);
+    delete [] pszDst;
+    return strTemp;
+}
+wstring Ansi2WChar(const char<em> pszSrc, int nLen)
 {
     int nSize = MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, 0, 0);
-    if(nSize &lt;= 0) return NULL;</p>
-
-<pre><code>wchar_t *pwszDst = new wchar_t[nSize+1];
-if( NULL == pwszDst) return NULL;
-
-MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, pwszDst, nSize);
-pwszDst[nSize] = 0;
-
-if( pwszDst[0] == 0xFEFF)                    // skip Oxfeff
-    for(int i = 0; i &lt; nSize; i ++) 
-        pwszDst[i] = pwszDst[i+1]; 
-
-wstring wcharString(pwszDst);
-delete pwszDst;
-
-return wcharString;
-</code></pre>
-
-<p>}</p>
-
-<p>// Use wcstombs_s and mbstowcs_s
+    if(nSize &lt;= 0) return NULL;
+    wchar_t </em>pwszDst = new wchar_t[nSize+1];
+    if( NULL == pwszDst) return NULL;
+    MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, pwszDst, nSize);
+    pwszDst[nSize] = 0;
+    if( pwszDst[0] == 0xFEFF)                    // skip Oxfeff
+        for(int i = 0; i &lt; nSize; i ++)
+            pwszDst[i] = pwszDst[i+1];
+    wstring wcharString(pwszDst);
+    delete pwszDst;
+    return wcharString;
+}
+// Use wcstombs_s and mbstowcs_s
 string ws2s(wstring ws)
 {
     const wchar_t<em> Source = ws.c_str();
@@ -653,14 +558,10 @@ string ws2s(wstring ws)
     wcstombs(Dest, Source, size);
     //wcstombs_s(&amp;len, Dest, size, Source, size);
     string result = Dest;
-    delete [] Dest;</p>
-
-<pre><code>return result;
-</code></pre>
-
-<p>}</p>
-
-<p>wstring s2ws(string s)
+    delete [] Dest;
+    return result;
+}
+wstring s2ws(string s)
 {
     const char<em> Source = s.c_str();
     size_t size = s.size() + 1;
@@ -670,118 +571,91 @@ string ws2s(wstring ws)
     mbstowcs(Dest, Source, size);
     //mbstowcs_s(&amp;len, Dest, size, Source, size);
     wstring result = Dest;
-    delete [] Dest;</p>
-
-<pre><code>return result;
-</code></pre>
-
-<p>}</p>
-
-<p>// Testing
-    __int64 elapsed;
+    delete [] Dest;
+    return result;
+}
+// Testing
+    <em><em>int64 elapsed;
     string input = &ldquo;Hello, World.\XXX\XXX&rdquo;;
     wstring winput = L&#8221;Hello, World.\XXX\XXX&#8221;;
-    wchar_t dest[1000];</p>
-
-<pre><code>int count = 10000;
-elapsed = time_call([input, &amp;count] 
-{
-    while (count)
+    wchar_t dest[1000];
+    int count = 10000;
+    elapsed = time_call([input, &amp;count]
     {
-        Ansi2WChar(input.c_str(), input.length());
-        count--;
-    }
-});
-memset(dest, 0, 1000);
-_itow_s(elapsed, dest, 10);
-OutputDebugStringW(L"Time:");
-OutputDebugStringW(dest);
-OutputDebugStringW(L"ms\n");
-
-count = 10000;
-elapsed = 0;
-elapsed = time_call([input, &amp;count] 
-{
-    while (count)
+        while (count)
+        {
+            Ansi2WChar(input.c_str(), input.length());
+            count&ndash;;
+        }
+    });
+    memset(dest, 0, 1000);
+    </em>itow_s(elapsed, dest, 10);
+    OutputDebugStringW(L&#8221;Time:&ldquo;);
+    OutputDebugStringW(dest);
+    OutputDebugStringW(L&#8221;ms\n&rdquo;);
+    count = 10000;
+    elapsed = 0;
+    elapsed = time_call([input, &amp;count]
     {
-        s2ws(input);
-        count--;
-    }
-});
-memset(dest, 0, 1000);
-_itow_s(elapsed, dest, 10);
-OutputDebugStringW(L"Time:");
-OutputDebugStringW(dest);
-OutputDebugStringW(L"ms\n");
-
-count = 10000;
-elapsed = 0;
-elapsed = time_call([winput, &amp;count] 
-{
-    while (count)
+        while (count)
+        {
+            s2ws(input);
+            count&ndash;;
+        }
+    });
+    memset(dest, 0, 1000);
+    </em>itow_s(elapsed, dest, 10);
+    OutputDebugStringW(L&#8221;Time:&ldquo;);
+    OutputDebugStringW(dest);
+    OutputDebugStringW(L&#8221;ms\n&rdquo;);
+    count = 10000;
+    elapsed = 0;
+    elapsed = time_call([winput, &amp;count]
     {
-        WChar2Ansi(winput.c_str());
-        count--;
-    }
-});
-memset(dest, 0, 1000);
-_itow_s(elapsed, dest, 10);
-OutputDebugStringW(L"Time:");
-OutputDebugStringW(dest);
-OutputDebugStringW(L"ms\n");
-
-count = 10000;
-elapsed = 0;
-elapsed = time_call([winput, &amp;count] 
-{
-    while (count)
+        while (count)
+        {
+            WChar2Ansi(winput.c_str());
+            count&ndash;;
+        }
+    });
+    memset(dest, 0, 1000);
+    <em>itow_s(elapsed, dest, 10);
+    OutputDebugStringW(L&#8221;Time:&ldquo;);
+    OutputDebugStringW(dest);
+    OutputDebugStringW(L&#8221;ms\n&rdquo;);
+    count = 10000;
+    elapsed = 0;
+    elapsed = time_call([winput, &amp;count]
     {
-        ws2s(winput);
-        count--;
-    }
-});
-memset(dest, 0, 1000);
-_itow_s(elapsed, dest, 10);
-OutputDebugStringW(L"Time:");
-OutputDebugStringW(dest);
-OutputDebugStringW(L"ms\n");
-</code></pre>
-
-<p>  输出：</p>
-
-<p>  Time:78ms</p>
-
-<p>  Time:94ms</p>
-
-<p>  Time:62ms</p>
-
-<p>  Time:109ms</p>
-
-<p>  从输出结果可以看出</p>
-
-<p>   WideCharToMultiByte</p>
-
-<p>   和</p>
-
-<p>   MultiByteToWideChar</p>
-
-<p>   转换效率要比</p>
-
-<p>   mbstowcs</p>
-
-<p>   和</p>
-
-<p>   wcstombs</p>
-
-<p>   高。</p>
-
-<p>   注意：如果使用</p>
-
-<p>   mbstowcs</p>
-
-<p>   则需要</p>
-
-<p>   Disable
+        while (count)
+        {
+            ws2s(winput);
+            count&ndash;;
+        }
+    });
+    memset(dest, 0, 1000);
+    </em>itow_s(elapsed, dest, 10);
+    OutputDebugStringW(L&#8221;Time:&ldquo;);
+    OutputDebugStringW(dest);
+    OutputDebugStringW(L&#8221;ms\n&rdquo;);
+  输出：
+  Time:78ms
+  Time:94ms
+  Time:62ms
+  Time:109ms
+  从输出结果可以看出
+   WideCharToMultiByte
+   和
+   MultiByteToWideChar
+   转换效率要比
+   mbstowcs
+   和
+   wcstombs
+   高。
+   注意：如果使用
+   mbstowcs
+   则需要
+   Disable
  Specific Warnings： 4996</p>
 </div>
   
@@ -811,9 +685,8 @@ OutputDebugStringW(L"ms\n");
   </header>
 
 
-  <div class="entry-content"><p>  1、将文件加到工程中</p>
-
-<p>  2、选中文件，右键属性->;Content->;True</p>
+  <div class="entry-content"><p>  1、将文件加到工程中
+  2、选中文件，右键属性->;Content->;True</p>
 </div>
   
   
