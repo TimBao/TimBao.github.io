@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "工欲善其事，必先利其器"
-date: 2014-11-05 16:07:00 
+date: 2014-11-05 16:07:00
 comments: true
 categories: [记事]
 tags: [记事]
@@ -9,8 +9,7 @@ description: "工欲善其事，必先利其器"
 keywords: 记事
 ---
 
-      工欲善其事
-      ，必先利其器
+      工欲善其事，必先利其器
       背景：最近一直在写些
       python
       脚本，同事
