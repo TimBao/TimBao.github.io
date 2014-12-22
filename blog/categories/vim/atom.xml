@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Vim | My Octopress Blog]]></title>
   <link href="http://timbao.github.io/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-22T11:33:03+08:00</updated>
+  <updated>2014-12-22T11:41:27+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -18,9 +18,11 @@
     <link href="http://timbao.github.io/blog/2013/06/21/gvim%20use%20wmctrl%20in%20ubuntu/"/>
     <updated>2013-06-21T03:35:00+08:00</updated>
     <id>http://timbao.github.io/blog/2013/06/21/gvim use wmctrl in ubuntu</id>
-    <content type="html"><![CDATA[<p>  Use the wmctrl tools could maximize the windows of gvim in ubuntu. But I find a small issue for that.
-  Here is the wrong script:
-  if has(&ldquo;win32&rdquo;)
+    <content type="html"><![CDATA[<p>  Use the wmctrl tools could maximize the windows of gvim in ubuntu. But I find a small issue for that.</p>
+
+<p>  Here is the wrong script:</p>
+
+<pre><code class="``vimscript">  if has("win32")
     au GUIEnter * simalt ~x
 else
     au GUIEnter * call MaximizeWindow()
@@ -28,7 +30,9 @@ endif
 function! MaximizeWindow()
     silent !wmctrl -r :ACTIVE: -b add, maximized_vert,maximized_horz
 endfunction
-   You could see that between &ldquo;,&rdquo; and &ldquo;maximized_vert&rdquo; on line 8, there is a blank. It&rsquo;s the reason why the script can&rsquo;t works. So I remove the blank and it woks fine. So strange, because this scripts works well on my mac mini.</p>
+</code></pre>
+
+<p>   You could see that between &ldquo;,&rdquo; and &ldquo;maximized_vert&rdquo; on line 8, there is a blank. It&rsquo;s the reason why the script can&rsquo;t works. So I remove the blank and it woks fine. So strange, because this scripts works well on my mac mini.</p>
 ]]></content>
   </entry>
   
