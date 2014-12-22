@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "谈Lambda表达式"
-date: 2012-06-18 22:31:00 
+date: 2012-06-18 22:31:00
 comments: true
 categories: [C++技术]
 tags: [C++技术]
@@ -9,9 +9,11 @@ description: "谈Lambda表达式"
 keywords: C++技术
 ---
 
-  最近由于再开发Win 8 metro程序和准备开发Win Phone 8 App，学习了下WinRT开发，包括一些C++ 11新标准内容，最初对Lamdba表达式的表达很是头疼，对以往的编程认识非常不同，这也就让我对它产生了浓厚的兴趣，找了很多资料来学习它，并且写了好多程序去测试它，慢慢发现其实Lamdba表达式真的很有趣！
-  其实对Lambda表达式不必有任何的畏惧心里，通过仔细的分析它，我发现其实Lambda表达式就是一个函数，是一个匿名的函数，是一个可以自己执行的自己的函数。就这么简单！下面我们来看一个例子：
-  #include <functional>;
+> 最近由于再开发Win 8 metro程序和准备开发Win Phone 8 App，学习了下WinRT开发，包括一些C++ 11新标准内容，最初对Lamdba表达式的表达很是头疼，对以往的编程认识非常不同，这也就让我对它产生了浓厚的兴趣，找了很多资料来学习它，并且写了好多程序去测试它，慢慢发现其实Lamdba表达式真的很有趣！
+
+其实对Lambda表达式不必有任何的畏惧心里，通过仔细的分析它，我发现其实Lambda表达式就是一个函数，是一个匿名的函数，是一个可以自己执行的自己的函数。就这么简单！下面我们来看一个例子：
+```c++
+#include <functional>;
 #include <iostream>;
 using namespace std;
 int main(int argc, char argv[])
@@ -25,9 +27,9 @@ int main(int argc, char argv[])
     // ->; 后跟返回值
     // {} 函数题
     auto f1 = [number, &menber] (int x, int y) mutable throw() ->; int {
-        ++number; 
-        ++menber; 
-        return x + y; 
+        ++number;
+        ++menber;
+        return x + y;
     };
     //Lambda表达式执行之前
     cout << "number:" << number << " menber:" << menber << endl;
@@ -43,3 +45,4 @@ int main(int argc, char argv[])
     system("pause");
     return 0;
 }
+```

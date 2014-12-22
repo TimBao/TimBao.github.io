@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Win 8 文件读写操作"
-date: 2012-08-07 16:41:00 
+date: 2012-08-07 16:41:00
 comments: true
 categories: [Windows 8]
 tags: [Windows 8]
@@ -9,8 +9,9 @@ description: "Win 8 文件读写操作"
 keywords: Windows 8
 ---
 
-   啥也不说了，直接上代码。
-    #include <windows.h>;
+啥也不说了，直接上代码。
+```
+#include <windows.h>;
 #include <ppltasks.h>;
 using namespace Platform;
 using namespace Windows::Storage;
@@ -40,14 +41,14 @@ Array<byte>;^ getFileContent(String^ fileName)
     {
         task<IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::Read)).then([&]
 (task<IRandomAccessStream^>; getStream)
-        {  
+        {
             auto readStream = getStream.get();
             DataReader^ dataReader=ref new DataReader(readStream);
             int length = readStream->;Size;
             if (length >; 0)
             {
                 data = ref new Array<byte>;(length);
-                task<unsigned int>;(dataReader->;LoadAsync(readStream->;Size)).then([&](task<unsigned 
+                task<unsigned int>;(dataReader->;LoadAsync(readStream->;Size)).then([&](task<unsigned
 int>; loadTask) {
                     loadTask.get();
                     dataReader->;ReadBytes(data);
@@ -67,7 +68,7 @@ bool setFileContent(String^ fileName, unsigned char* data, int size)
         IRandomAccessStream^ readStream = nullptr;
         task<IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::ReadWrite)).then([&]
 (task<IRandomAccessStream^>; getStream)
-        {  
+        {
             readStream = getStream.get();
             DataWriter^ dataWriter = ref new DataWriter(readStream);
             Array<unsigned char>;^ arr = ref new Array<unsigned char>;(data, size);
@@ -91,3 +92,4 @@ bool setFileContent(String^ fileName, unsigned char* data, int size)
     }
     return complete;
 }
+```

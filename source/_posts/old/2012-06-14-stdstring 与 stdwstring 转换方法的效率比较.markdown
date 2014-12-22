@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "std::string 与 std::wstring 转换方法的效率比较"
-date: 2012-06-14 13:18:00 
+date: 2012-06-14 13:18:00
 comments: true
 categories: [Windows 8]
 tags: [Windows 8]
@@ -9,8 +9,10 @@ description: "std::string 与 std::wstring 转换方法的效率比较"
 keywords: Windows 8
 ---
 
- // Calls the provided work function and returns the number of milliseconds 
+// Calls the provided work function and returns the number of milliseconds
+
 // that it takes to call that function.
+```
 template <class Function>;
 __int64 time_call(Function&& f)
 {
@@ -40,13 +42,13 @@ wstring Ansi2WChar(const char* pszSrc, int nLen)
     MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, pwszDst, nSize);
     pwszDst[nSize] = 0;
     if( pwszDst[0] == 0xFEFF)                    // skip Oxfeff
-        for(int i = 0; i < nSize; i ++) 
-            pwszDst[i] = pwszDst[i+1]; 
+        for(int i = 0; i < nSize; i ++)
+            pwszDst[i] = pwszDst[i+1];
     wstring wcharString(pwszDst);
     delete pwszDst;
     return wcharString;
 }
-// Use wcstombs_s and mbstowcs_s 
+// Use wcstombs_s and mbstowcs_s
 string ws2s(wstring ws)
 {
     const wchar_t* Source = ws.c_str();
@@ -73,13 +75,13 @@ wstring s2ws(string s)
     delete [] Dest;
     return result;
 }
-// Testing 
+// Testing
     __int64 elapsed;
     string input = "Hello, World.\\XXX\\XXX";
     wstring winput = L"Hello, World.\\XXX\\XXX";
     wchar_t dest[1000];
     int count = 10000;
-    elapsed = time_call([input, &count] 
+    elapsed = time_call([input, &count]
     {
         while (count)
         {
@@ -94,7 +96,7 @@ wstring s2ws(string s)
     OutputDebugStringW(L"ms\n");
     count = 10000;
     elapsed = 0;
-    elapsed = time_call([input, &count] 
+    elapsed = time_call([input, &count]
     {
         while (count)
         {
@@ -109,7 +111,7 @@ wstring s2ws(string s)
     OutputDebugStringW(L"ms\n");
     count = 10000;
     elapsed = 0;
-    elapsed = time_call([winput, &count] 
+    elapsed = time_call([winput, &count]
     {
         while (count)
         {
@@ -124,7 +126,7 @@ wstring s2ws(string s)
     OutputDebugStringW(L"ms\n");
     count = 10000;
     elapsed = 0;
-    elapsed = time_call([winput, &count] 
+    elapsed = time_call([winput, &count]
     {
         while (count)
         {
@@ -137,22 +139,20 @@ wstring s2ws(string s)
     OutputDebugStringW(L"Time:");
     OutputDebugStringW(dest);
     OutputDebugStringW(L"ms\n");
-  输出：
+```
+
+输出：
+
   Time:78ms
+
   Time:94ms
+
   Time:62ms
+
   Time:109ms
-  从输出结果可以看出
-   WideCharToMultiByte
-   和
-   MultiByteToWideChar
-   转换效率要比
-   mbstowcs
-   和
-   wcstombs
-   高。
-   注意：如果使用
-   mbstowcs
-   则需要
-   Disable
- Specific Warnings： 4996
+
+从输出结果可以看出
+
+WideCharToMultiByte和MultiByteToWideChar转换效率要比mbstowcs和wcstombs高。
+
+注意：如果使用mbstowcs则需要Disable Specific Warnings：4996
