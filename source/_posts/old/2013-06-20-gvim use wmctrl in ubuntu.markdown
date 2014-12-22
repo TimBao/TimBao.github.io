@@ -13,7 +13,7 @@ keywords: Vim
 
   Here is the wrong script:
 
-  ```vimscript
+```vimscript
   if has("win32")
     au GUIEnter * simalt ~x
 else
@@ -22,6 +22,6 @@ endif
 function! MaximizeWindow()
     silent !wmctrl -r :ACTIVE: -b add, maximized_vert,maximized_horz
 endfunction
-  ```
+```
 
    You could see that between "," and "maximized_vert" on line 8, there is a blank. It's the reason why the script can't works. So I remove the blank and it woks fine. So strange, because this scripts works well on my mac mini.
