@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "delete对象后到底要不要将对象置为NULL"
-date: 2012-11-22 14:31:00 
+date: 2012-11-22 14:31:00
 comments: true
 categories: [C++技术]
 tags: [C++技术]
