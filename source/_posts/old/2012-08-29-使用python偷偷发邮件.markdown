@@ -13,7 +13,7 @@ keywords: Python
 
 下面简单介绍下如何使用python发送邮件，包括普通文本内容，也可以带附件，或者HTML内容的邮件。可以说有了python，一切都变得非常的容易。
   smtplib 模块是用来发送email的标准module，另外配合email.mime内的几个module实现起来就非常的简单。
-```python
+```
  def sendmail(message):
     try:
         smtp = smtplib.SMTP(EMAIL_HOST)
@@ -27,7 +27,7 @@ keywords: Python
 ```
 
 首先要导入smtplib模块，加入import smtplib，初始化的时候直接连上邮箱服务器，也就是上面的EMAIL_HOST（我使用的是163邮箱，所以定义EMAIL_HOST = 'smtp.163.com'），由于目前的邮箱基本都需要登录才可以使用，所以要调用smtp.login()函数，输入用户和密码。
-```python
+```
 def sendwithoutattachment():
     msg = MIMEText(getcontent(), 'plain','utf-8')
     getheader(msg)
@@ -35,7 +35,7 @@ def sendwithoutattachment():
 ```
 
 我将发送简单文本内容的邮件单独独立为一个函数，使用MIMEText生成，注意这里用到了utf-8，因为内容有可能是中文，所以要特别指定。如果要发送html内容，则讲plain更改为html即可。
-```python
+```
 def getheader(msg):
     msg['From'] = ME
     msg['To'] = ";".join(TO_EMAIL)
@@ -56,7 +56,7 @@ def getcontent():
 ```
 
 至于邮件正文，我是事先写到一个TXT文档中，读取出来。这样也比较隐蔽。：）要主意中文编码。
-```python
+```
 def getattachment(msg):
     ctype, encoding = mimetypes.guess_type(ACCESSORY_FULLPATH)
     if ctype is None or encoding is not None:
