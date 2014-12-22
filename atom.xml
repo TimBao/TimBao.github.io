@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://timbao.github.io/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-22T10:33:12+08:00</updated>
+  <updated>2014-12-22T11:03:41+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -44,7 +44,7 @@
 <li>strncat : char<em> strcat(char</em> destination, const char* source, size_t num);
 
 <blockquote><p>cat 意思是catenate，连接的意思。
-strncp 是strcat的安全版本，可以防止越界。
+strnca 是strcat的安全版本，可以防止越界。
 从定义上可以看出是将带const的字符串连接到不带const的字符串上。</p></blockquote></li>
 </ul>
 </li>
@@ -113,51 +113,23 @@ chr意思应该是character。</p></blockquote></li>
     <link href="http://timbao.github.io/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/"/>
     <updated>2014-03-19T04:26:00+08:00</updated>
     <id>http://timbao.github.io/blog/2014/03/19/Android NDK帮助文档的一个小错误</id>
-    <content type="html"><![CDATA[<p>   刚刚在调试如何不安装
-    Cgywin
-   的情况下，利用
-    NDK
-   编译
-    cocos2d-x
-   的
-    SampleGame
-   .却机缘巧合的情况下发现了
-    android-ndk-r8d
-   的
-    docs/IMPORT-MODULE.html
-   下的一个小bug。
-  在
-   Eclipse
-  中导入工程后，工程目录如下：
-   将工程转换为C++工程。这步不会的可以google下。
-   设置ndk目录。
-   设置
-    NDK_MODULE_PATH
-   环境变量。
-  在
-   docs/IMPORT-MODULE.html
-  中的介绍：
-   I.
-    NDK_MODULE_PATH
-   :
-   The
-    NDK_MODULE_PATH
-   variable
- must contain a list of directories.
-     Due to GNU Make limitations,
-      NDK_MODULE_PATH
-     must
- not contain any space. The NDK will complain if this is not the case.
-       Use
- &lsquo;:&rsquo; as the path separator
-     .
-     On Windows, use &lsquo;/&rsquo; as the directory separator.
-  这里面说的
-   Use
- &lsquo;:&rsquo; as the path separator
-  ,经过实践验证在windows平台路径使用
-   ;
-  分割</p>
+    <content type="html"><![CDATA[<blockquote><p>刚刚在调试如何不安装<code>Cgywin</code>的情况下，利用<code>NDK</code>编译<code>cocos2d-x</code>的SampleGame.却机缘巧合的情况下发现了<code>android-ndk-r8d</code>的<em>docs/IMPORT-MODULE.html</em>下的一个小bug。</p></blockquote>
+
+<p>  在Eclipse中导入工程后，工程目录如下：
+  (<a href="http://img.blog.csdn.net/20140318204030468?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ29vZg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">http://img.blog.csdn.net/20140318204030468?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvZ29vZg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast</a>)</p>
+
+<ul>
+<li>将工程转换为C++工程。这步不会的可以google下。</li>
+<li>设置ndk目录。</li>
+<li>设置<code>NDK_MODULE_PATH</code>环境变量。</li>
+</ul>
+
+
+<p> 在docs/IMPORT-MODULE.html中的介绍：</p>
+
+<blockquote><p>I.NDK_MODULE_PATH: The NDK_MODULE_PATH variable must contain a list of directories. Due to GNU Make limitations, NDK_MODULE_PATH must not contain any space. The NDK will complain if this is not the case. Use &lsquo;:&rsquo; as the path separator. On Windows, use &lsquo;/&rsquo; as the directory separator.</p></blockquote>
+
+<p> 这里面说的Use &lsquo;:&rsquo; as the path separator, 经过实践验证在windows平台路径应该是使用;分割.</p>
 ]]></content>
   </entry>
   
