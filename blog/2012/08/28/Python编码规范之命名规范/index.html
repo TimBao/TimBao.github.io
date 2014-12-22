@@ -1,0 +1,221 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Python编码规范之命名规范 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Python编码规范之命名规范">
+  <meta name="keywords" content="Python">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://timbao.github.io/blog/2012/08/28/Python%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83%E4%B9%8B%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:timbao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Python编码规范之命名规范</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-08-28T22:57:00+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>10:57 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>1、不要使用小写字母&#8217;l&#8217;(el),大写字母&#8217;O&#8217;(oh),或者小写&#8217;i&#8217;作为单独变量名称。因为一些字体中，上诉字母和数字很难区分（比如：O和0，l和1）。</p>
+
+<p>2、Module应该采用全小写，并且尽可能短的命名，可以在模块名中使用下划线以提高可读性。Package应该采用全部小写，并且也要尽可能短的命名，但不允许使用下划线。当一个用C 或C++ 写的扩展模块，有一个伴随的Python 模块来提供一个更高层(例如，更面向对象)的接口时，C/C++模块名有一个前导下划线(如：_socket)。</p>
+
+<p>3、类名使用首字母大写单词串(CapWords) 的约定。 内部使用的类使用一个额外的前导下划线。</p>
+
+<p>4、因为异常应该是类，故类命名约定也适用于异常。然而，你应该对异常名添加后缀&#8221;Error&#8221; (如果该异常的确是一个错误)。</p>
+
+<p>5、对设计为通过&#8221;from M import &ldquo; 来使用的模块，应采用all 机制来防止导 出全局变量；或者使用旧的约定，为该类全局变量加一个前导下划线(可能你想表 明这些全局变量是&#8221;module non-public&rdquo;)。</p>
+
+<p>6、函数名应该为小写，必要时可用下划线分隔单词以增加可读性。 混合大小写(mixedCase) 仅被允许用于这种风格已经占优势的上下文(如:threading.py)，以便保持向后兼容。</p>
+
+<p>7、对实例的方法，总是用&#8217;self&#8217; 做第一个参数。对类的方法，总是用&#8217;cls&#8217; 做第一个参数。如果函数的参数名与保留关键字冲突，在参数名后加一个下划线，比用缩写、错误 的拼写要好。因此 &ldquo;_print&rdquo; 比 &ldquo;prnt&rdquo; 好。(也许使用同义词来避免冲突更好。)</p>
+
+<p>8、方法名和实例变量：采用函数命名规则：小写单词，必要时可用下划线分隔单词以增加可读性。仅对non-public 方法和实例变量采用一个前导下划线。为避免与子类命名冲突，采用两个前导下划线来触发Python 的命名重整规则。Python用类名重整这些名字：如果类Foo 有一个属性名为<strong>a， 它不能以Foo.</strong>a 访问。(执著的用户还是可以通过Foo._Foo__a.得到访问权。)通常，双前导下划线仅被用来避免与基类的属性发生名字冲突。</p>
+
+<p>9、常量定义全部为大写，必要时可用下划线分隔单词以增加可读性。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2012-08-28T22:57:00+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>10:57 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/python/'>python</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://timbao.github.io/blog/2012/08/28/Python%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83%E4%B9%8B%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/" data-via="" data-counturl="http://timbao.github.io/blog/2012/08/28/Python%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83%E4%B9%8B%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/08/08/Win%208%20%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99%E6%93%8D%E4%BD%9C/" title="Previous Post: Win 8 文件读写操作">&laquo; Win 8 文件读写操作</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/08/30/%E4%BD%BF%E7%94%A8python%E5%81%B7%E5%81%B7%E5%8F%91%E9%82%AE%E4%BB%B6/" title="Next Post: 使用python偷偷发邮件">使用python偷偷发邮件 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

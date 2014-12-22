@@ -1,0 +1,266 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>More Effective C++读书笔记14 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="More Effective C++读书笔记14">
+  <meta name="keywords" content="C++技术">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://timbao.github.io/blog/2013/01/12/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B014">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:timbao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">More Effective C++读书笔记14</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-12T19:39:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:39 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Item 14：审慎使用异常规格(exception specifications)</h2>
+
+<p>  何为异常规格，通俗的理解就是对异常的规范的说明。它明确地描述了一个函数可以抛出什么样的异常。但是它不只是一个有趣的注释。编译器在编译时有时能够检测到异常规格的不一致。而且如果一个函数抛出一个不在异常规格范围里的异常，系统在运行时能够检测出这个错误，然后一个特殊函数unexpected将被自动地调用。异常规格既可以做为一个指导性文档同时也是异常使用的强制约束机制。</p>
+
+<p>  不过在通常情况下，美貌只是一层皮，外表的美丽并不代表其内在的素质。函数unexpected缺省的行为是调用函数terminate，而terminate缺省的行为是调用函数abort，所以一个违反异常规格的程序其缺省的行为就是halt（停止运行）。在激活的栈中的局部变量没有被释放，因为abort在关闭程序时不进行这样的清除操作。对异常规格的触犯变成了一场并不应该发生的灾难。</p>
+
+<p>  一个函数调用了另一个函数，并且后者可能抛出一个违反前者异常规格的异常，（A函数调用B函数，但因为B函数可能抛出一个不在A函数异常规格之内的异常，所以这个函数调用就违反了A函数的异常规格  译者注）编译器不对此种情况进行检测，并且语言标准也禁止编译器拒绝这种调用方式（尽管可以显示警告信息）。</p>
+
+<p>  虽然防止抛出unexpected异常是不现实的，但是C++允许你用其它不同的异常类型替换unexpected异常，你能够利用这个特性。例如你希望所有的unexpected异常都被替换为UnexpectedException对象。你能这样编写代码：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class UnexpectedException {};          // 所有的unexpected异常对象被
+</span><span class='line'>                                       //替换为这种类型对象
+</span><span class='line'>void convertUnexpected()               // 如果一个unexpected异常被
+</span><span class='line'>{                                      // 抛出，这个函数被调用
+</span><span class='line'>    throw UnexpectedException();
+</span><span class='line'>}
+</span><span class='line'>set_unexpected(convertUnexpected);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  通过用convertUnexpected函数替换缺省的unexpected函数，来使上述代码开始运行。
+  下面看另外一个书中例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Session {
+</span><span class='line'>public:
+</span><span class='line'>    ~Session();
+</span><span class='line'>  ...
+</span><span class='line'>private:
+</span><span class='line'>    static void logDestruction(Session *objAddr) throw();
+</span><span class='line'>};
+</span><span class='line'>Session::~Session()
+</span><span class='line'>{
+</span><span class='line'>   try
+</span><span class='line'>   {
+</span><span class='line'>       logDestruction(this);
+</span><span class='line'>   }
+</span><span class='line'>   catch (...) {  }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  session的析构函数调用logDestruction记录有关session对象被释放的信息，它明确地要捕获从logDestruction抛出的所有异常。但是logDestruction的异常规格表示其不抛出任何异常。现在假设被logDestruction调用的函数抛出了一个异常，而logDestruction没有捕获。我们不会期望发生这样的事情，但正如我们所见，很容易就会写出违反异常规格的代码。当这个异常通过logDestruction传递出来，unexpected将被调用，缺省情况下将导致程序终止执行。这是一个正确的行为，但这是session析构函数的作者所希望的行为么？作者想处理所有可能的异常，所以好像不应该不给session析构函数里的catch块执行的机会就终止程序。如果logDestruction没有异常规格，这种事情就不会发生（一种防止的方法是如上所描述的那样替换unexpected）。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-01-12T19:39:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:39 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/c-plus-plus-ji-zhu/'>c++技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://timbao.github.io/blog/2013/01/12/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B014/" data-via="" data-counturl="http://timbao.github.io/blog/2013/01/12/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B014/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B013/" title="Previous Post: More Effective C++读书笔记13">&laquo; More Effective C++读书笔记13</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/01/15/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B015/" title="Next Post: More Effective C++读书笔记15">More Effective C++读书笔记15 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
