@@ -84,89 +84,171 @@
   </header>
 
 
-<div class="entry-content"><p>   啥也不说了，直接上代码。
-    #include &lt;windows.h>;</p>
+<div class="entry-content"><p>啥也不说了，直接上代码。</p>
 
-<h1>include &lt;ppltasks.h>;</h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;windows.h&gt;;
+</span><span class='line'>#include &lt;ppltasks.h&gt;;
+</span><span class='line'>using namespace Platform;
+</span><span class='line'>using namespace Windows::Storage;
+</span><span class='line'>using namespace Windows::Storage::Streams;
+</span><span class='line'>using namespace Concurrency;
+</span><span class='line'>StorageFile^ openFile(String^ fileName)
+</span><span class='line'>{
+</span><span class='line'>    StorageFile^ file = nullptr;
+</span><span class='line'>    StorageFolder^ rootFolder = Windows::Storage::ApplicationData::Current-&gt;;LocalFolder;
+</span><span class='line'>    task&lt;StorageFile^&gt;;(rootFolder-&gt;;GetFileAsync(fileName)).then([&]\(task&lt;StorageFile^&gt;; getFileTask\)
+</span><span class='line'>    {
+</span><span class='line'>        try
+</span><span class='line'>        {
+</span><span class='line'>            file = getFileTask.get();
+</span><span class='line'>        }
+</span><span class='line'>        catch (Platform::Exception^ e)
+</span><span class='line'>        {
+</span><span class='line'>        }
+</span><span class='line'>    }).wait();
+</span><span class='line'>    return file;
+</span><span class='line'>}
+</span><span class='line'>Array&lt;byte&gt;;^ getFileContent(String^ fileName)
+</span><span class='line'>{
+</span><span class='line'>    Array&lt;byte&gt;;^ data = nullptr;
+</span><span class='line'>    StorageFile^ file = openFile(fileName);
+</span><span class='line'>    if (file)
+</span><span class='line'>    {
+</span><span class='line'>        task&lt;IRandomAccessStream^&gt;;(file-&gt;;OpenAsync(FileAccessMode::Read)).then([&]
+</span><span class='line'>(task&lt;IRandomAccessStream^&gt;; getStream)
+</span><span class='line'>        {
+</span><span class='line'>            auto readStream = getStream.get();
+</span><span class='line'>            DataReader^ dataReader=ref new DataReader(readStream);
+</span><span class='line'>            int length = readStream-&gt;;Size;
+</span><span class='line'>            if (length &gt;; 0)
+</span><span class='line'>            {
+</span><span class='line'>                data = ref new Array&lt;byte&gt;;(length);
+</span><span class='line'>                task&lt;unsigned int&gt;;(dataReader-&gt;;LoadAsync(readStream-&gt;;Size)).then([&]\(task&lt;unsigned
+</span><span class='line'>int&gt;; loadTask\) {
+</span><span class='line'>                    loadTask.get();
+</span><span class='line'>                    dataReader-&gt;;ReadBytes(data);
+</span><span class='line'>                }).wait();
+</span><span class='line'>            }
+</span><span class='line'>        }).wait();
+</span><span class='line'>    }
+</span><span class='line'>    return data;
+</span><span class='line'>}
+</span><span class='line'>bool setFileContent(String^ fileName, unsigned char* data, int size)
+</span><span class='line'>{
+</span><span class='line'>    size_t totalWritten = 0;
+</span><span class='line'>    bool complete = false;
+</span><span class='line'>    StorageFile^ file = openFile(fileName);
+</span><span class='line'>    if (file)
+</span><span class='line'>    {
+</span><span class='line'>        IRandomAccessStream^ readStream = nullptr;
+</span><span class='line'>        task&lt;IRandomAccessStream^&gt;;(file-&gt;;OpenAsync(FileAccessMode::ReadWrite)).then([&]
+</span><span class='line'>(task&lt;IRandomAccessStream^&gt;; getStream)
+</span><span class='line'>        {
+</span><span class='line'>            readStream = getStream.get();
+</span><span class='line'>            DataWriter^ dataWriter = ref new DataWriter(readStream);
+</span><span class='line'>            Array&lt;unsigned char&gt;;^ arr = ref new Array&lt;unsigned char&gt;;(data, size);
+</span><span class='line'>            dataWriter-&gt;;WriteBytes(arr);
+</span><span class='line'>            task&lt;unsigned int&gt;;(dataWriter-&gt;;StoreAsync()).then([&]\(task&lt;unsigned int&gt;; writeTask)
+</span><span class='line'>            {
+</span><span class='line'>                try
+</span><span class='line'>                {
+</span><span class='line'>                    totalWritten = writeTask.get();
+</span><span class='line'>                } catch (Platform::Exception^ ex) {}
+</span><span class='line'>            }).wait();
+</span><span class='line'>            task&lt;bool&gt;;(dataWriter-&gt;;FlushAsync()).then([&]\(task&lt;bool&gt;; flushTask)
+</span><span class='line'>            {
+</span><span class='line'>                try
+</span><span class='line'>                {
+</span><span class='line'>                    complete = flushTask.get();
+</span><span class='line'>                } catch (Platform::Exception^ ex) {}
+</span><span class='line'>            }).wait();
+</span><span class='line'>            dataWriter-&gt;;DetachStream();
+</span><span class='line'>        }).wait();
+</span><span class='line'>    }
+</span><span class='line'>    return complete;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
-<p>using namespace Platform;
-using namespace Windows::Storage;
-using namespace Windows::Storage::Streams;
-using namespace Concurrency;
-StorageFile^ openFile(String^ fileName)
-{
-    StorageFile^ file = nullptr;
-    StorageFolder^ rootFolder = Windows::Storage::ApplicationData::Current->;LocalFolder;
-    task&lt;StorageFile^>;(rootFolder->;GetFileAsync(fileName)).then(<a href="task&lt;StorageFile^>;%20getFileTask&#8221;>&amp;</a>
-    {
-        try
-        {
-            file = getFileTask.get();
-        }
-        catch (Platform::Exception^ e)
-        {
-        }
-    }).wait();
-    return file;
-}
-Array<byte>;^ getFileContent(String^ fileName)
-{
-    Array<byte>;^ data = nullptr;
-    StorageFile^ file = openFile(fileName);
-    if (file)
-    {
-        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::Read)).then([&amp;]
-(task&lt;IRandomAccessStream^>; getStream)
-        {<br/>
-            auto readStream = getStream.get();
-            DataReader^ dataReader=ref new DataReader(readStream);
-            int length = readStream->;Size;
-            if (length >; 0)
-            {
-                data = ref new Array<byte>;(length);
-                task<unsigned int>;(dataReader->;LoadAsync(readStream->;Size)).then(<a href="task&lt;unsigned%0Aint>;%20loadTask&#8221;>&amp;</a> {
-                    loadTask.get();
-                    dataReader->;ReadBytes(data);
-                }).wait();
-            }
-        }).wait();
-    }
-    return data;
-}
-bool setFileContent(String^ fileName, unsigned char* data, int size)
-{
-    size_t totalWritten = 0;
-    bool complete = false;
-    StorageFile^ file = openFile(fileName);
-    if (file)
-    {
-        IRandomAccessStream^ readStream = nullptr;
-        task&lt;IRandomAccessStream^>;(file->;OpenAsync(FileAccessMode::ReadWrite)).then([&amp;]
-(task&lt;IRandomAccessStream^>; getStream)
-        {<br/>
-            readStream = getStream.get();
-            DataWriter^ dataWriter = ref new DataWriter(readStream);
-            Array<unsigned char>;^ arr = ref new Array<unsigned char>;(data, size);
-            dataWriter->;WriteBytes(arr);
-            task<unsigned int>;(dataWriter->;StoreAsync()).then(<a href="task&lt;unsigned%20int>;%20writeTask&#8221;>&amp;</a>
-            {
-                try
-                {
-                    totalWritten = writeTask.get();
-                } catch (Platform::Exception^ ex) {}
-            }).wait();
-            task<bool>;(dataWriter->;FlushAsync()).then(<a href="task&lt;bool>;%20flushTask&#8221;>&amp;</a>
-            {
-                try
-                {
-                    complete = flushTask.get();
-                } catch (Platform::Exception^ ex) {}
-            }).wait();
-            dataWriter->;DetachStream();
-        }).wait();
-    }
-    return complete;
-}</p>
 </div>
 
 

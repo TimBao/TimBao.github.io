@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Python | My Octopress Blog]]></title>
   <link href="http://timbao.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-22T14:48:37+08:00</updated>
+  <updated>2014-12-22T15:36:25+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -51,54 +51,66 @@ mystring.translate(translate_table)
     <link href="http://timbao.github.io/blog/2012/08/30/%E4%BD%BF%E7%94%A8python%E5%81%B7%E5%81%B7%E5%8F%91%E9%82%AE%E4%BB%B6/"/>
     <updated>2012-08-30T05:16:00+08:00</updated>
     <id>http://timbao.github.io/blog/2012/08/30/使用python偷偷发邮件</id>
-    <content type="html"><![CDATA[<p>  以前的公司上班上网或者收发邮件都得小心翼翼的，怕一不小心被有心人瞧见，又得被说说。为了能发邮件而不被发现，嘿嘿，我就用python写了个邮件发送程序，用控制台控制，不了解的人一定以为哥还在编程工作呢。哈哈。
-  下面简单介绍下如何使用python发送邮件，包括普通文本内容，也可以带附件，或者HTML内容的邮件。可以说有了python，一切都变得非常的容易。
+    <content type="html"><![CDATA[<blockquote><p>以前的公司上班上网或者收发邮件都得小心翼翼的，怕一不小心被有心人瞧见，又得被说说。为了能发邮件而不被发现，嘿嘿，我就用python写了个邮件发送程序，用控制台控制，不了解的人一定以为哥还在编程工作呢。哈哈。</p></blockquote>
+
+<p>下面简单介绍下如何使用python发送邮件，包括普通文本内容，也可以带附件，或者HTML内容的邮件。可以说有了python，一切都变得非常的容易。
   smtplib 模块是用来发送email的标准module，另外配合email.mime内的几个module实现起来就非常的简单。
+<code>
  def sendmail(message):
     try:
         smtp = smtplib.SMTP(EMAIL_HOST)
-        smtp.login(EMAIL_USER, EMAIL_PWD)<br/>
-        smtp.sendmail(EMAIL_USER+&ldquo;@&rdquo;+EMAIL_POSTFIX, TO_EMAIL, message)<br/>
-        smtp.quit()<br/>
-        print &lsquo;email send success.&rsquo;
+        smtp.login(EMAIL_USER, EMAIL_PWD)
+        smtp.sendmail(EMAIL_USER+"@"+EMAIL_POSTFIX, TO_EMAIL, message)
+        smtp.quit()
+        print 'email send success.'
     except Exception ,e:
         print e
-        print &lsquo;email send failed.&rsquo;
- 首先要导入smtplib模块，加入import smtplib，初始化的时候直接连上邮箱服务器，也就是上面的EMAIL_HOST（我使用的是163邮箱，所以定义EMAIL_HOST = &lsquo;smtp.163.com&#8217;），由于目前的邮箱基本都需要登录才可以使用，所以要调用smtp.login()函数，输入用户和密码。
-  def sendwithoutattachment():
-    msg = MIMEText(getcontent(), &#8216;plain&rsquo;,&lsquo;utf-8&rsquo;)
+        print 'email send failed.'
+</code></p>
+
+<p>首先要导入smtplib模块，加入import smtplib，初始化的时候直接连上邮箱服务器，也就是上面的EMAIL_HOST（我使用的是163邮箱，所以定义EMAIL_HOST = &lsquo;smtp.163.com&#8217;），由于目前的邮箱基本都需要登录才可以使用，所以要调用smtp.login()函数，输入用户和密码。
+<code>
+def sendwithoutattachment():
+    msg = MIMEText(getcontent(), 'plain','utf-8')
     getheader(msg)
     sendmail(msg.as_string())
-   我将发送简单文本内容的邮件单独独立为一个函数，使用MIMEText生成，注意这里用到了utf-8，因为内容有可能是中文，所以要特别指定。如果要发送html内容，则讲plain更改为html即可。
-  def getheader(msg):
-    msg[&lsquo;From&rsquo;] = ME
-    msg[&lsquo;To&rsquo;] = &ldquo;;&rdquo;.join(TO_EMAIL)
-    msg[&lsquo;Subject&rsquo;] = EMAIL_HEADER
-    msg[&lsquo;Date&rsquo;] = formatdate(localtime=True)
+</code></p>
+
+<p>我将发送简单文本内容的邮件单独独立为一个函数，使用MIMEText生成，注意这里用到了utf-8，因为内容有可能是中文，所以要特别指定。如果要发送html内容，则讲plain更改为html即可。
+<code>
+def getheader(msg):
+    msg['From'] = ME
+    msg['To'] = ";".join(TO_EMAIL)
+    msg['Subject'] = EMAIL_HEADER
+    msg['Date'] = formatdate(localtime=True)
    getheader函数是用来设置发送者，接受者，主题和发送时间的。
-  def getcontent():
+def getcontent():
     path = os.getcwd()
     file = os.path.join(path, CONTENT_FILE_NAME)
-    content = open(file, &lsquo;rb&rsquo;)
+    content = open(file, 'rb')
     data = content.read()
     try:
-        data = data.decode(&lsquo;gbk&rsquo;)
+        data = data.decode('gbk')
     except :
-        data = data.decode(&lsquo;gbk&rsquo;,&lsquo;ignore&rsquo;)
+        data = data.decode('gbk','ignore')
     content.close()
     return data
-  至于邮件正文，我是事先写到一个TXT文档中，读取出来。这样也比较隐蔽。：）要主意中文编码。
-  def getattachment(msg):
+</code></p>
+
+<p>至于邮件正文，我是事先写到一个TXT文档中，读取出来。这样也比较隐蔽。：）要主意中文编码。
+<code>
+def getattachment(msg):
     ctype, encoding = mimetypes.guess_type(ACCESSORY_FULLPATH)
-    if ctype is None or encoding is not None:<br/>
-        ctype = &lsquo;application/octet-stream&rsquo;<br/>
-    maintype, subtype = ctype.split(&lsquo;/&rsquo;, 1)
+    if ctype is None or encoding is not None:
+        ctype = 'application/octet-stream'
+    maintype, subtype = ctype.split('/', 1)
     #Formating accessory data
-    data = open(ACCESSORY_FULLPATH, &lsquo;rb&rsquo;)
+    data = open(ACCESSORY_FULLPATH, 'rb')
     file_msg = MIMEBase(maintype, subtype)
     file_msg.set_payload(data.read( ))
     data.close( )
     encode_base64(file_msg)
+</code>
     #file_msg[&ldquo;Content-Type&rdquo;] = ctype # if add type then return error 10054
     file_msg.add_header(&lsquo;Content-Disposition&rsquo;, &lsquo;attachment&rsquo;, filename = ACCESSORY_NAME)
     msg.attach(file_msg)
@@ -112,15 +124,23 @@ mystring.translate(translate_table)
     <link href="http://timbao.github.io/blog/2012/08/28/Python%E7%BC%96%E7%A0%81%E8%A7%84%E8%8C%83%E4%B9%8B%E5%91%BD%E5%90%8D%E8%A7%84%E8%8C%83/"/>
     <updated>2012-08-28T22:57:00+08:00</updated>
     <id>http://timbao.github.io/blog/2012/08/28/Python编码规范之命名规范</id>
-    <content type="html"><![CDATA[<p>  1、不要使用小写字母&#8217;l&#8217;(el),大写字母&#8217;O&#8217;(oh),或者小写&#8217;i&#8217;作为单独变量名称。因为一些字体中，上诉字母和数字很难区分（比如：O和0，l和1）。
-  2、Module应该采用全小写，并且尽可能短的命名，可以在模块名中使用下划线以提高可读性。Package应该采用全部小写，并且也要尽可能短的命名，但不允许使用下划线。当一个用C 或C++ 写的扩展模块，有一个伴随的Python 模块来提供一个更高层(例如，更面向对象)的接口时，C/C++模块名有一个前导下划线(如：<em>socket)。
-  3、类名使用首字母大写单词串(CapWords) 的约定。 内部使用的类使用一个额外的前导下划线。
-  4、因为异常应该是类，故类命名约定也适用于异常。然而，你应该对异常名添加后缀&#8221;Error&#8221; (如果该异常的确是一个错误)。
-  5、对设计为通过&#8221;from M import &ldquo; 来使用的模块，应采用all 机制来防止导 出全局变量；或者使用旧的约定，为该类全局变量加一个前导下划线(可能你想表 明这些全局变量是&#8221;module non-public&rdquo;)。
-  6、函数名应该为小写，必要时可用下划线分隔单词以增加可读性。 混合大小写(mixedCase) 仅被允许用于这种风格已经占优势的上下文(如:threading.py)，以便保持向后兼容。
-  7、对实例的方法，总是用&#8217;self&#8217; 做第一个参数。对类的方法，总是用&#8217;cls&#8217; 做第一个参数。如果函数的参数名与保留关键字冲突，在参数名后加一个下划线，比用缩写、错误 的拼写要好。因此 &ldquo;</em>print&rdquo; 比 &ldquo;prnt&rdquo; 好。(也许使用同义词来避免冲突更好。)
-  8、方法名和实例变量：采用函数命名规则：小写单词，必要时可用下划线分隔单词以增加可读性。仅对non-public 方法和实例变量采用一个前导下划线。为避免与子类命名冲突，采用两个前导下划线来触发Python 的命名重整规则。Python用类名重整这些名字：如果类Foo 有一个属性名为<strong>a， 它不能以Foo.</strong>a 访问。(执著的用户还是可以通过Foo._Foo__a.得到访问权。)通常，双前导下划线仅被用来避免与基类的属性发生名字冲突。
-  9、常量定义全部为大写，必要时可用下划线分隔单词以增加可读性。</p>
+    <content type="html"><![CDATA[<p>1、不要使用小写字母&#8217;l&#8217;(el),大写字母&#8217;O&#8217;(oh),或者小写&#8217;i&#8217;作为单独变量名称。因为一些字体中，上诉字母和数字很难区分（比如：O和0，l和1）。</p>
+
+<p>2、Module应该采用全小写，并且尽可能短的命名，可以在模块名中使用下划线以提高可读性。Package应该采用全部小写，并且也要尽可能短的命名，但不允许使用下划线。当一个用C 或C++ 写的扩展模块，有一个伴随的Python 模块来提供一个更高层(例如，更面向对象)的接口时，C/C++模块名有一个前导下划线(如：_socket)。</p>
+
+<p>3、类名使用首字母大写单词串(CapWords) 的约定。 内部使用的类使用一个额外的前导下划线。</p>
+
+<p>4、因为异常应该是类，故类命名约定也适用于异常。然而，你应该对异常名添加后缀&#8221;Error&#8221; (如果该异常的确是一个错误)。</p>
+
+<p>5、对设计为通过&#8221;from M import &ldquo; 来使用的模块，应采用all 机制来防止导 出全局变量；或者使用旧的约定，为该类全局变量加一个前导下划线(可能你想表 明这些全局变量是&#8221;module non-public&rdquo;)。</p>
+
+<p>6、函数名应该为小写，必要时可用下划线分隔单词以增加可读性。 混合大小写(mixedCase) 仅被允许用于这种风格已经占优势的上下文(如:threading.py)，以便保持向后兼容。</p>
+
+<p>7、对实例的方法，总是用&#8217;self&#8217; 做第一个参数。对类的方法，总是用&#8217;cls&#8217; 做第一个参数。如果函数的参数名与保留关键字冲突，在参数名后加一个下划线，比用缩写、错误 的拼写要好。因此 &ldquo;_print&rdquo; 比 &ldquo;prnt&rdquo; 好。(也许使用同义词来避免冲突更好。)</p>
+
+<p>8、方法名和实例变量：采用函数命名规则：小写单词，必要时可用下划线分隔单词以增加可读性。仅对non-public 方法和实例变量采用一个前导下划线。为避免与子类命名冲突，采用两个前导下划线来触发Python 的命名重整规则。Python用类名重整这些名字：如果类Foo 有一个属性名为<strong>a， 它不能以Foo.</strong>a 访问。(执著的用户还是可以通过Foo._Foo__a.得到访问权。)通常，双前导下划线仅被用来避免与基类的属性发生名字冲突。</p>
+
+<p>9、常量定义全部为大写，必要时可用下划线分隔单词以增加可读性。</p>
 ]]></content>
   </entry>
   

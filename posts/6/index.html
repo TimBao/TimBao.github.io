@@ -9,7 +9,7 @@
   <meta name="author" content="Your Name">
 
   
-  <meta name="description" content="1、 C++ Metro App ：AddReference Project ->; Properties ->;Common Properties ->; Framework and References ->; Add new Reference… 2、 C# Metro App ： &hellip;&#8221;>
+  <meta name="description" content="1、 C++ Metro App ：AddReference Project->Properties->Common Properties->Framework and References->Add new Reference… 2、 C# Metro App ：AddReference &hellip;&#8221;>
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -87,10 +87,13 @@
   </header>
 
 
-  <div class="entry-content"><p>  1、 C++ Metro App ：AddReference
-  Project ->; Properties ->;Common Properties ->; Framework and References ->; Add new Reference…
-  2、 C# Metro App ：AddReference
-  Right click References folder orRight click Project ->; Add Reference</p>
+  <div class="entry-content"><p>1、 C++ Metro App ：AddReference</p>
+
+<p>Project->Properties->Common Properties->Framework and References->Add new Reference…</p>
+
+<p>2、 C# Metro App ：AddReference</p>
+
+<p>Right click References folder orRight click Project->Add Reference</p>
 </div>
   
   
@@ -119,38 +122,70 @@
   </header>
 
 
-  <div class="entry-content"><p>  在类中可以定义引用类型的成员变量，但是必须在构造函数之前完成初始化，也就是必须在构造函数的初始化列表中完成初始化。
- class Functor
-{
-public:
-    // The constructor.
-    explicit Functor(int&amp; evenCount)
-        : <em>evenCount(evenCount)
-    {
-        //</em>evenCount = evenCount;
-    }
-    // The function-call operator prints whether the number is
-    // even or odd. If the number is even, this method updates
-    // the counter.
-    void operator()(int n)
-    {
-        cout &lt;&lt; n;
-        if (n % 2 == 0)
-        {
-            cout &lt;&lt; &ldquo; is even &rdquo; &lt;&lt; endl;
-            // Increment the counter.
-            <em>evenCount++;
-        }
-        else
-        {
-            cout &lt;&lt; &ldquo; is odd &rdquo; &lt;&lt; endl;
-        }
-    }
-private:
-    int&amp; </em>evenCount; // the number of even variables in the vector
-};
-   注意如果将初始化列表去掉，改为在构造函数中初始化，则编译器会提示：
-   error C2758: &lsquo;Functor::_evenCount&rsquo; : must be initialized in constructor base/member initializer list</p>
+  <div class="entry-content"><p>在类中可以定义引用类型的成员变量，但是必须在构造函数之前完成初始化，也就是必须在构造函数的初始化列表中完成初始化。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Functor
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    // The constructor.
+</span><span class='line'>    explicit Functor(int& evenCount)
+</span><span class='line'>        : _evenCount(evenCount)
+</span><span class='line'>    {
+</span><span class='line'>        //_evenCount = evenCount;
+</span><span class='line'>    }
+</span><span class='line'>    // The function-call operator prints whether the number is
+</span><span class='line'>    // even or odd. If the number is even, this method updates
+</span><span class='line'>    // the counter.
+</span><span class='line'>    void operator()(int n)
+</span><span class='line'>    {
+</span><span class='line'>        cout &lt;&lt; n;
+</span><span class='line'>        if (n % 2 == 0)
+</span><span class='line'>        {
+</span><span class='line'>            cout &lt;&lt; " is even " &lt;&lt; endl;
+</span><span class='line'>            // Increment the counter.
+</span><span class='line'>            _evenCount++;
+</span><span class='line'>        }
+</span><span class='line'>        else
+</span><span class='line'>        {
+</span><span class='line'>            cout &lt;&lt; " is odd " &lt;&lt; endl;
+</span><span class='line'>        }
+</span><span class='line'>    }
+</span><span class='line'>private:
+</span><span class='line'>    int& _evenCount; // the number of even variables in the vector
+</span><span class='line'>};</span></code></pre></td></tr></table></div></figure>
+
+
+<p>注意如果将初始化列表去掉，改为在构造函数中初始化，则编译器会提示：
+<em>error C2758: &lsquo;Functor::_evenCount&rsquo; : must be initialized in constructor base/member initializer list</em></p>
 </div>
   
   
@@ -179,9 +214,9 @@ private:
   </header>
 
 
-  <div class="entry-content"><p>  最近一直在折腾动态库，静态库，N多个库，编译，连接，排查link error，搞的头都大了！真奇怪为什么要搞那么多库！功能是分的很清楚了，但是没人了解全部了，三个国家的人再搞，没有一个整体负责的人，没有说明，只能看代码，摸索！终于搞定了吧，又得merge到其他breach上，又是新的一轮编译，连接，排查
-   ！
-  终于在下班前搞定了，虽然还有点小问题，但是已经基本正常了，谢天谢地<del>~，给其他同事讲解的时候，还是比较自豪的，哈哈，这么多的东西，要搞懂还真不容易那</del></p>
+  <div class="entry-content"><p>最近一直在折腾动态库，静态库，N多个库，编译，连接，排查link error，搞的头都大了！真奇怪为什么要搞那么多库！功能是分的很清楚了，但是没人了解全部了，三个国家的人再搞，没有一个整体负责的人，没有说明，只能看代码，摸索！终于搞定了吧，又得merge到其他breach上，又是新的一轮编译，连接，排查！</p>
+
+<p>终于在下班前搞定了，虽然还有点小问题，但是已经基本正常了，谢天谢地<del>~，给其他同事讲解的时候，还是比较自豪的，哈哈，这么多的东西，要搞懂还真不容易那</del></p>
 </div>
   
   
@@ -210,42 +245,69 @@ private:
   </header>
 
 
-  <div class="entry-content"><p> 原型
-  size_t strxfrm ( char * destination, const char * source, size_t num );
-    功能：
-     根据num长度拷贝前num个字符到目的字符串中，并返回源字符串长度。
-      同时，该函数还可以自作为返回字符串长度，这时num=0，destination允许传入NULL。
-        参数：
-         destination
-          指向目的字符数组的指针，当num为0时，可以传NULL。
-           source
-            要拷贝的源字符串，以‘\0’结尾。
-             num
-              最大要拷贝到目的数组的字符的长度。
-                 返回值：
-                 返回source字符串的长度，不包含‘\0’。
-                 #include <cstring>;</p>
+  <div class="entry-content"><p>原型</p>
 
-<h1>include <iostream>;</h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>size_t strxfrm ( char * destination, const char * source, size_t num );</span></code></pre></td></tr></table></div></figure>
 
-<h1>include &lt;windows.h>;</h1>
 
-<p>int main(int argc, char<em> argv[])
-{
-    char</em> source = &ldquo;1234567890 abc&rdquo;;
-    char des[100];
-    size_t len = strxfrm(des, source, 50);
-    std::cout &lt;&lt; &ldquo;len:&rdquo; &lt;&lt; len &lt;&lt;std::endl;
-    std::cout &lt;&lt; &ldquo;des:&rdquo; &lt;&lt; des &lt;&lt;std::endl;
-    return 0;
-}
-                  output:
-                   len:14
-                    des:1234567890 abc
-                 这里举这个例子要说明的是num长度大于源字符串长度的原因，涉及到strxfrm函数的具体实现了。
-                 strncpy(<em>string1, </em>string2, <em>count);
-                  return strlen(</em>string2);
-                   vs平台下该函数的实现非常简单，除了必要的验证外，只是调用了同是cstring的库函数中的两个基本函数。这也说明了为什么num长度超过源串后为什么没有问题，因为strncpy函数自动截取字符串到&#8217;\0&#8217;。</p>
+<p>功能：</p>
+
+<p>根据num长度拷贝前num个字符到目的字符串中，并返回源字符串长度。</p>
+
+<p>同时，该函数还可以自作为返回字符串长度，这时num=0，destination允许传入NULL。</p>
+
+<p>参数：</p>
+
+<p>destination 指向目的字符数组的指针，当num为0时，可以传NULL。</p>
+
+<p>source 要拷贝的源字符串，以‘\0’结尾。</p>
+
+<p>num 最大要拷贝到目的数组的字符的长度。</p>
+
+<p>返回值：</p>
+
+<p>返回source字符串的长度，不包含‘\0’。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;cstring&gt;;
+</span><span class='line'>#include &lt;iostream&gt;;
+</span><span class='line'>#include &lt;windows.h&gt;;
+</span><span class='line'>int main(int argc, char* argv[])
+</span><span class='line'>{
+</span><span class='line'>    char* source = "1234567890 abc";
+</span><span class='line'>    char des[100];
+</span><span class='line'>    size_t len = strxfrm(des, source, 50);
+</span><span class='line'>    std::cout &lt;&lt; "len:" &lt;&lt; len &lt;&lt;std::endl;
+</span><span class='line'>    std::cout &lt;&lt; "des:" &lt;&lt; des &lt;&lt;std::endl;
+</span><span class='line'>    return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>output:
+len:14
+des:1234567890 abc</p>
+
+<p>这里举这个例子要说明的是num长度大于源字符串长度的原因，涉及到strxfrm函数的具体实现了。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>strncpy(_string1, _string2, _count);
+</span><span class='line'>return strlen(_string2);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vs平台下该函数的实现非常简单，除了必要的验证外，只是调用了同是cstring的库函数中的两个基本函数。这也说明了为什么num长度超过源串后为什么没有问题，因为strncpy函数自动截取字符串到&#8217;\0&#8217;。</p>
 </div>
   
   
@@ -274,32 +336,51 @@ private:
   </header>
 
 
-  <div class="entry-content"><p> inserter、back_inserter、front_inserter
-  分别返回三种类型的iterator：insert_iterator,back_insert_iterator,front_insert_iterator。这三种iterator被设计成允许不同的算法重写elements(例如copy方法)去替代插入操作。
-    // inserter example</p>
+  <div class="entry-content"><p>inserter、back_inserter、front_inserter</p>
 
-<h1>include <iostream>;</h1>
+<p>分别返回三种类型的iterator：insert_iterator,back_insert_iterator,front_insert_iterator。这三种iterator被设计成允许不同的算法重写elements(例如copy方法)去替代插入操作。</p>
 
-<h1>include <iterator>;</h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// inserter example
+</span><span class='line'>#include &lt;iostream&gt;;
+</span><span class='line'>#include &lt;iterator&gt;;
+</span><span class='line'>#include &lt;list&gt;;
+</span><span class='line'>using namespace std;
+</span><span class='line'>int main () {
+</span><span class='line'>  list&lt;int&gt;; firstlist, secondlist;
+</span><span class='line'>  for (int i=1; i&lt;=5; i++)
+</span><span class='line'>  { firstlist.push_back(i); secondlist.push_back(i*10); }
+</span><span class='line'>  list&lt;int&gt;;::iterator it;
+</span><span class='line'>  it = firstlist.begin(); advance (it,3);
+</span><span class='line'>  copy (secondlist.begin(),secondlist.end(),inserter(firstlist,it));
+</span><span class='line'>  for ( it = firstlist.begin(); it!= firstlist.end(); ++it )
+</span><span class='line'>      cout &lt;&lt; *it &lt;&lt; " ";
+</span><span class='line'>  cout &lt;&lt; endl;
+</span><span class='line'>  return 0;
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
 
-<h1>include <list>;</h1>
 
-<p>using namespace std;
-int main () {
-  list<int>; firstlist, secondlist;
-  for (int i=1; i&lt;=5; i++)
-  { firstlist.push_back(i); secondlist.push_back(i<em>10); }
-  list<int>;::iterator it;
-  it = firstlist.begin(); advance (it,3);
-  copy (secondlist.begin(),secondlist.end(),inserter(firstlist,it));
-  for ( it = firstlist.begin(); it!= firstlist.end(); ++it )
-      cout &lt;&lt; </em>it &lt;&lt; &ldquo; &rdquo;;
-  cout &lt;&lt; endl;
-  return 0;
-}
-       Output:
-        1 2 3 10 20 30 40 50 4 5
-          必须要提到的一点是，这三种迭代器是对容器有要求的，分别要求容器提供insert，push_back，push_front方法才行。</p>
+<p>Output:
+1 2 3 10 20 30 40 50 4 5</p>
+
+<p>必须要提到的一点是，这三种迭代器是对容器有要求的，分别要求容器提供insert，push_back，push_front方法才行。</p>
 </div>
   
   
@@ -328,9 +409,11 @@ int main () {
   </header>
 
 
-  <div class="entry-content"><p>  VS建立的项目，其中肯定涉及到DLL或者是LIB库，这时候调试起来会有一定不便，这里建议大家将相关项目建立成一个solution，只要设置好路径，就可以调试了，而且调试起来非常方便。但是当lib库或DLL库中涉及到内存分配，但是释放却在其他库或上层软件时，切记要保证EXE或DLL或者LIB的版本要一致，这里说的一直就是要求必须都是debug版本或者release版本，否则在内存处理上会出现一些问题。
-  例如：
-  在DLL中new出的内存，在上层delete的时候，会由于版本不一致，导致vs在对内存进行检查的时候略有不同，导致程序崩溃。希望大家多注意下。</p>
+  <div class="entry-content"><p>VS建立的项目，其中肯定涉及到DLL或者是LIB库，这时候调试起来会有一定不便，这里建议大家将相关项目建立成一个solution，只要设置好路径，就可以调试了，而且调试起来非常方便。但是当lib库或DLL库中涉及到内存分配，但是释放却在其他库或上层软件时，切记要保证EXE或DLL或者LIB的版本要一致，这里说的一直就是要求必须都是debug版本或者release版本，否则在内存处理上会出现一些问题。</p>
+
+<p>例如：</p>
+
+<p>在DLL中new出的内存，在上层delete的时候，会由于版本不一致，导致vs在对内存进行检查的时候略有不同，导致程序崩溃。希望大家多注意下。</p>
 </div>
   
   
@@ -359,22 +442,39 @@ int main () {
   </header>
 
 
-  <div class="entry-content"><p> #include &lt;stdio.h>;
-  #include &lt;stdarg.h>;
-    void logTest(const char<em> content, &hellip;)
-     {
-      FILE</em> logfile = fopen(&ldquo;log.txt&rdquo;, &ldquo;a&rdquo;);
-       if(logfile)
-        {
-         fprintf(logfile, &ldquo;########## NEW LOG ########\n&rdquo;);
-           va_list arg;
-            va_start(arg, content);
-             vfprintf(logfile, content, arg);
-              va_end(arg);
-                int status = fflush(logfile);
-                  fclose(logfile);
-                   }
-                    }</p>
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;stdio.h&gt;;
+</span><span class='line'>#include &lt;stdarg.h&gt;;
+</span><span class='line'>void logTest(const char* content, ...)
+</span><span class='line'>{
+</span><span class='line'>    FILE* logfile = fopen("log.txt", "a");
+</span><span class='line'>    if(logfile)
+</span><span class='line'>    {
+</span><span class='line'>        fprintf(logfile, "########## NEW LOG ########\n");
+</span><span class='line'>        va_list arg;
+</span><span class='line'>        va_start(arg, content);
+</span><span class='line'>        vfprintf(logfile, content, arg);
+</span><span class='line'>        va_end(arg);
+</span><span class='line'>        int status = fflush(logfile);
+</span><span class='line'>        fclose(logfile);
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
 </div>
   
   
@@ -403,11 +503,15 @@ int main () {
   </header>
 
 
-  <div class="entry-content"><p>  最近几天一直在做代码移植工作，将Unix下的C/C++代码移植到Windows平台上，有一些小体会，这里记录下来跟大家分享下：
-  1、一定要注意跨平台的C++尽量使用STL，各个编译器对STL都支持，除了一些特性外基本无需修改。
-  2、使用的C库函数一定要注意，是C99标准还是C89标准，VS编译器2010以下对C99都不支持，很多函数都无法使用。
-  3、一些变量声明尽量放到函数开始，for循环中尽量不要声明变量，VS编译器2005之下对其支持不是很好。
-  4、尤其是在文件路径方面要注意，路径处理尽量放到上层实现。</p>
+  <div class="entry-content"><p>最近几天一直在做代码移植工作，将Unix下的C/C++代码移植到Windows平台上，有一些小体会，这里记录下来跟大家分享下：</p>
+
+<p>1、一定要注意跨平台的C++尽量使用STL，各个编译器对STL都支持，除了一些特性外基本无需修改。</p>
+
+<p>2、使用的C库函数一定要注意，是C99标准还是C89标准，VS编译器2010以下对C99都不支持，很多函数都无法使用。</p>
+
+<p>3、一些变量声明尽量放到函数开始，for循环中尽量不要声明变量，VS编译器2005之下对其支持不是很好。</p>
+
+<p>4、尤其是在文件路径方面要注意，路径处理尽量放到上层实现。</p>
 </div>
   
   
@@ -436,7 +540,7 @@ int main () {
   </header>
 
 
-  <div class="entry-content"><p> 把之前使用iterator 进行循环检测的方法都改成使用find方法进行查找，更快，代码更简洁，清晰。</p>
+  <div class="entry-content"><p>把之前使用iterator 进行循环检测的方法都改成使用find方法进行查找，更快，代码更简洁，清晰。</p>
 </div>
   
   
@@ -465,112 +569,65 @@ int main () {
   </header>
 
 
-  <div class="entry-content"><p>  NSMutableArray<em> array1 = [[NSMutableArray alloc] init];
-NSMutableArray</em> array2 = [[NSMutableArray alloc] init];
-- (void)pushs:(NSInteger)VALUE {
-    BOOL find = NO;
-    [array2 removeAllObjects];
-    for (NSNumber<em> item in array1) {
-        NSInteger value = [item intValue];
-        if (value == VALUE) {
-            [array1 removeAllObjects];
-            [array1 addObjectsFromArray: array2];
-            [array1 addObject: item];
-            find = YES;
-            break;
-        }
-        else {
-            [array2 addObject: item];
-        }
-    }
-    if (!find) {
-        NSNumber</em> newItem = [NSNumber numberWithInt: VALUE];
-        [viewTypeArray addObject:newItem];
-    }
-}
-   当
-   进
-   入
-  if (value == VALUE)
-   后，
-  [array1
- addObject: value];
-   执行
-   完
-   毕
-   后，
-   查
-   看array1中的元素类型
-   发现
-   已
-   经
-   不再
-   是
-  NSNumber<em>
-   而是
-   变为
-  NSobject</em>
-   ,
- 取出使用
-   报错
-   ，bad access。
-   该问题
-   出
-   现
-   的
-   几率比较随机。单独使用没有任何问题，放到整个工程中就出现问题。
-  通
-   过查
-  看内存，
-   发现
-   NSMutableArray
-  中存
-   储
-  的
-   为
-   NSNumber
-  指
-   针
-  ，array1和array2中指
-   针
-  地址一致，有可能是当
-   [array1
- removeAllObjects];
-  后，
-   item
-  有可能被自
-   动销毁
-  ，
-   导
-  致加入到array1中的
-   值
-  出
-   现错误。修改为：
-  NSNumber<em> topItem = [NSNumber numberWithInt: value];
-  [array1 addObject:topItem];
-   问题
-  解决。
-   这
-  个
-   问题
-  的根本原因
-   还
-  是内存的
-   问题
-  ，objective-c的内存管理比
-   较
-  特殊，有很多
-   隐藏
-  的内存分配和自
-   动
-  回收，个人
-   怀
-  疑
-   numberWithInt
-  方法返回的
-   NSNumber</em>
-   对象为
-  autorelease。</p>
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>NSMutableArray* array1 = [[NSMutableArray alloc] init];
+</span><span class='line'>NSMutableArray* array2 = [[NSMutableArray alloc] init];
+</span><span class='line'>- (void)pushs:(NSInteger)VALUE {
+</span><span class='line'>    BOOL find = NO;
+</span><span class='line'>    [array2 removeAllObjects];
+</span><span class='line'>    for (NSNumber* item in array1) {
+</span><span class='line'>        NSInteger value = [item intValue];
+</span><span class='line'>        if (value == VALUE) {
+</span><span class='line'>            [array1 removeAllObjects];
+</span><span class='line'>            [array1 addObjectsFromArray: array2];
+</span><span class='line'>            [array1 addObject: item];
+</span><span class='line'>            find = YES;
+</span><span class='line'>            break;
+</span><span class='line'>        }
+</span><span class='line'>        else {
+</span><span class='line'>            [array2 addObject: item];
+</span><span class='line'>        }
+</span><span class='line'>    }
+</span><span class='line'>    if (!find) {
+</span><span class='line'>        NSNumber* newItem = [NSNumber numberWithInt: VALUE];
+</span><span class='line'>        [viewTypeArray addObject:newItem];
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>当进入if (value == VALUE)后，[array1 addObject: value];执行完毕后，查看array1中的元素类型发现已经不再是NSNumber<em>而是变为NSobject</em>,取出使用报错，bad access。</p>
+
+<p>该问题出现的几率比较随机。单独使用没有任何问题，放到整个工程中就出现问题。通过查看内存，发现NSMutableArray中存储的为NSNumber指针，array1和array2中指针地址一致，有可能是当[array1 removeAllObjects];后，item有可能被自动销毁，导致加入到array1中的值出现错误。修改为：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>NSNumber* topItem = [NSNumber numberWithInt: value];
+</span><span class='line'>[array1 addObject:topItem];</span></code></pre></td></tr></table></div></figure>
+
+
+<p>问题解决。这个问题的根本原因还是内存的问题，objective-c的内存管理比较特殊，有很多隐藏的内存分配和自动回收，个人怀疑numberWithInt方法返回的NSNumber*对象为autorelease。</p>
 </div>
   
   

@@ -84,153 +84,279 @@
   </header>
 
 
-<div class="entry-content"><p> // Calls the provided work function and returns the number of milliseconds
-// that it takes to call that function.
-template <class Function>;
-<strong>int64 time_call(Function&amp;&amp; f)
-{
-    </strong>int64 begin = GetTickCount64();
-    f();
-    return GetTickCount64() - begin;
-}
-// Use WideCharToMultiByte and MultiByteToWideChar
-string WChar2Ansi(const wchar_t<em> pwszSrc)
-{
-    int nLen = WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, NULL, 0, NULL, NULL);
-    if (nLen&lt;= 0) return string(&ldquo;&rdquo;);
-    char</em> pszDst = new char[nLen];
-    if (NULL == pszDst) return string(&ldquo;&rdquo;);
-    WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, pszDst, nLen, NULL, NULL);
-    pszDst[nLen -1] = 0;
-    string strTemp(pszDst);
-    delete [] pszDst;
-    return strTemp;
-}
-wstring Ansi2WChar(const char<em> pszSrc, int nLen)
-{
-    int nSize = MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, 0, 0);
-    if(nSize &lt;= 0) return NULL;
-    wchar_t </em>pwszDst = new wchar_t[nSize+1];
-    if( NULL == pwszDst) return NULL;
-    MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, pwszDst, nSize);
-    pwszDst[nSize] = 0;
-    if( pwszDst[0] == 0xFEFF)                    // skip Oxfeff
-        for(int i = 0; i &lt; nSize; i ++)
-            pwszDst[i] = pwszDst[i+1];
-    wstring wcharString(pwszDst);
-    delete pwszDst;
-    return wcharString;
-}
-// Use wcstombs_s and mbstowcs_s
-string ws2s(wstring ws)
-{
-    const wchar_t<em> Source = ws.c_str();
-    size_t size = 2 * ws.size() + 1;
-    char</em> Dest = new char[size];
-    memset(Dest,0, size);
-    size_t len = 0;
-    wcstombs(Dest, Source, size);
-    //wcstombs_s(&amp;len, Dest, size, Source, size);
-    string result = Dest;
-    delete [] Dest;
-    return result;
-}
-wstring s2ws(string s)
-{
-    const char<em> Source = s.c_str();
-    size_t size = s.size() + 1;
-    wchar_t</em> Dest = new wchar_t[size];
-    wmemset(Dest, 0, size);
-    size_t len = 0;
-    mbstowcs(Dest, Source, size);
-    //mbstowcs_s(&amp;len, Dest, size, Source, size);
-    wstring result = Dest;
-    delete [] Dest;
-    return result;
-}
-// Testing
-    <em><em>int64 elapsed;
-    string input = &ldquo;Hello, World.\XXX\XXX&rdquo;;
-    wstring winput = L&#8221;Hello, World.\XXX\XXX&#8221;;
-    wchar_t dest[1000];
-    int count = 10000;
-    elapsed = time_call([input, &amp;count]
-    {
-        while (count)
-        {
-            Ansi2WChar(input.c_str(), input.length());
-            count&ndash;;
-        }
-    });
-    memset(dest, 0, 1000);
-    </em>itow_s(elapsed, dest, 10);
-    OutputDebugStringW(L&#8221;Time:&ldquo;);
-    OutputDebugStringW(dest);
-    OutputDebugStringW(L&#8221;ms\n&rdquo;);
-    count = 10000;
-    elapsed = 0;
-    elapsed = time_call([input, &amp;count]
-    {
-        while (count)
-        {
-            s2ws(input);
-            count&ndash;;
-        }
-    });
-    memset(dest, 0, 1000);
-    </em>itow_s(elapsed, dest, 10);
-    OutputDebugStringW(L&#8221;Time:&ldquo;);
-    OutputDebugStringW(dest);
-    OutputDebugStringW(L&#8221;ms\n&rdquo;);
-    count = 10000;
-    elapsed = 0;
-    elapsed = time_call([winput, &amp;count]
-    {
-        while (count)
-        {
-            WChar2Ansi(winput.c_str());
-            count&ndash;;
-        }
-    });
-    memset(dest, 0, 1000);
-    <em>itow_s(elapsed, dest, 10);
-    OutputDebugStringW(L&#8221;Time:&ldquo;);
-    OutputDebugStringW(dest);
-    OutputDebugStringW(L&#8221;ms\n&rdquo;);
-    count = 10000;
-    elapsed = 0;
-    elapsed = time_call([winput, &amp;count]
-    {
-        while (count)
-        {
-            ws2s(winput);
-            count&ndash;;
-        }
-    });
-    memset(dest, 0, 1000);
-    </em>itow_s(elapsed, dest, 10);
-    OutputDebugStringW(L&#8221;Time:&ldquo;);
-    OutputDebugStringW(dest);
-    OutputDebugStringW(L&#8221;ms\n&rdquo;);
-  输出：
-  Time:78ms
-  Time:94ms
-  Time:62ms
-  Time:109ms
-  从输出结果可以看出
-   WideCharToMultiByte
-   和
-   MultiByteToWideChar
-   转换效率要比
-   mbstowcs
-   和
-   wcstombs
-   高。
-   注意：如果使用
-   mbstowcs
-   则需要
-   Disable
- Specific Warnings： 4996</p>
+<div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// Calls the provided work function and returns the number of milliseconds
+</span><span class='line'>// that it takes to call that function.
+</span><span class='line'>template &lt;class Function&gt;;
+</span><span class='line'>__int64 time_call(Function&& f)
+</span><span class='line'>{
+</span><span class='line'>    __int64 begin = GetTickCount64();
+</span><span class='line'>    f();
+</span><span class='line'>    return GetTickCount64() - begin;
+</span><span class='line'>}
+</span><span class='line'>// Use WideCharToMultiByte and MultiByteToWideChar
+</span><span class='line'>string WChar2Ansi(const wchar_t* pwszSrc)
+</span><span class='line'>{
+</span><span class='line'>    int nLen = WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, NULL, 0, NULL, NULL);
+</span><span class='line'>    if (nLen&lt;= 0) return string("");
+</span><span class='line'>    char* pszDst = new char[nLen];
+</span><span class='line'>    if (NULL == pszDst) return string("");
+</span><span class='line'>    WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, pszDst, nLen, NULL, NULL);
+</span><span class='line'>    pszDst[nLen -1] = 0;
+</span><span class='line'>    string strTemp(pszDst);
+</span><span class='line'>    delete [] pszDst;
+</span><span class='line'>    return strTemp;
+</span><span class='line'>}
+</span><span class='line'>wstring Ansi2WChar(const char* pszSrc, int nLen)
+</span><span class='line'>{
+</span><span class='line'>    int nSize = MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, 0, 0);
+</span><span class='line'>    if(nSize &lt;= 0) return NULL;
+</span><span class='line'>    wchar_t *pwszDst = new wchar_t[nSize+1];
+</span><span class='line'>    if( NULL == pwszDst) return NULL;
+</span><span class='line'>    MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, pwszDst, nSize);
+</span><span class='line'>    pwszDst[nSize] = 0;
+</span><span class='line'>    if( pwszDst[0] == 0xFEFF)                    // skip Oxfeff
+</span><span class='line'>        for(int i = 0; i &lt; nSize; i ++)
+</span><span class='line'>            pwszDst[i] = pwszDst[i+1];
+</span><span class='line'>    wstring wcharString(pwszDst);
+</span><span class='line'>    delete pwszDst;
+</span><span class='line'>    return wcharString;
+</span><span class='line'>}
+</span><span class='line'>// Use wcstombs_s and mbstowcs_s
+</span><span class='line'>string ws2s(wstring ws)
+</span><span class='line'>{
+</span><span class='line'>    const wchar_t* Source = ws.c_str();
+</span><span class='line'>    size_t size = 2 * ws.size() + 1;
+</span><span class='line'>    char* Dest = new char[size];
+</span><span class='line'>    memset(Dest,0, size);
+</span><span class='line'>    size_t len = 0;
+</span><span class='line'>    wcstombs(Dest, Source, size);
+</span><span class='line'>    //wcstombs_s(&len, Dest, size, Source, size);
+</span><span class='line'>    string result = Dest;
+</span><span class='line'>    delete [] Dest;
+</span><span class='line'>    return result;
+</span><span class='line'>}
+</span><span class='line'>wstring s2ws(string s)
+</span><span class='line'>{
+</span><span class='line'>    const char* Source = s.c_str();
+</span><span class='line'>    size_t size = s.size() + 1;
+</span><span class='line'>    wchar_t* Dest = new wchar_t[size];
+</span><span class='line'>    wmemset(Dest, 0, size);
+</span><span class='line'>    size_t len = 0;
+</span><span class='line'>    mbstowcs(Dest, Source, size);
+</span><span class='line'>    //mbstowcs_s(&len, Dest, size, Source, size);
+</span><span class='line'>    wstring result = Dest;
+</span><span class='line'>    delete [] Dest;
+</span><span class='line'>    return result;
+</span><span class='line'>}
+</span><span class='line'>// Testing
+</span><span class='line'>    __int64 elapsed;
+</span><span class='line'>    string input = "Hello, World.\\XXX\\XXX";
+</span><span class='line'>    wstring winput = L"Hello, World.\\XXX\\XXX";
+</span><span class='line'>    wchar_t dest[1000];
+</span><span class='line'>    int count = 10000;
+</span><span class='line'>    elapsed = time_call([input, &count]
+</span><span class='line'>    {
+</span><span class='line'>        while (count)
+</span><span class='line'>        {
+</span><span class='line'>            Ansi2WChar(input.c_str(), input.length());
+</span><span class='line'>            count--;
+</span><span class='line'>        }
+</span><span class='line'>    });
+</span><span class='line'>    memset(dest, 0, 1000);
+</span><span class='line'>    _itow_s(elapsed, dest, 10);
+</span><span class='line'>    OutputDebugStringW(L"Time:");
+</span><span class='line'>    OutputDebugStringW(dest);
+</span><span class='line'>    OutputDebugStringW(L"ms\n");
+</span><span class='line'>    count = 10000;
+</span><span class='line'>    elapsed = 0;
+</span><span class='line'>    elapsed = time_call([input, &count]
+</span><span class='line'>    {
+</span><span class='line'>        while (count)
+</span><span class='line'>        {
+</span><span class='line'>            s2ws(input);
+</span><span class='line'>            count--;
+</span><span class='line'>        }
+</span><span class='line'>    });
+</span><span class='line'>    memset(dest, 0, 1000);
+</span><span class='line'>    _itow_s(elapsed, dest, 10);
+</span><span class='line'>    OutputDebugStringW(L"Time:");
+</span><span class='line'>    OutputDebugStringW(dest);
+</span><span class='line'>    OutputDebugStringW(L"ms\n");
+</span><span class='line'>    count = 10000;
+</span><span class='line'>    elapsed = 0;
+</span><span class='line'>    elapsed = time_call([winput, &count]
+</span><span class='line'>    {
+</span><span class='line'>        while (count)
+</span><span class='line'>        {
+</span><span class='line'>            WChar2Ansi(winput.c_str());
+</span><span class='line'>            count--;
+</span><span class='line'>        }
+</span><span class='line'>    });
+</span><span class='line'>    memset(dest, 0, 1000);
+</span><span class='line'>    _itow_s(elapsed, dest, 10);
+</span><span class='line'>    OutputDebugStringW(L"Time:");
+</span><span class='line'>    OutputDebugStringW(dest);
+</span><span class='line'>    OutputDebugStringW(L"ms\n");
+</span><span class='line'>    count = 10000;
+</span><span class='line'>    elapsed = 0;
+</span><span class='line'>    elapsed = time_call([winput, &count]
+</span><span class='line'>    {
+</span><span class='line'>        while (count)
+</span><span class='line'>        {
+</span><span class='line'>            ws2s(winput);
+</span><span class='line'>            count--;
+</span><span class='line'>        }
+</span><span class='line'>    });
+</span><span class='line'>    memset(dest, 0, 1000);
+</span><span class='line'>    _itow_s(elapsed, dest, 10);
+</span><span class='line'>    OutputDebugStringW(L"Time:");
+</span><span class='line'>    OutputDebugStringW(dest);
+</span><span class='line'>    OutputDebugStringW(L"ms\n");</span></code></pre></td></tr></table></div></figure>
+
+
+<p>输出：</p>
+
+<p>  Time:78ms</p>
+
+<p>  Time:94ms</p>
+
+<p>  Time:62ms</p>
+
+<p>  Time:109ms</p>
+
+<p>从输出结果可以看出</p>
+
+<p>WideCharToMultiByte和MultiByteToWideChar转换效率要比mbstowcs和wcstombs高。</p>
+
+<p>注意：如果使用mbstowcs则需要Disable Specific Warnings：4996</p>
 </div>
 
 

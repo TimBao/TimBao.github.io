@@ -4,7 +4,7 @@
   <title><![CDATA[Category: 重构技术 | My Octopress Blog]]></title>
   <link href="http://timbao.github.io/blog/categories/zhong-gou-ji-zhu/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-22T14:48:37+08:00</updated>
+  <updated>2014-12-22T15:36:25+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -33,12 +33,17 @@
     <link href="http://timbao.github.io/blog/2012/07/21/%E3%80%8A%E9%87%8D%E6%9E%84%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%E4%B8%80/"/>
     <updated>2012-07-21T06:25:00+08:00</updated>
     <id>http://timbao.github.io/blog/2012/07/21/《重构》读书笔记一</id>
-    <content type="html"><![CDATA[<p>  一、重构之前一定要对原有代码有一套可靠的测试机制，并且测试要有自我检测能力。
-  第六章主要是讲的最简单的重构方法，就是对函数的重构。重构的目的就是要让函数更容易理解，思路更清晰。个人觉得重构的目的主要是针对开发者，能让维护者更容易理解而已。对函数的效率没有太多帮助，用作者的话来说就是应该放到优化中去做。有了易理解的函数，清晰的思路，优化起来那是事半功倍！
-  几个比较重要的重构的小方法：
-  1、Extract Methord：提取函数。将大函数分解为多个独立功能的小函数。小函数更容易阅读和理解。
-  2、Replace Temp with Quary：用查询函数替换局部变量。过多的局部变量会影响阅读。
-  3、Replace Methord with Methord Object：用函数对象替换函数。</p>
+    <content type="html"><![CDATA[<p>一、重构之前一定要对原有代码有一套可靠的测试机制，并且测试要有自我检测能力。</p>
+
+<p>第六章主要是讲的最简单的重构方法，就是对函数的重构。重构的目的就是要让函数更容易理解，思路更清晰。个人觉得重构的目的主要是针对开发者，能让维护者更容易理解而已。对函数的效率没有太多帮助，用作者的话来说就是应该放到优化中去做。有了易理解的函数，清晰的思路，优化起来那是事半功倍！</p>
+
+<p>几个比较重要的重构的小方法：</p>
+
+<p>1、Extract Methord：提取函数。将大函数分解为多个独立功能的小函数。小函数更容易阅读和理解。</p>
+
+<p>2、Replace Temp with Quary：用查询函数替换局部变量。过多的局部变量会影响阅读。</p>
+
+<p>3、Replace Methord with Methord Object：用函数对象替换函数。</p>
 ]]></content>
   </entry>
   

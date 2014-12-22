@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Iphone/objective-c | My Octopress Blog]]></title>
   <link href="http://timbao.github.io/blog/categories/iphone-slash-objective-c/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-22T14:48:37+08:00</updated>
+  <updated>2014-12-22T15:36:25+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -18,12 +18,12 @@
     <link href="http://timbao.github.io/blog/2012/03/15/NSMutableArray%E4%BD%BF%E7%94%A8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98/"/>
     <updated>2012-03-15T23:58:00+08:00</updated>
     <id>http://timbao.github.io/blog/2012/03/15/NSMutableArray使用中遇到的内存问题</id>
-    <content type="html"><![CDATA[<p>  NSMutableArray<em> array1 = [[NSMutableArray alloc] init];
-NSMutableArray</em> array2 = [[NSMutableArray alloc] init];
+    <content type="html"><![CDATA[<pre><code>NSMutableArray* array1 = [[NSMutableArray alloc] init];
+NSMutableArray* array2 = [[NSMutableArray alloc] init];
 - (void)pushs:(NSInteger)VALUE {
     BOOL find = NO;
     [array2 removeAllObjects];
-    for (NSNumber<em> item in array1) {
+    for (NSNumber* item in array1) {
         NSInteger value = [item intValue];
         if (value == VALUE) {
             [array1 removeAllObjects];
@@ -37,93 +37,21 @@ NSMutableArray</em> array2 = [[NSMutableArray alloc] init];
         }
     }
     if (!find) {
-        NSNumber</em> newItem = [NSNumber numberWithInt: VALUE];
+        NSNumber* newItem = [NSNumber numberWithInt: VALUE];
         [viewTypeArray addObject:newItem];
     }
 }
-   当
-   进
-   入
-  if (value == VALUE)
-   后，
-  [array1
- addObject: value];
-   执行
-   完
-   毕
-   后，
-   查
-   看array1中的元素类型
-   发现
-   已
-   经
-   不再
-   是
-  NSNumber<em>
-   而是
-   变为
-  NSobject</em>
-   ,
- 取出使用
-   报错
-   ，bad access。
-   该问题
-   出
-   现
-   的
-   几率比较随机。单独使用没有任何问题，放到整个工程中就出现问题。
-  通
-   过查
-  看内存，
-   发现
-   NSMutableArray
-  中存
-   储
-  的
-   为
-   NSNumber
-  指
-   针
-  ，array1和array2中指
-   针
-  地址一致，有可能是当
-   [array1
- removeAllObjects];
-  后，
-   item
-  有可能被自
-   动销毁
-  ，
-   导
-  致加入到array1中的
-   值
-  出
-   现错误。修改为：
-  NSNumber<em> topItem = [NSNumber numberWithInt: value];
-  [array1 addObject:topItem];
-   问题
-  解决。
-   这
-  个
-   问题
-  的根本原因
-   还
-  是内存的
-   问题
-  ，objective-c的内存管理比
-   较
-  特殊，有很多
-   隐藏
-  的内存分配和自
-   动
-  回收，个人
-   怀
-  疑
-   numberWithInt
-  方法返回的
-   NSNumber</em>
-   对象为
-  autorelease。</p>
+</code></pre>
+
+<p>当进入if (value == VALUE)后，[array1 addObject: value];执行完毕后，查看array1中的元素类型发现已经不再是NSNumber<em>而是变为NSobject</em>,取出使用报错，bad access。</p>
+
+<p>该问题出现的几率比较随机。单独使用没有任何问题，放到整个工程中就出现问题。通过查看内存，发现NSMutableArray中存储的为NSNumber指针，array1和array2中指针地址一致，有可能是当[array1 removeAllObjects];后，item有可能被自动销毁，导致加入到array1中的值出现错误。修改为：</p>
+
+<pre><code>NSNumber* topItem = [NSNumber numberWithInt: value];
+[array1 addObject:topItem];
+</code></pre>
+
+<p>问题解决。这个问题的根本原因还是内存的问题，objective-c的内存管理比较特殊，有很多隐藏的内存分配和自动回收，个人怀疑numberWithInt方法返回的NSNumber*对象为autorelease。</p>
 ]]></content>
   </entry>
   

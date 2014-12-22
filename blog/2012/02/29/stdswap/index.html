@@ -84,48 +84,81 @@
   </header>
 
 
-<div class="entry-content"><p>  std::swap             function template     <algorithm>;
-  template <class T>; void swap ( T&amp; a, T&amp; b );
-   Exchange values of two objects(交换两个对象的值)
-  Assigns the content of a to b and the content of b to a.
-   （将a的内容给b，将b的内容给a。）
-  The behavior of this function template is equivalent to:
-   （该函数模板的实现如下：）
-    template <class T>; void swap ( T&amp; a, T&amp; b )
-     {
-      T c(a); a=b; b=c;
-       }
-   Notice how this function involves a copy construction and two assignment operations, which may not be the most efficient way of swapping the contents of classes that store large quantities of data, since each of these operations generally operate in linear
- time on their size.
-    （注意，该函数是通过调用一个拷贝构造函数和两个赋值操作来交换两个对象的内容，这并不是最高效的交换方法对大数据来说，因为每个操作时间都是跟对象大小的成正比的线性时间关系。）
-  Because this function template is used as a primitive operation by many other algorithms, it is highly recommended that large data types overload their own specialization of this function. Notably, all STL containers define such specializations (at least
- for the standard allocator), in such a way that instead of swapping their entire data content, only the values of a few internal pointers are swapped, making this operation to operate in real constant time with them.
-   Parameters
-    a, b
-     Two objects, whose contents are swapped.
-      The type must be copy constructible and support assignment operations. （类型T必须包含拷贝构造和支持赋值操作。）
-   Return value
-    none
-   Example
-    // swap algorithm example
-     #include <iostream>;
-      #include <algorithm>;
-       #include <vector>;
-        using namespace std;
-  int main () {
-  int x=10, y=20;                         // x:10 y:20
-   swap(x,y);                              // x:20 y:10
-  vector<int>; first (4,x), second (6,y);  // first:4x20 second:6x10
-   swap(first,second);                     // first:6x10 second:4x20
-  cout &lt;&lt; &ldquo;first contains:&rdquo;;
-   for (vector<int>;::iterator it=first.begin(); it!=first.end(); ++it)
-    cout &lt;&lt; &ldquo; &rdquo; &lt;&lt; *it;
-  cout &lt;&lt; endl;
-  return 0;
-   }
-  Output:
-  first contains: 10 10 10 10 10 10
-   Complexity
+<div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>template &lt;class T&gt;; void swap ( T& a, T& b );</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Exchange values of two objects(交换两个对象的值)</p>
+
+<p>Assigns the content of a to b and the content of b to a.
+（将a的内容给b，将b的内容给a。）</p>
+
+<p>The behavior of this function template is equivalent to:
+（该函数模板的实现如下：）</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>template &lt;class T&gt;; void swap ( T& a, T& b )
+</span><span class='line'>{
+</span><span class='line'>    T c(a); a=b; b=c;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>Notice how this function involves a copy construction and two assignment operations, which may not be the most efficient way of swapping the contents of classes that store large quantities of data, since each of these operations generally operate in linear time on their size.</p></blockquote>
+
+<p>（注意，该函数是通过调用一个拷贝构造函数和两个赋值操作来交换两个对象的内容，这并不是最高效的交换方法对大数据来说，因为每个操作时间都是跟对象大小的成正比的线性时间关系。）</p>
+
+<blockquote><p>Because this function template is used as a primitive operation by many other algorithms, it is highly recommended that large data types overload their own specialization of this function. Notably, all STL containers define such specializations (at least for the standard allocator), in such a way that instead of swapping their entire data content, only the values of a few internal pointers are swapped, making this operation to operate in real constant time with them. Parameters a, b Two objects, whose contents are swapped. The type must be copy constructible and support assignment operations.</p></blockquote>
+
+<p>（类型T必须包含拷贝构造和支持赋值操作。）</p>
+
+<blockquote><p>Return value none</p></blockquote>
+
+<p>Example</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// swap algorithm example
+</span><span class='line'>#include &lt;iostream&gt;;
+</span><span class='line'>#include &lt;algorithm&gt;;
+</span><span class='line'>#include &lt;vector&gt;;
+</span><span class='line'>using namespace std;
+</span><span class='line'>int main ()
+</span><span class='line'>{
+</span><span class='line'>    int x=10, y=20;                         // x:10 y:20
+</span><span class='line'>    swap(x,y);                              // x:20 y:10
+</span><span class='line'>    vector&lt;int&gt;; first (4,x), second (6,y);  // first:4x20 second:6x10
+</span><span class='line'>    swap(first,second);                     // first:6x10 second:4x20
+</span><span class='line'>    cout &lt;&lt; "first contains:";
+</span><span class='line'>    for (vector&lt;int&gt;;::iterator it=first.begin(); it!=first.end(); ++it)
+</span><span class='line'>        cout &lt;&lt; " " &lt;&lt; *it;
+</span><span class='line'>    cout &lt;&lt; endl;
+</span><span class='line'>    return 0;
+</span><span class='line'>}
+</span><span class='line'>Output:
+</span><span class='line'>first contains: 10 10 10 10 10 10</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Complexity
     Constant: Performs exactly one copy construction and two assignments (although notice that each of these operations works on its own complexity).</p>
 </div>
 

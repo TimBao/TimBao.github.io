@@ -84,32 +84,51 @@
   </header>
 
 
-<div class="entry-content"><p> inserter、back_inserter、front_inserter
-  分别返回三种类型的iterator：insert_iterator,back_insert_iterator,front_insert_iterator。这三种iterator被设计成允许不同的算法重写elements(例如copy方法)去替代插入操作。
-    // inserter example</p>
+<div class="entry-content"><p>inserter、back_inserter、front_inserter</p>
 
-<h1>include <iostream>;</h1>
+<p>分别返回三种类型的iterator：insert_iterator,back_insert_iterator,front_insert_iterator。这三种iterator被设计成允许不同的算法重写elements(例如copy方法)去替代插入操作。</p>
 
-<h1>include <iterator>;</h1>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// inserter example
+</span><span class='line'>#include &lt;iostream&gt;;
+</span><span class='line'>#include &lt;iterator&gt;;
+</span><span class='line'>#include &lt;list&gt;;
+</span><span class='line'>using namespace std;
+</span><span class='line'>int main () {
+</span><span class='line'>  list&lt;int&gt;; firstlist, secondlist;
+</span><span class='line'>  for (int i=1; i&lt;=5; i++)
+</span><span class='line'>  { firstlist.push_back(i); secondlist.push_back(i*10); }
+</span><span class='line'>  list&lt;int&gt;;::iterator it;
+</span><span class='line'>  it = firstlist.begin(); advance (it,3);
+</span><span class='line'>  copy (secondlist.begin(),secondlist.end(),inserter(firstlist,it));
+</span><span class='line'>  for ( it = firstlist.begin(); it!= firstlist.end(); ++it )
+</span><span class='line'>      cout &lt;&lt; *it &lt;&lt; " ";
+</span><span class='line'>  cout &lt;&lt; endl;
+</span><span class='line'>  return 0;
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
 
-<h1>include <list>;</h1>
 
-<p>using namespace std;
-int main () {
-  list<int>; firstlist, secondlist;
-  for (int i=1; i&lt;=5; i++)
-  { firstlist.push_back(i); secondlist.push_back(i<em>10); }
-  list<int>;::iterator it;
-  it = firstlist.begin(); advance (it,3);
-  copy (secondlist.begin(),secondlist.end(),inserter(firstlist,it));
-  for ( it = firstlist.begin(); it!= firstlist.end(); ++it )
-      cout &lt;&lt; </em>it &lt;&lt; &ldquo; &rdquo;;
-  cout &lt;&lt; endl;
-  return 0;
-}
-       Output:
-        1 2 3 10 20 30 40 50 4 5
-          必须要提到的一点是，这三种迭代器是对容器有要求的，分别要求容器提供insert，push_back，push_front方法才行。</p>
+<p>Output:
+1 2 3 10 20 30 40 50 4 5</p>
+
+<p>必须要提到的一点是，这三种迭代器是对容器有要求的，分别要求容器提供insert，push_back，push_front方法才行。</p>
 </div>
 
 

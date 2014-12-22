@@ -84,22 +84,39 @@
   </header>
 
 
-<div class="entry-content"><p> #include &lt;stdio.h>;
-  #include &lt;stdarg.h>;
-    void logTest(const char<em> content, &hellip;)
-     {
-      FILE</em> logfile = fopen(&ldquo;log.txt&rdquo;, &ldquo;a&rdquo;);
-       if(logfile)
-        {
-         fprintf(logfile, &ldquo;########## NEW LOG ########\n&rdquo;);
-           va_list arg;
-            va_start(arg, content);
-             vfprintf(logfile, content, arg);
-              va_end(arg);
-                int status = fflush(logfile);
-                  fclose(logfile);
-                   }
-                    }</p>
+<div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;stdio.h&gt;;
+</span><span class='line'>#include &lt;stdarg.h&gt;;
+</span><span class='line'>void logTest(const char* content, ...)
+</span><span class='line'>{
+</span><span class='line'>    FILE* logfile = fopen("log.txt", "a");
+</span><span class='line'>    if(logfile)
+</span><span class='line'>    {
+</span><span class='line'>        fprintf(logfile, "########## NEW LOG ########\n");
+</span><span class='line'>        va_list arg;
+</span><span class='line'>        va_start(arg, content);
+</span><span class='line'>        vfprintf(logfile, content, arg);
+</span><span class='line'>        va_end(arg);
+</span><span class='line'>        int status = fflush(logfile);
+</span><span class='line'>        fclose(logfile);
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Cstring (string.h)函数介绍 | My Octopress Blog]]></title>
   <link href="http://timbao.github.io/blog/categories/cstring-string-dot-h-han-shu-jie-shao/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-22T14:48:37+08:00</updated>
+  <updated>2014-12-22T15:36:25+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -99,42 +99,54 @@ chr意思应该是character。</p></blockquote></li>
     <link href="http://timbao.github.io/blog/2012/04/28/strxfrm%E5%87%BD%E6%95%B0/"/>
     <updated>2012-04-28T19:24:00+08:00</updated>
     <id>http://timbao.github.io/blog/2012/04/28/strxfrm函数</id>
-    <content type="html"><![CDATA[<p> 原型
-  size_t strxfrm ( char * destination, const char * source, size_t num );
-    功能：
-     根据num长度拷贝前num个字符到目的字符串中，并返回源字符串长度。
-      同时，该函数还可以自作为返回字符串长度，这时num=0，destination允许传入NULL。
-        参数：
-         destination
-          指向目的字符数组的指针，当num为0时，可以传NULL。
-           source
-            要拷贝的源字符串，以‘\0’结尾。
-             num
-              最大要拷贝到目的数组的字符的长度。
-                 返回值：
-                 返回source字符串的长度，不包含‘\0’。
-                 #include <cstring>;</p>
+    <content type="html"><![CDATA[<p>原型</p>
 
-<h1>include <iostream>;</h1>
+<pre><code>size_t strxfrm ( char * destination, const char * source, size_t num );
+</code></pre>
 
-<h1>include &lt;windows.h>;</h1>
+<p>功能：</p>
 
-<p>int main(int argc, char<em> argv[])
+<p>根据num长度拷贝前num个字符到目的字符串中，并返回源字符串长度。</p>
+
+<p>同时，该函数还可以自作为返回字符串长度，这时num=0，destination允许传入NULL。</p>
+
+<p>参数：</p>
+
+<p>destination 指向目的字符数组的指针，当num为0时，可以传NULL。</p>
+
+<p>source 要拷贝的源字符串，以‘\0’结尾。</p>
+
+<p>num 最大要拷贝到目的数组的字符的长度。</p>
+
+<p>返回值：</p>
+
+<p>返回source字符串的长度，不包含‘\0’。</p>
+
+<pre><code>#include &lt;cstring&gt;;
+#include &lt;iostream&gt;;
+#include &lt;windows.h&gt;;
+int main(int argc, char* argv[])
 {
-    char</em> source = &ldquo;1234567890 abc&rdquo;;
+    char* source = "1234567890 abc";
     char des[100];
     size_t len = strxfrm(des, source, 50);
-    std::cout &lt;&lt; &ldquo;len:&rdquo; &lt;&lt; len &lt;&lt;std::endl;
-    std::cout &lt;&lt; &ldquo;des:&rdquo; &lt;&lt; des &lt;&lt;std::endl;
+    std::cout &lt;&lt; "len:" &lt;&lt; len &lt;&lt;std::endl;
+    std::cout &lt;&lt; "des:" &lt;&lt; des &lt;&lt;std::endl;
     return 0;
 }
-                  output:
-                   len:14
-                    des:1234567890 abc
-                 这里举这个例子要说明的是num长度大于源字符串长度的原因，涉及到strxfrm函数的具体实现了。
-                 strncpy(<em>string1, </em>string2, <em>count);
-                  return strlen(</em>string2);
-                   vs平台下该函数的实现非常简单，除了必要的验证外，只是调用了同是cstring的库函数中的两个基本函数。这也说明了为什么num长度超过源串后为什么没有问题，因为strncpy函数自动截取字符串到&#8217;\0&#8217;。</p>
+</code></pre>
+
+<p>output:
+len:14
+des:1234567890 abc</p>
+
+<p>这里举这个例子要说明的是num长度大于源字符串长度的原因，涉及到strxfrm函数的具体实现了。</p>
+
+<pre><code>strncpy(_string1, _string2, _count);
+return strlen(_string2);
+</code></pre>
+
+<p>vs平台下该函数的实现非常简单，除了必要的验证外，只是调用了同是cstring的库函数中的两个基本函数。这也说明了为什么num长度超过源串后为什么没有问题，因为strncpy函数自动截取字符串到&#8217;\0&#8217;。</p>
 ]]></content>
   </entry>
   

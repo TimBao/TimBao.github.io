@@ -84,42 +84,75 @@
   </header>
 
 
-<div class="entry-content"><p>  最近由于再开发Win 8 metro程序和准备开发Win Phone 8 App，学习了下WinRT开发，包括一些C++ 11新标准内容，最初对Lamdba表达式的表达很是头疼，对以往的编程认识非常不同，这也就让我对它产生了浓厚的兴趣，找了很多资料来学习它，并且写了好多程序去测试它，慢慢发现其实Lamdba表达式真的很有趣！
-  其实对Lambda表达式不必有任何的畏惧心里，通过仔细的分析它，我发现其实Lambda表达式就是一个函数，是一个匿名的函数，是一个可以自己执行的自己的函数。就这么简单！下面我们来看一个例子：
-  #include <functional>;</p>
+<div class="entry-content"><blockquote><p>最近由于再开发Win 8 metro程序和准备开发Win Phone 8 App，学习了下WinRT开发，包括一些C++ 11新标准内容，最初对Lamdba表达式的表达很是头疼，对以往的编程认识非常不同，这也就让我对它产生了浓厚的兴趣，找了很多资料来学习它，并且写了好多程序去测试它，慢慢发现其实Lamdba表达式真的很有趣！</p></blockquote>
 
-<h1>include <iostream>;</h1>
+<p>其实对Lambda表达式不必有任何的畏惧心里，通过仔细的分析它，我发现其实Lambda表达式就是一个函数，是一个匿名的函数，是一个可以自己执行的自己的函数。就这么简单！下面我们来看一个例子：</p>
 
-<p>using namespace std;
-int main(int argc, char argv[])
-{
-    int number = 2;
-    int menber = 2;
-    // []表示要使用到的作用域外的变量
-    // ()传入的参数
-    // mutable： 对number 来说，number是值传递，如果要修改的话,需要mutable标记，否则可以使用引用传递.
-    // throw：抛出异常
-    // ->; 后跟返回值
-    // {} 函数题
-    auto f1 = [number, &amp;menber] (int x, int y) mutable throw() ->; int {
-        ++number;
-        ++menber;
-        return x + y;
-    };
-    //Lambda表达式执行之前
-    cout &lt;&lt; &ldquo;number:&rdquo; &lt;&lt; number &lt;&lt; &ldquo; menber:&rdquo; &lt;&lt; menber &lt;&lt; endl;
-    //执行Lambda表达式
-    f1(3, 4);
-    //Lambda表达式执行之后
-    cout &lt;&lt; &ldquo;number:&rdquo; &lt;&lt; number &lt;&lt; &ldquo; menber:&rdquo; &lt;&lt; menber &lt;&lt; endl;
-    //自我执行
-    cout &lt;&lt; [] (int x, int y) { return x + y; }(2, 3) &lt;&lt; endl;
-    // auto类型其实就是 function<int (int, int)>;.
-    function<int (int, int)>; f2 = [] (int x, int y) { return x + y; };
-    cout &lt;&lt; f2(3,4) &lt;&lt; f1(3, 4) &lt;&lt; endl;
-    system(&ldquo;pause&rdquo;);
-    return 0;
-}</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;functional&gt;;
+</span><span class='line'>#include &lt;iostream&gt;;
+</span><span class='line'>using namespace std;
+</span><span class='line'>int main(int argc, char argv[])
+</span><span class='line'>{
+</span><span class='line'>    int number = 2;
+</span><span class='line'>    int menber = 2;
+</span><span class='line'>    // []表示要使用到的作用域外的变量
+</span><span class='line'>    // ()传入的参数
+</span><span class='line'>    // mutable： 对number 来说，number是值传递，如果要修改的话,需要mutable标记，否则可以使用引用传递.
+</span><span class='line'>    // throw：抛出异常
+</span><span class='line'>    // -&gt; 后跟返回值
+</span><span class='line'>    // {} 函数题
+</span><span class='line'>    auto f1 = [number, &menber]\(int x, int y\) mutable throw() -&gt; int {
+</span><span class='line'>        ++number;
+</span><span class='line'>        ++menber;
+</span><span class='line'>        return x + y;
+</span><span class='line'>    };
+</span><span class='line'>    //Lambda表达式执行之前
+</span><span class='line'>    cout &lt;&lt; "number:" &lt;&lt; number &lt;&lt; " menber:" &lt;&lt; menber &lt;&lt; endl;
+</span><span class='line'>    //执行Lambda表达式
+</span><span class='line'>    f1(3, 4);
+</span><span class='line'>    //Lambda表达式执行之后
+</span><span class='line'>    cout &lt;&lt; "number:" &lt;&lt; number &lt;&lt; " menber:" &lt;&lt; menber &lt;&lt; endl;
+</span><span class='line'>    //自我执行
+</span><span class='line'>    cout &lt;&lt; []\(int x, int y\) { return x + y; }(2, 3) &lt;&lt; endl;
+</span><span class='line'>    // auto类型其实就是 function&lt;int (int, int)&gt;;.
+</span><span class='line'>    function&lt;int (int, int)&gt;; f2 = []\(int x, int y\) { return x + y; };
+</span><span class='line'>    cout &lt;&lt; f2(3,4) &lt;&lt; f1(3, 4) &lt;&lt; endl;
+</span><span class='line'>    system("pause");
+</span><span class='line'>    return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
