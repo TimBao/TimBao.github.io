@@ -12,7 +12,7 @@ keywords: C++技术
 > 最近由于再开发Win 8 metro程序和准备开发Win Phone 8 App，学习了下WinRT开发，包括一些C++ 11新标准内容，最初对Lamdba表达式的表达很是头疼，对以往的编程认识非常不同，这也就让我对它产生了浓厚的兴趣，找了很多资料来学习它，并且写了好多程序去测试它，慢慢发现其实Lamdba表达式真的很有趣！
 
 其实对Lambda表达式不必有任何的畏惧心里，通过仔细的分析它，我发现其实Lambda表达式就是一个函数，是一个匿名的函数，是一个可以自己执行的自己的函数。就这么简单！下面我们来看一个例子：
-```c++
+```
 #include <functional>;
 #include <iostream>;
 using namespace std;
