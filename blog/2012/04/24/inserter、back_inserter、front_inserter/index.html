@@ -1,0 +1,249 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Inserter、back_inserter、front_inserter - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="inserter、back_inserter、front_inserter">
+  <meta name="keywords" content="C++技术">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://timbao.github.io/blog/2012/04/24/inserter%E3%80%81back_inserter%E3%80%81front_inserter">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:timbao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Inserter、back_inserter、front_inserter</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-04-24T23:17:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>11:17 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>inserter、back_inserter、front_inserter</p>
+
+<p>分别返回三种类型的iterator：insert_iterator,back_insert_iterator,front_insert_iterator。这三种iterator被设计成允许不同的算法重写elements(例如copy方法)去替代插入操作。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// inserter example
+</span><span class='line'>#include &lt;iostream&gt;;
+</span><span class='line'>#include &lt;iterator&gt;;
+</span><span class='line'>#include &lt;list&gt;;
+</span><span class='line'>using namespace std;
+</span><span class='line'>int main () {
+</span><span class='line'>  list&lt;int&gt;; firstlist, secondlist;
+</span><span class='line'>  for (int i=1; i&lt;=5; i++)
+</span><span class='line'>  { firstlist.push_back(i); secondlist.push_back(i*10); }
+</span><span class='line'>  list&lt;int&gt;;::iterator it;
+</span><span class='line'>  it = firstlist.begin(); advance (it,3);
+</span><span class='line'>  copy (secondlist.begin(),secondlist.end(),inserter(firstlist,it));
+</span><span class='line'>  for ( it = firstlist.begin(); it!= firstlist.end(); ++it )
+</span><span class='line'>      cout &lt;&lt; *it &lt;&lt; " ";
+</span><span class='line'>  cout &lt;&lt; endl;
+</span><span class='line'>  return 0;
+</span><span class='line'>}
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Output:
+1 2 3 10 20 30 40 50 4 5</p>
+
+<p>必须要提到的一点是，这三种迭代器是对容器有要求的，分别要求容器提供insert，push_back，push_front方法才行。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2012-04-24T23:17:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>11:17 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/c-plus-plus-ji-zhu/'>c++技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://timbao.github.io/blog/2012/04/24/inserter%E3%80%81back_inserter%E3%80%81front_inserter/" data-via="" data-counturl="http://timbao.github.io/blog/2012/04/24/inserter%E3%80%81back_inserter%E3%80%81front_inserter/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/04/23/VS%E8%B0%83%E8%AF%95-library%E7%89%88%E6%9C%AC%E5%BC%95%E8%B5%B7%E7%9A%84%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98/" title="Previous Post: VS调试-library版本引起的内存问题">&laquo; VS调试-library版本引起的内存问题</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/04/28/strxfrm%E5%87%BD%E6%95%B0/" title="Next Post: strxfrm函数">strxfrm函数 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

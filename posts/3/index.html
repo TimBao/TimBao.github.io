@@ -1,0 +1,1171 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="Item 12：理解“抛出一个异常”与“传递一个参数”或“调用一个虚函数”间的差异 你调用函数时，程序的控制权最终还会返回到函数的调用处，但是当你抛出一个异常时，控制权永远不会回到抛出异常的地方。 把一个对象传递给函数或一个对象调用虚拟函数与把一个对象做为异常抛出，这之间有三个主要区别。 第一、 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://timbao.github.io/posts/3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:timbao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B012/">More Effective C++读书笔记12</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-11T19:17:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:17 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 12：理解“抛出一个异常”与“传递一个参数”或“调用一个虚函数”间的差异</h2>
+
+<p>   你调用函数时，程序的控制权最终还会返回到函数的调用处，但是当你抛出一个异常时，控制权永远不会回到抛出异常的地方。</p>
+
+<p>   把一个对象传递给函数或一个对象调用虚拟函数与把一个对象做为异常抛出，这之间有三个主要区别。</p>
+
+<p>   第一、异常对象在传递时总被进行拷贝；当通过传值方式捕获时，异常对象被拷贝了两次。对象做为参数传递给函数时不一定需要被拷贝。第二、对象做为异常被抛出与做为参数传递给函数相比，前者类型转换比后者要少（前者只有两种转换形式）。</p>
+
+<p>   最后一点，catch 子句进行异常类型匹配的顺序是它们在源代码中出现的顺序，第一个类型匹配成功的 catch 将被用来执行。当一个对象调用一个虚拟函数时，被选择的函数位于与对象类型匹配最佳的类里，即使该类不是在源代码的最前头。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;iostream&gt;;
+</span><span class='line'>using namespace std;
+</span><span class='line'>class Base
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Base() { cout &lt;&lt; "constructor" &lt;&lt; endl; }
+</span><span class='line'>    ~Base()  { cout &lt;&lt; "destructor" &lt;&lt; endl; }
+</span><span class='line'>    Base(const Base& m) { cout &lt;&lt; "copy constructor" &lt;&lt; endl; pInt = m.pInt; }
+</span><span class='line'>    void Message() {cout &lt;&lt; "Base::Message" &lt;&lt;endl;}
+</span><span class='line'>private:
+</span><span class='line'>    int pInt;
+</span><span class='line'>};
+</span><span class='line'>class SubClass: public Base
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    SubClass() { cout &lt;&lt; "constructor_sub" &lt;&lt; endl; }
+</span><span class='line'>    ~SubClass(){ cout &lt;&lt; "destructor_sub" &lt;&lt; endl; }
+</span><span class='line'>    SubClass(const SubClass& ) { cout &lt;&lt; "copy constructor_sub" &lt;&lt; endl; }
+</span><span class='line'>    void Message() {cout &lt;&lt; "SubClass::Message" &lt;&lt;endl;}
+</span><span class='line'>private:
+</span><span class='line'>};
+</span><span class='line'>int main() {
+</span><span class='line'>    int iTemp = 0;
+</span><span class='line'>    try
+</span><span class='line'>    {
+</span><span class='line'>        throw iTemp;
+</span><span class='line'>    }
+</span><span class='line'>    catch (double d)
+</span><span class='line'>    {
+</span><span class='line'>        cout &lt;&lt; "double" &lt;&lt; endl;
+</span><span class='line'>    }
+</span><span class='line'>    catch (int i)
+</span><span class='line'>    {
+</span><span class='line'>        cout &lt;&lt; "int" &lt;&lt; endl;
+</span><span class='line'>    }
+</span><span class='line'>    int* piTemp = NULL;
+</span><span class='line'>    try
+</span><span class='line'>    {
+</span><span class='line'>        throw piTemp;
+</span><span class='line'>    }
+</span><span class='line'>    catch (void* e)
+</span><span class='line'>    {
+</span><span class='line'>        cout &lt;&lt; "void*" &lt;&lt; endl;
+</span><span class='line'>    }
+</span><span class='line'>    catch (int* i)
+</span><span class='line'>    {
+</span><span class='line'>        cout &lt;&lt; "int* " &lt;&lt; endl;
+</span><span class='line'>    }
+</span><span class='line'>    SubClass n;
+</span><span class='line'>    try
+</span><span class='line'>    {
+</span><span class='line'>        throw n;
+</span><span class='line'>    }
+</span><span class='line'>    catch (Base& e)
+</span><span class='line'>    {
+</span><span class='line'>        e.Message();
+</span><span class='line'>        //throw;
+</span><span class='line'>        //throw e;
+</span><span class='line'>    }
+</span><span class='line'>    catch (SubClass& ex)
+</span><span class='line'>    {
+</span><span class='line'>        e.Message();
+</span><span class='line'>    }
+</span><span class='line'>    Base m;
+</span><span class='line'>    //Base* m = new Base（）；
+</span><span class='line'>    try
+</span><span class='line'>    {
+</span><span class='line'>        throw m;
+</span><span class='line'>    }
+</span><span class='line'>    catch (Base e)
+</span><span class='line'>    {
+</span><span class='line'>        cout &lt;&lt; "Base" &lt;&lt; endl;
+</span><span class='line'>    }
+</span><span class='line'>//    catch (Base& e)
+</span><span class='line'>//    {
+</span><span class='line'>//        cout &lt;&lt; "Base&" &lt;&lt; endl;
+</span><span class='line'>//    }
+</span><span class='line'>//    catch (const Base& e)
+</span><span class='line'>//    {
+</span><span class='line'>//        cout &lt;&lt; "const Base&" &lt;&lt; endl;
+</span><span class='line'>//    }
+</span><span class='line'>//    catch (Base* e)
+</span><span class='line'>//    {
+</span><span class='line'>//        e-&gt;;Message();
+</span><span class='line'>//        delete e;
+</span><span class='line'>//    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  第一部分throw iTemp;输出：cout &lt;&lt; &ldquo;int&rdquo; &lt;&lt; endl; 对应上面的第二种情况，异常传递的类型如果是基础类型的话不能进行隐式转换。</p>
+
+<p>  第二部分throw piTemp;输出：cout &lt;&lt; &ldquo;void<em>&rdquo; &lt;&lt; endl;对应上面的第二种情况，说明如果是异常抛出指针的话，catch参数可以被隐式转换为void</em>指针。</p>
+
+<p>  第三部分throw n;输出：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  constructor
+</span><span class='line'>  constructor_sub
+</span><span class='line'>  constructor
+</span><span class='line'>  copy constructor_sub
+</span><span class='line'>  Base::Message
+</span><span class='line'>  destructor_sub
+</span><span class='line'>  destructor</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  对应上面的第二种情况，说明在异常捕获中，子类异常可以通过基类参数捕获到。对应上面的第三种情况，说明捕获的顺序是代码中出现的顺序。把注释掉的//throw; //throw e;两句分别打开，运行结果确是一样的，跟书中描述不尽相同。理论上讲throw应该抛出的时subclass类型的异常。
+                     最后一部分主要是验证异常参数传值，传引用和传指针的区别。通过程序结果可以看出，不论是传值还是传引用，都会进行拷贝构造，不同之处为传值会进行两次拷贝构造。不过在传指针时，确没有进行拷贝构造函数的调用。和函数参数穿指针一样。但是需要注意的是，异常处理有可能会跟异常抛出位置不是同一个作用域，那样抛指针异常的时候，有可能会造成异常泄露，所以我在最后显示调用delete e；释放资源。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/10/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B011/">More Effective C++读书笔记11</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-10T18:54:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>10</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>6:54 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 11：禁止异常信息（exceptions）传递到析构函数外</h2>
+
+<p>书中所言，会有两种情况调用析构函数。第一种是在正常情况下删除一个对象，例如对象超出作用域或者显示delete。第二种是异常传递的堆栈辗转开解（stack-unwinding）过程中，由异常处理系统删除一个对象。在一个异常被激活的同时，析构函数也抛出异常，并导致程序控制权转移到析构函数外，C++将调用 terminate 函数。</p>
+
+<p>为什么要防止在析构函数中的异常传递到函数外，除了上面说的第二种情况外，还有就是将异常传递出去后，程序转到异常处理程序，析构函数中异常之后的程序将不会再被执行，这有可能会导致资源的泄露。</p>
+
+<p>这里对stack unwinding说明下，堆栈展开是C++的一个概念，每个函数都回有它的堆栈，调用函数时会对函数参数和局部成员进行入栈，而函数结束时会按入栈相反的顺序进行出栈。举个例子说下的上面的第二种情况：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void func（string s）
+</span><span class='line'>{
+</span><span class='line'>    object obj（s）；
+</span><span class='line'>    obj.dosomething();
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果在dosomething()中发生某些异常，那么异常将传递出去，直到遇到异常捕获函数为止。而随着异常的传递，函数func已经结束，其局部变量obj会被析构，如果在析构的过程中再次出现异常，那么C++将调用 terminate 函数，程序直接终止。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/09/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B010/">More Effective C++读书笔记10</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-09T19:49:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:49 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 10：在构造函数中防止资源泄漏</h2>
+
+<p>该条款讲述的内容跟上一条款很相似，应该都可以归属为编写异常安全代码范畴。在构造函数中尽量处理简单的代码，防止抛异常，因为C++并没有对构造函数异常做析构的动作，并不会在构造函数发生异常的情况下，调用析构函数去释放资源。这是考虑到效率问题。</p>
+
+<p>我们还是举个例子更直观的描述如何在构造函数中编写异常安全的代码，要做个通讯录类，内容包括姓名，地址，图片和一段声音。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Image
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Image(string name);
+</span><span class='line'>private:
+</span><span class='line'>    string imageName;
+</span><span class='line'>}；
+</span><span class='line'>class Audio
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Audio(string name);
+</span><span class='line'>private:
+</span><span class='line'>    string audioName;
+</span><span class='line'>};
+</span><span class='line'>class BookEntry
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    BookEntry(string name, string adress, Image* image, Audio* audio);
+</span><span class='line'>    ~BookEntry();
+</span><span class='line'>private:
+</span><span class='line'>    string m_name;
+</span><span class='line'>    string m_adress;
+</span><span class='line'>    Image* m_image;
+</span><span class='line'>    Audio* m_audio;
+</span><span class='line'>};
+</span><span class='line'>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+</span><span class='line'>: m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
+</span><span class='line'>{
+</span><span class='line'>   m_image = new Image(imageName);
+</span><span class='line'>   m_audio = new Audio(audioName);
+</span><span class='line'>}
+</span><span class='line'>BookEntry::~BookEntry()
+</span><span class='line'>{
+</span><span class='line'>    delete m_image;
+</span><span class='line'>    delete m_audio;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>因为C++ delete删除空指针是不做任何操作的，所以析构函数中并没有对指针进行判断。</p>
+
+<p>我们考虑正常情况下构造函数全部指向完毕（完全构造），当销毁BookEntry的时候，会调用析构函数释放资源，没有任何问题。但是如果是构造函数中出现异常情况怎么办？最简单的办法就是万能的try catch。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+</span><span class='line'>: m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
+</span><span class='line'>{
+</span><span class='line'>    try
+</span><span class='line'>    {
+</span><span class='line'>        m_image = new Image(imageName);
+</span><span class='line'>        m_audio = new Audio(audioName);
+</span><span class='line'>    }
+</span><span class='line'>    catch(...)
+</span><span class='line'>    {
+</span><span class='line'>        delete m_image；
+</span><span class='line'>        delete m_audio;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OK, 没有问题了，但是看起来catch中的代码跟析构函数的代码一样，OK，利用refactoring method我们可以合并代码，abstract a public method。</p>
+
+<p>那么如果我们再修改下代码，将成员变量改为const常量</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Image* const m_image;
+</span><span class='line'>Audio* const m_audio;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>那么就只能在成员初始化列表中对指针进行初始化了。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+</span><span class='line'>: m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
+</span><span class='line'>{}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在成员初始化函数列表中，是不可以包含语句的，只能使用表达式，那么try catch就无法再使用了，那么该如何解决呢？估计看过前一章的一定会想到的，对就是使用智能指针。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>const share_ptr&lt;Image&gt;; m_image;
+</span><span class='line'>const share_ptr&lt;Audio&gt;; m_audio;
+</span><span class='line'>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+</span><span class='line'>: m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
+</span><span class='line'>{
+</span><span class='line'>}
+</span><span class='line'>BookEntry::~BookEntry()
+</span><span class='line'>{
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>连析构函数也省了。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/08/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B09/">More Effective C++读书笔记9</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-08T19:54:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>8</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:54 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 9：使用析构函数防止资源泄漏</h2>
+
+<p>这一章我觉得可以算作是异常安全处理的一种情况，也就是说在异常发生的情况下，保证资源能被正确释放。</p>
+
+<p>这里分为两种情况来讨论，一是指针操作
+举个例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void myFucntion()
+</span><span class='line'>{
+</span><span class='line'>    Object* obj = getBack();
+</span><span class='line'>    obj-&gt;;doSomething();
+</span><span class='line'>    delete obj；
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>如果在obj->;doSomething()中发生异常，那么delete obj将不会执行，这是个很显然的泄露问题。想到的第一解决方法基本都是加上try&hellip;catch（），Ok那么让我们重新整理代码。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void myFucntion()
+</span><span class='line'>{
+</span><span class='line'>    Object* obj = getBack();
+</span><span class='line'>    try
+</span><span class='line'>    {
+</span><span class='line'>        obj-&gt;;doSomething();
+</span><span class='line'>    }
+</span><span class='line'>    catch(...)
+</span><span class='line'>    {
+</span><span class='line'>        delete obj；
+</span><span class='line'>    }
+</span><span class='line'>    delete obj；
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>好吧，我承认，程序很丑陋，代码重复，那么继续改进。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void myFucntion()
+</span><span class='line'>{
+</span><span class='line'>    Object* obj = getBack();
+</span><span class='line'>    try
+</span><span class='line'>    {
+</span><span class='line'>        obj-&gt;;doSomething();
+</span><span class='line'>    }
+</span><span class='line'>    catch(...)
+</span><span class='line'>    {
+</span><span class='line'>        ...
+</span><span class='line'>    }
+</span><span class='line'>    finally
+</span><span class='line'>    {
+</span><span class='line'>        delete obj；
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ok，问题已经解决。但是还不要高兴，满篇的try catch，如果有很多地方都需要加try catch，那么工作量也是非常惊人的，当然你也可以这样写，但是我觉得作为程序员就是要有“懒惰”的思想，要简化，越简单越好，代码越少出错的地方也就越少。那么你一定想到了，利用智能指针auto_ptr或者share_ptr来解决问题。Ok，尽管不推荐auto_ptr，但是老的代码中还是会出现的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void myFucntion()
+</span><span class='line'>{
+</span><span class='line'>    share_ptr&lt;Object*&gt;; obj(getBack());
+</span><span class='line'>    obj-&gt;;doSomething();
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Perfect!</p>
+
+<p>二是对象操作</p>
+
+<p>最常见的问题时windows中的各种handler的关闭泄露问题，我们可以针对handler进行一个封装，在析构函数中释放handler。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class WindowHandle
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    WindowHandle(WINDOW_HANDLE handle): w(handle) {}
+</span><span class='line'>    ~WindowHandle() { destroyWindow(w); }
+</span><span class='line'>    operator WINDOW_HANDLE() { return w; } // see below
+</span><span class='line'>private:
+</span><span class='line'>    WINDOW_HANDLE w;
+</span><span class='line'>    WindowHandle(const WindowHandle&);
+</span><span class='line'>    WindowHandle& operator=(const WindowHandle&);
+</span><span class='line'>};</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/07/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B08/">More Effective C++读书笔记8</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-07T19:10:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:10 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 8：理解各种不同含义的new和delete</h2>
+
+<p>new操作符在C++中做了两件事，1是在堆上分配足够的内存，2是调用类的构造函数。new操作法的这种行为是程序员无法改变的，唯一程序员可以去做的就是按自己的需求来修改内存分配，通过重载operator new函数（void* operator new（size_t size））来自定义内存的分配，但是在调用构造函数上面是由编译器来决定的。如果要重载自己的operator new函数，第一个参数必须为size_t。</p>
+
+<pre><code>例如：
+</code></pre>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Obeject* obj = new Object（）；</span></code></pre></td></tr></table></div></figure>
+
+
+<p>被编译器解析：</p>
+
+<p>1.allocate memory
+2.call Object（）构造函数</p>
+
+<p>关于placement new，就是在已经分配的内存上创建对象，例如：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void* placementnewSample（void* buffer， size_t）
+</span><span class='line'>{
+</span><span class='line'>    return new （buffer） Object();
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>注意，如果是调用的placement new，则对应的一定不要调用delete操作符，因为该对象是在buffer中分配的。可以直接调用对象的析构函数。数组的new操作符表现形式不同单个对象的new，但是做的事情是一样的。只不过是需要将所有数组元素都分配内存并依次调用构造函数。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void* operator new[](size_t size)；</span></code></pre></td></tr></table></div></figure>
+
+
+<p>为new数组分配内存函数，可以被重载。delete操作符作为new操作符对应的相反行为，做的事情自然跟new相反，1调用析构函数，2释放已经分配的内存。如果你重载了operator new，则你必须重载operator delete来对应，否则有可能导致new和delete行为的不一致性。什么样的new对应什么样的delete，即单个对象的new对应单个对象的delete，new[]对应delete[]。注意，尽量不要重载全局的new和delete，这样会造成程序的不兼容性，除非这是你想要的结果。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/06/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B07/">More Effective C++读书笔记7</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-06T19:39:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:39 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 7：不要重载“&amp;&amp;”,“||”, 或“,”</h2>
+
+<p>C/C++中“&amp;&amp;”和“||”操作符是采用短路计算法的，而且是有顺序的。即从左往右计算，如果一旦确认表达式的值，那么后面的表达式或计算不再执行。而重载运算符本质上是函数重载，即运算符操作为函数操作。operator &amp;&amp;()有两种情况，一是全局重载，二是作为类成员函数；如果是全局重载，那么调用本质为 &ldquo;operator &amp;&amp;（expression1， expression2）&rdquo;,而C++并没有规定参数的计算顺序，所以没有办法保证重载的&amp;&amp;保持原意不变。成员函数形式为expression1.operator&amp;&amp;(expression2)，跟全局问题一样，所以“&amp;&amp;”和“||”操作符适合重载。“，”运算符也是相同的原因，这里不再赘述。</p>
+
+<p>操作符重载的目的是为了程序更容易阅读，理解和书写。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/06/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B06/">More Effective C++读书笔记6</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-06T17:22:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>5:22 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 6：自增(increment)、自减(decrement)操作符前缀形式与后缀形式的区别</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class UPInt
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    ...
+</span><span class='line'>    UPInt& operator++();         //前缀形式
+</span><span class='line'>    const UPInt operator++(int); //后缀形式
+</span><span class='line'>    UPInt& operator--();         //前缀形式
+</span><span class='line'>    const UPInt operator--(int); //后缀形式
+</span><span class='line'>};
+</span><span class='line'>UPInt& UPInt::operator++()
+</span><span class='line'>{
+</span><span class='line'>    *this += 1；
+</span><span class='line'>    return *this；
+</span><span class='line'>}
+</span><span class='line'>const UPInt UPInt::operator++(int)
+</span><span class='line'>{
+</span><span class='line'>    UPInt temp = *this;
+</span><span class='line'>    ++(*this);
+</span><span class='line'>    return temp;
+</span><span class='line'>}
+</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
+
+
+<p>从代码中可以看到，</p>
+
+<ol>
+<li><p>前缀是先增加再返回，而后缀是先返回再增加。</p></li>
+<li><p>前缀和后缀在表现形式上就有所不同，是通过参数来区分的，这是C++语言规范规定的区别标准。</p></li>
+<li><p>二者在返回值上也不相同，前缀形式返回类型的引用，而后缀则返回const 类型。为什么二者返回类型不相同，是为了防止出现 UPInt u； u++++；（在基础类型中不合法）。为了保持和基础类型一致而采取的考虑。</p></li>
+<li><p>不管是前缀形式还是后缀形式，二者最终行为都是一致的（即增1），后缀实现采用前缀实现，这样就缩小改变，只需用改变前缀的实现就可以二者都改变。</p></li>
+<li><p>从实现上可以看出，后缀形式比前缀形式多了一个临时对象temp，而临时对象会造成构造和析构的时间开销，空间方面也会有开销，这就导致前缀形式的效率会比后缀要高，所以能使用前缀形式就要使用前缀形式。</p></li>
+</ol>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B05/">More Effective C++读书笔记5</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-05T20:18:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>8:18 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 5：谨慎定义类型转换函数</h2>
+
+<p>隐式类型转换时在编译期间由编译器来执行的。除了C/C++默认的基本类型的隐式类型转换外，用户自定义类型的隐式转换方式有两种：</p>
+
+<p>1.定义隐式类型转换运算符</p>
+
+<p>2.单参数构造函数或者多参数构造函数，但第一个参数以后的参数都有默认值。</p>
+
+<p>隐式类型转换运算符例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Rational
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Rational（int numerator = 0, int denominator = 1）；
+</span><span class='line'>    operator double() const;   //不需要返回类型，函数名称就是返回类型
+</span><span class='line'>};
+</span><span class='line'>Rational r（1， 2）；
+</span><span class='line'>double d = 0.5 * r; //r 转换为double类型</span></code></pre></td></tr></table></div></figure>
+
+
+<p>标题是要谨慎定义类型转换函数，为什么要谨慎呢，就是说这些定义的类型转换函数有可能会产生不是你想要的结果，比如你不想进行转换的时候，却给你转换了。如下情况：</p>
+
+<p>cout &lt;&lt; r；  //Rational并没有定义operator &lt;&lt; 运算符，但是，编译器会找到operator double()转换函数，将r转换为double输出。但这并不是你想要的结果。</p>
+
+<p>解决方法是用不使用语法关键字的等同的函数来替代转换运算符。如定义一个toDouble()函数来代替operator double()转换函数。STL中的string就提供了一个c_str()函数来转换到char*。</p>
+
+<p>通过单参数构造函数进行隐式类型转换更难消除。而且在很多情况下这些函数所导致的问题要甚于隐式类型转换运算符。</p>
+
+<p>我们来看一个例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>temlplate&lt;typename T&gt;;
+</span><span class='line'>class Array
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Array(int lowBound, int hightBound);
+</span><span class='line'>    Array(int size);
+</span><span class='line'>    T& operator[](int index);
+</span><span class='line'>};
+</span><span class='line'>Array&lt;int&gt;; a(10);
+</span><span class='line'>Array&lt;int&gt;; b(10);
+</span><span class='line'>for (int i = 0; i &lt; 10; ++i)
+</span><span class='line'>{
+</span><span class='line'>    if (a == b[i]) // 哎呦! "a" 应该是 "a[i]"
+</span><span class='line'>    {
+</span><span class='line'>        do something for when
+</span><span class='line'>        a[i] and b[i] are equal;
+</span><span class='line'>    }
+</span><span class='line'>    else
+</span><span class='line'>    {
+</span><span class='line'>        do something for when they're not;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们的编译器注意到它能通过调用 Array<int>;构造函数能转换 int 类型到 Array<int>;类型，这个构造函数只有一个 int 类型的参数。然后编译器如此去编译，生成的代码就象这样：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if (a == static_cast&lt; Array&lt;int&gt;; &gt;;(b[i]))</span></code></pre></td></tr></table></div></figure>
+
+
+<p>解决方案是利用一个最新编译器的特性，explicit 关键字。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B04/">More Effective C++读书笔记4</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-05T17:43:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>5:43 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 4：避免无用的缺省构造函数</h2>
+
+<p>没有缺省构造函数会导致：</p>
+
+<p>  1.无法创建该类的数组形式。</p>
+
+<p>  2.无法在许多基于模板的容器类里使用。</p>
+
+<p>设计虚基类时所面临的要提供缺省构造函数还是不提供缺省构造函数的两难决策：</p>
+
+<p>  1.不提供缺省构造函数的虚基类，很难与其进行合作。因为几乎所有的派生类在实例化时都必须给虚基类构造函数提供参数。</p>
+
+<p>  2.提供无意义的缺省构造函数也会影响类的工作效率。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B03/">More Effective C++读书笔记3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-05T17:42:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>5:42 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 3: 不要对数组使用多态</h2>
+
+<p>语言规范中说通过一个基类指针来删除一个含有派生类对象的数组，结果将是不确定的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class BST { ... };
+</span><span class='line'>class BalancedBST: public BST { ... };
+</span><span class='line'>void printBSTArray(ostream& s,const BST array[], int numElements)
+</span><span class='line'>{
+</span><span class='line'>    for (int i = 0; i &lt; numElements; )
+</span><span class='line'>    {
+</span><span class='line'>        s &lt;&lt; array[i]; //假设 BST 类重载了操作符&lt;&lt;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编译器原先已经假设数组中元素与 BST 对象的大小一致，但是现在数组中每一个对象大小却与 BalancedBST 一致。派生类的长度通常都比基类要长。我们料想 BalancedBST 对象长度的比 BST 长。如果如此的话，printBSTArray 函数生成的指针算法将是错误的，没有人知道如果用 BalancedBST 数组来执行 printBSTArray 函数将会发生什么样的后果。不论是什么后果都是令人不愉快的。</p>
+
+<p>值得注意的是如果你不从一个具体类（concrete classes） （例如 BST）派生出另一个具体类（例如 BalancedBST），那么你就不太可能犯这种使用多态性数组的错误。</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/posts/4">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/posts/2">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

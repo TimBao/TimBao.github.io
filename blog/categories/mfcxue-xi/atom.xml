@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Mfc学习 | My Octopress Blog]]></title>
+  <link href="http://timbao.github.io/blog/categories/mfcxue-xi/atom.xml" rel="self"/>
+  <link href="http://timbao.github.io/"/>
+  <updated>2014-12-22T16:04:42+08:00</updated>
+  <id>http://timbao.github.io/</id>
+  <author>
+    <name><![CDATA[Your Name]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[VC++2008如何生成OCX控件包装类]]></title>
+    <link href="http://timbao.github.io/blog/2011/02/17/VC++2008%E5%A6%82%E4%BD%95%E7%94%9F%E6%88%90OCX%E6%8E%A7%E4%BB%B6%E5%8C%85%E8%A3%85%E7%B1%BB/"/>
+    <updated>2011-02-17T00:22:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2011/02/17/VC++2008如何生成OCX控件包装类</id>
+    <content type="html"><![CDATA[<p>1、将OCX控件注册。</p>
+
+<p>方法：使用recsvr32命令注册。</p>
+
+<p>2、随便建立一个MFC工程，在对话框上右键，Insert Activex Control，选择注册的OCX控件。</p>
+
+<p>3、为2步添加的控件添加变量，VC会自动生成该OCX的包装类。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[MFC Timer实现]]></title>
+    <link href="http://timbao.github.io/blog/2010/08/18/MFC%20Timer%E5%AE%9E%E7%8E%B0/"/>
+    <updated>2010-08-18T00:46:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2010/08/18/MFC Timer实现</id>
+    <content type="html"><![CDATA[<p>1、在Dialog类的头文件中增加定时器消息处理函数：
+<code>
+afx_msg void OnTimer(UINT nIDEvent);
+</code>
+2、在Dialog类的CPP文件的消息映射中增加WM_TIMER消息处理
+<code>
+ON_WM_TIMER()
+</code>
+3、启动定时器
+<code>
+UINT uiTimerID = SetTiemr(1/*nIDEvent*/, 1000/*时间间隔*/, NULL);
+</code>
+4、杀死定时器
+<code>
+KillTiemr(uiTimerID );
+</code>
+4、定时器处理函数
+<code>
+void CTestDlg::OnTimer(UINT nIDEvent)
+{
+    switch (nIDEvent)
+    {
+    case 1:
+        //你的消息处理函数
+        break;
+    }
+    CDialog::OnTimer(nIDEvent);
+}
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

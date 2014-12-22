@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>More Effective C++读书笔记12 - My Octopress Blog</title>
+  <meta name="author" content="Your Name">
+
+  
+  <meta name="description" content="More Effective C++读书笔记12">
+  <meta name="keywords" content="C++技术">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://timbao.github.io/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B012">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="My Octopress Blog" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">My Octopress Blog</a></h1>
+  
+    <h2>A blogging framework for hackers.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:timbao.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">More Effective C++读书笔记12</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-11T19:17:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:17 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h2>Item 12：理解“抛出一个异常”与“传递一个参数”或“调用一个虚函数”间的差异</h2>
+
+<p>   你调用函数时，程序的控制权最终还会返回到函数的调用处，但是当你抛出一个异常时，控制权永远不会回到抛出异常的地方。</p>
+
+<p>   把一个对象传递给函数或一个对象调用虚拟函数与把一个对象做为异常抛出，这之间有三个主要区别。</p>
+
+<p>   第一、异常对象在传递时总被进行拷贝；当通过传值方式捕获时，异常对象被拷贝了两次。对象做为参数传递给函数时不一定需要被拷贝。第二、对象做为异常被抛出与做为参数传递给函数相比，前者类型转换比后者要少（前者只有两种转换形式）。</p>
+
+<p>   最后一点，catch 子句进行异常类型匹配的顺序是它们在源代码中出现的顺序，第一个类型匹配成功的 catch 将被用来执行。当一个对象调用一个虚拟函数时，被选择的函数位于与对象类型匹配最佳的类里，即使该类不是在源代码的最前头。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;iostream&gt;;
+</span><span class='line'>using namespace std;
+</span><span class='line'>class Base
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Base() { cout &lt;&lt; "constructor" &lt;&lt; endl; }
+</span><span class='line'>    ~Base()  { cout &lt;&lt; "destructor" &lt;&lt; endl; }
+</span><span class='line'>    Base(const Base& m) { cout &lt;&lt; "copy constructor" &lt;&lt; endl; pInt = m.pInt; }
+</span><span class='line'>    void Message() {cout &lt;&lt; "Base::Message" &lt;&lt;endl;}
+</span><span class='line'>private:
+</span><span class='line'>    int pInt;
+</span><span class='line'>};
+</span><span class='line'>class SubClass: public Base
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    SubClass() { cout &lt;&lt; "constructor_sub" &lt;&lt; endl; }
+</span><span class='line'>    ~SubClass(){ cout &lt;&lt; "destructor_sub" &lt;&lt; endl; }
+</span><span class='line'>    SubClass(const SubClass& ) { cout &lt;&lt; "copy constructor_sub" &lt;&lt; endl; }
+</span><span class='line'>    void Message() {cout &lt;&lt; "SubClass::Message" &lt;&lt;endl;}
+</span><span class='line'>private:
+</span><span class='line'>};
+</span><span class='line'>int main() {
+</span><span class='line'>    int iTemp = 0;
+</span><span class='line'>    try
+</span><span class='line'>    {
+</span><span class='line'>        throw iTemp;
+</span><span class='line'>    }
+</span><span class='line'>    catch (double d)
+</span><span class='line'>    {
+</span><span class='line'>        cout &lt;&lt; "double" &lt;&lt; endl;
+</span><span class='line'>    }
+</span><span class='line'>    catch (int i)
+</span><span class='line'>    {
+</span><span class='line'>        cout &lt;&lt; "int" &lt;&lt; endl;
+</span><span class='line'>    }
+</span><span class='line'>    int* piTemp = NULL;
+</span><span class='line'>    try
+</span><span class='line'>    {
+</span><span class='line'>        throw piTemp;
+</span><span class='line'>    }
+</span><span class='line'>    catch (void* e)
+</span><span class='line'>    {
+</span><span class='line'>        cout &lt;&lt; "void*" &lt;&lt; endl;
+</span><span class='line'>    }
+</span><span class='line'>    catch (int* i)
+</span><span class='line'>    {
+</span><span class='line'>        cout &lt;&lt; "int* " &lt;&lt; endl;
+</span><span class='line'>    }
+</span><span class='line'>    SubClass n;
+</span><span class='line'>    try
+</span><span class='line'>    {
+</span><span class='line'>        throw n;
+</span><span class='line'>    }
+</span><span class='line'>    catch (Base& e)
+</span><span class='line'>    {
+</span><span class='line'>        e.Message();
+</span><span class='line'>        //throw;
+</span><span class='line'>        //throw e;
+</span><span class='line'>    }
+</span><span class='line'>    catch (SubClass& ex)
+</span><span class='line'>    {
+</span><span class='line'>        e.Message();
+</span><span class='line'>    }
+</span><span class='line'>    Base m;
+</span><span class='line'>    //Base* m = new Base（）；
+</span><span class='line'>    try
+</span><span class='line'>    {
+</span><span class='line'>        throw m;
+</span><span class='line'>    }
+</span><span class='line'>    catch (Base e)
+</span><span class='line'>    {
+</span><span class='line'>        cout &lt;&lt; "Base" &lt;&lt; endl;
+</span><span class='line'>    }
+</span><span class='line'>//    catch (Base& e)
+</span><span class='line'>//    {
+</span><span class='line'>//        cout &lt;&lt; "Base&" &lt;&lt; endl;
+</span><span class='line'>//    }
+</span><span class='line'>//    catch (const Base& e)
+</span><span class='line'>//    {
+</span><span class='line'>//        cout &lt;&lt; "const Base&" &lt;&lt; endl;
+</span><span class='line'>//    }
+</span><span class='line'>//    catch (Base* e)
+</span><span class='line'>//    {
+</span><span class='line'>//        e-&gt;;Message();
+</span><span class='line'>//        delete e;
+</span><span class='line'>//    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  第一部分throw iTemp;输出：cout &lt;&lt; &ldquo;int&rdquo; &lt;&lt; endl; 对应上面的第二种情况，异常传递的类型如果是基础类型的话不能进行隐式转换。</p>
+
+<p>  第二部分throw piTemp;输出：cout &lt;&lt; &ldquo;void<em>&rdquo; &lt;&lt; endl;对应上面的第二种情况，说明如果是异常抛出指针的话，catch参数可以被隐式转换为void</em>指针。</p>
+
+<p>  第三部分throw n;输出：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  constructor
+</span><span class='line'>  constructor_sub
+</span><span class='line'>  constructor
+</span><span class='line'>  copy constructor_sub
+</span><span class='line'>  Base::Message
+</span><span class='line'>  destructor_sub
+</span><span class='line'>  destructor</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  对应上面的第二种情况，说明在异常捕获中，子类异常可以通过基类参数捕获到。对应上面的第三种情况，说明捕获的顺序是代码中出现的顺序。把注释掉的//throw; //throw e;两句分别打开，运行结果确是一样的，跟书中描述不尽相同。理论上讲throw应该抛出的时subclass类型的异常。
+                     最后一部分主要是验证异常参数传值，传引用和传指针的区别。通过程序结果可以看出，不论是传值还是传引用，都会进行拷贝构造，不同之处为传值会进行两次拷贝构造。不过在传指针时，确没有进行拷贝构造函数的调用。和函数参数穿指针一样。但是需要注意的是，异常处理有可能会跟异常抛出位置不是同一个作用域，那样抛指针异常的时候，有可能会造成异常泄露，所以我在最后显示调用delete e；释放资源。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Your Name</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2013-01-11T19:17:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:17 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/c-plus-plus-ji-zhu/'>c++技术</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://timbao.github.io/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B012/" data-via="" data-counturl="http://timbao.github.io/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B012/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/01/10/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B011/" title="Previous Post: More Effective C++读书笔记11">&laquo; More Effective C++读书笔记11</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B013/" title="Next Post: More Effective C++读书笔记13">More Effective C++读书笔记13 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - Your Name -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
