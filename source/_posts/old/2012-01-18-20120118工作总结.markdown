@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "20120118工作总结"
-date: 2012-01-18 22:55:00 
+date: 2012-01-18 22:55:00
 comments: true
 categories: [记事]
 tags: [记事]
@@ -9,10 +9,14 @@ description: "20120118工作总结"
 keywords: 记事
 ---
 
-  这两天老大给分配了新的任务，学习最新的NBI-MapKit，编写地图DEMO，激动，终于要开始编程了。SDK很简单，一个MapKit.framwork，包含两个文件MapKit.docset和MapKit.framework。包括6个headers和一个静态库，真的很简单。
-  再细看docset，发现模块也不是特别多，但是接口多的不行，在原有的CCI基础上又包装一层，以后值做UI了，
-   方便了开发但是学到的东西就少了。以后还得学习底层开发。自己捣鼓了一下午，终于学会了如何导入framework和.a库，如何设置编译选项，丫的编译还是有问题。已经完全按照说明做了，郁闷。
-  今天把错误跟QA说了下，原来丫的给我的版本不对，
-   。没办法，根据她给我的WEB SITE，自己注册下载了最新的SDK，哈哈把Sample也一起下载了，爽。果断重建工程，在buildphase中加入framework和.a及相关的几个framework和库，加上编译条件-lstdc++，编译，successed！耶。
-  下面就开始UI布局了，按照原来的UI样子，学着使用Interface Builder进行UI设计，娘的，跟使用MFC做界面一样麻烦，弄了半天才弄好了一个Navigation和ToolBar，最后弄好了Tray。可以鱼目混珠啦。哈哈，做了个假的Map。
-  这两天学到了如何建立Iphone工程，如何导入第三方库和framework，如何设置编译选项，如何使用UIView等控件进行界面设计。东西很杂，但是都是基础，还需锻炼。尤其是对整个工程的架构上面来看，还不是很熟练，在年前这几天争取要把UI全部做出来，先不考虑架构，只做UI和基本功能，等基本功能做完后可以考虑第一次重构将架构重新设计，这时候应该轻车熟路了。
+这两天老大给分配了新的任务，学习最新的NBI-MapKit，编写地图DEMO，激动，终于要开始编程了。SDK很简单，一个MapKit.framwork，包含两个文件MapKit.docset和MapKit.framework。包括6个headers和一个静态库，真的很简单。
+
+再细看docset，发现模块也不是特别多，但是接口多的不行，在原有的CCI基础上又包装一层，以后值做UI了，
+
+方便了开发但是学到的东西就少了。以后还得学习底层开发。自己捣鼓了一下午，终于学会了如何导入framework和.a库，如何设置编译选项，丫的编译还是有问题。已经完全按照说明做了，郁闷。
+
+今天把错误跟QA说了下，原来丫的给我的版本不对。没办法，根据她给我的WEB SITE，自己注册下载了最新的SDK，哈哈把Sample也一起下载了，爽。果断重建工程，在buildphase中加入framework和.a及相关的几个framework和库，加上编译条件-lstdc++，编译，successed！耶。
+
+下面就开始UI布局了，按照原来的UI样子，学着使用Interface Builder进行UI设计，娘的，跟使用MFC做界面一样麻烦，弄了半天才弄好了一个Navigation和ToolBar，最后弄好了Tray。可以鱼目混珠啦。哈哈，做了个假的Map。
+
+这两天学到了如何建立Iphone工程，如何导入第三方库和framework，如何设置编译选项，如何使用UIView等控件进行界面设计。东西很杂，但是都是基础，还需锻炼。尤其是对整个工程的架构上面来看，还不是很熟练，在年前这几天争取要把UI全部做出来，先不考虑架构，只做UI和基本功能，等基本功能做完后可以考虑第一次重构将架构重新设计，这时候应该轻车熟路了。
