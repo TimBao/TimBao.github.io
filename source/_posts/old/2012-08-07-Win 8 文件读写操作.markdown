@@ -10,6 +10,7 @@ keywords: Windows 8
 ---
 
 啥也不说了，直接上代码。
+
 ```
 #include <windows.h>;
 #include <ppltasks.h>;
@@ -21,7 +22,7 @@ StorageFile^ openFile(String^ fileName)
 {
     StorageFile^ file = nullptr;
     StorageFolder^ rootFolder = Windows::Storage::ApplicationData::Current->;LocalFolder;
-    task<StorageFile^>;(rootFolder->;GetFileAsync(fileName)).then([&](task<StorageFile^>; getFileTask)
+    task<StorageFile^>;(rootFolder->;GetFileAsync(fileName)).then([&]\(task<StorageFile^>; getFileTask\)
     {
         try
         {
@@ -48,8 +49,8 @@ Array<byte>;^ getFileContent(String^ fileName)
             if (length >; 0)
             {
                 data = ref new Array<byte>;(length);
-                task<unsigned int>;(dataReader->;LoadAsync(readStream->;Size)).then([&](task<unsigned
-int>; loadTask) {
+                task<unsigned int>;(dataReader->;LoadAsync(readStream->;Size)).then([&]\(task<unsigned
+int>; loadTask\) {
                     loadTask.get();
                     dataReader->;ReadBytes(data);
                 }).wait();
@@ -73,14 +74,14 @@ bool setFileContent(String^ fileName, unsigned char* data, int size)
             DataWriter^ dataWriter = ref new DataWriter(readStream);
             Array<unsigned char>;^ arr = ref new Array<unsigned char>;(data, size);
             dataWriter->;WriteBytes(arr);
-            task<unsigned int>;(dataWriter->;StoreAsync()).then([&](task<unsigned int>; writeTask)
+            task<unsigned int>;(dataWriter->;StoreAsync()).then([&]\(task<unsigned int>; writeTask)
             {
                 try
                 {
                     totalWritten = writeTask.get();
                 } catch (Platform::Exception^ ex) {}
             }).wait();
-            task<bool>;(dataWriter->;FlushAsync()).then([&](task<bool>; flushTask)
+            task<bool>;(dataWriter->;FlushAsync()).then([&]\(task<bool>; flushTask)
             {
                 try
                 {
