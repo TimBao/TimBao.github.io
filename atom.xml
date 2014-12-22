@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://timbao.github.io/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-19T17:47:35+08:00</updated>
+  <updated>2014-12-22T10:12:44+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -18,8 +18,7 @@
     <link href="http://timbao.github.io/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/"/>
     <updated>2014-11-06T00:07:00+08:00</updated>
     <id>http://timbao.github.io/blog/2014/11/06/工欲善其事，必先利其器</id>
-    <content type="html"><![CDATA[<pre><code>  工欲善其事
-  ，必先利其器
+    <content type="html"><![CDATA[<pre><code>  工欲善其事，必先利其器
   背景：最近一直在写些
   python
   脚本，同事
@@ -296,52 +295,96 @@
     <link href="http://timbao.github.io/blog/2013/07/07/stdvector%20%E4%B8%A4%E7%A7%8D%E6%93%8D%E4%BD%9C%E7%9A%84%E6%AF%94%E8%BE%83/"/>
     <updated>2013-07-07T01:27:00+08:00</updated>
     <id>http://timbao.github.io/blog/2013/07/07/stdvector 两种操作的比较</id>
-    <content type="html"><![CDATA[<p>   swap
-   assign
-  这里只想说明这三种操作的用处和效率。swap和assign都可以用在将一个vector的内容全部复制给另外一个vector，区别是swap会改变源vector，而assign会清空目的vector后再将源vector的值全部插入到目的vector中。就效率而言，swap只是交换vector的头指针，时间复杂度是常数；而assigin时间复杂度则是线性。
-  #include <vector>;</p>
+    <content type="html"><![CDATA[<ul>
+<li>swap</li>
+<li>assign
 
-<h1>include &ldquo;DebugUtility.h&rdquo;</h1>
+<blockquote><p> 这里只想说明这二种操作的用处和效率。swap和assign都可以用在将一个vector的内容全部复制给另外一个vector，区别是swap会改变源vector，而assign会清空目的vector后再将源vector的值全部插入到目的vector中。就效率而言，swap只是交换vector的头指针，时间复杂度是常数；而assigin时间复杂度则是线性。</p></blockquote></li>
+</ul>
 
-<h1>include <iostream>;</h1>
 
-<h1>include <algorithm>;</h1>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='C++'><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'><span class="cp">#include &quot;DebugUtility.h&quot;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="n">Swap</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">;</span><span class="o">&amp;</span> <span class="n">source</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">;</span><span class="o">&amp;</span> <span class="n">dest</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">DebugUtility</span> <span class="n">temp</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">dest</span><span class="p">.</span><span class="n">swap</span><span class="p">(</span><span class="n">source</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="n">Assign</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">;</span><span class="o">&amp;</span> <span class="n">source</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">;</span><span class="o">&amp;</span> <span class="n">dest</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">DebugUtility</span> <span class="n">temp</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">dest</span><span class="p">.</span><span class="n">assign</span><span class="p">(</span><span class="n">source</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">source</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">;</span> <span class="n">source</span><span class="p">(</span><span class="mi">900000</span><span class="p">,</span> <span class="s">&quot;90&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">vector</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">;</span> <span class="n">destination</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;abc&quot;</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">Swap</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">destination</span><span class="p">);</span>
+</span><span class='line'>    <span class="c1">//source.clear();</span>
+</span><span class='line'>    <span class="c1">//for_each(destination.begin(), destination.end(), print);</span>
+</span><span class='line'>    <span class="c1">//Assign(source, destination);</span>
+</span><span class='line'>    <span class="c1">//source.clear();</span>
+</span><span class='line'>    <span class="c1">//for_each(destination.begin(), destination.end(), print);</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<h1>include <string>;</h1>
 
-<p>using namespace std;
-void print(int x)
-{
-    cout &lt;&lt; x &lt;&lt; endl;
-}
-void Swap(vector<string>;&amp; source, vector<string>;&amp; dest)
-{
-    DebugUtility temp;
-    dest.swap(source);
-}
-void Assign(vector<string>;&amp; source, vector<string>;&amp; dest)
-{
-    DebugUtility temp;
-    dest.assign(source.begin(), source.end());
-}
-int main(int argc, const char *argv[])
-{
-    vector<string>; source(900000, &ldquo;90&rdquo;);
-    vector<string>; destination(1, &ldquo;abc&rdquo;);
-    Swap(source, destination);
-    //source.clear();
-    //for_each(destination.begin(), destination.end(), print);
-    //Assign(source, destination);
-    //source.clear();
-    //for_each(destination.begin(), destination.end(), print);
-    return 0;
-}
-   结果：
+<p>结果：
   Total time elapsed : 1 us
-900000
-Total time elapsed : 12391 us
-900000
-   DebugUtility.h  大家可以从<a href="https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82">https://github.com/TimBao/Material.git/Utility%E5%8F%96%E5%BE%97%E3%80%82</a></p>
+  Total time elapsed : 12391 us</p>
+
+<p>  ps: DebugUtility.h  大家可以从<a href="https://github.com/timbao/material.git/utility">https://github.com/timbao/material.git/utility</a>取得。</p>
 ]]></content>
   </entry>
   
