@@ -84,25 +84,53 @@
   </header>
 
 
-<div class="entry-content"><p>  1、在Dialog类的头文件中增加定时器消息处理函数：
-  afx_msg void OnTimer(UINT nIDEvent);
-  2、在Dialog类的CPP文件的消息映射中增加WM_TIMER消息处理
-  ON_WM_TIMER()
-  3、启动定时器
-  UINT uiTimerID = SetTiemr(1/<em>nIDEvent</em>/, 1000/<em>时间间隔</em>/, NULL);
-  4、杀死定时器
-  KillTiemr(uiTimerID );
-  4、定时器处理函数
-  void CTestDlg::OnTimer(UINT nIDEvent)
-  {
-  switch (nIDEvent)
-  {
-  case 1:
-  //你的消息处理函数
-  break;
-  }
-  CDialog::OnTimer(nIDEvent);
-  }</p>
+<div class="entry-content"><p>1、在Dialog类的头文件中增加定时器消息处理函数：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>afx_msg void OnTimer(UINT nIDEvent);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2、在Dialog类的CPP文件的消息映射中增加WM_TIMER消息处理</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ON_WM_TIMER()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>3、启动定时器</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>UINT uiTimerID = SetTiemr(1/*nIDEvent*/, 1000/*时间间隔*/, NULL);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>4、杀死定时器</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>KillTiemr(uiTimerID );</span></code></pre></td></tr></table></div></figure>
+
+
+<p>4、定时器处理函数</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void CTestDlg::OnTimer(UINT nIDEvent)
+</span><span class='line'>{
+</span><span class='line'>    switch (nIDEvent)
+</span><span class='line'>    {
+</span><span class='line'>    case 1:
+</span><span class='line'>        //你的消息处理函数
+</span><span class='line'>        break;
+</span><span class='line'>    }
+</span><span class='line'>    CDialog::OnTimer(nIDEvent);
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 

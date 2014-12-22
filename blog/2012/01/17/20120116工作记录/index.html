@@ -84,21 +84,33 @@
   </header>
 
 
-<div class="entry-content"><p>  今天老大没来，我今天的考核又泡汤了，哈哈，也好有时间可以再深入学习下。把自己几百块的餐票都给了j，嘿嘿，团队就是要相互帮助。
-  今天继续对上周的疑问进行攻克，编写DEMO深入进去，对UI进行了解，也对Objective-C进行深入了解。
-  UIScrollView的几个属性和委托方法：
-  1、zoomscale：当前缩放倍数。初始值设置，只有在将contentView加为sub view后才起作用。
-  2、contentSize：内容的大小，如果想要scrollview进行缩放和平移，那么contensize的大小需要设置为scrollview内容的的最大值。
-  3、contentoffset：这个属性是指内容视图相对于scrollview的frame的顶点的偏移量，通过它可以计算当前视图的center point。这个属性非常关键。
-  center.x = contentOffset.x + frame.width/2; center.y = contentOffset.y + frame.height/2;
-  4、需要遵守 <UIScrollVewDeledate>;协议，并设置代理scrollView.delegate = self;
-  5、要想缩放必须设置 maximumZoomScale和minumZoomScale必须设置为不同的值，才能进行缩放。
-  缩放过程中进行拖动和放缩的是scrollview的subview，而不是scrollview本身。
-  6、必须实现委托方法viewForZoomingInScrollView，返回放缩的view，才可以进行放缩。如果想要控制放缩，可以实现委托方法scrollViewDidEndZooming:withView:atScale:方法。
-  7、如果是实现双击或者单击操作，可以实现UITapGestureCognizer作为scrollview的子类，并通过selector关联到相应的单击或双击方法中。
-  IOS的坐标系跟WINDOWS坐标系一致，左上角为origin point，向右横向为X轴正放向，向下竖向为Y轴正方向；view的Frame，bounds和center各不相同，其中frame是对父视图的坐标系而言，bounds是对自身的坐标系而言，所以bounds的原点永远都是(0,0)，两者的width和height相同，而center者可以通过两者算出来；center是CGPoint一点，是视图中心相对父视图原点的坐标，所以是bounds.width/2 + frame.X， bounds.Height/2
- + frame.Y。
-  这些内容熟练掌握后，对地图界面的理解有容易多了。</p>
+<div class="entry-content"><p>今天老大没来，我今天的考核又泡汤了，哈哈，也好有时间可以再深入学习下。把自己几百块的餐票都给了j，嘿嘿，团队就是要相互帮助。</p>
+
+<p>今天继续对上周的疑问进行攻克，编写DEMO深入进去，对UI进行了解，也对Objective-C进行深入了解。</p>
+
+<p>UIScrollView的几个属性和委托方法：</p>
+
+<p>  1、zoomscale：当前缩放倍数。初始值设置，只有在将contentView加为sub view后才起作用。</p>
+
+<p>  2、contentSize：内容的大小，如果想要scrollview进行缩放和平移，那么contensize的大小需要设置为scrollview内容的的最大值。</p>
+
+<p>  3、contentoffset：这个属性是指内容视图相对于scrollview的frame的顶点的偏移量，通过它可以计算当前视图的center point。这个属性非常关键。</p>
+
+<p>  center.x = contentOffset.x + frame.width/2; center.y = contentOffset.y + frame.height/2;</p>
+
+<p>  4、需要遵守 <UIScrollVewDeledate>;协议，并设置代理scrollView.delegate = self;</p>
+
+<p>  5、要想缩放必须设置 maximumZoomScale和minumZoomScale必须设置为不同的值，才能进行缩放。</p>
+
+<p>  缩放过程中进行拖动和放缩的是scrollview的subview，而不是scrollview本身。</p>
+
+<p>  6、必须实现委托方法viewForZoomingInScrollView，返回放缩的view，才可以进行放缩。如果想要控制放缩，可以实现委托方法scrollViewDidEndZooming:withView:atScale:方法。</p>
+
+<p>  7、如果是实现双击或者单击操作，可以实现UITapGestureCognizer作为scrollview的子类，并通过selector关联到相应的单击或双击方法中。</p>
+
+<p>  IOS的坐标系跟WINDOWS坐标系一致，左上角为origin point，向右横向为X轴正放向，向下竖向为Y轴正方向；view的Frame，bounds和center各不相同，其中frame是对父视图的坐标系而言，bounds是对自身的坐标系而言，所以bounds的原点永远都是(0,0)，两者的width和height相同，而center者可以通过两者算出来；center是CGPoint一点，是视图中心相对父视图原点的坐标，所以是bounds.width/2 + frame.X， bounds.Height/2 + frame.Y。</p>
+
+<p>  这些内容熟练掌握后，对地图界面的理解有容易多了。</p>
 </div>
 
 

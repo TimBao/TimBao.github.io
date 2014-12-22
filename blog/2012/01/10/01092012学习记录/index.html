@@ -84,16 +84,27 @@
   </header>
 
 
-<div class="entry-content"><p>  今天又学到一招STL的用法，嘿嘿。关于遍历容器的时候删除迭代器的方法：   例如有一个vector<int>; vec，及指向该vector的迭代器it；要删除其中值等于5的所有项，
- for(it = vec.begin(); it != vec.end(); it++)
-{
-    if(5 ==*it )
-    {
-        vec.erase(it++);//important
-    }
-}
-  比我以前的做法效率要高很多。利用的++运算符的特性，以前怎么就没想到呢？看来看高手的源码还是很有用滴！
-  今天把任务提交给老大了，后天进行讲解，希望能perfect！Fighting！</p>
+<div class="entry-content"><p>今天又学到一招STL的用法，嘿嘿。关于遍历容器的时候删除迭代器的方法：   例如有一个vector<int>; vec，及指向该vector的迭代器it；要删除其中值等于5的所有项，</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>for(it = vec.begin(); it != vec.end(); it++)
+</span><span class='line'>{
+</span><span class='line'>    if(5 ==*it )
+</span><span class='line'>    {
+</span><span class='line'>        vec.erase(it++);//important
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>比我以前的做法效率要高很多。利用的++运算符的特性，以前怎么就没想到呢？看来看高手的源码还是很有用滴！</p>
+
+<p>今天把任务提交给老大了，后天进行讲解，希望能perfect！Fighting！</p>
 </div>
 
 

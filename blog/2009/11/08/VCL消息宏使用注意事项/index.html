@@ -84,42 +84,23 @@
   </header>
 
 
-<div class="entry-content"><pre><code>ATL
-定义
-"MESSAGE_HANDLER"
-宏与
-VCL
-中的宏相冲突。
-VCL
-中的宏被重命名为
-"VCL_MESSAGE_HANDLER"
-，如果没有使用
-ATL
-，则
-"MESSAGE_HANDLER"
-被定义在
-BCB
-的旧版本中。
-</code></pre>
+<div class="entry-content"><p>ATL定义&#8221;MESSAGE_HANDLER&#8221;宏与VCL中的宏相冲突。</p>
 
-<p>   #if
-   ！
-   defined
-   （
-   USING_ATL
-   ）
-   &amp;&amp; !defined(USING_ATLVCL)
-&amp;&amp; !defined(INC_ATL_HEADERS)
-  #define MESSAGE_HANDLER VCL_MESSAGE_HANDLER
-  #endif
-   所以在写消息处理时，要写
-   &ldquo;VCL_MESSAGE_HANDLER&rdquo;
-   而不要写
-   &ldquo;MESSAGE_HANDLER&rdquo;
-   ，
-   否则如果使用到了
-   ATL
-   的话就会有问题。</p>
+<p>VCL中的宏被重命名为&#8221;VCL_MESSAGE_HANDLER&#8221;，如果没有使用ATL，则&#8221;MESSAGE_HANDLER&#8221;被定义在BCB的旧版本中。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#if !defined(USING_ATL）
+</span><span class='line'>        && !defined(USING_ATLVCL)
+</span><span class='line'>        && !defined(INC_ATL_HEADERS)
+</span><span class='line'>    #define MESSAGE_HANDLER VCL_MESSAGE_HANDLER
+</span><span class='line'>#endif</span></code></pre></td></tr></table></div></figure>
+
+
+<p>所以在写消息处理时，要写&#8221;VCL_MESSAGE_HANDLER&#8221;而不要写&#8221;MESSAGE_HANDLER&#8221;，否则如果使用到了ATL的话就会有问题。</p>
 </div>
 
 

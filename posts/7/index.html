@@ -290,10 +290,11 @@
   </header>
 
 
-  <div class="entry-content"><p>  除了checked_delete外，今天还学习了两点内容：
-  1、char<em> strdup(char</em> s); 函数，使用malloc方法，拷贝一个新的s，返回，需要使用free释放；还有类似的strndup等。
-  2、bundle：Iphone开发中bundle是一个目录，其中包含了程序会使用到的资源，这些资源包括了图像，声音，编译好的代码，nib文件（用户也会把bundle称为plug-in），cocoa框架提供了NSBundle类来对
-   其进行操作。</p>
+  <div class="entry-content"><p>除了checked_delete外，今天还学习了两点内容：</p>
+
+<p>1、char<em> strdup(char</em> s); 函数，使用malloc方法，拷贝一个新的s，返回，需要使用free释放；还有类似的strndup等。</p>
+
+<p>2、bundle：Iphone开发中bundle是一个目录，其中包含了程序会使用到的资源，这些资源包括了图像，声音，编译好的代码，nib文件（用户也会把bundle称为plug-in），cocoa框架提供了NSBundle类来对其进行操作。</p>
 </div>
   
   
@@ -504,14 +505,21 @@
   </header>
 
 
-  <div class="entry-content"><p>  plist文件的作用还真是不少，今天就接触到两点：
-  1、设置App启动界面，在plist中add row，name=Launch Image，Value=XXX.png。
-  2、设置status bar样式，name=status bar style，value=opaque black sytle等三种。
-  等同于代码[application setStatusBarStyle:UIStatusBarStyleBlackOpaque];
-  UINavigationController：使用堆栈方式来管理UIViewController。适用与层次化工作流。
- [self.navigationController pushViewChontroller:nextController animated:YES];
-[self.navigationController popViewControllerAnimated:YES];
-   UITabBarController：适用与各部分相对比较对立的情况。</p>
+  <div class="entry-content"><p>plist文件的作用还真是不少，今天就接触到两点：</p>
+
+<p>1、设置App启动界面，在plist中add row，name=Launch Image，Value=XXX.png。</p>
+
+<p>2、设置status bar样式，name=status bar style，value=opaque black sytle等三种。</p>
+
+<p>  等同于代码[application setStatusBarStyle:UIStatusBarStyleBlackOpaque];</p>
+
+<p>  UINavigationController：使用堆栈方式来管理UIViewController。适用与层次化工作流。</p>
+
+<p>  [self.navigationController pushViewChontroller:nextController animated:YES];</p>
+
+<p>  [self.navigationController popViewControllerAnimated:YES];</p>
+
+<p>  UITabBarController：适用与各部分相对比较对立的情况。</p>
 </div>
   
   
@@ -540,32 +548,58 @@
   </header>
 
 
-  <div class="entry-content"><p>  今天无意之间看到了通用类的三个函数，是用STL实现字符串去掉首尾空格，方法用的颇为简洁，记录下来分享和学习下。
-  1#include <string>;
- 2#include <algorithm>; <br/>
- 3 <br/>
- 4using namespace std;
- 5
- 6
- 7string&amp;  lTrim(string   &amp;ss) <br/>
-8{ <br/>
-9    string::iterator   p=find_if(ss.begin(),ss.end(),not1(ptr_fun(isspace))); <br/>
-10    ss.erase(ss.begin(),p); <br/>
-11    return  ss; <br/>
-12} <br/>
-13
-14string&amp;  rTrim(string   &amp;ss) <br/>
-15{ <br/>
-16    string::reverse_iterator  p=find_if(ss.rbegin(),ss.rend(),not1(ptr_fun(isspace))); <br/>
-17    ss.erase(p.base(),ss.end()); <br/>
-18    return   ss; <br/>
-19} <br/>
-20
-21string&amp;   trim(string   &amp;st) <br/>
-22{ <br/>
-23    lTrim(rTrim(st)); <br/>
-24    return   st; <br/>
-25}</p>
+  <div class="entry-content"><p>今天无意之间看到了通用类的三个函数，是用STL实现字符串去掉首尾空格，方法用的颇为简洁，记录下来分享和学习下。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="cp">#include &lt;string&gt;;</span>
+</span><span class='line'><span class="cp">#include &lt;algorithm&gt;;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">string</span><span class="o">&amp;</span>  <span class="n">lTrim</span><span class="p">(</span><span class="n">string</span>   <span class="o">&amp;</span><span class="n">ss</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">string</span><span class="o">::</span><span class="n">iterator</span>   <span class="n">p</span><span class="o">=</span><span class="n">find_if</span><span class="p">(</span><span class="n">ss</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">ss</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="n">not1</span><span class="p">(</span><span class="n">ptr_fun</span><span class="p">(</span><span class="n">isspace</span><span class="p">)));</span>
+</span><span class='line'>    <span class="n">ss</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">ss</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">p</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">return</span>  <span class="n">ss</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">string</span><span class="o">&amp;</span>  <span class="n">rTrim</span><span class="p">(</span><span class="n">string</span>   <span class="o">&amp;</span><span class="n">ss</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">string</span><span class="o">::</span><span class="n">reverse_iterator</span>  <span class="n">p</span><span class="o">=</span><span class="n">find_if</span><span class="p">(</span><span class="n">ss</span><span class="p">.</span><span class="n">rbegin</span><span class="p">(),</span><span class="n">ss</span><span class="p">.</span><span class="n">rend</span><span class="p">(),</span><span class="n">not1</span><span class="p">(</span><span class="n">ptr_fun</span><span class="p">(</span><span class="n">isspace</span><span class="p">)));</span>
+</span><span class='line'>    <span class="n">ss</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">base</span><span class="p">(),</span><span class="n">ss</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+</span><span class='line'>    <span class="k">return</span>   <span class="n">ss</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">string</span><span class="o">&amp;</span>   <span class="n">trim</span><span class="p">(</span><span class="n">string</span>   <span class="o">&amp;</span><span class="n">st</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="n">lTrim</span><span class="p">(</span><span class="n">rTrim</span><span class="p">(</span><span class="n">st</span><span class="p">));</span>
+</span><span class='line'>    <span class="k">return</span>   <span class="n">st</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
   
   
@@ -594,13 +628,17 @@
   </header>
 
 
-  <div class="entry-content"><p>  这两天老大给分配了新的任务，学习最新的NBI-MapKit，编写地图DEMO，激动，终于要开始编程了。SDK很简单，一个MapKit.framwork，包含两个文件MapKit.docset和MapKit.framework。包括6个headers和一个静态库，真的很简单。
-  再细看docset，发现模块也不是特别多，但是接口多的不行，在原有的CCI基础上又包装一层，以后值做UI了，
-   方便了开发但是学到的东西就少了。以后还得学习底层开发。自己捣鼓了一下午，终于学会了如何导入framework和.a库，如何设置编译选项，丫的编译还是有问题。已经完全按照说明做了，郁闷。
-  今天把错误跟QA说了下，原来丫的给我的版本不对，
-   。没办法，根据她给我的WEB SITE，自己注册下载了最新的SDK，哈哈把Sample也一起下载了，爽。果断重建工程，在buildphase中加入framework和.a及相关的几个framework和库，加上编译条件-lstdc++，编译，successed！耶。
-  下面就开始UI布局了，按照原来的UI样子，学着使用Interface Builder进行UI设计，娘的，跟使用MFC做界面一样麻烦，弄了半天才弄好了一个Navigation和ToolBar，最后弄好了Tray。可以鱼目混珠啦。哈哈，做了个假的Map。
-  这两天学到了如何建立Iphone工程，如何导入第三方库和framework，如何设置编译选项，如何使用UIView等控件进行界面设计。东西很杂，但是都是基础，还需锻炼。尤其是对整个工程的架构上面来看，还不是很熟练，在年前这几天争取要把UI全部做出来，先不考虑架构，只做UI和基本功能，等基本功能做完后可以考虑第一次重构将架构重新设计，这时候应该轻车熟路了。</p>
+  <div class="entry-content"><p>这两天老大给分配了新的任务，学习最新的NBI-MapKit，编写地图DEMO，激动，终于要开始编程了。SDK很简单，一个MapKit.framwork，包含两个文件MapKit.docset和MapKit.framework。包括6个headers和一个静态库，真的很简单。</p>
+
+<p>再细看docset，发现模块也不是特别多，但是接口多的不行，在原有的CCI基础上又包装一层，以后值做UI了，</p>
+
+<p>方便了开发但是学到的东西就少了。以后还得学习底层开发。自己捣鼓了一下午，终于学会了如何导入framework和.a库，如何设置编译选项，丫的编译还是有问题。已经完全按照说明做了，郁闷。</p>
+
+<p>今天把错误跟QA说了下，原来丫的给我的版本不对。没办法，根据她给我的WEB SITE，自己注册下载了最新的SDK，哈哈把Sample也一起下载了，爽。果断重建工程，在buildphase中加入framework和.a及相关的几个framework和库，加上编译条件-lstdc++，编译，successed！耶。</p>
+
+<p>下面就开始UI布局了，按照原来的UI样子，学着使用Interface Builder进行UI设计，娘的，跟使用MFC做界面一样麻烦，弄了半天才弄好了一个Navigation和ToolBar，最后弄好了Tray。可以鱼目混珠啦。哈哈，做了个假的Map。</p>
+
+<p>这两天学到了如何建立Iphone工程，如何导入第三方库和framework，如何设置编译选项，如何使用UIView等控件进行界面设计。东西很杂，但是都是基础，还需锻炼。尤其是对整个工程的架构上面来看，还不是很熟练，在年前这几天争取要把UI全部做出来，先不考虑架构，只做UI和基本功能，等基本功能做完后可以考虑第一次重构将架构重新设计，这时候应该轻车熟路了。</p>
 </div>
   
   
@@ -629,21 +667,33 @@
   </header>
 
 
-  <div class="entry-content"><p>  今天老大没来，我今天的考核又泡汤了，哈哈，也好有时间可以再深入学习下。把自己几百块的餐票都给了j，嘿嘿，团队就是要相互帮助。
-  今天继续对上周的疑问进行攻克，编写DEMO深入进去，对UI进行了解，也对Objective-C进行深入了解。
-  UIScrollView的几个属性和委托方法：
-  1、zoomscale：当前缩放倍数。初始值设置，只有在将contentView加为sub view后才起作用。
-  2、contentSize：内容的大小，如果想要scrollview进行缩放和平移，那么contensize的大小需要设置为scrollview内容的的最大值。
-  3、contentoffset：这个属性是指内容视图相对于scrollview的frame的顶点的偏移量，通过它可以计算当前视图的center point。这个属性非常关键。
-  center.x = contentOffset.x + frame.width/2; center.y = contentOffset.y + frame.height/2;
-  4、需要遵守 <UIScrollVewDeledate>;协议，并设置代理scrollView.delegate = self;
-  5、要想缩放必须设置 maximumZoomScale和minumZoomScale必须设置为不同的值，才能进行缩放。
-  缩放过程中进行拖动和放缩的是scrollview的subview，而不是scrollview本身。
-  6、必须实现委托方法viewForZoomingInScrollView，返回放缩的view，才可以进行放缩。如果想要控制放缩，可以实现委托方法scrollViewDidEndZooming:withView:atScale:方法。
-  7、如果是实现双击或者单击操作，可以实现UITapGestureCognizer作为scrollview的子类，并通过selector关联到相应的单击或双击方法中。
-  IOS的坐标系跟WINDOWS坐标系一致，左上角为origin point，向右横向为X轴正放向，向下竖向为Y轴正方向；view的Frame，bounds和center各不相同，其中frame是对父视图的坐标系而言，bounds是对自身的坐标系而言，所以bounds的原点永远都是(0,0)，两者的width和height相同，而center者可以通过两者算出来；center是CGPoint一点，是视图中心相对父视图原点的坐标，所以是bounds.width/2 + frame.X， bounds.Height/2
- + frame.Y。
-  这些内容熟练掌握后，对地图界面的理解有容易多了。</p>
+  <div class="entry-content"><p>今天老大没来，我今天的考核又泡汤了，哈哈，也好有时间可以再深入学习下。把自己几百块的餐票都给了j，嘿嘿，团队就是要相互帮助。</p>
+
+<p>今天继续对上周的疑问进行攻克，编写DEMO深入进去，对UI进行了解，也对Objective-C进行深入了解。</p>
+
+<p>UIScrollView的几个属性和委托方法：</p>
+
+<p>  1、zoomscale：当前缩放倍数。初始值设置，只有在将contentView加为sub view后才起作用。</p>
+
+<p>  2、contentSize：内容的大小，如果想要scrollview进行缩放和平移，那么contensize的大小需要设置为scrollview内容的的最大值。</p>
+
+<p>  3、contentoffset：这个属性是指内容视图相对于scrollview的frame的顶点的偏移量，通过它可以计算当前视图的center point。这个属性非常关键。</p>
+
+<p>  center.x = contentOffset.x + frame.width/2; center.y = contentOffset.y + frame.height/2;</p>
+
+<p>  4、需要遵守 <UIScrollVewDeledate>;协议，并设置代理scrollView.delegate = self;</p>
+
+<p>  5、要想缩放必须设置 maximumZoomScale和minumZoomScale必须设置为不同的值，才能进行缩放。</p>
+
+<p>  缩放过程中进行拖动和放缩的是scrollview的subview，而不是scrollview本身。</p>
+
+<p>  6、必须实现委托方法viewForZoomingInScrollView，返回放缩的view，才可以进行放缩。如果想要控制放缩，可以实现委托方法scrollViewDidEndZooming:withView:atScale:方法。</p>
+
+<p>  7、如果是实现双击或者单击操作，可以实现UITapGestureCognizer作为scrollview的子类，并通过selector关联到相应的单击或双击方法中。</p>
+
+<p>  IOS的坐标系跟WINDOWS坐标系一致，左上角为origin point，向右横向为X轴正放向，向下竖向为Y轴正方向；view的Frame，bounds和center各不相同，其中frame是对父视图的坐标系而言，bounds是对自身的坐标系而言，所以bounds的原点永远都是(0,0)，两者的width和height相同，而center者可以通过两者算出来；center是CGPoint一点，是视图中心相对父视图原点的坐标，所以是bounds.width/2 + frame.X， bounds.Height/2 + frame.Y。</p>
+
+<p>  这些内容熟练掌握后，对地图界面的理解有容易多了。</p>
 </div>
   
   
