@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://timbao.github.io/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-22T13:50:27+08:00</updated>
+  <updated>2014-12-22T14:06:11+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -606,10 +606,13 @@ IDE
     <link href="http://timbao.github.io/blog/2013/01/15/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B015/"/>
     <updated>2013-01-15T18:00:00+08:00</updated>
     <id>http://timbao.github.io/blog/2013/01/15/More Effective C++读书笔记15</id>
-    <content type="html"><![CDATA[<p>  Item 16：牢记 80－20 准则（80－20 rule）
-   80－20 准则说的是大约 20％的代码使用了 80％的程序资源；大约 20%的代码耗用了大约 80％的运行时间；大约 20％的代码使用了 80％的内存；大约 20％的代码执行 80％的磁盘访问；80％的维护投入于大约 20％的代码上；通过无数台机器、操作系统和应用程序上的实验这条准则已经被再三地验证过。80－20 准则不只是一条好记的惯用语，它更是一条有关系统性能的指导方针，它有着广泛的适用性和坚实的实验基础。
-     当想到 80－20 准则时，不要在具体数字上纠缠不清，一些人喜欢更严格的 90－10 准则，而且也有一些试验证据支持它。不管准确地数字是多少，基本的观点是一样的：软件整体的性能取决于代码组成中的一小部分。
-       本章主要讲解如何找到影响性能瓶颈的20%的代码的位置。提高效率并不难，难得是如何找到性能的正确瓶颈。方法不外乎有两种，一是猜测或屏经验判断，二是通过profile工具准确测算，这两种方法，当然是第二种方法更科学，更可信。利用好profile工具，提供最有效的数据进行测试，找到程序的瓶颈是一个程序员需要掌握的高级技巧之一。</p>
+    <content type="html"><![CDATA[<h2>Item 16：牢记 80－20 准则（80－20 rule）</h2>
+
+<p>   80－20 准则说的是大约 20％的代码使用了 80％的程序资源；大约 20%的代码耗用了大约 80％的运行时间；大约 20％的代码使用了 80％的内存；大约 20％的代码执行 80％的磁盘访问；80％的维护投入于大约 20％的代码上；通过无数台机器、操作系统和应用程序上的实验这条准则已经被再三地验证过。80－20 准则不只是一条好记的惯用语，它更是一条有关系统性能的指导方针，它有着广泛的适用性和坚实的实验基础。</p>
+
+<p>   当想到 80－20 准则时，不要在具体数字上纠缠不清，一些人喜欢更严格的 90－10 准则，而且也有一些试验证据支持它。不管准确地数字是多少，基本的观点是一样的：软件整体的性能取决于代码组成中的一小部分。</p>
+
+<p>   本章主要讲解如何找到影响性能瓶颈的20%的代码的位置。提高效率并不难，难得是如何找到性能的正确瓶颈。方法不外乎有两种，一是猜测或屏经验判断，二是通过profile工具准确测算，这两种方法，当然是第二种方法更科学，更可信。利用好profile工具，提供最有效的数据进行测试，找到程序的瓶颈是一个程序员需要掌握的高级技巧之一。</p>
 ]]></content>
   </entry>
   
@@ -618,36 +621,68 @@ IDE
     <link href="http://timbao.github.io/blog/2013/01/12/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B014/"/>
     <updated>2013-01-12T19:39:00+08:00</updated>
     <id>http://timbao.github.io/blog/2013/01/12/More Effective C++读书笔记14</id>
-    <content type="html"><![CDATA[<p>   Item 14：审慎使用异常规格(exception specifications)
-  何为异常规格，通俗的理解就是对异常的规范的说明。它明确地描述了一个函数可以抛出什么样的异常。但是它不只是一个有趣的注释。编译器在编译时有时能够检测到异常规格的不一致。而且如果一个函数抛出一个不在异常规格范围里的异常，系统在运行时能够检测出这个错误，然后一个特殊函数unexpected将被自动地调用。异常规格既可以做为一个指导性文档同时也是异常使用的强制约束机制。
-  不过在通常情况下，美貌只是一层皮，外表的美丽并不代表其内在的素质。函数unexpected缺省的行为是调用函数terminate，而terminate缺省的行为是调用函数abort，所以一个违反异常规格的程序其缺省的行为就是halt（停止运行）。在激活的栈中的局部变量没有被释放，因为abort在关闭程序时不进行这样的清除操作。对异常规格的触犯变成了一场并不应该发生的灾难。
-  一个函数调用了另一个函数，并且后者可能抛出一个违反前者异常规格的异常，（A函数调用B函数，但因为B函数可能抛出一个不在A函数异常规格之内的异常，所以这个函数调用就违反了A函数的异常规格  译者注）编译器不对此种情况进行检测，并且语言标准也禁止编译器拒绝这种调用方式（尽管可以显示警告信息）。
-  虽然防止抛出unexpected异常是不现实的，但是C++允许你用其它不同的异常类型替换unexpected异常，你能够利用这个特性。例如你希望所有的unexpected异常都被替换为UnexpectedException对象。你能这样编写代码：
-  class UnexpectedException {};          // 所有的unexpected异常对象被
-                                       //替换为这种类型对象
-void convertUnexpected()               // 如果一个unexpected异常被
-{                                      // 抛出，这个函数被调用
-    throw UnexpectedException();<br/>
-}
-set_unexpected(convertUnexpected);
-  通过用convertUnexpected函数替换缺省的unexpected函数，来使上述代码开始运行。
-  下面看另外一个书中例子：
-  class Session {
-public:
-    ~Session();
-  &hellip;
-private:
-    static void logDestruction(Session *objAddr) throw();
-};
-Session::~Session()
-{
-   try
-   {
-       logDestruction(this);
-   }
-   catch (&hellip;) {  }
-}
-  session的析构函数调用logDestruction记录有关session对象被释放的信息，它明确地要捕获从logDestruction抛出的所有异常。但是logDestruction的异常规格表示其不抛出任何异常。现在假设被logDestruction调用的函数抛出了一个异常，而logDestruction没有捕获。我们不会期望发生这样的事情，但正如我们所见，很容易就会写出违反异常规格的代码。当这个异常通过logDestruction传递出来，unexpected将被调用，缺省情况下将导致程序终止执行。这是一个正确的行为，但这是session析构函数的作者所希望的行为么？作者想处理所有可能的异常，所以好像不应该不给session析构函数里的catch块执行的机会就终止程序。如果logDestruction没有异常规格，这种事情就不会发生（一种防止的方法是如上所描述的那样替换unexpected）。</p>
+    <content type="html"><![CDATA[<h2>Item 14：审慎使用异常规格(exception specifications)</h2>
+
+<p>  何为异常规格，通俗的理解就是对异常的规范的说明。它明确地描述了一个函数可以抛出什么样的异常。但是它不只是一个有趣的注释。编译器在编译时有时能够检测到异常规格的不一致。而且如果一个函数抛出一个不在异常规格范围里的异常，系统在运行时能够检测出这个错误，然后一个特殊函数unexpected将被自动地调用。异常规格既可以做为一个指导性文档同时也是异常使用的强制约束机制。</p>
+
+<p>  不过在通常情况下，美貌只是一层皮，外表的美丽并不代表其内在的素质。函数unexpected缺省的行为是调用函数terminate，而terminate缺省的行为是调用函数abort，所以一个违反异常规格的程序其缺省的行为就是halt（停止运行）。在激活的栈中的局部变量没有被释放，因为abort在关闭程序时不进行这样的清除操作。对异常规格的触犯变成了一场并不应该发生的灾难。</p>
+
+<p>  一个函数调用了另一个函数，并且后者可能抛出一个违反前者异常规格的异常，（A函数调用B函数，但因为B函数可能抛出一个不在A函数异常规格之内的异常，所以这个函数调用就违反了A函数的异常规格  译者注）编译器不对此种情况进行检测，并且语言标准也禁止编译器拒绝这种调用方式（尽管可以显示警告信息）。</p>
+
+<p>  虽然防止抛出unexpected异常是不现实的，但是C++允许你用其它不同的异常类型替换unexpected异常，你能够利用这个特性。例如你希望所有的unexpected异常都被替换为UnexpectedException对象。你能这样编写代码：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class UnexpectedException {};          // 所有的unexpected异常对象被
+</span><span class='line'>                                       //替换为这种类型对象
+</span><span class='line'>void convertUnexpected()               // 如果一个unexpected异常被
+</span><span class='line'>{                                      // 抛出，这个函数被调用
+</span><span class='line'>    throw UnexpectedException();
+</span><span class='line'>}
+</span><span class='line'>set_unexpected(convertUnexpected);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  通过用convertUnexpected函数替换缺省的unexpected函数，来使上述代码开始运行。
+  下面看另外一个书中例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Session {
+</span><span class='line'>public:
+</span><span class='line'>    ~Session();
+</span><span class='line'>  ...
+</span><span class='line'>private:
+</span><span class='line'>    static void logDestruction(Session *objAddr) throw();
+</span><span class='line'>};
+</span><span class='line'>Session::~Session()
+</span><span class='line'>{
+</span><span class='line'>   try
+</span><span class='line'>   {
+</span><span class='line'>       logDestruction(this);
+</span><span class='line'>   }
+</span><span class='line'>   catch (...) {  }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  session的析构函数调用logDestruction记录有关session对象被释放的信息，它明确地要捕获从logDestruction抛出的所有异常。但是logDestruction的异常规格表示其不抛出任何异常。现在假设被logDestruction调用的函数抛出了一个异常，而logDestruction没有捕获。我们不会期望发生这样的事情，但正如我们所见，很容易就会写出违反异常规格的代码。当这个异常通过logDestruction传递出来，unexpected将被调用，缺省情况下将导致程序终止执行。这是一个正确的行为，但这是session析构函数的作者所希望的行为么？作者想处理所有可能的异常，所以好像不应该不给session析构函数里的catch块执行的机会就终止程序。如果logDestruction没有异常规格，这种事情就不会发生（一种防止的方法是如上所描述的那样替换unexpected）。</p>
 ]]></content>
   </entry>
   
@@ -656,11 +691,15 @@ Session::~Session()
     <link href="http://timbao.github.io/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B013/"/>
     <updated>2013-01-11T19:47:00+08:00</updated>
     <id>http://timbao.github.io/blog/2013/01/11/More Effective C++读书笔记13</id>
-    <content type="html"><![CDATA[<p>  Item 13：通过引用（reference）捕获异常
-   为什么要通过引用捕获异常，引用捕获异常相对值和指针捕获有何优点？
-    通过Item12学习可以看到首先，值捕获异常会调用拷贝构造函数2次，而引用捕获只有一次，效率方面，引用要高于值。可以按效率高低进行下排序，由高到低：指针->;引用->;值。
-     其次值传递在继承体系中会导致slice问题，即子类会被切割为基类。通过这两点就可以完全排除值捕获异常的可能性了。那么指针和引用相比，为什么要采用引用呢？
-      如果要是通过指针捕获异常的话，那么传递过来的指针是堆栈分配的？还是静态指针？还是栈对象的取地址操作获取的指针？根据不同的情况，会有不同的结果。如果是堆栈分配的指针，那么需要释放内存，如果通过局部对象的地址获取的指针，有可能在捕获到后，已经超过作用域，而指向一个已经销毁的对象，所以对catch来说，通过指针捕获异常，对异常的处理要复杂得多，也难以保持统一。而通过引用捕获异常却没有这些问题，所以当然最终选择最优的方案，通过引用捕获异常。</p>
+    <content type="html"><![CDATA[<h2>Item 13：通过引用（reference）捕获异常</h2>
+
+<p>   为什么要通过引用捕获异常，引用捕获异常相对值和指针捕获有何优点？</p>
+
+<p>   通过Item12学习可以看到首先，值捕获异常会调用拷贝构造函数2次，而引用捕获只有一次，效率方面，引用要高于值。可以按效率高低进行下排序，由高到低：指针->;引用->;值。</p>
+
+<p>   其次值传递在继承体系中会导致slice问题，即子类会被切割为基类。通过这两点就可以完全排除值捕获异常的可能性了。那么指针和引用相比，为什么要采用引用呢？</p>
+
+<p>   如果要是通过指针捕获异常的话，那么传递过来的指针是堆栈分配的？还是静态指针？还是栈对象的取地址操作获取的指针？根据不同的情况，会有不同的结果。如果是堆栈分配的指针，那么需要释放内存，如果通过局部对象的地址获取的指针，有可能在捕获到后，已经超过作用域，而指向一个已经销毁的对象，所以对catch来说，通过指针捕获异常，对异常的处理要复杂得多，也难以保持统一。而通过引用捕获异常却没有这些问题，所以当然最终选择最优的方案，通过引用捕获异常。</p>
 ]]></content>
   </entry>
   
