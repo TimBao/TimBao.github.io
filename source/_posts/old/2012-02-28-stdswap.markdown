@@ -9,17 +9,24 @@ description: "std::swap"
 keywords: C++技术
 ---
 
-std::swap             function template     <algorithm>;
+```
 template <class T>; void swap ( T& a, T& b );
+```
+
 Exchange values of two objects(交换两个对象的值)
+
 Assigns the content of a to b and the content of b to a.
 （将a的内容给b，将b的内容给a。）
+
 The behavior of this function template is equivalent to:
 （该函数模板的实现如下：）
+
+```
 template <class T>; void swap ( T& a, T& b )
 {
     T c(a); a=b; b=c;
 }
+```
 
 > Notice how this function involves a copy construction and two assignment operations, which may not be the most efficient way of swapping the contents of classes that store large quantities of data, since each of these operations generally operate in linear time on their size.
 

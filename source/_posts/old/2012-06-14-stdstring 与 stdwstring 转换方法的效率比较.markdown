@@ -9,10 +9,9 @@ description: "std::string 与 std::wstring 转换方法的效率比较"
 keywords: Windows 8
 ---
 
-// Calls the provided work function and returns the number of milliseconds
-
-// that it takes to call that function.
 ```
+// Calls the provided work function and returns the number of milliseconds
+// that it takes to call that function.
 template <class Function>;
 __int64 time_call(Function&& f)
 {

@@ -15,7 +15,7 @@ keywords: C++技术
 
 下面举例说明：
 
-``` c++
+```
 //delete_object.h
 class CObject;
 void delete_object(CObject* pObj); //p为imcomplete type
@@ -44,7 +44,7 @@ int main(int argc, char[] argv)
 这里的pObj对象在delete的时候就是不确定对象，编译器不知道它的类型，无法调用析构函数，最终导致内存泄漏。解决的最简单的方法，就是在delete_object.cpp文件中增加#include “CObject.h”语句即可。
 
 我们这里要重点介绍的是boost库中的使用的方法，方法使用的非常巧妙。整理如下：
-``` c++
+```
 //utiles.h
 template<typename T>;
 inline void checked_delete(T * x)
