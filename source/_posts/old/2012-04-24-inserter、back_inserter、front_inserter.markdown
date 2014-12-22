@@ -31,8 +31,9 @@ int main () {
   cout << endl;
   return 0;
 }
+
+```
 Output:
 1 2 3 10 20 30 40 50 4 5
-```
 
 必须要提到的一点是，这三种迭代器是对容器有要求的，分别要求容器提供insert，push_back，push_front方法才行。

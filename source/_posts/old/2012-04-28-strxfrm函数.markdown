@@ -44,11 +44,11 @@ int main(int argc, char* argv[])
     std::cout << "des:" << des <<std::endl;
     return 0;
 }
+```
+
 output:
 len:14
 des:1234567890 abc
-
-```
 
 这里举这个例子要说明的是num长度大于源字符串长度的原因，涉及到strxfrm函数的具体实现了。
 
