@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "浅析移动开发"
-date: 2014-03-01 21:14:00 
+date: 2014-03-01 21:14:00
 comments: true
 categories: [移动开发]
 tags: [移动开发]
@@ -10,71 +10,36 @@ keywords: 移动开发
 ---
 
    这里只介绍笔者开发过的几个平台（iPhone, Android, Windows phone, Blackberry）。将从以下几个角度进行介绍：
- 1. 开发语言
+1. 开发语言
 2. IDE
 3. 模拟器
 4. 编译及调试
 5. 开发成本
    开发语言
-  ● `iPhone`：Object-C, C/C++
-● `Android`：XML, java, C/C++(NDK)
-● `WP`：XAML, C#, C++/CX
-● `BlackBerry`：KML, C/C++
-    可以分成两类：一是
-     iPhone
-    ；二是其他三种。前者是完全native开发，并且只能在Mac
- OS X下开发（尽管现在有
-     Xamarin
-    但其跟官方
-     API
-    同步问题是个大问题）；而其他三类，可以看出来，前端都使用
-     类XML
-    的语言开发
-     UI
-    ，后端采用各自的开发语言，当然也可以使用native开发，但从目前来看对native的支持都不如原生语言支持的好。
+   ● `iPhone`：Object-C, C/C++
+   ● `Android`：XML, java, C/C++(NDK)
+   ● `WP`：XAML, C#, C++/CX
+   ● `BlackBerry`：KML, C/C++
+    可以分成两类：
+    一是iPhone；
+    二是其他三种。前者是完全native开发，并且只能在Mac OS X下开发（尽管现在有Xamarin但其跟官方API同步问题是个大问题）；而其他三类，可以看出来，前端都使用类XML的语言开发UI，后端采用各自的开发语言，当然也可以使用native开发，但从目前来看对native的支持都不如原生语言支持的好。
     IDE
    ● `iPhone`： 首推`XCode`。
-● `Android`：`Eclipse`目前还是主流；谷歌目前推出的`Adroid Studio`市场还未打开，以后不好说。
-● `Widnows Phone`：`Visual Studio`是不二人选啊！
-● `BlackBerry`：自带IED，是将`Eclipse`及所需插件打包到一起的一个IDE，可以归到`Eclipse`一类。
-     从IDE的易用性和功能性来看，
-      Visual
- Studio
-     是当之无愧的第一名，
-      xcode
-     应该说是紧随其后，两个IDE都非常强大，但是
-      xcode
-     会有随机的crash，稳定性上还是不如
-      Visual
- Studio
-     ，而且VS可以调试C#和C/C++，而
-      eclipse
-     调试
-      native
-     上非常麻烦，不是三言两语可以说明白的，有感兴趣的童鞋可以去网上找找。至于
-      BlackBerry
-     的
-      IDE
-     集成的插件还可以，调试native代码也还行，功能也比较强大，但是在调试的速度上实在是无法忍受。
-     模拟器
+   ● `Android`：`Eclipse`目前还是主流；谷歌目前推出的`Adroid Studio`市场还未打开，以后不好说。
+   ● `Widnows Phone`：`Visual Studio`是不二人选啊！
+   ● `BlackBerry`：自带IED，是将`Eclipse`及所需插件打包到一起的一个IDE，可以归到`Eclipse`一类。
+     从IDE的易用性和功能性来看，Visual Studio是当之无愧的第一名，xcode应该说是紧随其后，两个IDE都非常强大，但是xcode会有随机的crash，稳定性上还是不如Visual Studio，而且VS可以调试C#和C/C++，而eclipse调试native上非常麻烦，不是三言两语可以说明白的，有感兴趣的童鞋可以去网上找找。至于BlackBerry的IDE集成的插件还可以，调试native代码也还行，功能也比较强大，但是在调试的速度上实在是无法忍受。
+   模拟器
     xcode的模拟器和WP的模拟器安装都是随SDK安装的，使用起来非常方便。而android的模拟器和Blackberry的模拟器笔者没用过，但是BlackBerry的模拟器安装却非常麻烦，又得折腾VM使用起来还经常断开，所以说在后两者上有条件还是真机调试的比较好。
-      编译及调试
-     ● `XCode`：可以同时调试`Objective-C`和`C/C++`，编译速度还算比较快。
-● `Visual Studio`：如此强大的IDE，同时调试`C#`和`C/C++`。
-● `Android`：如果是java代码，速度和调试都挺方便的，但是如果想编译和调试native代码，那就需要有足够的耐心了，尤其是调试，配置之麻烦当属第一。
-● `BlackBerry`：编译速度十分慢，调试启动也很慢，但是启动后调试还可以接受的，比起android来，省去了很多配置的麻烦。
-       开发成本
-       ●
-        iPhone
-       ：投资比较大，光是注册开发者账号就需要99刀，而且还需要一台苹果设备，属于高富帅玩法。
-       ●
-        Windows
- Phone
-       ：投资一般，只用花注册的钱（如果要是用盗版VS的话），光VS的投资也不是小数。
-       ●
-        Adnroid
-       ：投资小，只需要一台PC和一台Android手机即可。可谓是专门给屌丝开发者准备的。
-       ●
-        BlackBerry
-       ：不熟悉，目前国内做的太少，而且BB10也没有在国内发售呢。
-       总的来说，做为一名移动开发者来说，如果没有一定的经济实力的话还是选择iPhone开发比较好，至少在经济收入上更可观一些；但是目前的情形上来说，安卓的市场是越来越大，说明做安卓的开发前途至少会越来越光明。至于WP，目前还需要观望；至于BB，就算了吧。
+   编译及调试
+   ● `XCode`：可以同时调试`Objective-C`和`C/C++`，编译速度还算比较快。
+   ● `Visual Studio`：如此强大的IDE，同时调试`C#`和`C/C++`。
+   ● `Android`：如果是java代码，速度和调试都挺方便的，但是如果想编译和调试native代码，那就需要有足够的耐心了，尤其是调试，配置之麻烦当属第一。
+   ● `BlackBerry`：编译速度十分慢，调试启动也很慢，但是启动后调试还可以接受的，比起android来，省去了很多配置的麻烦。
+   开发成本
+   ● iPhone：投资比较大，光是注册开发者账号就需要99刀，而且还需要一台苹果设备，属于高富帅玩法。
+   ● Windows Phone：投资一般，只用花注册的钱（如果要是用盗版VS的话），光VS的投资也不是小数。
+   ● Adnroid：投资小，只需要一台PC和一台Android手机即可。可谓是专门给屌丝开发者准备的。
+   ● BlackBerry：不熟悉，目前国内做的太少，而且BB10也没有在国内发售呢。
+
+   总的来说，做为一名移动开发者来说，如果没有一定的经济实力的话还是选择iPhone开发比较好，至少在经济收入上更可观一些；但是目前的情形上来说，安卓的市场是越来越大，说明做安卓的开发前途至少会越来越光明。至于WP，目前还需要观望；至于BB，就算了吧。
