@@ -15,7 +15,7 @@ keywords: cstring (string.h)函数介绍
   * strcat : char* strcat(char* destination, const char* source);
   * strncat : char* strcat(char* destination, const char* source, size_t num);
 > cat 意思是catenate，连接的意思。
-  strncp 是strcat的安全版本，可以防止越界。
+  strnca 是strcat的安全版本，可以防止越界。
   从定义上可以看出是将带const的字符串连接到不带const的字符串上。
 * 字符/字符串查找:
   * strchr : char* strchr(const char* str, int character); char* strchr(char* str, int character);
