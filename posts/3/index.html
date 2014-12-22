@@ -374,80 +374,163 @@
   </header>
 
 
-  <div class="entry-content"><p>  Item 10：在构造函数中防止资源泄漏
-   该条款讲述的内容跟上一条款很相似，应该都可以归属为编写异常安全代码范畴。在构造函数中尽量处理简单的代码，防止抛异常，因为C++并没有对构造函数异常做析构的动作，并不会在构造函数发生异常的情况下，调用析构函数去释放资源。这是考虑到效率问题。
-    我们还是举个例子更直观的描述如何在构造函数中编写异常安全的代码，要做个通讯录类，内容包括姓名，地址，图片和一段声音。
-     class Image
-{
-public:
-    Image(string name);
-private:
-    string imageName;
-}；
-class Audio
-{
-public:
-    Audio(string name);
-private:
-    string audioName;
-};
-class BookEntry
-{
-public:
-    BookEntry(string name, string adress, Image<em> image, Audio</em> audio);
-    ~BookEntry();
-private:
-    string m_name;
-    string m_adress;
-    Image<em> m_image;
-    Audio</em> m_audio;
-};
-BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
-: m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
-{
-   m_image = new Image(imageName);
-   m_audio = new Audio(audioName);
-}
-BookEntry::~BookEntry()
-{
-    delete m_image;
-    delete m_audio;
-}
-      因为C++ delete删除空指针是不做任何操作的，所以析构函数中并没有对指针进行判断。
-        我们考虑正常情况下构造函数全部指向完毕（完全构造），当销毁BookEntry的时候，会调用析构函数释放资源，没有任何问题。但是如果是构造函数中出现异常情况怎么办？最简单的办法就是万能的try catch。
-         BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
-: m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
-{
-    try
-    {
-        m_image = new Image(imageName);
-        m_audio = new Audio(audioName);
-    }
-    catch(&hellip;)
-    {
-        delete m_image；
-        delete m_audio;
-    }
-}
-           OK, 没有问题了，但是看起来catch中的代码跟析构函数的代码一样，OK，利用refactoring method我们可以合并代码，abstract a public method。
-            那么如果我们再修改下代码，将成员变量改为const常量
-             Image<em> const m_image;
-Audio</em> const m_audio;
-              那么就只能在成员初始化列表中对指针进行初始化了。
-               BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
-: m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
-{}
-                在成员初始化函数列表中，是不可以包含语句的，只能使用表达式，那么try catch就无法再使用了，那么该如何解决呢？估计看过前一章的一定会想到的，对就是使用智能指针。
-                 const share_ptr<Image>; m_image;
-const share_ptr<Audio>; m_audio;
-BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
-: m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
-{
-}
-BookEntry::~BookEntry()
-{
-}
-                  连析构函数也省了。</p>
+  <div class="entry-content"><h2>Item 10：在构造函数中防止资源泄漏</h2>
+
+<p>该条款讲述的内容跟上一条款很相似，应该都可以归属为编写异常安全代码范畴。在构造函数中尽量处理简单的代码，防止抛异常，因为C++并没有对构造函数异常做析构的动作，并不会在构造函数发生异常的情况下，调用析构函数去释放资源。这是考虑到效率问题。</p>
+
+<p>我们还是举个例子更直观的描述如何在构造函数中编写异常安全的代码，要做个通讯录类，内容包括姓名，地址，图片和一段声音。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Image
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Image(string name);
+</span><span class='line'>private:
+</span><span class='line'>    string imageName;
+</span><span class='line'>}；
+</span><span class='line'>class Audio
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Audio(string name);
+</span><span class='line'>private:
+</span><span class='line'>    string audioName;
+</span><span class='line'>};
+</span><span class='line'>class BookEntry
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    BookEntry(string name, string adress, Image* image, Audio* audio);
+</span><span class='line'>    ~BookEntry();
+</span><span class='line'>private:
+</span><span class='line'>    string m_name;
+</span><span class='line'>    string m_adress;
+</span><span class='line'>    Image* m_image;
+</span><span class='line'>    Audio* m_audio;
+</span><span class='line'>};
+</span><span class='line'>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+</span><span class='line'>: m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
+</span><span class='line'>{
+</span><span class='line'>   m_image = new Image(imageName);
+</span><span class='line'>   m_audio = new Audio(audioName);
+</span><span class='line'>}
+</span><span class='line'>BookEntry::~BookEntry()
+</span><span class='line'>{
+</span><span class='line'>    delete m_image;
+</span><span class='line'>    delete m_audio;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>因为C++ delete删除空指针是不做任何操作的，所以析构函数中并没有对指针进行判断。</p>
+
+<p>我们考虑正常情况下构造函数全部指向完毕（完全构造），当销毁BookEntry的时候，会调用析构函数释放资源，没有任何问题。但是如果是构造函数中出现异常情况怎么办？最简单的办法就是万能的try catch。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+</span><span class='line'>: m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
+</span><span class='line'>{
+</span><span class='line'>    try
+</span><span class='line'>    {
+</span><span class='line'>        m_image = new Image(imageName);
+</span><span class='line'>        m_audio = new Audio(audioName);
+</span><span class='line'>    }
+</span><span class='line'>    catch(...)
+</span><span class='line'>    {
+</span><span class='line'>        delete m_image；
+</span><span class='line'>        delete m_audio;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OK, 没有问题了，但是看起来catch中的代码跟析构函数的代码一样，OK，利用refactoring method我们可以合并代码，abstract a public method。</p>
+
+<p>那么如果我们再修改下代码，将成员变量改为const常量</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Image* const m_image;
+</span><span class='line'>Audio* const m_audio;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>那么就只能在成员初始化列表中对指针进行初始化了。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+</span><span class='line'>: m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
+</span><span class='line'>{}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在成员初始化函数列表中，是不可以包含语句的，只能使用表达式，那么try catch就无法再使用了，那么该如何解决呢？估计看过前一章的一定会想到的，对就是使用智能指针。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>const share_ptr&lt;Image&gt;; m_image;
+</span><span class='line'>const share_ptr&lt;Audio&gt;; m_audio;
+</span><span class='line'>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+</span><span class='line'>: m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
+</span><span class='line'>{
+</span><span class='line'>}
+</span><span class='line'>BookEntry::~BookEntry()
+</span><span class='line'>{
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>连析构函数也省了。</p>
 </div>
   
   
@@ -566,22 +649,41 @@ private:
   </header>
 
 
-  <div class="entry-content"><p> Item 8：理解各种不同含义的new和delete
-   new操作符在C++中做了两件事，1是在堆上分配足够的内存，2是调用类的构造函数。new操作法的这种行为是程序员无法改变的，唯一程序员可以去做的就是按自己的需求来修改内存分配，通过重载operator new函数（void<em> operator new（size_t size））来自定义内存的分配，但是在调用构造函数上面是由编译器来决定的。如果要重载自己的operator new函数，第一个参数必须为size_t。
-    例如： Obeject</em> obj = new Object（）；
-     被编译器解析：
-      1.allocate memory
-       2.call Object（）构造函数
-         关于placement new，就是在已经分配的内存上创建对象，例如：
-          void<em> placementnewSample（void</em> buffer， size_t）
-{
-    return new （buffer） Object();
-}
-            注意，如果是调用的placement new，则对应的一定不要调用delete操作符，因为该对象是在buffer中分配的。可以直接调用对象的析构函数。
-              数组的new操作符表现形式不同单个对象的new，但是做的事情是一样的。只不过是需要将所有数组元素都分配内存并依次调用构造函数。
-               void* operator new<a href="size_t%20size"></a>； 为new数组分配内存函数，可以被重载。
-                 delete操作符作为new操作符对应的相反行为，做的事情自然跟new相反，1调用析构函数，2释放已经分配的内存。如果你重载了operator new，则你必须重载operator delete来对应，否则有可能导致new和delete行为的不一致性。什么样的new对应什么样的delete，即单个对象的new对应单个对象的delete，new[]对应delete[]。
-                   注意，尽量不要重载全局的new和delete，这样会造成程序的不兼容性，除非这是你想要的结果。</p>
+  <div class="entry-content"><h2>Item 8：理解各种不同含义的new和delete</h2>
+
+<p>new操作符在C++中做了两件事，1是在堆上分配足够的内存，2是调用类的构造函数。new操作法的这种行为是程序员无法改变的，唯一程序员可以去做的就是按自己的需求来修改内存分配，通过重载operator new函数（void* operator new（size_t size））来自定义内存的分配，但是在调用构造函数上面是由编译器来决定的。如果要重载自己的operator new函数，第一个参数必须为size_t。</p>
+
+<pre><code>例如：
+</code></pre>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Obeject* obj = new Object（）；</span></code></pre></td></tr></table></div></figure>
+
+
+<p>被编译器解析：</p>
+
+<p>1.allocate memory
+2.call Object（）构造函数</p>
+
+<p>关于placement new，就是在已经分配的内存上创建对象，例如：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void* placementnewSample（void* buffer， size_t）
+</span><span class='line'>{
+</span><span class='line'>    return new （buffer） Object();
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>注意，如果是调用的placement new，则对应的一定不要调用delete操作符，因为该对象是在buffer中分配的。可以直接调用对象的析构函数。数组的new操作符表现形式不同单个对象的new，但是做的事情是一样的。只不过是需要将所有数组元素都分配内存并依次调用构造函数。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void* operator new[](size_t size)；</span></code></pre></td></tr></table></div></figure>
+
+
+<p>为new数组分配内存函数，可以被重载。delete操作符作为new操作符对应的相反行为，做的事情自然跟new相反，1调用析构函数，2释放已经分配的内存。如果你重载了operator new，则你必须重载operator delete来对应，否则有可能导致new和delete行为的不一致性。什么样的new对应什么样的delete，即单个对象的new对应单个对象的delete，new[]对应delete[]。注意，尽量不要重载全局的new和delete，这样会造成程序的不兼容性，除非这是你想要的结果。</p>
 </div>
   
   
@@ -610,9 +712,11 @@ private:
   </header>
 
 
-  <div class="entry-content"><p>   Item 7：不要重载“&amp;&amp;”,“||”, 或“,”
- C/C++中“&amp;&amp;”和“||”操作符是采用短路计算法的，而且是有顺序的。即从左往右计算，如果一旦确认表达式的值，那么后面的表达式或计算不再执行。而重载运算符本质上是函数重载，即运算符操作为函数操作。operator &amp;&amp;()有两种情况，一是全局重载，二是作为类成员函数；如果是全局重载，那么调用本质为 &ldquo;operator &amp;&amp;（expression1， expression2）&rdquo;,而C++并没有规定参数的计算顺序，所以没有办法保证重载的&amp;&amp;保持原意不变。成员函数形式为expression1.operator&amp;&amp;(expression2)，跟全局问题一样，所以“&amp;&amp;”和“||”操作符适合重载。“，”运算符也是相同的原因，这里不再赘述。
-   操作符重载的目的是为了程序更容易阅读，理解和书写。</p>
+  <div class="entry-content"><h2>Item 7：不要重载“&amp;&amp;”,“||”, 或“,”</h2>
+
+<p>C/C++中“&amp;&amp;”和“||”操作符是采用短路计算法的，而且是有顺序的。即从左往右计算，如果一旦确认表达式的值，那么后面的表达式或计算不再执行。而重载运算符本质上是函数重载，即运算符操作为函数操作。operator &amp;&amp;()有两种情况，一是全局重载，二是作为类成员函数；如果是全局重载，那么调用本质为 &ldquo;operator &amp;&amp;（expression1， expression2）&rdquo;,而C++并没有规定参数的计算顺序，所以没有办法保证重载的&amp;&amp;保持原意不变。成员函数形式为expression1.operator&amp;&amp;(expression2)，跟全局问题一样，所以“&amp;&amp;”和“||”操作符适合重载。“，”运算符也是相同的原因，这里不再赘述。</p>
+
+<p>操作符重载的目的是为了程序更容易阅读，理解和书写。</p>
 </div>
   
   
@@ -641,34 +745,62 @@ private:
   </header>
 
 
-  <div class="entry-content"><p>   Item 6：自增(increment)、自减(decrement)操作符前缀形式与后缀形式的区别
- class UPInt
-{
-public:
-    &hellip;
-    UPInt&amp; operator++();         //前缀形式
-    const UPInt operator++(int); //后缀形式
-    UPInt&amp; operator&ndash;();         //前缀形式
-    const UPInt operator&ndash;(int); //后缀形式
-};
-UPInt&amp; UPInt::operator++()
-{
-    <em>this += 1；
-    return </em>this；
-}
-const UPInt UPInt::operator++(int)
-{
-    UPInt temp = <em>this;
-    ++(</em>this);
-    return temp;
-}
-&hellip;
-  从代码中可以看到，
-   1. 前缀是先增加再返回，而后缀是先返回再增加。
-    2. 前缀和后缀在表现形式上就有所不同，是通过参数来区分的，这是C++语言规范规定的区别标准。
-     3. 二者在返回值上也不相同，前缀形式返回类型的引用，而后缀则返回const 类型。为什么二者返回类型不相同，是为了防止出现 UPInt u； u++++；（在基础类型中不合法）。为了保持和基础类型一致而采取的考虑。
-      4. 不管是前缀形式还是后缀形式，二者最终行为都是一致的（即增1），后缀实现采用前缀实现，这样就缩小改变，只需用改变前缀的实现就可以二者都改变。
-       5. 从实现上可以看出，后缀形式比前缀形式多了一个临时对象temp，而临时对象会造成构造和析构的时间开销，空间方面也会有开销，这就导致前缀形式的效率会比后缀要高，所以能使用前缀形式就要使用前缀形式。</p>
+  <div class="entry-content"><h2>Item 6：自增(increment)、自减(decrement)操作符前缀形式与后缀形式的区别</h2>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class UPInt
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    ...
+</span><span class='line'>    UPInt& operator++();         //前缀形式
+</span><span class='line'>    const UPInt operator++(int); //后缀形式
+</span><span class='line'>    UPInt& operator--();         //前缀形式
+</span><span class='line'>    const UPInt operator--(int); //后缀形式
+</span><span class='line'>};
+</span><span class='line'>UPInt& UPInt::operator++()
+</span><span class='line'>{
+</span><span class='line'>    *this += 1；
+</span><span class='line'>    return *this；
+</span><span class='line'>}
+</span><span class='line'>const UPInt UPInt::operator++(int)
+</span><span class='line'>{
+</span><span class='line'>    UPInt temp = *this;
+</span><span class='line'>    ++(*this);
+</span><span class='line'>    return temp;
+</span><span class='line'>}
+</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
+
+
+<p>从代码中可以看到，</p>
+
+<ol>
+<li><p>前缀是先增加再返回，而后缀是先返回再增加。</p></li>
+<li><p>前缀和后缀在表现形式上就有所不同，是通过参数来区分的，这是C++语言规范规定的区别标准。</p></li>
+<li><p>二者在返回值上也不相同，前缀形式返回类型的引用，而后缀则返回const 类型。为什么二者返回类型不相同，是为了防止出现 UPInt u； u++++；（在基础类型中不合法）。为了保持和基础类型一致而采取的考虑。</p></li>
+<li><p>不管是前缀形式还是后缀形式，二者最终行为都是一致的（即增1），后缀实现采用前缀实现，这样就缩小改变，只需用改变前缀的实现就可以二者都改变。</p></li>
+<li><p>从实现上可以看出，后缀形式比前缀形式多了一个临时对象temp，而临时对象会造成构造和析构的时间开销，空间方面也会有开销，这就导致前缀形式的效率会比后缀要高，所以能使用前缀形式就要使用前缀形式。</p></li>
+</ol>
+
 </div>
   
   
@@ -697,50 +829,97 @@ const UPInt UPInt::operator++(int)
   </header>
 
 
-  <div class="entry-content"><p>  Item 5：谨慎定义类型转换函数
-   隐式类型转换时在编译期间由编译器来执行的。除了C/C++默认的基本类型的隐式类型转换外，用户自定义类型的隐式转换方式有两种：
-    1.定义隐式类型转换运算符
-     2.单参数构造函数或者多参数构造函数，但第一个参数以后的参数都有默认值。
-       隐式类型转换运算符例子：
-        class Rational
-{
-public:
-    Rational（int numerator = 0, int denominator = 1）；
-    operator double() const;   //不需要返回类型，函数名称就是返回类型
-};
-Rational r（1， 2）；
-double d = 0.5 * r; //r 转换为double类型
-          标题是要谨慎定义类型转换函数，为什么要谨慎呢，就是说这些定义的类型转换函数有可能会产生不是你想要的结果，比如你不想进行转换的时候，却给你转换了。如下情况：
-           cout &lt;&lt; r；  //Rational并没有定义operator &lt;&lt; 运算符，但是，编译器会找到operator double()转换函数，将r转换为double输出。但这并不是你想要的结果。
-            解决方法是用不使用语法关键字的等同的函数来替代转换运算符。如定义一个toDouble()函数来代替operator double()转换函数。STL中的string就提供了一个c_str()函数来转换到char*。
-              通过单参数构造函数进行隐式类型转换更难消除。而且在很多情况下这些函数所导致的
-               问题要甚于隐式类型转换运算符。
-                我们来看一个例子：
-                 temlplate<typename T>;
-class Array
-{
-public:
-    Array(int lowBound, int hightBound);
-    Array(int size);
-    T&amp; operator<a href="int%20index"></a>;
-};
-Array<int>; a(10);
-Array<int>; b(10);
-for (int i = 0; i &lt; 10; ++i)
-{
-    if (a == b[i]) // 哎呦! &ldquo;a&rdquo; 应该是 &ldquo;a[i]&rdquo;
-    {
-        do something for when
-        a[i] and b[i] are equal;
-    }
-    else
-    {
-        do something for when they&rsquo;re not;
-    }
-}
-                  我们的编译器注意到它能通过调用 Array<int>;构造函数能转换 int 类型到 Array<int>;类型，这个构造函数只有一个 int 类型的参数。然后编译器如此去编译，生成的代码就象这样：
-                   if (a == static_cast&lt; Array<int>; >;(b[i]))
-                     解决方案是利用一个最新编译器的特性，explicit 关键字。</p>
+  <div class="entry-content"><h2>Item 5：谨慎定义类型转换函数</h2>
+
+<p>隐式类型转换时在编译期间由编译器来执行的。除了C/C++默认的基本类型的隐式类型转换外，用户自定义类型的隐式转换方式有两种：</p>
+
+<p>1.定义隐式类型转换运算符</p>
+
+<p>2.单参数构造函数或者多参数构造函数，但第一个参数以后的参数都有默认值。</p>
+
+<p>隐式类型转换运算符例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Rational
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Rational（int numerator = 0, int denominator = 1）；
+</span><span class='line'>    operator double() const;   //不需要返回类型，函数名称就是返回类型
+</span><span class='line'>};
+</span><span class='line'>Rational r（1， 2）；
+</span><span class='line'>double d = 0.5 * r; //r 转换为double类型</span></code></pre></td></tr></table></div></figure>
+
+
+<p>标题是要谨慎定义类型转换函数，为什么要谨慎呢，就是说这些定义的类型转换函数有可能会产生不是你想要的结果，比如你不想进行转换的时候，却给你转换了。如下情况：</p>
+
+<p>cout &lt;&lt; r；  //Rational并没有定义operator &lt;&lt; 运算符，但是，编译器会找到operator double()转换函数，将r转换为double输出。但这并不是你想要的结果。</p>
+
+<p>解决方法是用不使用语法关键字的等同的函数来替代转换运算符。如定义一个toDouble()函数来代替operator double()转换函数。STL中的string就提供了一个c_str()函数来转换到char*。</p>
+
+<p>通过单参数构造函数进行隐式类型转换更难消除。而且在很多情况下这些函数所导致的问题要甚于隐式类型转换运算符。</p>
+
+<p>我们来看一个例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>temlplate&lt;typename T&gt;;
+</span><span class='line'>class Array
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Array(int lowBound, int hightBound);
+</span><span class='line'>    Array(int size);
+</span><span class='line'>    T& operator[](int index);
+</span><span class='line'>};
+</span><span class='line'>Array&lt;int&gt;; a(10);
+</span><span class='line'>Array&lt;int&gt;; b(10);
+</span><span class='line'>for (int i = 0; i &lt; 10; ++i)
+</span><span class='line'>{
+</span><span class='line'>    if (a == b[i]) // 哎呦! "a" 应该是 "a[i]"
+</span><span class='line'>    {
+</span><span class='line'>        do something for when
+</span><span class='line'>        a[i] and b[i] are equal;
+</span><span class='line'>    }
+</span><span class='line'>    else
+</span><span class='line'>    {
+</span><span class='line'>        do something for when they're not;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们的编译器注意到它能通过调用 Array<int>;构造函数能转换 int 类型到 Array<int>;类型，这个构造函数只有一个 int 类型的参数。然后编译器如此去编译，生成的代码就象这样：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if (a == static_cast&lt; Array&lt;int&gt;; &gt;;(b[i]))</span></code></pre></td></tr></table></div></figure>
+
+
+<p>解决方案是利用一个最新编译器的特性，explicit 关键字。</p>
 </div>
   
   
@@ -769,13 +948,19 @@ for (int i = 0; i &lt; 10; ++i)
   </header>
 
 
-  <div class="entry-content"><p>   Item 4：避免无用的缺省构造函数
-   没有缺省构造函数会导致：
-  1.无法创建该类的数组形式。
-  2.无法在许多基于模板的容器类里使用。
-   设计虚基类时所面临的要提供缺省构造函数还是不提供缺省构造函数的两难决策：
-  1.不提供缺省构造函数的虚基类，很难与其进行合作。因为几乎所有的派生类在实例化时都必须给虚基类构造函数提供参数。
-  2.提供无意义的缺省构造函数也会影响类的工作效率。</p>
+  <div class="entry-content"><h2>Item 4：避免无用的缺省构造函数</h2>
+
+<p>没有缺省构造函数会导致：</p>
+
+<p>  1.无法创建该类的数组形式。</p>
+
+<p>  2.无法在许多基于模板的容器类里使用。</p>
+
+<p>设计虚基类时所面临的要提供缺省构造函数还是不提供缺省构造函数的两难决策：</p>
+
+<p>  1.不提供缺省构造函数的虚基类，很难与其进行合作。因为几乎所有的派生类在实例化时都必须给虚基类构造函数提供参数。</p>
+
+<p>  2.提供无意义的缺省构造函数也会影响类的工作效率。</p>
 </div>
   
   
@@ -804,19 +989,33 @@ for (int i = 0; i &lt; 10; ++i)
   </header>
 
 
-  <div class="entry-content"><p>  Item 3: 不要对数组使用多态
-   语言规范中说通过一个基类指针来删除一个含有派生类对象的数组，结果将是不确定的。
-     class BST { &hellip; };
-class BalancedBST: public BST { &hellip; };
-void printBSTArray(ostream&amp; s,const BST array[], int numElements)
-{
-    for (int i = 0; i &lt; numElements; )
-    {
-        s &lt;&lt; array[i]; //假设 BST 类重载了操作符&lt;&lt;
-    }
-}
-        编译器原先已经假设数组中元素与 BST 对象的大小一致，但是现在数组中每一个对象大小却与 BalancedBST 一致。派生类的长度通常都比基类要长。我们料想 BalancedBST 对象长度的比 BST 长。如果如此的话，printBSTArray 函数生成的指针算法将是错误的，没有人知道如果用 BalancedBST 数组来执行 printBSTArray 函数将会发生什么样的后果。不论是什么后果都是令人不愉快的。
-        值得注意的是如果你不从一个具体类（concrete classes） （例如 BST）派生出另一个具体类（例如 BalancedBST），那么你就不太可能犯这种使用多态性数组的错误。</p>
+  <div class="entry-content"><h2>Item 3: 不要对数组使用多态</h2>
+
+<p>语言规范中说通过一个基类指针来删除一个含有派生类对象的数组，结果将是不确定的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class BST { ... };
+</span><span class='line'>class BalancedBST: public BST { ... };
+</span><span class='line'>void printBSTArray(ostream& s,const BST array[], int numElements)
+</span><span class='line'>{
+</span><span class='line'>    for (int i = 0; i &lt; numElements; )
+</span><span class='line'>    {
+</span><span class='line'>        s &lt;&lt; array[i]; //假设 BST 类重载了操作符&lt;&lt;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编译器原先已经假设数组中元素与 BST 对象的大小一致，但是现在数组中每一个对象大小却与 BalancedBST 一致。派生类的长度通常都比基类要长。我们料想 BalancedBST 对象长度的比 BST 长。如果如此的话，printBSTArray 函数生成的指针算法将是错误的，没有人知道如果用 BalancedBST 数组来执行 printBSTArray 函数将会发生什么样的后果。不论是什么后果都是令人不愉快的。</p>
+
+<p>值得注意的是如果你不从一个具体类（concrete classes） （例如 BST）派生出另一个具体类（例如 BalancedBST），那么你就不太可能犯这种使用多态性数组的错误。</p>
 </div>
   
   

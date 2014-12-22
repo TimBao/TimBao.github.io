@@ -84,23 +84,39 @@
   </header>
 
 
-<div class="entry-content"><p>  Item 1
- ：  指针和引用的区别
-   1.指针可以为空值，引用不可以引用不可以为空值的好处是可以省略判断，提高代码效率。
-  void Test（const  int&amp; count）
-{
-    cout &lt;&lt; count &lt;&lt; endl;
-}
-void Test（const int* count）
-{
-    if(NULL != count)
-    {
-        cout &lt;&lt; count &lt;&lt; endl;
-    }
-}
-  2 指针可以被改变，引用初始化后不可以再改变
-   3 重载某些操作符时可能需要返回引用
-    也就是说，当有可能会为空值的时候要使用指针，当有变量可能改变的时候要使用指针。</p>
+<div class="entry-content"><h2>Item 1：指针和引用的区别</h2>
+
+<p>1.指针可以为空值，引用不可以引用不可以为空值的好处是可以省略判断，提高代码效率。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void Test（const  int& count）
+</span><span class='line'>{
+</span><span class='line'>    cout &lt;&lt; count &lt;&lt; endl;
+</span><span class='line'>}
+</span><span class='line'>void Test（const int* count）
+</span><span class='line'>{
+</span><span class='line'>    if(NULL != count)
+</span><span class='line'>    {
+</span><span class='line'>        cout &lt;&lt; count &lt;&lt; endl;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2 指针可以被改变，引用初始化后不可以再改变</p>
+
+<p>3 重载某些操作符时可能需要返回引用</p>
+
+<p>也就是说，当有可能会为空值的时候要使用指针，当有变量可能改变的时候要使用指针。</p>
 </div>
 
 

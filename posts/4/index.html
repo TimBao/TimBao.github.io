@@ -9,7 +9,7 @@
   <meta name="author" content="Your Name">
 
   
-  <meta name="description" content="Item 2 ： 尽量使用C++风格的类型转换 1. C语言的类型转换缺点 1.1 过于粗鲁，允许在任何类型之间进行转换。 1.2 在程序语句中难以识别。 1.3 类型转换失败不可获知。 2. C++类型转换符的介绍 2.1. static_cast 在功能上基本上与 C 风格的类型转换一样强大， &hellip;">
+  <meta name="description" content="Item 2：尽量使用C++风格的类型转换 C语言的类型转换缺点 1.1 过于粗鲁，允许在任何类型之间进行转换。 1.2 在程序语句中难以识别。 1.3 类型转换失败不可获知。 2. C++类型转换符的介绍 2.1.static_cast 在功能上基本上与 C 风格的类型转换一样强大，含义也一样。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -87,28 +87,29 @@
   </header>
 
 
-  <div class="entry-content"><pre><code>Item 2
-</code></pre>
+  <div class="entry-content"><h2>Item 2：尽量使用C++风格的类型转换</h2>
 
-<p>   ：
-  尽量使用C++风格的类型转换
-   1. C语言的类型转换缺点
-  1.1 过于粗鲁，允许在任何类型之间进行转换。
-   1.2 在程序语句中难以识别。
-    1.3 类型转换失败不可获知。
-   2. C++类型转换符的介绍
-  2.1.
-   static_cast
-  在功能上基本上与 C 风格的类型转换一样强大，含义也一样。但是，static_cast 不能从表达式中去除 const 属性。
-  2.2.
-   const_cast
-  用于类型转换掉表达式的 const 或 volatileness 属性。
-  2.3.
-   dynamic_cast
-  ，它被用于安全地沿着类的继承关系向下进行类型转换。在帮助你浏览继承层次上是有限制的。它不能被用于缺乏虚函数的类型上。
-  2.4.
-   reinterpret_cast
-  ，其的转换 结果几乎都是执行期定义（implementation-defined）。因此， 使用reinterpret_casts 的代码很难移植。 reinterpret_casts 的最普通的用途就是在函数指针类型之间进行转换。</p>
+<ol>
+<li><p>C语言的类型转换缺点</p>
+
+<p> 1.1 过于粗鲁，允许在任何类型之间进行转换。</p>
+
+<p> 1.2 在程序语句中难以识别。</p>
+
+<p> 1.3 类型转换失败不可获知。</p></li>
+</ol>
+
+
+<p>2. C++类型转换符的介绍</p>
+
+<pre><code>2.1.static_cast 在功能上基本上与 C 风格的类型转换一样强大，含义也一样。但是，static_cast 不能从表达式中去除 const 属性。
+
+2.2.const_cast 用于类型转换掉表达式的 const 或 volatileness 属性。
+
+2.3.dynamic_cast，它被用于安全地沿着类的继承关系向下进行类型转换。在帮助你浏览继承层次上是有限制的。它不能被用于缺乏虚函数的类型上。
+
+2.4.reinterpret_cast，其的转换 结果几乎都是执行期定义（implementation-defined）。因此， 使用reinterpret_casts 的代码很难移植。 reinterpret_casts 的最普通的用途就是在函数指针类型之间进行转换。
+</code></pre>
 </div>
   
   
@@ -137,23 +138,39 @@
   </header>
 
 
-  <div class="entry-content"><p>  Item 1
- ：  指针和引用的区别
-   1.指针可以为空值，引用不可以引用不可以为空值的好处是可以省略判断，提高代码效率。
-  void Test（const  int&amp; count）
-{
-    cout &lt;&lt; count &lt;&lt; endl;
-}
-void Test（const int* count）
-{
-    if(NULL != count)
-    {
-        cout &lt;&lt; count &lt;&lt; endl;
-    }
-}
-  2 指针可以被改变，引用初始化后不可以再改变
-   3 重载某些操作符时可能需要返回引用
-    也就是说，当有可能会为空值的时候要使用指针，当有变量可能改变的时候要使用指针。</p>
+  <div class="entry-content"><h2>Item 1：指针和引用的区别</h2>
+
+<p>1.指针可以为空值，引用不可以引用不可以为空值的好处是可以省略判断，提高代码效率。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void Test（const  int& count）
+</span><span class='line'>{
+</span><span class='line'>    cout &lt;&lt; count &lt;&lt; endl;
+</span><span class='line'>}
+</span><span class='line'>void Test（const int* count）
+</span><span class='line'>{
+</span><span class='line'>    if(NULL != count)
+</span><span class='line'>    {
+</span><span class='line'>        cout &lt;&lt; count &lt;&lt; endl;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2 指针可以被改变，引用初始化后不可以再改变</p>
+
+<p>3 重载某些操作符时可能需要返回引用</p>
+
+<p>也就是说，当有可能会为空值的时候要使用指针，当有变量可能改变的时候要使用指针。</p>
 </div>
   
   

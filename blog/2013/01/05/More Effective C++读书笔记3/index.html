@@ -84,19 +84,33 @@
   </header>
 
 
-<div class="entry-content"><p>  Item 3: 不要对数组使用多态
-   语言规范中说通过一个基类指针来删除一个含有派生类对象的数组，结果将是不确定的。
-     class BST { &hellip; };
-class BalancedBST: public BST { &hellip; };
-void printBSTArray(ostream&amp; s,const BST array[], int numElements)
-{
-    for (int i = 0; i &lt; numElements; )
-    {
-        s &lt;&lt; array[i]; //假设 BST 类重载了操作符&lt;&lt;
-    }
-}
-        编译器原先已经假设数组中元素与 BST 对象的大小一致，但是现在数组中每一个对象大小却与 BalancedBST 一致。派生类的长度通常都比基类要长。我们料想 BalancedBST 对象长度的比 BST 长。如果如此的话，printBSTArray 函数生成的指针算法将是错误的，没有人知道如果用 BalancedBST 数组来执行 printBSTArray 函数将会发生什么样的后果。不论是什么后果都是令人不愉快的。
-        值得注意的是如果你不从一个具体类（concrete classes） （例如 BST）派生出另一个具体类（例如 BalancedBST），那么你就不太可能犯这种使用多态性数组的错误。</p>
+<div class="entry-content"><h2>Item 3: 不要对数组使用多态</h2>
+
+<p>语言规范中说通过一个基类指针来删除一个含有派生类对象的数组，结果将是不确定的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class BST { ... };
+</span><span class='line'>class BalancedBST: public BST { ... };
+</span><span class='line'>void printBSTArray(ostream& s,const BST array[], int numElements)
+</span><span class='line'>{
+</span><span class='line'>    for (int i = 0; i &lt; numElements; )
+</span><span class='line'>    {
+</span><span class='line'>        s &lt;&lt; array[i]; //假设 BST 类重载了操作符&lt;&lt;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编译器原先已经假设数组中元素与 BST 对象的大小一致，但是现在数组中每一个对象大小却与 BalancedBST 一致。派生类的长度通常都比基类要长。我们料想 BalancedBST 对象长度的比 BST 长。如果如此的话，printBSTArray 函数生成的指针算法将是错误的，没有人知道如果用 BalancedBST 数组来执行 printBSTArray 函数将会发生什么样的后果。不论是什么后果都是令人不愉快的。</p>
+
+<p>值得注意的是如果你不从一个具体类（concrete classes） （例如 BST）派生出另一个具体类（例如 BalancedBST），那么你就不太可能犯这种使用多态性数组的错误。</p>
 </div>
 
 

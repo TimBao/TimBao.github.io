@@ -84,80 +84,163 @@
   </header>
 
 
-<div class="entry-content"><p>  Item 10：在构造函数中防止资源泄漏
-   该条款讲述的内容跟上一条款很相似，应该都可以归属为编写异常安全代码范畴。在构造函数中尽量处理简单的代码，防止抛异常，因为C++并没有对构造函数异常做析构的动作，并不会在构造函数发生异常的情况下，调用析构函数去释放资源。这是考虑到效率问题。
-    我们还是举个例子更直观的描述如何在构造函数中编写异常安全的代码，要做个通讯录类，内容包括姓名，地址，图片和一段声音。
-     class Image
-{
-public:
-    Image(string name);
-private:
-    string imageName;
-}；
-class Audio
-{
-public:
-    Audio(string name);
-private:
-    string audioName;
-};
-class BookEntry
-{
-public:
-    BookEntry(string name, string adress, Image<em> image, Audio</em> audio);
-    ~BookEntry();
-private:
-    string m_name;
-    string m_adress;
-    Image<em> m_image;
-    Audio</em> m_audio;
-};
-BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
-: m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
-{
-   m_image = new Image(imageName);
-   m_audio = new Audio(audioName);
-}
-BookEntry::~BookEntry()
-{
-    delete m_image;
-    delete m_audio;
-}
-      因为C++ delete删除空指针是不做任何操作的，所以析构函数中并没有对指针进行判断。
-        我们考虑正常情况下构造函数全部指向完毕（完全构造），当销毁BookEntry的时候，会调用析构函数释放资源，没有任何问题。但是如果是构造函数中出现异常情况怎么办？最简单的办法就是万能的try catch。
-         BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
-: m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
-{
-    try
-    {
-        m_image = new Image(imageName);
-        m_audio = new Audio(audioName);
-    }
-    catch(&hellip;)
-    {
-        delete m_image；
-        delete m_audio;
-    }
-}
-           OK, 没有问题了，但是看起来catch中的代码跟析构函数的代码一样，OK，利用refactoring method我们可以合并代码，abstract a public method。
-            那么如果我们再修改下代码，将成员变量改为const常量
-             Image<em> const m_image;
-Audio</em> const m_audio;
-              那么就只能在成员初始化列表中对指针进行初始化了。
-               BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
-: m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
-{}
-                在成员初始化函数列表中，是不可以包含语句的，只能使用表达式，那么try catch就无法再使用了，那么该如何解决呢？估计看过前一章的一定会想到的，对就是使用智能指针。
-                 const share_ptr<Image>; m_image;
-const share_ptr<Audio>; m_audio;
-BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
-: m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
-{
-}
-BookEntry::~BookEntry()
-{
-}
-                  连析构函数也省了。</p>
+<div class="entry-content"><h2>Item 10：在构造函数中防止资源泄漏</h2>
+
+<p>该条款讲述的内容跟上一条款很相似，应该都可以归属为编写异常安全代码范畴。在构造函数中尽量处理简单的代码，防止抛异常，因为C++并没有对构造函数异常做析构的动作，并不会在构造函数发生异常的情况下，调用析构函数去释放资源。这是考虑到效率问题。</p>
+
+<p>我们还是举个例子更直观的描述如何在构造函数中编写异常安全的代码，要做个通讯录类，内容包括姓名，地址，图片和一段声音。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Image
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Image(string name);
+</span><span class='line'>private:
+</span><span class='line'>    string imageName;
+</span><span class='line'>}；
+</span><span class='line'>class Audio
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Audio(string name);
+</span><span class='line'>private:
+</span><span class='line'>    string audioName;
+</span><span class='line'>};
+</span><span class='line'>class BookEntry
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    BookEntry(string name, string adress, Image* image, Audio* audio);
+</span><span class='line'>    ~BookEntry();
+</span><span class='line'>private:
+</span><span class='line'>    string m_name;
+</span><span class='line'>    string m_adress;
+</span><span class='line'>    Image* m_image;
+</span><span class='line'>    Audio* m_audio;
+</span><span class='line'>};
+</span><span class='line'>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+</span><span class='line'>: m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
+</span><span class='line'>{
+</span><span class='line'>   m_image = new Image(imageName);
+</span><span class='line'>   m_audio = new Audio(audioName);
+</span><span class='line'>}
+</span><span class='line'>BookEntry::~BookEntry()
+</span><span class='line'>{
+</span><span class='line'>    delete m_image;
+</span><span class='line'>    delete m_audio;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>因为C++ delete删除空指针是不做任何操作的，所以析构函数中并没有对指针进行判断。</p>
+
+<p>我们考虑正常情况下构造函数全部指向完毕（完全构造），当销毁BookEntry的时候，会调用析构函数释放资源，没有任何问题。但是如果是构造函数中出现异常情况怎么办？最简单的办法就是万能的try catch。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+</span><span class='line'>: m_name(name), m_adress(adress),m_image(NULL),m_audio(NULL)
+</span><span class='line'>{
+</span><span class='line'>    try
+</span><span class='line'>    {
+</span><span class='line'>        m_image = new Image(imageName);
+</span><span class='line'>        m_audio = new Audio(audioName);
+</span><span class='line'>    }
+</span><span class='line'>    catch(...)
+</span><span class='line'>    {
+</span><span class='line'>        delete m_image；
+</span><span class='line'>        delete m_audio;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>OK, 没有问题了，但是看起来catch中的代码跟析构函数的代码一样，OK，利用refactoring method我们可以合并代码，abstract a public method。</p>
+
+<p>那么如果我们再修改下代码，将成员变量改为const常量</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Image* const m_image;
+</span><span class='line'>Audio* const m_audio;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>那么就只能在成员初始化列表中对指针进行初始化了。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+</span><span class='line'>: m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
+</span><span class='line'>{}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>在成员初始化函数列表中，是不可以包含语句的，只能使用表达式，那么try catch就无法再使用了，那么该如何解决呢？估计看过前一章的一定会想到的，对就是使用智能指针。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>const share_ptr&lt;Image&gt;; m_image;
+</span><span class='line'>const share_ptr&lt;Audio&gt;; m_audio;
+</span><span class='line'>BookEntry::BookEntry(string name, string adress, string imageName, string audioName)
+</span><span class='line'>: m_name(name), m_adress(adress),m_image((iamgeName.empty()?NULL:new Image(imageName))),m_audio((audioName.empty()?NULL:new Audio(audioName)))
+</span><span class='line'>{
+</span><span class='line'>}
+</span><span class='line'>BookEntry::~BookEntry()
+</span><span class='line'>{
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>连析构函数也省了。</p>
 </div>
 
 
