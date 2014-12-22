@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "strxfrm函数"
-date: 2012-04-28 11:24:00 
+date: 2012-04-28 11:24:00
 comments: true
 categories: [cstring (string.h)函数介绍]
 tags: [cstring (string.h)函数介绍]
@@ -9,36 +9,52 @@ description: "strxfrm函数"
 keywords: cstring (string.h)函数介绍
 ---
 
- 原型
-  size_t strxfrm ( char * destination, const char * source, size_t num );
-    功能：
-     根据num长度拷贝前num个字符到目的字符串中，并返回源字符串长度。
-      同时，该函数还可以自作为返回字符串长度，这时num=0，destination允许传入NULL。
-        参数：
-         destination
-          指向目的字符数组的指针，当num为0时，可以传NULL。
-           source
-            要拷贝的源字符串，以‘\0’结尾。
-             num
-              最大要拷贝到目的数组的字符的长度。
-                 返回值：
-                 返回source字符串的长度，不包含‘\0’。
-                 #include <cstring>;
+原型
+```
+size_t strxfrm ( char * destination, const char * source, size_t num );
+```
+
+功能：
+
+根据num长度拷贝前num个字符到目的字符串中，并返回源字符串长度。
+
+同时，该函数还可以自作为返回字符串长度，这时num=0，destination允许传入NULL。
+
+参数：
+
+destination 指向目的字符数组的指针，当num为0时，可以传NULL。
+
+source 要拷贝的源字符串，以‘\0’结尾。
+
+num 最大要拷贝到目的数组的字符的长度。
+
+返回值：
+
+返回source字符串的长度，不包含‘\0’。
+```
+#include <cstring>;
 #include <iostream>;
 #include <windows.h>;
 int main(int argc, char* argv[])
 {
-	char* source = "1234567890 abc";
-	char des[100];
-	size_t len = strxfrm(des, source, 50);
-	std::cout << "len:" << len <<std::endl;
+    char* source = "1234567890 abc";
+    char des[100];
+    size_t len = strxfrm(des, source, 50);
+    std::cout << "len:" << len <<std::endl;
     std::cout << "des:" << des <<std::endl;
-	return 0;
+    return 0;
 }
-                  output:
-                   len:14
-                    des:1234567890 abc
-                 这里举这个例子要说明的是num长度大于源字符串长度的原因，涉及到strxfrm函数的具体实现了。
-                 strncpy(_string1, _string2, _count);
-                  return strlen(_string2);
-                   vs平台下该函数的实现非常简单，除了必要的验证外，只是调用了同是cstring的库函数中的两个基本函数。这也说明了为什么num长度超过源串后为什么没有问题，因为strncpy函数自动截取字符串到'\0'。
+output:
+len:14
+des:1234567890 abc
+
+```
+
+这里举这个例子要说明的是num长度大于源字符串长度的原因，涉及到strxfrm函数的具体实现了。
+
+```
+strncpy(_string1, _string2, _count);
+return strlen(_string2);
+```
+
+vs平台下该函数的实现非常简单，除了必要的验证外，只是调用了同是cstring的库函数中的两个基本函数。这也说明了为什么num长度超过源串后为什么没有问题，因为strncpy函数自动截取字符串到'\0'。

@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "std:find"
-date: 2012-03-23 17:42:00 
+date: 2012-03-23 17:42:00
 comments: true
 categories: [C++技术]
 tags: [C++技术]
@@ -9,4 +9,4 @@ description: "std:find"
 keywords: C++技术
 ---
 
- 把之前使用iterator 进行循环检测的方法都改成使用find方法进行查找，更快，代码更简洁，清晰。
+把之前使用iterator 进行循环检测的方法都改成使用find方法进行查找，更快，代码更简洁，清晰。
