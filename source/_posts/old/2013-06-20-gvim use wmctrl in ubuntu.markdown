@@ -13,7 +13,7 @@ keywords: Vim
 
   Here is the wrong script:
 
-```vimscript
+```
   if has("win32")
     au GUIEnter * simalt ~x
 else
