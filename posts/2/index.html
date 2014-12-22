@@ -9,7 +9,8 @@
   <meta name="author" content="Your Name">
 
   
-  <meta name="description" content="这篇文章虽然叫做“如何在Vim中使用Terminal”，但是我这里要说的是在Windows下使用。 OS： Windows 8 64bit Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通信来操作terminal command的。 &hellip;">
+  <meta name="description" content="这篇文章虽然叫做“如何在Vim中使用Terminal”，但是我这里要说的是在Windows下使用。 OS： Windows 8 64bit
+Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通信来操作terminal command的。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -87,13 +88,19 @@
   </header>
 
 
-  <div class="entry-content"><p>  这篇文章虽然叫做“如何在Vim中使用Terminal”，但是我这里要说的是在Windows下使用。
-  OS： Windows 8 64bit
-  Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通信来操作terminal command的。插件是使用python写的）
-  Python：2.7
-  Vim：7.3
-  在我的Linux下使用ConqueTerm一点问题都没有，非常好用，我的32位的Window7 上面也没有问题，只有在64位windows 8工作机上才会出现无法在vim中找到python接口。也就是说 echo has(&lsquo;python&rsquo;) = 0。通过查看vim的verison，发现已经打开了python/dyn。这个问题一连搞了一天也没有解决，果断放弃。这段时间vim的学习又有了突破，才又想起解决这个问题，通过大量的google search，终于在stackflow上面看到某人也有类似的问题，解决方法也是让我没有想到，重装vim或者python？为什么呢？原来是版本不匹配，我的机器安装的是64位的python，而vim确是32位的，果断下载一个64位的Vim，重新测试。OK，一切正常！
-  通过这个问题，我的收获就是当一个问题陷入死胡同的时候，不应该去放弃；可以暂时先放下，调整下心情状态，或者过段时间再来解决，很有可能就会柳暗花明又一村！</p>
+  <div class="entry-content"><p>   这篇文章虽然叫做“如何在Vim中使用Terminal”，但是我这里要说的是在Windows下使用。</p>
+
+<ul>
+<li>OS： Windows 8 64bit</li>
+<li>Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通信来操作terminal command的。插件是使用python写的）</li>
+<li>Python：2.7</li>
+<li>Vim：7.3</li>
+</ul>
+
+
+<p>  在我的Linux下使用ConqueTerm一点问题都没有，非常好用，我的32位的Window7 上面也没有问题，只有在64位windows 8工作机上才会出现无法在vim中找到python接口。也就是说 echo has(&lsquo;python&rsquo;) = 0。通过查看vim的verison，发现已经打开了python/dyn。这个问题一连搞了一天也没有解决，果断放弃。这段时间vim的学习又有了突破，才又想起解决这个问题，通过大量的google search，终于在stackflow上面看到某人也有类似的问题，解决方法也是让我没有想到，重装vim或者python？为什么呢？原来是版本不匹配，我的机器安装的是64位的python，而vim确是32位的，果断下载一个64位的Vim，重新测试。OK，一切正常！</p>
+
+<p>  通过这个问题，我的收获就是当一个问题陷入死胡同的时候，不应该去放弃；可以暂时先放下，调整下心情状态，或者过段时间再来解决，很有可能就会柳暗花明又一村！</p>
 </div>
   
   
@@ -122,11 +129,17 @@
   </header>
 
 
-  <div class="entry-content"><p>  今天跟T又学了一招，当邮件中包含code时，可以将code转换为html格式再发送，这样既整齐，又美观！不过T使用Emacs来制作的，偶Emacs不会，想用VIM来实现类似的功能，上网找到了这篇文章，原来VIM早就有了这种插件了。看来是我out了，要学习的东西还是太多啊！抓紧时间，持续学习，每天进步一点点，累计起来也是非常巨大的。就像最近微薄中有个公式：
- 1.01<sup>365</sup>=37.78
-0.99<sup>365</sup>=0.0255
-  每天一点，一年后的变化差距有多大啊！！！！
-  Addr：<a href="http://vim.wikia.com/wiki/Pasting_code_with_syntax_coloring_in_emails">http://vim.wikia.com/wiki/Pasting_code_with_syntax_coloring_in_emails</a></p>
+  <div class="entry-content"><p>  今天跟T又学了一招，当邮件中包含code时，可以将code转换为html格式再发送，这样既整齐，又美观！不过T使用Emacs来制作的，偶Emacs不会，想用VIM来实现类似的功能，上网找到了这篇文章，原来VIM早就有了这种插件了。看来是我out了，要学习的东西还是太多啊！抓紧时间，持续学习，每天进步一点点，累计起来也是非常巨大的。就像最近微薄中有个公式：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>1.01^365=37.78
+</span><span class='line'>0.99^365=0.0255</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  每天一点，一年后的变化差距有多大啊！！！！</p>
+
+<p>  <a href="http://vim.wikia.com/wiki/Pasting_code_with_syntax_coloring_in_emails">Address</a></p>
 </div>
   
   
