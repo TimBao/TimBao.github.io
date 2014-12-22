@@ -4,7 +4,7 @@
   <title><![CDATA[My Octopress Blog]]></title>
   <link href="http://timbao.github.io/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-22T10:22:56+08:00</updated>
+  <updated>2014-12-22T10:33:12+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -32,41 +32,79 @@
     <link href="http://timbao.github.io/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/"/>
     <updated>2014-10-30T00:34:00+08:00</updated>
     <id>http://timbao.github.io/blog/2014/10/30/字符串相关函数整理</id>
-    <content type="html"><![CDATA[<p> string.h 中字符串相关函数
-  按功能分类:
-    字符串连接:
-     strcat : char<em> strcat(char</em> destination, const char<em> source);
-       strncat : char</em> strcat(char<em> destination, const char</em> source, size_t num);
-         cat 意思是catenate，连接的意思。
-           strncp 是strcat的安全版本，可以防止越界。
-             从定义上可以看出带是将const的字符串连接到不带const的字符串上。
-               字符/字符串查找:
-                strchr : char<em> strchr(const char</em> str, int character); char<em> strchr(char</em> str, int character);
-                  查找字符character在str中第一次出现的位置，返回一个指针指向该字符到字符串结尾。
-                    由于&#8217;\0&#8217;也是字符串的一部分，故该函数也可以查找结束符。
-                      chr意思应该是character。
-                        strrchr : char<em> strchr(const char</em> str, int character); char<em> strchr(char</em> str, int character);
-                          最后一次出现的位置。 &lsquo;r&#8217;应该是right的意思，也就是从右开始搜索。
-                            strpbrk : const char<em> strpbrk(const char</em> str1,const char<em> str2); char</em> strpbrk(char<em> str1,const char</em> str2);
-                              查找str2中任意字符在str1中第一次出现的位置，返回从整个位置到str1最后的字符串。不包含结束符。
-                                strcspn : size_t strcspn(const char<em> str1, const char</em> str2);
-                                  返回的是str1第一次出现str2中任意字符的位置。搜索包含null结束符，所以函数可以返回str1字符串的长度当没有任何匹配的时候。
-                                    strstr : const char<em> strstr(const char</em> str1, const char<em> str2); char</em> strstr(char<em> str1, const char</em> str2);
-                                      匹配完整字符串
-                                        字符串比较:
-                                         strcmp: int strcmp(const char<em> str1, const char</em> str2);
-                                           strncmp: int strcmp(const char<em> str1, const char</em> str2, size_t num);
-                                             strcoll: int strcoll(const char<em> str1, const char</em> str2);
-                                               根据LC_COLIATE比较str1和str2。
-                                                 字符串拷贝:
-                                                  strcpy : char<em> strcpy(char</em> destination, const char<em> source);
-                                                    strncpy : char</em> strcpy(char<em> destination, const char</em> source, size_t num);
-                                                      拷贝source到destination中去。遇到&rsquo;\0&#8217;停止copy。
-                                                        获取字符串长度:
-                                                         strlen: size_t strlen(const char<em> str);
-                                                           拆分字符串:
-                                                            strtok: char</em> strtok(char<em> str, const char</em> delimiters);
-                                                              tok的意思是token，该函数就是将str根据delimiter拆分。</p>
+    <content type="html"><![CDATA[<h2>string.h 中字符串相关函数</h2>
+
+<h3>按功能分类:</h3>
+
+<ul>
+<li>字符串连接:
+
+<ul>
+<li>strcat : char<em> strcat(char</em> destination, const char* source);</li>
+<li>strncat : char<em> strcat(char</em> destination, const char* source, size_t num);
+
+<blockquote><p>cat 意思是catenate，连接的意思。
+strncp 是strcat的安全版本，可以防止越界。
+从定义上可以看出是将带const的字符串连接到不带const的字符串上。</p></blockquote></li>
+</ul>
+</li>
+<li>字符/字符串查找:
+
+<ul>
+<li>strchr : char<em> strchr(const char</em> str, int character); char<em> strchr(char</em> str, int character);
+
+<blockquote><p>查找字符character在str中第一次出现的位置，返回一个指针指向该字符到字符串结尾。
+由于&#8217;\0&#8217;也是字符串的一部分，故该函数也可以查找结束符。
+chr意思应该是character。</p></blockquote></li>
+<li>strrchr : char<em> strchr(const char</em> str, int character); char<em> strchr(char</em> str, int character);
+
+<blockquote><p>最后一次出现的位置。 &lsquo;r&#8217;应该是right的意思，也就是从右开始搜索。</p></blockquote></li>
+<li>strpbrk : const char<em> strpbrk(const char</em> str1,const char<em> str2); char</em> strpbrk(char<em> str1,const char</em> str2);
+
+<blockquote><p>查找str2中任意字符在str1中第一次出现的位置，返回从整个位置到str1最后的字符串。不包含结束符。</p></blockquote></li>
+<li>strcspn : size_t strcspn(const char<em> str1, const char</em> str2);
+
+<blockquote><p>返回的是str1第一次出现str2中任意字符的位置。搜索包含null结束符，所以函数可以返回str1字符串的长度当没有任何匹配的时候。</p></blockquote></li>
+<li>strstr : const char<em> strstr(const char</em> str1, const char<em> str2); char</em> strstr(char<em> str1, const char</em> str2);
+
+<blockquote><p>匹配完整字符串</p></blockquote></li>
+</ul>
+</li>
+<li>字符串比较:
+
+<ul>
+<li>strcmp: int strcmp(const char<em> str1, const char</em> str2);</li>
+<li>strncmp: int strcmp(const char<em> str1, const char</em> str2, size_t num);</li>
+<li>strcoll: int strcoll(const char<em> str1, const char</em> str2);
+
+<blockquote><p>根据LC_COLIATE比较str1和str2。</p></blockquote></li>
+</ul>
+</li>
+<li>字符串拷贝:
+
+<ul>
+<li>strcpy : char<em> strcpy(char</em> destination, const char* source);</li>
+<li>strncpy : char<em> strcpy(char</em> destination, const char* source, size_t num);
+
+<blockquote><p>拷贝source到destination中去。遇到&#8217;\0&#8217;停止copy。</p></blockquote></li>
+</ul>
+</li>
+<li>获取字符串长度:
+
+<ul>
+<li>strlen: size_t strlen(const char* str);</li>
+</ul>
+</li>
+<li>拆分字符串:
+
+<ul>
+<li>strtok: char<em> strtok(char</em> str, const char* delimiters);
+
+<blockquote><p>tok的意思是token，该函数就是将str根据delimiter拆分。</p></blockquote></li>
+</ul>
+</li>
+</ul>
+
 ]]></content>
   </entry>
   
