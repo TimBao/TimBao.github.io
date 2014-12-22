@@ -84,23 +84,40 @@
   </header>
 
 
-<div class="entry-content"><p>   Item 20：协助完成返回值优化
-  返回对象时的开销会比较大，会调用对象的构造和析构函数，但是当一个函数必须要返回对象时，这种构造和析构造成的开销是无法消除的。那么还能优化么？
-   以某种方法返回对象，能让编译器消除临时对象的开销，这样编写函数通常是很普遍的。这种技巧是返回constructor argument而不是直接返回对象。你可以这样做：
-    const Rational operator<em>(const Rational&amp; lhs, const Rational&amp; rhs)
-{
-    return Rational(lhs.numerator() * rhs.numerator(),
-                  lhs.denominator() * rhs.denominator());
-}
-    仔细观察被返回的表达式。它看上去好象正在调用Rational的构造函数，实际上确是这样。你通过这个表达式建立一个临时的Rational对象，
-     Rational(lhs.numerator() * rhs.numerator(),  lhs.denominator() * rhs.denominator());
-      并且这是一个临时对象，函数把它拷贝给函数的返回值。
-       返回constructor argument而不出现局部对象，这种方法还会给你带来很多开销，因为你仍旧必须为在函数内临时对象的构造和释放而付出代价，你仍旧必须为函数返回对象的构造和释放而付出代价。但是你已经获得了好处。C++规则允许编译器优化不出现的临时对象（temporary objects out of existence）。因此如果你在如下的环境里调用operator</em>：
-        Rational a = 10;
-         Rational b(1, 2);
-          Rational c = a * b;                          // 在这里调用operator<em>
-           编译器就会被允许消除在operator</em>内的临时变量和operator<em>返回的临时变量。它们能在为目标c分配的内存里构造return表达式定义的对象。如果你的编译器这样去做，调用operator</em>的临时对象的开销就是零：没有建立临时对象。你的代价就是调用一个构造函数――建立c时调用的构造函数。而且你不能比这做得更好了，因为c是命名对象，命名对象不能被消除（参见条款M22）。不过你还可以通过把函数声明为inline来消除operator*的调用开销。
-  看完这篇突然认识到，理解编译器优化是非常重要的，对编译器了解构思，代码的效率自然有保证。路漫漫其修远兮，吾将上下而求索！</p>
+<div class="entry-content"><h2>Item 20：协助完成返回值优化</h2>
+
+<p>  返回对象时的开销会比较大，会调用对象的构造和析构函数，但是当一个函数必须要返回对象时，这种构造和析构造成的开销是无法消除的。那么还能优化么？
+  以某种方法返回对象，能让编译器消除临时对象的开销，这样编写函数通常是很普遍的。这种技巧是返回constructor argument而不是直接返回对象。你可以这样做：</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='C++'><span class='line'><span class="k">const</span> <span class="n">Rational</span> <span class="k">operator</span><span class="o">*</span><span class="p">(</span><span class="k">const</span> <span class="n">Rational</span><span class="o">&amp;</span> <span class="n">lhs</span><span class="p">,</span> <span class="k">const</span> <span class="n">Rational</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">Rational</span><span class="p">(</span><span class="n">lhs</span><span class="p">.</span><span class="n">numerator</span><span class="p">()</span> <span class="o">*</span> <span class="n">rhs</span><span class="p">.</span><span class="n">numerator</span><span class="p">(),</span>
+</span><span class='line'>                  <span class="n">lhs</span><span class="p">.</span><span class="n">denominator</span><span class="p">()</span> <span class="o">*</span> <span class="n">rhs</span><span class="p">.</span><span class="n">denominator</span><span class="p">());</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>仔细观察被返回的表达式。它看上去好象正在调用Rational的构造函数，实际上确是这样。你通过这个表达式建立一个临时的Rational对象，Rational(lhs.numerator() * rhs.numerator(),  lhs.denominator() * rhs.denominator()); 并且这是一个临时对象，函数把它拷贝给函数的返回值。返回constructor argument而不出现局部对象，这种方法还会给你带来很多开销，因为你仍旧必须为在函数内临时对象的构造和释放而付出代价，你仍旧必须为函数返回对象的构造和释放而付出代价。但是你已经获得了好处。C++规则允许编译器优化不出现的临时对象（temporary objects out of existence）。因此如果你在如下的环境里调用operator*：
+</code></pre>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='C++'><span class='line'><span class="n">Rational</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'><span class="n">Rational</span> <span class="nf">b</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+</span><span class='line'><span class="n">Rational</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">;</span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="c1">// 在这里调用operator*</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<pre><code>编译器就会被允许消除在operator*内的临时变量和operator*返回的临时变量。它们能在为目标c分配的内存里构造return表达式定义的对象。如果你的编译器这样去做，调用operator*的临时对象的开销就是零：没有建立临时对象。你的代价就是调用一个构造函数――建立c时调用的构造函数。而且你不能比这做得更好了，因为c是命名对象，命名对象不能被消除（参见条款M22）。不过你还可以通过把函数声明为inline来消除operator*的调用开销。
+
+看完这篇突然认识到，理解编译器优化是非常重要的，对编译器了解构思，代码的效率自然有保证。路漫漫其修远兮，吾将上下而求索！
+</code></pre>
 </div>
 
 
