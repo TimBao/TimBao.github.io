@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Windows 8 | My Octopress Blog]]></title>
   <link href="http://timbao.github.io/blog/categories/windows-8/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2014-12-22T14:38:27+08:00</updated>
+  <updated>2014-12-22T14:48:37+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Your Name]]></name>
@@ -18,15 +18,18 @@
     <link href="http://timbao.github.io/blog/2012/11/15/ListBox%E5%88%B7%E6%96%B0%E9%97%AA%E7%83%81%E9%97%AE%E9%A2%98/"/>
     <updated>2012-11-15T03:27:00+08:00</updated>
     <id>http://timbao.github.io/blog/2012/11/15/ListBox刷新闪烁问题</id>
-    <content type="html"><![CDATA[<p> UI采用的是xaml，ListBox 的 ItemsSource 绑定 后台model 的IList，当list更新后，UI会出现闪烁。
-   原因竟然是出在Run属性的使用上，很奇怪。将run 去掉，改用多个TextBlock      闪烁消失。
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">;
-     <TextBlock>;
-         <Run Text="{Binding Path=DistanceText}"/>;
-         <Run Text=" " FontSize="2" />;
-         <Run Text="{Binding Path=DistanceUnit}" />;
-     </TextBlock>;
-</StackPanel>;</p>
+    <content type="html"><![CDATA[<p>UI采用的是xaml，ListBox 的 ItemsSource 绑定 后台model 的IList，当list更新后，UI会出现闪烁。</p>
+
+<p>原因竟然是出在Run属性的使用上，很奇怪。将run 去掉，改用多个TextBlock闪烁消失。
+<code>
+&lt;StackPanel Orientation="Horizontal" HorizontalAlignment="Center"&gt;;
+     &lt;TextBlock&gt;;
+         &lt;Run Text="{Binding Path=DistanceText}"/&gt;;
+         &lt;Run Text=" " FontSize="2" /&gt;;
+         &lt;Run Text="{Binding Path=DistanceUnit}" /&gt;;
+     &lt;/TextBlock&gt;;
+&lt;/StackPanel&gt;;
+</code></p>
 ]]></content>
   </entry>
   

@@ -84,15 +84,25 @@
   </header>
 
 
-<div class="entry-content"><p> UI采用的是xaml，ListBox 的 ItemsSource 绑定 后台model 的IList，当list更新后，UI会出现闪烁。
-   原因竟然是出在Run属性的使用上，很奇怪。将run 去掉，改用多个TextBlock      闪烁消失。
-    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">;
-     <TextBlock>;
-         <Run Text="{Binding Path=DistanceText}"/>;
-         <Run Text=" " FontSize="2" />;
-         <Run Text="{Binding Path=DistanceUnit}" />;
-     </TextBlock>;
-</StackPanel>;</p>
+<div class="entry-content"><p>UI采用的是xaml，ListBox 的 ItemsSource 绑定 后台model 的IList，当list更新后，UI会出现闪烁。</p>
+
+<p>原因竟然是出在Run属性的使用上，很奇怪。将run 去掉，改用多个TextBlock闪烁消失。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;StackPanel Orientation="Horizontal" HorizontalAlignment="Center"&gt;;
+</span><span class='line'>     &lt;TextBlock&gt;;
+</span><span class='line'>         &lt;Run Text="{Binding Path=DistanceText}"/&gt;;
+</span><span class='line'>         &lt;Run Text=" " FontSize="2" /&gt;;
+</span><span class='line'>         &lt;Run Text="{Binding Path=DistanceUnit}" /&gt;;
+</span><span class='line'>     &lt;/TextBlock&gt;;
+</span><span class='line'>&lt;/StackPanel&gt;;</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
