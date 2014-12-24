@@ -101,6 +101,14 @@
 <p>在将ZOOM的流程捋顺的过程中，对CALayer和UIScrollView两个控件的原理有了更深刻的理解，通过对CALayer的显示的了解，对地图在UI的实现终于弄清楚了。哈哈，而ZOOM的UI就是UIScrollView的实现，对界面熟悉后，可以对底层有更深入的了解，这方面都是相辅相成的，哪点都不能放过。</p>
 
 <p>每个程序只有一个窗口Window，都有一个根Layer负责显示层，layer可以有sublayer，每个地图的tile都是一个layer，有自己的Rect显示区域，将同一个zoomlevel的所有tiles都作为这个级别的layer的sublayer，并且按照顺序排列，就可以显示出地图来了。UIScrollView可以对它的content进行拖到和缩放，它将地图layer作为子视图来显示和拖动或者缩放，通过事件进行相应的位置调整或更新地图。ZoomAndSetCenter。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2011/12/28/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%85%AB)/'>http://timbao.github.io/blog/2011/12/28/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%85%AB)/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
 
 

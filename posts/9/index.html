@@ -96,6 +96,14 @@
 <p>今天对地图数据的请求又有了更深的理解，它里面封装了一个关于坐标的迭代器，用于叠加矩形和点集这两种结构的所有点，比如要申请一个矩形区域的所有地图图片，那么需要将矩形的每个点（行和列）进行迭代，取数据才行。根据点的坐标从服务器请求相应的地图图片过来。</p>
 
 <p>搜索方面今天进行了一些跟地图有接口的部分的了解，搜索也是一个非常大的功能，里面涉及的内容非常多，用到的技术也非常多，不过各个部分直接的耦合性比较低，都是通过接口进行互操作，并将对内部调用的接口都封装层抽象类和代理实现类。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2011/12/29/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E4%B9%9D)/'>http://timbao.github.io/blog/2011/12/29/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E4%B9%9D)/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -141,6 +149,14 @@
 <p>在将ZOOM的流程捋顺的过程中，对CALayer和UIScrollView两个控件的原理有了更深刻的理解，通过对CALayer的显示的了解，对地图在UI的实现终于弄清楚了。哈哈，而ZOOM的UI就是UIScrollView的实现，对界面熟悉后，可以对底层有更深入的了解，这方面都是相辅相成的，哪点都不能放过。</p>
 
 <p>每个程序只有一个窗口Window，都有一个根Layer负责显示层，layer可以有sublayer，每个地图的tile都是一个layer，有自己的Rect显示区域，将同一个zoomlevel的所有tiles都作为这个级别的layer的sublayer，并且按照顺序排列，就可以显示出地图来了。UIScrollView可以对它的content进行拖到和缩放，它将地图layer作为子视图来显示和拖动或者缩放，通过事件进行相应的位置调整或更新地图。ZoomAndSetCenter。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2011/12/28/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%85%AB)/'>http://timbao.github.io/blog/2011/12/28/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%85%AB)/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -182,6 +198,14 @@
 <p>关于地图逻辑还是有点乱，尤其是库中的回调函数的调用，很多地方都有，太乱了。不过整体逻辑划分还算清晰。下面简单的画下结构图：</p>
 
 <p>UI层通过CALayer将地图数据以Image形式画到View上，层次之间主要是进行地图数据Tile的传递和维护，包括缩放，定位，导航等内容。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2011/12/27/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E4%B8%83)/'>http://timbao.github.io/blog/2011/12/27/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E4%B8%83)/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -219,6 +243,14 @@
 <p>对CALayer的实现有了感性的理解，知道了它的实现方式和代码中如何实现地图的Layer。</p>
 
 <p>妈的，CSDN真烂，写了一堆的东西，竟然自动给我删除没了，XXXXX的。没心情了。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2011/12/24/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%85%AD)/'>http://timbao.github.io/blog/2011/12/24/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%85%AD)/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -252,6 +284,14 @@
 <p>花了半天的时间，把View都过了一遍，费了好大的劲，结果其实这些不重要。55555</p>
 
 <p>快下班时找R给我讲讲map部分代码，还有文档可以看，晕了竟然不知道。不过看完也没太多的帮助，只是了解了下流程和大致层次划分，具体的实现没有设计文档。都得靠看代码了。555，悲催啊。好多内容需要学习，挑战啊！继续努力啊！</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2011/12/23/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E4%BA%94)/'>http://timbao.github.io/blog/2011/12/23/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E4%BA%94)/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -287,6 +327,14 @@
 <p>最重要的学会build code，了解了2个Unix脚本。sh命令，执行shell，chmod命令，更改文件权限等。终于可以编译了，由于编译器还不是最新的，25个error，嘿嘿，也能大概解决了。编译终于过去了，不过还是出现了link的错误。下班是R过来问了下我现在的进度，给我简单的交代了两句，还得等具体设备来了后才能运行。我还得先view code啊。今天又掌握了2个概念，layer和墨托卡坐标。晚上学习下。明天rain讲解的时候得把问题都问一遍，抓住机会。哈哈</p>
 
 <p>最后开会讨论了下年会的节目，嘿嘿没有那么大的压力，感觉大家还都基本比较喜欢做了，也没有那么多限制了。嘿嘿。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2011/12/22/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%9B%9B)/'>http://timbao.github.io/blog/2011/12/22/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%9B%9B)/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -346,6 +394,14 @@
 <p>3、运用P4Win，熟悉下代码check in 和 check out等流程。</p>
 
 <p>加油吧~~~！！！！！！</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2011/12/21/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E4%B8%89)/'>http://timbao.github.io/blog/2011/12/21/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E4%B8%89)/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -385,6 +441,14 @@
 <p>还有就是竟然还有熟人，只能无限感慨这个世界真是太小了。</p>
 
 <p>下班就剩我和老J了，老J跟我介绍了下部门人员情况，还解答了几个我的问题。很好的一天！周末好好好整理下，下周就有自己的MAC和测试IPHONE喽！</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2011/12/16/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C%EF%BC%88%E4%BA%8C%EF%BC%89/'>http://timbao.github.io/blog/2011/12/16/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C%EF%BC%88%E4%BA%8C%EF%BC%89/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -428,6 +492,14 @@
 <p>  语言基础已经基本过一遍，这个就过了，可以放到休息时间看。规范类的内容可以看，C++编码规范，OBJC编码规范，code review process，startguide等等，看的头都大了。期间又办理了一些简单的手续。到下班了还差一个规范没看完。做了记录，简单整理下今天内容。也已经19点了，部门成员都已经走了，收拾东西果断走人。嘿嘿。遇到HR，还说我第一天就加班，(<em>^__^</em>) 嘻嘻……</p>
 
 <p>  加油！明天更好！</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2011/12/15/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C%EF%BC%88%E4%B8%80%EF%BC%89/'>http://timbao.github.io/blog/2011/12/15/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C%EF%BC%88%E4%B8%80%EF%BC%89/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -529,6 +601,14 @@
 </span><span class='line'>char c[3]={0};
 </span><span class='line'>iota(a, a+5, 10); //changes a to {10,11,12,13,14}
 </span><span class='line'>iota(c, c+3, 'a'); //{'a','b','c'}</span></code></pre></td></tr></table></div></figure>
+
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2011/12/13/C++11%E4%B8%AD%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E7%9A%84%E5%87%A0%E5%A4%A7%E5%8F%98%E5%8C%96/'>http://timbao.github.io/blog/2011/12/13/C++11%E4%B8%AD%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E7%9A%84%E5%87%A0%E5%A4%A7%E5%8F%98%E5%8C%96/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
 
 </div>
   

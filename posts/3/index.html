@@ -297,6 +297,14 @@
 
 <p>  对应上面的第二种情况，说明在异常捕获中，子类异常可以通过基类参数捕获到。对应上面的第三种情况，说明捕获的顺序是代码中出现的顺序。把注释掉的//throw; //throw e;两句分别打开，运行结果确是一样的，跟书中描述不尽相同。理论上讲throw应该抛出的时subclass类型的异常。
                      最后一部分主要是验证异常参数传值，传引用和传指针的区别。通过程序结果可以看出，不论是传值还是传引用，都会进行拷贝构造，不同之处为传值会进行两次拷贝构造。不过在传指针时，确没有进行拷贝构造函数的调用。和函数参数穿指针一样。但是需要注意的是，异常处理有可能会跟异常抛出位置不是同一个作用域，那样抛指针异常的时候，有可能会造成异常泄露，所以我在最后显示调用delete e；释放资源。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B012/'>http://timbao.github.io/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B012/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -346,6 +354,14 @@
 
 
 <p>如果在dosomething()中发生某些异常，那么异常将传递出去，直到遇到异常捕获函数为止。而随着异常的传递，函数func已经结束，其局部变量obj会被析构，如果在析构的过程中再次出现异常，那么C++将调用 terminate 函数，程序直接终止。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/10/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B011/'>http://timbao.github.io/blog/2013/01/10/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B011/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -531,6 +547,14 @@
 
 
 <p>连析构函数也省了。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/09/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B010/'>http://timbao.github.io/blog/2013/01/09/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B010/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -689,6 +713,14 @@
 </span><span class='line'>    WindowHandle& operator=(const WindowHandle&);
 </span><span class='line'>};</span></code></pre></td></tr></table></div></figure>
 
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/08/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B09/'>http://timbao.github.io/blog/2013/01/08/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B09/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -752,6 +784,14 @@
 
 
 <p>为new数组分配内存函数，可以被重载。delete操作符作为new操作符对应的相反行为，做的事情自然跟new相反，1调用析构函数，2释放已经分配的内存。如果你重载了operator new，则你必须重载operator delete来对应，否则有可能导致new和delete行为的不一致性。什么样的new对应什么样的delete，即单个对象的new对应单个对象的delete，new[]对应delete[]。注意，尽量不要重载全局的new和delete，这样会造成程序的不兼容性，除非这是你想要的结果。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/07/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B08/'>http://timbao.github.io/blog/2013/01/07/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B08/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -785,6 +825,14 @@
 <p>C/C++中“&amp;&amp;”和“||”操作符是采用短路计算法的，而且是有顺序的。即从左往右计算，如果一旦确认表达式的值，那么后面的表达式或计算不再执行。而重载运算符本质上是函数重载，即运算符操作为函数操作。operator &amp;&amp;()有两种情况，一是全局重载，二是作为类成员函数；如果是全局重载，那么调用本质为 &ldquo;operator &amp;&amp;（expression1， expression2）&rdquo;,而C++并没有规定参数的计算顺序，所以没有办法保证重载的&amp;&amp;保持原意不变。成员函数形式为expression1.operator&amp;&amp;(expression2)，跟全局问题一样，所以“&amp;&amp;”和“||”操作符适合重载。“，”运算符也是相同的原因，这里不再赘述。</p>
 
 <p>操作符重载的目的是为了程序更容易阅读，理解和书写。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/06/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B07/'>http://timbao.github.io/blog/2013/01/06/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B07/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -868,6 +916,14 @@
 <li><p>不管是前缀形式还是后缀形式，二者最终行为都是一致的（即增1），后缀实现采用前缀实现，这样就缩小改变，只需用改变前缀的实现就可以二者都改变。</p></li>
 <li><p>从实现上可以看出，后缀形式比前缀形式多了一个临时对象temp，而临时对象会造成构造和析构的时间开销，空间方面也会有开销，这就导致前缀形式的效率会比后缀要高，所以能使用前缀形式就要使用前缀形式。</p></li>
 </ol>
+
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/06/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B06/'>http://timbao.github.io/blog/2013/01/06/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B06/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
 
 </div>
   
@@ -988,6 +1044,14 @@
 
 
 <p>解决方案是利用一个最新编译器的特性，explicit 关键字。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B05/'>http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B05/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -1029,6 +1093,14 @@
 <p>  1.不提供缺省构造函数的虚基类，很难与其进行合作。因为几乎所有的派生类在实例化时都必须给虚基类构造函数提供参数。</p>
 
 <p>  2.提供无意义的缺省构造函数也会影响类的工作效率。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B04/'>http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B04/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   
@@ -1084,6 +1156,14 @@
 <p>编译器原先已经假设数组中元素与 BST 对象的大小一致，但是现在数组中每一个对象大小却与 BalancedBST 一致。派生类的长度通常都比基类要长。我们料想 BalancedBST 对象长度的比 BST 长。如果如此的话，printBSTArray 函数生成的指针算法将是错误的，没有人知道如果用 BalancedBST 数组来执行 printBSTArray 函数将会发生什么样的后果。不论是什么后果都是令人不愉快的。</p>
 
 <p>值得注意的是如果你不从一个具体类（concrete classes） （例如 BST）派生出另一个具体类（例如 BalancedBST），那么你就不太可能犯这种使用多态性数组的错误。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B03/'>http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B03/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
   
   

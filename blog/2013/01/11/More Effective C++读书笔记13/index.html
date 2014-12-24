@@ -93,6 +93,14 @@
 <p>   其次值传递在继承体系中会导致slice问题，即子类会被切割为基类。通过这两点就可以完全排除值捕获异常的可能性了。那么指针和引用相比，为什么要采用引用呢？</p>
 
 <p>   如果要是通过指针捕获异常的话，那么传递过来的指针是堆栈分配的？还是静态指针？还是栈对象的取地址操作获取的指针？根据不同的情况，会有不同的结果。如果是堆栈分配的指针，那么需要释放内存，如果通过局部对象的地址获取的指针，有可能在捕获到后，已经超过作用域，而指向一个已经销毁的对象，所以对catch来说，通过指针捕获异常，对异常的处理要复杂得多，也难以保持统一。而通过引用捕获异常却没有这些问题，所以当然最终选择最优的方案，通过引用捕获异常。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B013/'>http://timbao.github.io/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B013/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
 </div>
 
 
