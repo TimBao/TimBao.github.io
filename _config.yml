@@ -2,6 +2,10 @@
 #      Main Configs       #
 # ----------------------- #
 
+encoding: utf-8
+# foot page info
+original_url_pre: "原文地址:"
+
 url: http://timbao.github.io
 title: 逝水流年
 subtitle: This is a blog to record my life, my work, my feeling ...
