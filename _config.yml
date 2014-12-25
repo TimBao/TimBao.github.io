@@ -92,8 +92,8 @@ pinboard_user:
 pinboard_count: 3
 
 # Delicious
-delicious_user:
-delicious_count: 3
+#delicious_user:
+#delicious_count: 3
 
 # Disqus Comments
 disqus_short_name:
@@ -104,3 +104,6 @@ google_analytics_tracking_id:
 
 # Facebook Like
 facebook_like: false
+
+#uyan comments
+uyan_id: 1997414
