@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="一整天的时间都泡汤了，要说是流年不利可是有点迷信。全部都是人为啊。有个败家媳妇，让你怎么也木有办法。一大早的就跟人追尾，算下来得花2000块钱。就是有保险也很麻烦，还耽误一天的时间！俗话说的好，听人劝吃饱饭，古人诚不欺我！ 都说这人的脾气和性格是决定一个人的命运，太专注也要注意时间，不然多危险啊！ &hellip;">
+  <meta name="description" content="今天老大没来，我今天的考核又泡汤了，哈哈，也好有时间可以再深入学习下。把自己几百块的餐票都给了j，嘿嘿，团队就是要相互帮助。 今天继续对上周的疑问进行攻克，编写DEMO深入进去，对UI进行了解，也对Objective-C进行深入了解。 UIScrollView的几个属性和委托方法： 1、 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,69 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/17/20120116%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/">20120116工作记录</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-01-17T05:59:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>17</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>5:59 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天老大没来，我今天的考核又泡汤了，哈哈，也好有时间可以再深入学习下。把自己几百块的餐票都给了j，嘿嘿，团队就是要相互帮助。</p>
+
+<p>今天继续对上周的疑问进行攻克，编写DEMO深入进去，对UI进行了解，也对Objective-C进行深入了解。</p>
+
+<p>UIScrollView的几个属性和委托方法：</p>
+
+<p>  1、zoomscale：当前缩放倍数。初始值设置，只有在将contentView加为sub view后才起作用。</p>
+
+<p>  2、contentSize：内容的大小，如果想要scrollview进行缩放和平移，那么contensize的大小需要设置为scrollview内容的的最大值。</p>
+
+<p>  3、contentoffset：这个属性是指内容视图相对于scrollview的frame的顶点的偏移量，通过它可以计算当前视图的center point。这个属性非常关键。</p>
+
+<p>  center.x = contentOffset.x + frame.width/2; center.y = contentOffset.y + frame.height/2;</p>
+
+<p>  4、需要遵守 <UIScrollVewDeledate>;协议，并设置代理scrollView.delegate = self;</p>
+
+<p>  5、要想缩放必须设置 maximumZoomScale和minumZoomScale必须设置为不同的值，才能进行缩放。</p>
+
+<p>  缩放过程中进行拖动和放缩的是scrollview的subview，而不是scrollview本身。</p>
+
+<p>  6、必须实现委托方法viewForZoomingInScrollView，返回放缩的view，才可以进行放缩。如果想要控制放缩，可以实现委托方法scrollViewDidEndZooming:withView:atScale:方法。</p>
+
+<p>  7、如果是实现双击或者单击操作，可以实现UITapGestureCognizer作为scrollview的子类，并通过selector关联到相应的单击或双击方法中。</p>
+
+<p>  IOS的坐标系跟WINDOWS坐标系一致，左上角为origin point，向右横向为X轴正放向，向下竖向为Y轴正方向；view的Frame，bounds和center各不相同，其中frame是对父视图的坐标系而言，bounds是对自身的坐标系而言，所以bounds的原点永远都是(0,0)，两者的width和height相同，而center者可以通过两者算出来；center是CGPoint一点，是视图中心相对父视图原点的坐标，所以是bounds.width/2 + frame.X， bounds.Height/2 + frame.Y。</p>
+
+<p>  这些内容熟练掌握后，对地图界面的理解有容易多了。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2012/01/17/20120116%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/'>http://timbao.github.io/blog/2012/01/17/20120116%E5%B7%A5%E4%BD%9C%E8%AE%B0%E5%BD%95/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -534,53 +597,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/12/30/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81)/">记录我的新工作(十)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2011-12-30T05:42:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>5:42 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天状态不太好，车上只看了一小节，没有啥收获。只是对Picker控件有了进一步的了解。</p>
-
-<p>上午收到email，要填写timesheet，结果我的ID和密码还没有下来，发了我的第一封email，跟老美申请timesheet。</p>
-
-<p>继续看程序吧，结果虚拟机无法运行模拟器了，NND，真的喝口凉水都塞牙啊！一直捣鼓到下午3点才把模拟器搞好，弄了半天原来是虚拟机没有连接到Internet导致模拟GPS无法接收到信号。通过排查问题，我将startup部分也略微了解了一些，不停的加断点，不停的注掉代码，运行，查看效果，整个过程太郁闷了，头都大了。</p>
-
-<p>昨天发下了一个问题，解决了我以前一直没有能解决的问题，就是关于单件模式如何释放的问题。NND，刚看到那块代码我还以为是个BUG呢，结果人家用了智能指针，单件模式的释放问题就这么简单的给解决了。</p>
-
-<p>导航和地图的接口也是在地图类中，每个部分例如导航，搜索都有一个对内部的抽象接口类，地图类中将这些类的对象进行了聚合，通过聚合的对象进行相互关联操作。</p>
-
-<p>今天没有状态，看来明天得加把劲了，把今天落下的补上。早日把系统整体弄清楚。</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2011/12/30/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81)/'>http://timbao.github.io/blog/2011/12/30/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81)/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/9">&larr; Older</a>
@@ -602,6 +618,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
       </li>
     
@@ -615,10 +635,6 @@
     
       <li class="post">
         <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
       </li>
     
   </ul>
@@ -638,6 +654,7 @@
 <li class='category'><a href='/blog/categories/vim/'>vim (2)</a></li>
 <li class='category'><a href='/blog/categories/windows-8/'>windows 8 (6)</a></li>
 <li class='category'><a href='/blog/categories/其他技术问题/'>其他技术问题 (3)</a></li>
+<li class='category'><a href='/blog/categories/感悟/'>感悟 (1)</a></li>
 <li class='category'><a href='/blog/categories/移动开发/'>移动开发 (1)</a></li>
 <li class='category'><a href='/blog/categories/记事/'>记事 (33)</a></li>
 <li class='category'><a href='/blog/categories/设计模式学习/'>设计模式学习 (2)</a></li>
@@ -684,7 +701,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Tim Bao -
+  Copyright &copy; 2015 - Tim Bao -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

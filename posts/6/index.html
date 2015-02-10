@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="1、 C++ Metro App ：AddReference Project->Properties->Common Properties->Framework and References->Add new Reference… 2、 C# Metro App ：AddReference &hellip;&#8221;>
+  <meta name="description" content="1、将文件加到工程中 2、选中文件，右键属性->Content->True 原文地址: http://timbao.github.io/blog/2012/06/14/%E5%A6%82%E4%BD%95%E5%B0%86Metro%20%E7%A8%8B%E5%BA%8F%E9%9C%80%E8 &hellip;&#8221;>
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,45 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/06/14/%E5%A6%82%E4%BD%95%E5%B0%86Metro%20%E7%A8%8B%E5%BA%8F%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6%E5%8A%A0%E5%85%A5%E5%88%B0app%E8%BF%90%E8%A1%8C%E7%9B%AE%E5%BD%95%EF%BC%88AppX%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%EF%BC%89/">如何将Metro 程序需要的文件加入到app运行目录（AppX文件夹中）</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-06-14T18:32:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>6:32 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1、将文件加到工程中</p>
+
+<p>2、选中文件，右键属性->Content->True</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2012/06/14/%E5%A6%82%E4%BD%95%E5%B0%86Metro%20%E7%A8%8B%E5%BA%8F%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6%E5%8A%A0%E5%85%A5%E5%88%B0app%E8%BF%90%E8%A1%8C%E7%9B%AE%E5%BD%95%EF%BC%88AppX%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%EF%BC%89/'>http://timbao.github.io/blog/2012/06/14/%E5%A6%82%E4%BD%95%E5%B0%86Metro%20%E7%A8%8B%E5%BA%8F%E9%9C%80%E8%A6%81%E7%9A%84%E6%96%87%E4%BB%B6%E5%8A%A0%E5%85%A5%E5%88%B0app%E8%BF%90%E8%A1%8C%E7%9B%AE%E5%BD%95%EF%BC%88AppX%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%EF%BC%89/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -621,101 +660,6 @@ des:1234567890 abc</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/15/NSMutableArray%E4%BD%BF%E7%94%A8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98/">NSMutableArray使用中遇到的内存问题</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2012-03-15T23:58:00+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>11:58 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>NSMutableArray* array1 = [[NSMutableArray alloc] init];
-</span><span class='line'>NSMutableArray* array2 = [[NSMutableArray alloc] init];
-</span><span class='line'>- (void)pushs:(NSInteger)VALUE {
-</span><span class='line'>    BOOL find = NO;
-</span><span class='line'>    [array2 removeAllObjects];
-</span><span class='line'>    for (NSNumber* item in array1) {
-</span><span class='line'>        NSInteger value = [item intValue];
-</span><span class='line'>        if (value == VALUE) {
-</span><span class='line'>            [array1 removeAllObjects];
-</span><span class='line'>            [array1 addObjectsFromArray: array2];
-</span><span class='line'>            [array1 addObject: item];
-</span><span class='line'>            find = YES;
-</span><span class='line'>            break;
-</span><span class='line'>        }
-</span><span class='line'>        else {
-</span><span class='line'>            [array2 addObject: item];
-</span><span class='line'>        }
-</span><span class='line'>    }
-</span><span class='line'>    if (!find) {
-</span><span class='line'>        NSNumber* newItem = [NSNumber numberWithInt: VALUE];
-</span><span class='line'>        [viewTypeArray addObject:newItem];
-</span><span class='line'>    }
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>当进入if (value == VALUE)后，[array1 addObject: value];执行完毕后，查看array1中的元素类型发现已经不再是NSNumber<em>而是变为NSobject</em>,取出使用报错，bad access。</p>
-
-<p>该问题出现的几率比较随机。单独使用没有任何问题，放到整个工程中就出现问题。通过查看内存，发现NSMutableArray中存储的为NSNumber指针，array1和array2中指针地址一致，有可能是当[array1 removeAllObjects];后，item有可能被自动销毁，导致加入到array1中的值出现错误。修改为：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>NSNumber* topItem = [NSNumber numberWithInt: value];
-</span><span class='line'>[array1 addObject:topItem];</span></code></pre></td></tr></table></div></figure>
-
-
-<p>问题解决。这个问题的根本原因还是内存的问题，objective-c的内存管理比较特殊，有很多隐藏的内存分配和自动回收，个人怀疑numberWithInt方法返回的NSNumber*对象为autorelease。</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2012/03/15/NSMutableArray%E4%BD%BF%E7%94%A8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98/'>http://timbao.github.io/blog/2012/03/15/NSMutableArray%E4%BD%BF%E7%94%A8%E4%B8%AD%E9%81%87%E5%88%B0%E7%9A%84%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/7">&larr; Older</a>
@@ -737,6 +681,10 @@ des:1234567890 abc</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
       </li>
     
@@ -750,10 +698,6 @@ des:1234567890 abc</p>
     
       <li class="post">
         <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
       </li>
     
   </ul>
@@ -773,6 +717,7 @@ des:1234567890 abc</p>
 <li class='category'><a href='/blog/categories/vim/'>vim (2)</a></li>
 <li class='category'><a href='/blog/categories/windows-8/'>windows 8 (6)</a></li>
 <li class='category'><a href='/blog/categories/其他技术问题/'>其他技术问题 (3)</a></li>
+<li class='category'><a href='/blog/categories/感悟/'>感悟 (1)</a></li>
 <li class='category'><a href='/blog/categories/移动开发/'>移动开发 (1)</a></li>
 <li class='category'><a href='/blog/categories/记事/'>记事 (33)</a></li>
 <li class='category'><a href='/blog/categories/设计模式学习/'>设计模式学习 (2)</a></li>
@@ -819,7 +764,7 @@ des:1234567890 abc</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Tim Bao -
+  Copyright &copy; 2015 - Tim Bao -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

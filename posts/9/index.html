@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="从今天开始着重写对工作内容的分析和理解，穿插一些个人感受啥滴！！！ 通过对代码的继续阅读，不仅对已经了解的部分有了更深入的理解，而且发现这个工程实在是内容太丰富了，现在看到的仅仅是冰山一角，里面真的有好多内容可以学习。 这里面核心结构就是地图类，所有关于地图的信息处理，最终都是由它进行操作的。 &hellip;">
+  <meta name="description" content="今天状态不太好，车上只看了一小节，没有啥收获。只是对Picker控件有了进一步的了解。 上午收到email，要填写timesheet，结果我的ID和密码还没有下来，发了我的第一封email，跟老美申请timesheet。 继续看程序吧，结果虚拟机无法运行模拟器了，NND，真的喝口凉水都塞牙啊！ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/30/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81)/">记录我的新工作(十)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-12-30T05:42:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>5:42 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>今天状态不太好，车上只看了一小节，没有啥收获。只是对Picker控件有了进一步的了解。</p>
+
+<p>上午收到email，要填写timesheet，结果我的ID和密码还没有下来，发了我的第一封email，跟老美申请timesheet。</p>
+
+<p>继续看程序吧，结果虚拟机无法运行模拟器了，NND，真的喝口凉水都塞牙啊！一直捣鼓到下午3点才把模拟器搞好，弄了半天原来是虚拟机没有连接到Internet导致模拟GPS无法接收到信号。通过排查问题，我将startup部分也略微了解了一些，不停的加断点，不停的注掉代码，运行，查看效果，整个过程太郁闷了，头都大了。</p>
+
+<p>昨天发下了一个问题，解决了我以前一直没有能解决的问题，就是关于单件模式如何释放的问题。NND，刚看到那块代码我还以为是个BUG呢，结果人家用了智能指针，单件模式的释放问题就这么简单的给解决了。</p>
+
+<p>导航和地图的接口也是在地图类中，每个部分例如导航，搜索都有一个对内部的抽象接口类，地图类中将这些类的对象进行了聚合，通过聚合的对象进行相互关联操作。</p>
+
+<p>今天没有状态，看来明天得加把劲了，把今天落下的补上。早日把系统整体弄清楚。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2011/12/30/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81)/'>http://timbao.github.io/blog/2011/12/30/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81)/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -508,116 +555,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/12/13/C++11%E4%B8%AD%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E7%9A%84%E5%87%A0%E5%A4%A7%E5%8F%98%E5%8C%96/">C++11中值得关注的几大变化</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2011-12-13T17:15:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>13</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>5:15 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>C++11中值得关注的几大变化</p>
-
-<ul>
-<li><p>Lambda表达式</p></li>
-<li><p>自动类型推断和decltype</p></li>
-<li><p>统一初始化语法</p></li>
-<li><p>Deleted和Defaulted函数</p></li>
-<li><p>nullptr</p></li>
-<li><p>委托构造函数</p></li>
-<li><p>右值引用</p></li>
-</ul>
-
-
-<p>C++11标准库</p>
-
-<p>C++于2003年以库技术报告1(TR1)的形式经历了重大改版，TR1包括新的容器类(unordered_set，unordered_map，unordered_multiset和unordered_multimap)和多个支撑正则表达式、元组和函数对象封装器等的新库。随着C++11标准获得通过，TR1和自它首次发布以来新增的库被正式纳入标准的C++标准，下面是C++11标准库的一些特性：</p>
-
-<p>线程库</p>
-
-<p>站在程序员的角度来看，C++11最重要的新功能毫无疑问是并行操作，C++11拥有一个代表执行线程的线程类，在并行环境中用于同步，async()函数模板启动并行任务，为线程独特的数据声明thread_local存储类型。如果你想找C++11线程库的快速教程，请阅读Anthony William的“C++0x中更简单的多线程”。</p>
-
-<p>新的智能指针类</p>
-
-<p>C++98只定义了一个智能指针类auto_ptr，它现在已经被废弃了，C++11引入了新的智能指针类shared_ptr和最近添加的unique_ptr，两者都兼容其它标准库组件，因此你可以在标准容器内安全保存这些智能指针，并使用标准算法操作它们。</p>
-
-<p>新的算法</p>
-
-<p>C++11标准库定义了新的算法模仿all_of()，any_of()和none_of()操作，下面列出适用于ispositive()到(first, first+n)范围，且使用all_of(), any_of() and none_of() 检查范围的属性的谓词：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;algorithm&gt;
-</span><span class='line'>//C++11 code
-</span><span class='line'>//are all of the elements positive?
-</span><span class='line'>all_of(first, first+n, ispositive()); //false
-</span><span class='line'>//is there at least one positive element?
-</span><span class='line'>any_of(first, first+n, ispositive());//true
-</span><span class='line'>// are none of the elements positive?
-</span><span class='line'>none_of(first, first+n, ispositive()); //false</span></code></pre></td></tr></table></div></figure>
-
-
-<p>一种新型copy_n算法也可用了，使用copy_n()函数，复制一个包含5个元素的数组到另一个数组的代码如下：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#include
-</span><span class='line'>int source[5]={0,12,34,50,80};
-</span><span class='line'>int target[5];
-</span><span class='line'>//copy 5 elements from source to target
-</span><span class='line'>copy_n(source,5,target);</span></code></pre></td></tr></table></div></figure>
-
-
-<p>算法iota()创建了一个值顺序递增的范围，好像分配一个初始值给*first，然后使用前缀++使值递增，在下面的代码中，iota()分配连续值{10,11,12,13,14}给数组arr，并将{‘a’,’b’,’c’}分配给char数组c。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;numeric&gt;
-</span><span class='line'>int a[5]={0};
-</span><span class='line'>char c[3]={0};
-</span><span class='line'>iota(a, a+5, 10); //changes a to {10,11,12,13,14}
-</span><span class='line'>iota(c, c+3, 'a'); //{'a','b','c'}</span></code></pre></td></tr></table></div></figure>
-
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2011/12/13/C++11%E4%B8%AD%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E7%9A%84%E5%87%A0%E5%A4%A7%E5%8F%98%E5%8C%96/'>http://timbao.github.io/blog/2011/12/13/C++11%E4%B8%AD%E5%80%BC%E5%BE%97%E5%85%B3%E6%B3%A8%E7%9A%84%E5%87%A0%E5%A4%A7%E5%8F%98%E5%8C%96/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/10">&larr; Older</a>
@@ -639,6 +576,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
       </li>
     
@@ -652,10 +593,6 @@
     
       <li class="post">
         <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
       </li>
     
   </ul>
@@ -675,6 +612,7 @@
 <li class='category'><a href='/blog/categories/vim/'>vim (2)</a></li>
 <li class='category'><a href='/blog/categories/windows-8/'>windows 8 (6)</a></li>
 <li class='category'><a href='/blog/categories/其他技术问题/'>其他技术问题 (3)</a></li>
+<li class='category'><a href='/blog/categories/感悟/'>感悟 (1)</a></li>
 <li class='category'><a href='/blog/categories/移动开发/'>移动开发 (1)</a></li>
 <li class='category'><a href='/blog/categories/记事/'>记事 (33)</a></li>
 <li class='category'><a href='/blog/categories/设计模式学习/'>设计模式学习 (2)</a></li>
@@ -721,7 +659,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Tim Bao -
+  Copyright &copy; 2015 - Tim Bao -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

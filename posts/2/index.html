@@ -9,8 +9,14 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="这篇文章虽然叫做“如何在Vim中使用Terminal”，但是我这里要说的是在Windows下使用。 OS： Windows 8 64bit
-Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通信来操作terminal command的。 &hellip;">
+  <meta name="description" content="Use the wmctrl tools could maximize the windows of gvim in ubuntu. But I find a small issue for that. Here is the wrong script: 1
+2
+3
+4
+5
+6
+7
+8 if &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +73,65 @@ Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/21/gvim%20use%20wmctrl%20in%20ubuntu/">Gvim Use Wmctrl in Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-06-21T03:35:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>21</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>3:35 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>  Use the wmctrl tools could maximize the windows of gvim in ubuntu. But I find a small issue for that.</p>
+
+<p>  Here is the wrong script:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  if has("win32")
+</span><span class='line'>    au GUIEnter * simalt ~x
+</span><span class='line'>else
+</span><span class='line'>    au GUIEnter * call MaximizeWindow()
+</span><span class='line'>endif
+</span><span class='line'>function! MaximizeWindow()
+</span><span class='line'>    silent !wmctrl -r :ACTIVE: -b add, maximized_vert,maximized_horz
+</span><span class='line'>endfunction</span></code></pre></td></tr></table></div></figure>
+
+
+<p>   You could see that between &ldquo;,&rdquo; and &ldquo;maximized_vert&rdquo; on line 8, there is a blank. It&rsquo;s the reason why the script can&rsquo;t works. So I remove the blank and it woks fine. So strange, because this scripts works well on my mac mini.</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/06/21/gvim%20use%20wmctrl%20in%20ubuntu/'>http://timbao.github.io/blog/2013/06/21/gvim%20use%20wmctrl%20in%20ubuntu/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -608,51 +673,6 @@ Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B013/">More Effective C++读书笔记13</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2013-01-11T19:47:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>11</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:47 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Item 13：通过引用（reference）捕获异常</h2>
-
-<p>   为什么要通过引用捕获异常，引用捕获异常相对值和指针捕获有何优点？</p>
-
-<p>   通过Item12学习可以看到首先，值捕获异常会调用拷贝构造函数2次，而引用捕获只有一次，效率方面，引用要高于值。可以按效率高低进行下排序，由高到低：指针->;引用->;值。</p>
-
-<p>   其次值传递在继承体系中会导致slice问题，即子类会被切割为基类。通过这两点就可以完全排除值捕获异常的可能性了。那么指针和引用相比，为什么要采用引用呢？</p>
-
-<p>   如果要是通过指针捕获异常的话，那么传递过来的指针是堆栈分配的？还是静态指针？还是栈对象的取地址操作获取的指针？根据不同的情况，会有不同的结果。如果是堆栈分配的指针，那么需要释放内存，如果通过局部对象的地址获取的指针，有可能在捕获到后，已经超过作用域，而指向一个已经销毁的对象，所以对catch来说，通过指针捕获异常，对异常的处理要复杂得多，也难以保持统一。而通过引用捕获异常却没有这些问题，所以当然最终选择最优的方案，通过引用捕获异常。</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B013/'>http://timbao.github.io/blog/2013/01/11/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B013/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/3">&larr; Older</a>
@@ -674,6 +694,10 @@ Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
       </li>
     
@@ -687,10 +711,6 @@ Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通
     
       <li class="post">
         <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
       </li>
     
   </ul>
@@ -710,6 +730,7 @@ Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通
 <li class='category'><a href='/blog/categories/vim/'>vim (2)</a></li>
 <li class='category'><a href='/blog/categories/windows-8/'>windows 8 (6)</a></li>
 <li class='category'><a href='/blog/categories/其他技术问题/'>其他技术问题 (3)</a></li>
+<li class='category'><a href='/blog/categories/感悟/'>感悟 (1)</a></li>
 <li class='category'><a href='/blog/categories/移动开发/'>移动开发 (1)</a></li>
 <li class='category'><a href='/blog/categories/记事/'>记事 (33)</a></li>
 <li class='category'><a href='/blog/categories/设计模式学习/'>设计模式学习 (2)</a></li>
@@ -756,7 +777,7 @@ Plugin：ConqueTerm.vim （该插件是利用socket与真正的terminal进行通
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Tim Bao -
+  Copyright &copy; 2015 - Tim Bao -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

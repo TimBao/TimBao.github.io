@@ -9,7 +9,18 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="Item 2：尽量使用C++风格的类型转换 C语言的类型转换缺点 1.1 过于粗鲁，允许在任何类型之间进行转换。 1.2 在程序语句中难以识别。 1.3 类型转换失败不可获知。 2. C++类型转换符的介绍 2.1.static_cast 在功能上基本上与 C 风格的类型转换一样强大，含义也一样。 &hellip;">
+  <meta name="description" content="Item 3: 不要对数组使用多态 语言规范中说通过一个基类指针来删除一个含有派生类对象的数组，结果将是不确定的。 1
+2
+3
+4
+5
+6
+7
+8
+9
+class BST { ... };
+class BalancedBST: public BST { ... };
+void &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +77,69 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B03/">More Effective C++读书笔记3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-05T17:42:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>5:42 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 3: 不要对数组使用多态</h2>
+
+<p>语言规范中说通过一个基类指针来删除一个含有派生类对象的数组，结果将是不确定的。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class BST { ... };
+</span><span class='line'>class BalancedBST: public BST { ... };
+</span><span class='line'>void printBSTArray(ostream& s,const BST array[], int numElements)
+</span><span class='line'>{
+</span><span class='line'>    for (int i = 0; i &lt; numElements; )
+</span><span class='line'>    {
+</span><span class='line'>        s &lt;&lt; array[i]; //假设 BST 类重载了操作符&lt;&lt;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>编译器原先已经假设数组中元素与 BST 对象的大小一致，但是现在数组中每一个对象大小却与 BalancedBST 一致。派生类的长度通常都比基类要长。我们料想 BalancedBST 对象长度的比 BST 长。如果如此的话，printBSTArray 函数生成的指针算法将是错误的，没有人知道如果用 BalancedBST 数组来执行 printBSTArray 函数将会发生什么样的后果。不论是什么后果都是令人不愉快的。</p>
+
+<p>值得注意的是如果你不从一个具体类（concrete classes） （例如 BST）派生出另一个具体类（例如 BalancedBST），那么你就不太可能犯这种使用多态性数组的错误。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B03/'>http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B03/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -674,43 +748,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/09/%E5%85%B3%E4%BA%8E%E8%80%81%E5%A4%96%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E7%9C%8B%E6%B3%95/">关于老外程序员的看法</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2012-11-09T05:24:00+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>5:24 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><blockquote><p>这里只写一个一直给我们review code 的谢尔盖，一个年轻的俄罗斯人。给我留下的印象是对待技术比较认真，对待每个review都非常仔细。连变量命名的大小写都没有放过。尤其是在一些功能的实现上面，如果有更好的实现，他一定会告诉你。但是你跟他矫情下，他也一定会放过你，真是一个非常有意思的人。我的一个review来来回回review了三四遍，才顺利通过。虽然费了半天劲，但是效果还是蛮好的。</p></blockquote>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2012/11/09/%E5%85%B3%E4%BA%8E%E8%80%81%E5%A4%96%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E7%9C%8B%E6%B3%95/'>http://timbao.github.io/blog/2012/11/09/%E5%85%B3%E4%BA%8E%E8%80%81%E5%A4%96%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E7%9C%8B%E6%B3%95/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/5">&larr; Older</a>
@@ -732,6 +769,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
       </li>
     
@@ -745,10 +786,6 @@
     
       <li class="post">
         <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a>
       </li>
     
   </ul>
@@ -768,6 +805,7 @@
 <li class='category'><a href='/blog/categories/vim/'>vim (2)</a></li>
 <li class='category'><a href='/blog/categories/windows-8/'>windows 8 (6)</a></li>
 <li class='category'><a href='/blog/categories/其他技术问题/'>其他技术问题 (3)</a></li>
+<li class='category'><a href='/blog/categories/感悟/'>感悟 (1)</a></li>
 <li class='category'><a href='/blog/categories/移动开发/'>移动开发 (1)</a></li>
 <li class='category'><a href='/blog/categories/记事/'>记事 (33)</a></li>
 <li class='category'><a href='/blog/categories/设计模式学习/'>设计模式学习 (2)</a></li>
@@ -814,7 +852,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2014 - Tim Bao -
+  Copyright &copy; 2015 - Tim Bao -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
