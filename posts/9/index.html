@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="今天状态不太好，车上只看了一小节，没有啥收获。只是对Picker控件有了进一步的了解。 上午收到email，要填写timesheet，结果我的ID和密码还没有下来，发了我的第一封email，跟老美申请timesheet。 继续看程序吧，结果虚拟机无法运行模拟器了，NND，真的喝口凉水都塞牙啊！ &hellip;">
+  <meta name="description" content="又是一天的代码，眼干头大，今天主要将前几天的内容总体在捋顺一遍，深挖代码的细节，不断的提问，不断的解决问题，通过这个过程达到深入。这几天一直通过这样的努力来学习，发现有很大帮助。首先是看代码有了明确的目标，每次将问题解决，都有小小的成就感，可以促进继续下去。人老了，记性不好了，但是方法确是更多了， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,75 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/31/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81%E4%B8%80)/">记录我的新工作(十一)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2011-12-31T05:01:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2011</span></span> <span class='time'>5:01 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>又是一天的代码，眼干头大，今天主要将前几天的内容总体在捋顺一遍，深挖代码的细节，不断的提问，不断的解决问题，通过这个过程达到深入。这几天一直通过这样的努力来学习，发现有很大帮助。首先是看代码有了明确的目标，每次将问题解决，都有小小的成就感，可以促进继续下去。人老了，记性不好了，但是方法确是更多了，更有效了，这也是工作年限的一种附加值吧！
+  第一个细节点就是CALayer的方法andSubLayer，可以添加重复的layer，不会重复，只是将该层置前！</p>
+
+<p>第二个细节点是关于C/C++的左移运算，</p>
+
+<p>笨死了，查了资料才发现原来是对左边的表达式或值进行左移，移动位数为右值，以前一直理解的是相反的。NND</p>
+
+<p>第三通过跟踪运行，对pickerview控件的数据源的加载了解了实现原理。通过&lt;UIPickerViewDelegate, UIPickerViewDataSource>;协议的方法的重写，自动实现对数据的读入。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="p">-</span> <span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span> <span class="nf">pickerView:</span> <span class="p">(</span><span class="bp">UIPickerView</span> <span class="o">*</span><span class="p">)</span><span class="nv">pickerView</span>
+</span><span class='line'><span class="nf">numberOfRowsInComponent:</span> <span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span> <span class="nv">component</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[</span><span class="n">pickerData</span> <span class="n">count</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'><span class="cp">#pragma mark Picker Delegate Methods</span>
+</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="nf">pickerView:</span><span class="p">(</span><span class="bp">UIPickerView</span> <span class="o">*</span><span class="p">)</span><span class="nv">pickerView</span> <span class="nf">titleForRow:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span> <span class="nv">row</span>
+</span><span class='line'><span class="nf">forComponent:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span> <span class="nv">component</span><span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">[</span><span class="n">pickerData</span> <span class="nl">objectAtIndex</span><span class="p">:</span><span class="n">row</span><span class="p">];</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>然后就是对地图数据的显示和处理的深入了解了，目前对于所有流程都很清楚，但是在对平移和缩放的时候，地图数据的计算上面还有点小疑问需要明天继续，争取2012年来到之前把这块全部解决掉。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2011/12/31/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81%E4%B8%80)/'>http://timbao.github.io/blog/2011/12/31/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81%E4%B8%80)/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -504,57 +573,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/12/15/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C%EF%BC%88%E4%B8%80%EF%BC%89/">记录我的新工作（一）</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2011-12-15T06:10:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>6:10 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>  今天 第一天入职，兴奋的同时也有点点担忧。7点起床，路上遭遇堵车，打了个的还差点迟到，幸好公司上班时间比较灵活，其他人还没有到，我还等了10几分钟。</p>
-
-<p>  IT带我到我的新工位，空空如野啊，就一台孤零零的电脑摆在那。桌子好脏好脏，搽了两张纸都没搽干净。老大给我介绍了下部门成员，10几个人，人数最少的部门，估计都是</p>
-
-<p>  精英。哈哈（我把自己也列为精英了！）</p>
-
-<p>  工作机开机，NND，竟然是全英文系统，软件都是英文，NB。我头都大了。IT给我配置了EMAIL后就不再管我了，我只好按照文档自己搞了，搞了个MSN，还不行，最后还是IT给搞定的。里面只有老大一个人，截止到下班才3个人。5555</p>
-
-<p>  根据老大的任务和安排的导师R和J两个，我开始了我的工作。R借给我两本书让我学习，又给我搞了个VM先凑合用，新机器过两天才能弄来。我只好按照老大的task list开始学习。</p>
-
-<p>  我把任务中的内容先大致浏览了一遍，时间比较充裕，全部完成需要20几天，但是内容也不少，比较英文有限，进度肯定不如看中文的快。需要把任务分类整理下。我把任务先简单分解为两大类：一：学习类，自己可以完成，有资料的。二、需要帮助类，需要同事帮忙指导的。第一天先把自己可以完成的做个任务，去掉已经学习的部分，剩余就不多了，可以尽快搞定。行动！</p>
-
-<p>  语言基础已经基本过一遍，这个就过了，可以放到休息时间看。规范类的内容可以看，C++编码规范，OBJC编码规范，code review process，startguide等等，看的头都大了。期间又办理了一些简单的手续。到下班了还差一个规范没看完。做了记录，简单整理下今天内容。也已经19点了，部门成员都已经走了，收拾东西果断走人。嘿嘿。遇到HR，还说我第一天就加班，(<em>^__^</em>) 嘻嘻……</p>
-
-<p>  加油！明天更好！</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2011/12/15/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C%EF%BC%88%E4%B8%80%EF%BC%89/'>http://timbao.github.io/blog/2011/12/15/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C%EF%BC%88%E4%B8%80%EF%BC%89/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/10">&larr; Older</a>
@@ -576,6 +594,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
       </li>
     
@@ -591,10 +613,6 @@
         <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -606,6 +624,7 @@
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (1)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>

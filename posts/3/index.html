@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="Item 13：通过引用（reference）捕获异常 为什么要通过引用捕获异常，引用捕获异常相对值和指针捕获有何优点？ 通过Item12学习可以看到首先，值捕获异常会调用拷贝构造函数2次，而引用捕获只有一次，效率方面，引用要高于值。可以按效率高低进行下排序，由高到低：指针->;引用->;值。 &hellip;&#8221;>
+  <meta name="description" content="Item 14：审慎使用异常规格(exception specifications) 何为异常规格，通俗的理解就是对异常的规范的说明。它明确地描述了一个函数可以抛出什么样的异常。但是它不只是一个有趣的注释。编译器在编译时有时能够检测到异常规格的不一致。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,104 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/12/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B014/">More Effective C++读书笔记14</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-12T19:39:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>12</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>7:39 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 14：审慎使用异常规格(exception specifications)</h2>
+
+<p>  何为异常规格，通俗的理解就是对异常的规范的说明。它明确地描述了一个函数可以抛出什么样的异常。但是它不只是一个有趣的注释。编译器在编译时有时能够检测到异常规格的不一致。而且如果一个函数抛出一个不在异常规格范围里的异常，系统在运行时能够检测出这个错误，然后一个特殊函数unexpected将被自动地调用。异常规格既可以做为一个指导性文档同时也是异常使用的强制约束机制。</p>
+
+<p>  不过在通常情况下，美貌只是一层皮，外表的美丽并不代表其内在的素质。函数unexpected缺省的行为是调用函数terminate，而terminate缺省的行为是调用函数abort，所以一个违反异常规格的程序其缺省的行为就是halt（停止运行）。在激活的栈中的局部变量没有被释放，因为abort在关闭程序时不进行这样的清除操作。对异常规格的触犯变成了一场并不应该发生的灾难。</p>
+
+<p>  一个函数调用了另一个函数，并且后者可能抛出一个违反前者异常规格的异常，（A函数调用B函数，但因为B函数可能抛出一个不在A函数异常规格之内的异常，所以这个函数调用就违反了A函数的异常规格  译者注）编译器不对此种情况进行检测，并且语言标准也禁止编译器拒绝这种调用方式（尽管可以显示警告信息）。</p>
+
+<p>  虽然防止抛出unexpected异常是不现实的，但是C++允许你用其它不同的异常类型替换unexpected异常，你能够利用这个特性。例如你希望所有的unexpected异常都被替换为UnexpectedException对象。你能这样编写代码：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class UnexpectedException {};          // 所有的unexpected异常对象被
+</span><span class='line'>                                       //替换为这种类型对象
+</span><span class='line'>void convertUnexpected()               // 如果一个unexpected异常被
+</span><span class='line'>{                                      // 抛出，这个函数被调用
+</span><span class='line'>    throw UnexpectedException();
+</span><span class='line'>}
+</span><span class='line'>set_unexpected(convertUnexpected);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  通过用convertUnexpected函数替换缺省的unexpected函数，来使上述代码开始运行。
+  下面看另外一个书中例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Session {
+</span><span class='line'>public:
+</span><span class='line'>    ~Session();
+</span><span class='line'>  ...
+</span><span class='line'>private:
+</span><span class='line'>    static void logDestruction(Session *objAddr) throw();
+</span><span class='line'>};
+</span><span class='line'>Session::~Session()
+</span><span class='line'>{
+</span><span class='line'>   try
+</span><span class='line'>   {
+</span><span class='line'>       logDestruction(this);
+</span><span class='line'>   }
+</span><span class='line'>   catch (...) {  }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  session的析构函数调用logDestruction记录有关session对象被释放的信息，它明确地要捕获从logDestruction抛出的所有异常。但是logDestruction的异常规格表示其不抛出任何异常。现在假设被logDestruction调用的函数抛出了一个异常，而logDestruction没有捕获。我们不会期望发生这样的事情，但正如我们所见，很容易就会写出违反异常规格的代码。当这个异常通过logDestruction传递出来，unexpected将被调用，缺省情况下将导致程序终止执行。这是一个正确的行为，但这是session析构函数的作者所希望的行为么？作者想处理所有可能的异常，所以好像不应该不给session析构函数里的catch块执行的机会就终止程序。如果logDestruction没有异常规格，这种事情就不会发生（一种防止的方法是如上所描述的那样替换unexpected）。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/12/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B014/'>http://timbao.github.io/blog/2013/01/12/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B014/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1105,55 +1203,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B04/">More Effective C++读书笔记4</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2013-01-05T17:43:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>5:43 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Item 4：避免无用的缺省构造函数</h2>
-
-<p>没有缺省构造函数会导致：</p>
-
-<p>  1.无法创建该类的数组形式。</p>
-
-<p>  2.无法在许多基于模板的容器类里使用。</p>
-
-<p>设计虚基类时所面临的要提供缺省构造函数还是不提供缺省构造函数的两难决策：</p>
-
-<p>  1.不提供缺省构造函数的虚基类，很难与其进行合作。因为几乎所有的派生类在实例化时都必须给虚基类构造函数提供参数。</p>
-
-<p>  2.提供无意义的缺省构造函数也会影响类的工作效率。</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B04/'>http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B04/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/4">&larr; Older</a>
@@ -1175,6 +1224,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
       </li>
     
@@ -1190,10 +1243,6 @@
         <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -1205,6 +1254,7 @@
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (1)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>

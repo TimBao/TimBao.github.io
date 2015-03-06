@@ -9,7 +9,59 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="1、将文件加到工程中 2、选中文件，右键属性->Content->True 原文地址: http://timbao.github.io/blog/2012/06/14/%E5%A6%82%E4%BD%95%E5%B0%86Metro%20%E7%A8%8B%E5%BA%8F%E9%9C%80%E8 &hellip;&#8221;>
+  <meta name="description" content="1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +118,315 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/06/14/stdstring%20%E4%B8%8E%20stdwstring%20%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%88%E7%8E%87%E6%AF%94%E8%BE%83/">Std::string 与 Std::wstring 转换方法的效率比较</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-06-14T21:18:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>14</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>9:18 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>// Calls the provided work function and returns the number of milliseconds
+</span><span class='line'>// that it takes to call that function.
+</span><span class='line'>template &lt;class Function&gt;;
+</span><span class='line'>__int64 time_call(Function&& f)
+</span><span class='line'>{
+</span><span class='line'>    __int64 begin = GetTickCount64();
+</span><span class='line'>    f();
+</span><span class='line'>    return GetTickCount64() - begin;
+</span><span class='line'>}
+</span><span class='line'>// Use WideCharToMultiByte and MultiByteToWideChar
+</span><span class='line'>string WChar2Ansi(const wchar_t* pwszSrc)
+</span><span class='line'>{
+</span><span class='line'>    int nLen = WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, NULL, 0, NULL, NULL);
+</span><span class='line'>    if (nLen&lt;= 0) return string("");
+</span><span class='line'>    char* pszDst = new char[nLen];
+</span><span class='line'>    if (NULL == pszDst) return string("");
+</span><span class='line'>    WideCharToMultiByte(CP_ACP, 0, pwszSrc, -1, pszDst, nLen, NULL, NULL);
+</span><span class='line'>    pszDst[nLen -1] = 0;
+</span><span class='line'>    string strTemp(pszDst);
+</span><span class='line'>    delete [] pszDst;
+</span><span class='line'>    return strTemp;
+</span><span class='line'>}
+</span><span class='line'>wstring Ansi2WChar(const char* pszSrc, int nLen)
+</span><span class='line'>{
+</span><span class='line'>    int nSize = MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, 0, 0);
+</span><span class='line'>    if(nSize &lt;= 0) return NULL;
+</span><span class='line'>    wchar_t *pwszDst = new wchar_t[nSize+1];
+</span><span class='line'>    if( NULL == pwszDst) return NULL;
+</span><span class='line'>    MultiByteToWideChar(CP_ACP, 0, pszSrc, nLen, pwszDst, nSize);
+</span><span class='line'>    pwszDst[nSize] = 0;
+</span><span class='line'>    if( pwszDst[0] == 0xFEFF)                    // skip Oxfeff
+</span><span class='line'>        for(int i = 0; i &lt; nSize; i ++)
+</span><span class='line'>            pwszDst[i] = pwszDst[i+1];
+</span><span class='line'>    wstring wcharString(pwszDst);
+</span><span class='line'>    delete pwszDst;
+</span><span class='line'>    return wcharString;
+</span><span class='line'>}
+</span><span class='line'>// Use wcstombs_s and mbstowcs_s
+</span><span class='line'>string ws2s(wstring ws)
+</span><span class='line'>{
+</span><span class='line'>    const wchar_t* Source = ws.c_str();
+</span><span class='line'>    size_t size = 2 * ws.size() + 1;
+</span><span class='line'>    char* Dest = new char[size];
+</span><span class='line'>    memset(Dest,0, size);
+</span><span class='line'>    size_t len = 0;
+</span><span class='line'>    wcstombs(Dest, Source, size);
+</span><span class='line'>    //wcstombs_s(&len, Dest, size, Source, size);
+</span><span class='line'>    string result = Dest;
+</span><span class='line'>    delete [] Dest;
+</span><span class='line'>    return result;
+</span><span class='line'>}
+</span><span class='line'>wstring s2ws(string s)
+</span><span class='line'>{
+</span><span class='line'>    const char* Source = s.c_str();
+</span><span class='line'>    size_t size = s.size() + 1;
+</span><span class='line'>    wchar_t* Dest = new wchar_t[size];
+</span><span class='line'>    wmemset(Dest, 0, size);
+</span><span class='line'>    size_t len = 0;
+</span><span class='line'>    mbstowcs(Dest, Source, size);
+</span><span class='line'>    //mbstowcs_s(&len, Dest, size, Source, size);
+</span><span class='line'>    wstring result = Dest;
+</span><span class='line'>    delete [] Dest;
+</span><span class='line'>    return result;
+</span><span class='line'>}
+</span><span class='line'>// Testing
+</span><span class='line'>    __int64 elapsed;
+</span><span class='line'>    string input = "Hello, World.\\XXX\\XXX";
+</span><span class='line'>    wstring winput = L"Hello, World.\\XXX\\XXX";
+</span><span class='line'>    wchar_t dest[1000];
+</span><span class='line'>    int count = 10000;
+</span><span class='line'>    elapsed = time_call([input, &count]
+</span><span class='line'>    {
+</span><span class='line'>        while (count)
+</span><span class='line'>        {
+</span><span class='line'>            Ansi2WChar(input.c_str(), input.length());
+</span><span class='line'>            count--;
+</span><span class='line'>        }
+</span><span class='line'>    });
+</span><span class='line'>    memset(dest, 0, 1000);
+</span><span class='line'>    _itow_s(elapsed, dest, 10);
+</span><span class='line'>    OutputDebugStringW(L"Time:");
+</span><span class='line'>    OutputDebugStringW(dest);
+</span><span class='line'>    OutputDebugStringW(L"ms\n");
+</span><span class='line'>    count = 10000;
+</span><span class='line'>    elapsed = 0;
+</span><span class='line'>    elapsed = time_call([input, &count]
+</span><span class='line'>    {
+</span><span class='line'>        while (count)
+</span><span class='line'>        {
+</span><span class='line'>            s2ws(input);
+</span><span class='line'>            count--;
+</span><span class='line'>        }
+</span><span class='line'>    });
+</span><span class='line'>    memset(dest, 0, 1000);
+</span><span class='line'>    _itow_s(elapsed, dest, 10);
+</span><span class='line'>    OutputDebugStringW(L"Time:");
+</span><span class='line'>    OutputDebugStringW(dest);
+</span><span class='line'>    OutputDebugStringW(L"ms\n");
+</span><span class='line'>    count = 10000;
+</span><span class='line'>    elapsed = 0;
+</span><span class='line'>    elapsed = time_call([winput, &count]
+</span><span class='line'>    {
+</span><span class='line'>        while (count)
+</span><span class='line'>        {
+</span><span class='line'>            WChar2Ansi(winput.c_str());
+</span><span class='line'>            count--;
+</span><span class='line'>        }
+</span><span class='line'>    });
+</span><span class='line'>    memset(dest, 0, 1000);
+</span><span class='line'>    _itow_s(elapsed, dest, 10);
+</span><span class='line'>    OutputDebugStringW(L"Time:");
+</span><span class='line'>    OutputDebugStringW(dest);
+</span><span class='line'>    OutputDebugStringW(L"ms\n");
+</span><span class='line'>    count = 10000;
+</span><span class='line'>    elapsed = 0;
+</span><span class='line'>    elapsed = time_call([winput, &count]
+</span><span class='line'>    {
+</span><span class='line'>        while (count)
+</span><span class='line'>        {
+</span><span class='line'>            ws2s(winput);
+</span><span class='line'>            count--;
+</span><span class='line'>        }
+</span><span class='line'>    });
+</span><span class='line'>    memset(dest, 0, 1000);
+</span><span class='line'>    _itow_s(elapsed, dest, 10);
+</span><span class='line'>    OutputDebugStringW(L"Time:");
+</span><span class='line'>    OutputDebugStringW(dest);
+</span><span class='line'>    OutputDebugStringW(L"ms\n");</span></code></pre></td></tr></table></div></figure>
+
+
+<p>输出：</p>
+
+<p>  Time:78ms</p>
+
+<p>  Time:94ms</p>
+
+<p>  Time:62ms</p>
+
+<p>  Time:109ms</p>
+
+<p>从输出结果可以看出</p>
+
+<p>WideCharToMultiByte和MultiByteToWideChar转换效率要比mbstowcs和wcstombs高。</p>
+
+<p>注意：如果使用mbstowcs则需要Disable Specific Warnings：4996</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2012/06/14/stdstring%20%E4%B8%8E%20stdwstring%20%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%88%E7%8E%87%E6%AF%94%E8%BE%83/'>http://timbao.github.io/blog/2012/06/14/stdstring%20%E4%B8%8E%20stdwstring%20%E8%BD%AC%E6%8D%A2%E6%96%B9%E6%B3%95%E7%9A%84%E6%95%88%E7%8E%87%E6%AF%94%E8%BE%83/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -623,43 +984,6 @@ des:1234567890 abc</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/03/24/stdfind/">Std:find</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2012-03-24T01:42:00+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>1:42 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>把之前使用iterator 进行循环检测的方法都改成使用find方法进行查找，更快，代码更简洁，清晰。</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2012/03/24/stdfind/'>http://timbao.github.io/blog/2012/03/24/stdfind/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/7">&larr; Older</a>
@@ -681,6 +1005,10 @@ des:1234567890 abc</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
       </li>
     
@@ -696,10 +1024,6 @@ des:1234567890 abc</p>
         <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -711,6 +1035,7 @@ des:1234567890 abc</p>
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (1)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>

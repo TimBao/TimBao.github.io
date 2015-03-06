@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="今天老大没来，我今天的考核又泡汤了，哈哈，也好有时间可以再深入学习下。把自己几百块的餐票都给了j，嘿嘿，团队就是要相互帮助。 今天继续对上周的疑问进行攻克，编写DEMO深入进去，对UI进行了解，也对Objective-C进行深入了解。 UIScrollView的几个属性和委托方法： 1、 &hellip;">
+  <meta name="description" content="这两天老大给分配了新的任务，学习最新的NBI-MapKit，编写地图DEMO，激动，终于要开始编程了。SDK很简单，一个MapKit.framwork，包含两个文件MapKit.docset和MapKit.framework。包括6个headers和一个静态库，真的很简单。 再细看docset， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/19/20120118%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/">20120118工作总结</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-01-19T06:55:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>6:55 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>这两天老大给分配了新的任务，学习最新的NBI-MapKit，编写地图DEMO，激动，终于要开始编程了。SDK很简单，一个MapKit.framwork，包含两个文件MapKit.docset和MapKit.framework。包括6个headers和一个静态库，真的很简单。</p>
+
+<p>再细看docset，发现模块也不是特别多，但是接口多的不行，在原有的CCI基础上又包装一层，以后值做UI了，</p>
+
+<p>方便了开发但是学到的东西就少了。以后还得学习底层开发。自己捣鼓了一下午，终于学会了如何导入framework和.a库，如何设置编译选项，丫的编译还是有问题。已经完全按照说明做了，郁闷。</p>
+
+<p>今天把错误跟QA说了下，原来丫的给我的版本不对。没办法，根据她给我的WEB SITE，自己注册下载了最新的SDK，哈哈把Sample也一起下载了，爽。果断重建工程，在buildphase中加入framework和.a及相关的几个framework和库，加上编译条件-lstdc++，编译，successed！耶。</p>
+
+<p>下面就开始UI布局了，按照原来的UI样子，学着使用Interface Builder进行UI设计，娘的，跟使用MFC做界面一样麻烦，弄了半天才弄好了一个Navigation和ToolBar，最后弄好了Tray。可以鱼目混珠啦。哈哈，做了个假的Map。</p>
+
+<p>这两天学到了如何建立Iphone工程，如何导入第三方库和framework，如何设置编译选项，如何使用UIView等控件进行界面设计。东西很杂，但是都是基础，还需锻炼。尤其是对整个工程的架构上面来看，还不是很熟练，在年前这几天争取要把UI全部做出来，先不考虑架构，只做UI和基本功能，等基本功能做完后可以考虑第一次重构将架构重新设计，这时候应该轻车熟路了。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2012/01/19/20120118%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/'>http://timbao.github.io/blog/2012/01/19/20120118%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -528,75 +575,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/12/31/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81%E4%B8%80)/">记录我的新工作(十一)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2011-12-31T05:01:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>31</span><span class='date-suffix'>st</span>, <span class='date-year'>2011</span></span> <span class='time'>5:01 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>又是一天的代码，眼干头大，今天主要将前几天的内容总体在捋顺一遍，深挖代码的细节，不断的提问，不断的解决问题，通过这个过程达到深入。这几天一直通过这样的努力来学习，发现有很大帮助。首先是看代码有了明确的目标，每次将问题解决，都有小小的成就感，可以促进继续下去。人老了，记性不好了，但是方法确是更多了，更有效了，这也是工作年限的一种附加值吧！
-  第一个细节点就是CALayer的方法andSubLayer，可以添加重复的layer，不会重复，只是将该层置前！</p>
-
-<p>第二个细节点是关于C/C++的左移运算，</p>
-
-<p>笨死了，查了资料才发现原来是对左边的表达式或值进行左移，移动位数为右值，以前一直理解的是相反的。NND</p>
-
-<p>第三通过跟踪运行，对pickerview控件的数据源的加载了解了实现原理。通过&lt;UIPickerViewDelegate, UIPickerViewDataSource>;协议的方法的重写，自动实现对数据的读入。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='objective-c'><span class='line'><span class="p">-</span> <span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span> <span class="nf">pickerView:</span> <span class="p">(</span><span class="bp">UIPickerView</span> <span class="o">*</span><span class="p">)</span><span class="nv">pickerView</span>
-</span><span class='line'><span class="nf">numberOfRowsInComponent:</span> <span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span> <span class="nv">component</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="p">[</span><span class="n">pickerData</span> <span class="n">count</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'><span class="cp">#pragma mark Picker Delegate Methods</span>
-</span><span class='line'><span class="p">-</span> <span class="p">(</span><span class="bp">NSString</span> <span class="o">*</span><span class="p">)</span> <span class="nf">pickerView:</span><span class="p">(</span><span class="bp">UIPickerView</span> <span class="o">*</span><span class="p">)</span><span class="nv">pickerView</span> <span class="nf">titleForRow:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span> <span class="nv">row</span>
-</span><span class='line'><span class="nf">forComponent:</span><span class="p">(</span><span class="bp">NSInteger</span><span class="p">)</span> <span class="nv">component</span><span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="p">[</span><span class="n">pickerData</span> <span class="nl">objectAtIndex</span><span class="p">:</span><span class="n">row</span><span class="p">];</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>然后就是对地图数据的显示和处理的深入了解了，目前对于所有流程都很清楚，但是在对平移和缩放的时候，地图数据的计算上面还有点小疑问需要明天继续，争取2012年来到之前把这块全部解决掉。</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2011/12/31/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81%E4%B8%80)/'>http://timbao.github.io/blog/2011/12/31/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81%E4%B8%80)/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/9">&larr; Older</a>
@@ -618,6 +596,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
       </li>
     
@@ -633,10 +615,6 @@
         <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -648,6 +626,7 @@
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (1)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>

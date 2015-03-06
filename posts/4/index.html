@@ -9,18 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="Item 3: 不要对数组使用多态 语言规范中说通过一个基类指针来删除一个含有派生类对象的数组，结果将是不确定的。 1
-2
-3
-4
-5
-6
-7
-8
-9
-class BST { ... };
-class BalancedBST: public BST { ... };
-void &hellip;">
+  <meta name="description" content="Item 4：避免无用的缺省构造函数 没有缺省构造函数会导致： 1.无法创建该类的数组形式。 2.无法在许多基于模板的容器类里使用。 设计虚基类时所面临的要提供缺省构造函数还是不提供缺省构造函数的两难决策： 1.不提供缺省构造函数的虚基类，很难与其进行合作。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -77,6 +66,55 @@ void &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B04/">More Effective C++读书笔记4</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-05T17:43:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>5:43 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 4：避免无用的缺省构造函数</h2>
+
+<p>没有缺省构造函数会导致：</p>
+
+<p>  1.无法创建该类的数组形式。</p>
+
+<p>  2.无法在许多基于模板的容器类里使用。</p>
+
+<p>设计虚基类时所面临的要提供缺省构造函数还是不提供缺省构造函数的两难决策：</p>
+
+<p>  1.不提供缺省构造函数的虚基类，很难与其进行合作。因为几乎所有的派生类在实例化时都必须给虚基类构造函数提供参数。</p>
+
+<p>  2.提供无意义的缺省构造函数也会影响类的工作效率。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B04/'>http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B04/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -693,61 +731,6 @@ void &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/15/ListBox%E5%88%B7%E6%96%B0%E9%97%AA%E7%83%81%E9%97%AE%E9%A2%98/">ListBox刷新闪烁问题</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2012-11-15T03:27:00+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>3:27 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>UI采用的是xaml，ListBox 的 ItemsSource 绑定 后台model 的IList，当list更新后，UI会出现闪烁。</p>
-
-<p>原因竟然是出在Run属性的使用上，很奇怪。将run 去掉，改用多个TextBlock闪烁消失。</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;StackPanel Orientation="Horizontal" HorizontalAlignment="Center"&gt;;
-</span><span class='line'>     &lt;TextBlock&gt;;
-</span><span class='line'>         &lt;Run Text="{Binding Path=DistanceText}"/&gt;;
-</span><span class='line'>         &lt;Run Text=" " FontSize="2" /&gt;;
-</span><span class='line'>         &lt;Run Text="{Binding Path=DistanceUnit}" /&gt;;
-</span><span class='line'>     &lt;/TextBlock&gt;;
-</span><span class='line'>&lt;/StackPanel&gt;;</span></code></pre></td></tr></table></div></figure>
-
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2012/11/15/ListBox%E5%88%B7%E6%96%B0%E9%97%AA%E7%83%81%E9%97%AE%E9%A2%98/'>http://timbao.github.io/blog/2012/11/15/ListBox%E5%88%B7%E6%96%B0%E9%97%AA%E7%83%81%E9%97%AE%E9%A2%98/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/5">&larr; Older</a>
@@ -769,6 +752,10 @@ void &hellip;">
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
       </li>
     
@@ -784,10 +771,6 @@ void &hellip;">
         <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -799,6 +782,7 @@ void &hellip;">
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (1)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>

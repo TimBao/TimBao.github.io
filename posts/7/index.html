@@ -9,31 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-NSMutableArray* array1 = [[NSMutableArray alloc] init];
-NSMutableArray* array2 = [[ &hellip;">
+  <meta name="description" content="把之前使用iterator 进行循环检测的方法都改成使用find方法进行查找，更快，代码更简洁，清晰。 原文地址: http://timbao.github.io/blog/2012/03/24/stdfind/ written by Tim Bao &nbsp;posted at http:// &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -90,6 +66,43 @@ NSMutableArray* array2 = [[ &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/03/24/stdfind/">Std:find</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-03-24T01:42:00+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>24</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>1:42 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>把之前使用iterator 进行循环检测的方法都改成使用find方法进行查找，更快，代码更简洁，清晰。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2012/03/24/stdfind/'>http://timbao.github.io/blog/2012/03/24/stdfind/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -791,53 +804,6 @@ NSMutableArray* array2 = [[ &hellip;">
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/19/20120118%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/">20120118工作总结</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2012-01-19T06:55:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>19</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>6:55 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>这两天老大给分配了新的任务，学习最新的NBI-MapKit，编写地图DEMO，激动，终于要开始编程了。SDK很简单，一个MapKit.framwork，包含两个文件MapKit.docset和MapKit.framework。包括6个headers和一个静态库，真的很简单。</p>
-
-<p>再细看docset，发现模块也不是特别多，但是接口多的不行，在原有的CCI基础上又包装一层，以后值做UI了，</p>
-
-<p>方便了开发但是学到的东西就少了。以后还得学习底层开发。自己捣鼓了一下午，终于学会了如何导入framework和.a库，如何设置编译选项，丫的编译还是有问题。已经完全按照说明做了，郁闷。</p>
-
-<p>今天把错误跟QA说了下，原来丫的给我的版本不对。没办法，根据她给我的WEB SITE，自己注册下载了最新的SDK，哈哈把Sample也一起下载了，爽。果断重建工程，在buildphase中加入framework和.a及相关的几个framework和库，加上编译条件-lstdc++，编译，successed！耶。</p>
-
-<p>下面就开始UI布局了，按照原来的UI样子，学着使用Interface Builder进行UI设计，娘的，跟使用MFC做界面一样麻烦，弄了半天才弄好了一个Navigation和ToolBar，最后弄好了Tray。可以鱼目混珠啦。哈哈，做了个假的Map。</p>
-
-<p>这两天学到了如何建立Iphone工程，如何导入第三方库和framework，如何设置编译选项，如何使用UIView等控件进行界面设计。东西很杂，但是都是基础，还需锻炼。尤其是对整个工程的架构上面来看，还不是很熟练，在年前这几天争取要把UI全部做出来，先不考虑架构，只做UI和基本功能，等基本功能做完后可以考虑第一次重构将架构重新设计，这时候应该轻车熟路了。</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2012/01/19/20120118%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/'>http://timbao.github.io/blog/2012/01/19/20120118%E5%B7%A5%E4%BD%9C%E6%80%BB%E7%BB%93/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/8">&larr; Older</a>
@@ -859,6 +825,10 @@ NSMutableArray* array2 = [[ &hellip;">
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
       </li>
     
@@ -874,10 +844,6 @@ NSMutableArray* array2 = [[ &hellip;">
         <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -889,6 +855,7 @@ NSMutableArray* array2 = [[ &hellip;">
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (1)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>

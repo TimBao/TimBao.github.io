@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ios | 逝水流年]]></title>
+  <link href="http://timbao.github.io/blog/categories/ios/atom.xml" rel="self"/>
+  <link href="http://timbao.github.io/"/>
+  <updated>2015-03-06T13:17:07+08:00</updated>
+  <id>http://timbao.github.io/</id>
+  <author>
+    <name><![CDATA[Tim Bao]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue]]></title>
+    <link href="http://timbao.github.io/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/"/>
+    <updated>2015-03-06T00:00:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2015/03/06/Solve Jenkins build xcodeproject could not found provision issue</id>
+    <content type="html"><![CDATA[<p>The error is:
+Code Sign error: No matching provisioning profile found</p>
+
+<p>How to solve:</p>
+
+<p>1-Ensure the project is building successfully from Xcode to real target.</p>
+
+<p>2-Copy all the development cretificates &amp; credentials form your user folder to the system folder in KeyChain.</p>
+
+<p>3-Copy all the Provisioning profiles existing in Users/<user>/Library/MobileDevice/Provisioning Profiles to /System/Library/MobileDevice/Provisioning Profiles.</p>
+
+<p>If the directory is not exist, please create first.</p>
+
+<p>参考：
+<a href="https://issues.jenkins-ci.org/browse/JENKINS-20916">https://issues.jenkins-ci.org/browse/JENKINS-20916</a></p>
+]]></content>
+  </entry>
+  
+</feed>
