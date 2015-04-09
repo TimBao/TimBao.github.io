@@ -9,8 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="swap
-assign 这里只想说明这二种操作的用处和效率。swap和assign都可以用在将一个vector的内容全部复制给另外一个vector，区别是swap会改变源vector，而assign会清空目的vector后再将源vector的值全部插入到目的vector中。就效率而言， &hellip;">
+  <meta name="description" content="背景： 最近一个月一直在做移植库的工作，将c代码到share library移植到Android平台。这就涉及到Android NDK(native develop kit)内容。这里只想记录下JNI(java native interface)经常遇到到问题。 问题1.  忘记delete &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -67,6 +66,61 @@ assign 这里只想说明这二种操作的用处和效率。swap和assign都可
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/10/01/Android%20NDK%E4%B9%8BJNI%E9%99%B7%E9%98%B1/">Android NDK之JNI陷阱</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-10-01T05:54:00+08:00'><span class='date'><span class='date-month'>Oct</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>5:54 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>背景： 最近一个月一直在做移植库的工作，将c代码到share library移植到Android平台。这就涉及到Android NDK(native develop kit)内容。这里只想记录下JNI(java native interface)经常遇到到问题。</p></blockquote>
+
+<p>  问题1.  忘记delete local reference。带New到方法(如：NewByteArray)这样到方法比较好辨认，需要手动调用DeleteLocalRef()来释放(返回值除外)。比较特殊的一个方法是：GetByteArrayELement必须要调用ReleaseByteArrayElements进行释放。当然如果你只是取bytearray中到byte，那么完全可以用GetByteArrayRegion实现。</p>
+
+<p>  问题2. 没有NewGlobalRef。 在不同线程调用java方法，需要保存jobject对象，这时需要对jobject对象做全局引用，否则会失效。</p>
+
+<p>  问题3.  jbytearray的length。在JNI layer获取到jbytearray到长度是不对到，应该由java获取byte[]的length再传给C layer。否则C layer有可能获得到是乱码。</p>
+
+<p>  问题4.  线程问题。 不同线程使用JNIEnv*对象，需要AttachCurrentThread将env挂到当前线程，否则无法使用env。</p>
+
+<p>  问题5.  javap 命令是对java的class文件操作；而javah命令需要在包名到上一层路径运行才行，否则无法生成.h文件。</p>
+
+<p>  问题6. 尽量避免频繁调用JNI或者是使用JNI传输大量到数据。</p>
+
+<p>  问题7. Reference Table overflow (max=1024) 或者是 Reference Table overflow (max=512)一定是因为忘记释放global reference或者local reference，请仔细检查代码。</p>
+
+<p>  问题8. 不要在windows下使用cygwin编译NDK code，那样会遇到arguments too long问题，因为windows路径长度有限制导致。虽然可以使用subst将路径映射为短路径，但是在编译时间和调试上，windows到孩子都是伤不起。同样到build，在windows下要15分钟左右，而在mac下只要5分多，相差3倍。调试JNI 代码到速度更是不用提了，差太多。</p>
+
+<p>  <em>总结</em>，JNI代码量其实不是很多，JNI作为一个数据传输层，它到作用仅仅是java和c直接到桥梁，但是如果处理不好将会是灾难，调试和找bug非常困难。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/10/01/Android%20NDK%E4%B9%8BJNI%E9%99%B7%E9%98%B1/'>http://timbao.github.io/blog/2013/10/01/Android%20NDK%E4%B9%8BJNI%E9%99%B7%E9%98%B1/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -652,49 +706,6 @@ assign 这里只想说明这二种操作的用处和效率。swap和assign都可
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/15/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B015/">More Effective C++读书笔记15</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2013-01-15T18:00:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>15</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>6:00 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Item 16：牢记 80－20 准则（80－20 rule）</h2>
-
-<p>   80－20 准则说的是大约 20％的代码使用了 80％的程序资源；大约 20%的代码耗用了大约 80％的运行时间；大约 20％的代码使用了 80％的内存；大约 20％的代码执行 80％的磁盘访问；80％的维护投入于大约 20％的代码上；通过无数台机器、操作系统和应用程序上的实验这条准则已经被再三地验证过。80－20 准则不只是一条好记的惯用语，它更是一条有关系统性能的指导方针，它有着广泛的适用性和坚实的实验基础。</p>
-
-<p>   当想到 80－20 准则时，不要在具体数字上纠缠不清，一些人喜欢更严格的 90－10 准则，而且也有一些试验证据支持它。不管准确地数字是多少，基本的观点是一样的：软件整体的性能取决于代码组成中的一小部分。</p>
-
-<p>   本章主要讲解如何找到影响性能瓶颈的20%的代码的位置。提高效率并不难，难得是如何找到性能的正确瓶颈。方法不外乎有两种，一是猜测或屏经验判断，二是通过profile工具准确测算，这两种方法，当然是第二种方法更科学，更可信。利用好profile工具，提供最有效的数据进行测试，找到程序的瓶颈是一个程序员需要掌握的高级技巧之一。</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2013/01/15/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B015/'>http://timbao.github.io/blog/2013/01/15/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B015/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/3">&larr; Older</a>
@@ -716,6 +727,10 @@ assign 这里只想说明这二种操作的用处和效率。swap和assign都可
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/07/Summary%20Reports/">2015-04-07 Summary Reports</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
       </li>
     
@@ -731,10 +746,6 @@ assign 这里只想说明这二种操作的用处和效率。swap和assign都可
         <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -746,7 +757,7 @@ assign 这里只想说明这二种操作的用处和效率。swap和assign都可
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
-<li class='category'><a href='/blog/categories/ios/'>ios (1)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (2)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>

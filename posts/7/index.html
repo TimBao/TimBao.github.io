@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="把之前使用iterator 进行循环检测的方法都改成使用find方法进行查找，更快，代码更简洁，清晰。 原文地址: http://timbao.github.io/blog/2012/03/24/stdfind/ written by Tim Bao &nbsp;posted at http:// &hellip;">
+  <meta name="description" content="最近几天一直在做代码移植工作，将Unix下的C/C++代码移植到Windows平台上，有一些小体会，这里记录下来跟大家分享下： 1、一定要注意跨平台的C++尽量使用STL，各个编译器对STL都支持，除了一些特性外基本无需修改。 2、使用的C库函数一定要注意，是C99标准还是C89标准， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/04/%E5%85%B3%E4%BA%8E%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E6%84%9F%E5%8F%97/">关于跨平台的一些感受</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-04-04T06:43:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>6:43 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>最近几天一直在做代码移植工作，将Unix下的C/C++代码移植到Windows平台上，有一些小体会，这里记录下来跟大家分享下：</p>
+
+<p>1、一定要注意跨平台的C++尽量使用STL，各个编译器对STL都支持，除了一些特性外基本无需修改。</p>
+
+<p>2、使用的C库函数一定要注意，是C99标准还是C89标准，VS编译器2010以下对C99都不支持，很多函数都无法使用。</p>
+
+<p>3、一些变量声明尽量放到函数开始，for循环中尽量不要声明变量，VS编译器2005之下对其支持不是很好。</p>
+
+<p>4、尤其是在文件路径方面要注意，路径处理尽量放到上层实现。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2012/04/04/%E5%85%B3%E4%BA%8E%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E6%84%9F%E5%8F%97/'>http://timbao.github.io/blog/2012/04/04/%E5%85%B3%E4%BA%8E%E8%B7%A8%E5%B9%B3%E5%8F%B0%E7%9A%84%E4%B8%80%E4%BA%9B%E6%84%9F%E5%8F%97/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -716,94 +761,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/30/STL%E4%B9%8BTrim/">STL之Trim</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2012-01-30T06:09:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>30</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>6:09 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>今天无意之间看到了通用类的三个函数，是用STL实现字符串去掉首尾空格，方法用的颇为简洁，记录下来分享和学习下。</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="cp">#include &lt;string&gt;;</span>
-</span><span class='line'><span class="cp">#include &lt;algorithm&gt;;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">using</span> <span class="k">namespace</span> <span class="n">std</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">string</span><span class="o">&amp;</span>  <span class="n">lTrim</span><span class="p">(</span><span class="n">string</span>   <span class="o">&amp;</span><span class="n">ss</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">string</span><span class="o">::</span><span class="n">iterator</span>   <span class="n">p</span><span class="o">=</span><span class="n">find_if</span><span class="p">(</span><span class="n">ss</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">ss</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span><span class="n">not1</span><span class="p">(</span><span class="n">ptr_fun</span><span class="p">(</span><span class="n">isspace</span><span class="p">)));</span>
-</span><span class='line'>    <span class="n">ss</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">ss</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span><span class="n">p</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">return</span>  <span class="n">ss</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">string</span><span class="o">&amp;</span>  <span class="n">rTrim</span><span class="p">(</span><span class="n">string</span>   <span class="o">&amp;</span><span class="n">ss</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">string</span><span class="o">::</span><span class="n">reverse_iterator</span>  <span class="n">p</span><span class="o">=</span><span class="n">find_if</span><span class="p">(</span><span class="n">ss</span><span class="p">.</span><span class="n">rbegin</span><span class="p">(),</span><span class="n">ss</span><span class="p">.</span><span class="n">rend</span><span class="p">(),</span><span class="n">not1</span><span class="p">(</span><span class="n">ptr_fun</span><span class="p">(</span><span class="n">isspace</span><span class="p">)));</span>
-</span><span class='line'>    <span class="n">ss</span><span class="p">.</span><span class="n">erase</span><span class="p">(</span><span class="n">p</span><span class="p">.</span><span class="n">base</span><span class="p">(),</span><span class="n">ss</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
-</span><span class='line'>    <span class="k">return</span>   <span class="n">ss</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">string</span><span class="o">&amp;</span>   <span class="n">trim</span><span class="p">(</span><span class="n">string</span>   <span class="o">&amp;</span><span class="n">st</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="n">lTrim</span><span class="p">(</span><span class="n">rTrim</span><span class="p">(</span><span class="n">st</span><span class="p">));</span>
-</span><span class='line'>    <span class="k">return</span>   <span class="n">st</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2012/01/30/STL%E4%B9%8BTrim/'>http://timbao.github.io/blog/2012/01/30/STL%E4%B9%8BTrim/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/8">&larr; Older</a>
@@ -825,6 +782,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/07/Summary%20Reports/">2015-04-07 Summary Reports</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
       </li>
     
@@ -840,10 +801,6 @@
         <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -855,7 +812,7 @@
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
-<li class='category'><a href='/blog/categories/ios/'>ios (1)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (2)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>

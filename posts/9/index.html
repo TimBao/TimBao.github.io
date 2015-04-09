@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="又是一天的代码，眼干头大，今天主要将前几天的内容总体在捋顺一遍，深挖代码的细节，不断的提问，不断的解决问题，通过这个过程达到深入。这几天一直通过这样的努力来学习，发现有很大帮助。首先是看代码有了明确的目标，每次将问题解决，都有小小的成就感，可以促进继续下去。人老了，记性不好了，但是方法确是更多了， &hellip;">
+  <meta name="description" content="2011年的最后一天，依然继续努力的工作着，不管2012怎么样，至少我是努力了，奋斗了，无悔！ 晒晒今天学到的内容吧 1、四个库函数： round是取最近的整数值，五舍六入，如果想要取大整数，可以roundf(X+0.5); floor(x)，向下取整，return the lastest &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,65 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/01/01/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81%E4%BA%8C)/">记录我的新工作(十二)</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-01-01T06:08:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2012</span></span> <span class='time'>6:08 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>2011年的最后一天，依然继续努力的工作着，不管2012怎么样，至少我是努力了，奋斗了，无悔！</p>
+
+<p>晒晒今天学到的内容吧</p>
+
+<p>1、四个库函数：</p>
+
+<p>round是取最近的整数值，五舍六入，如果想要取大整数，可以roundf(X+0.5);</p>
+
+<p>floor(x)，向下取整，return the lastest integral value that is not greater than X。</p>
+
+<p>log2f是以2为底的对数。</p>
+
+<p>powf(x, y);是X的Y次幂。</p>
+
+<p>这四个函数都跟UIScrollView的zoom和pan的计算有关。</p>
+
+<p>2、在Quartz和OpenGL两种方式下，坐标系是不一样的。Quartz的坐标系跟windows基本一致，左上角为原点，横向为X轴，向右为正；纵向为Y轴，向下为正。而OpenGL中，左下角为原点。</p>
+
+<p>3、UIScrollView的Offset的计算，是以偏移后矩形的左上角（原点）与原始左上角（0，0）点的差得到的。view的frame和bounds在scrollview下也是不同的。frame是父的rect，而bounds是本身的rect。</p>
+
+<p>4、关于对齐矩形视图的计算，是将屏幕视图的边根tile的bounds对齐，如果不够一个tile，则补全。哈哈，看了快2天，终于完全弄清楚了。</p>
+
+<p>这两天对矩形的偏移和放大的计算有点进入误区了，抽象意识还是不够，将图形画出来，想了半天才搞清楚，差点有点要放弃的感觉，有时候觉得自己是不是真的不适合干程序员！但是坚持过来，一切都好转了，没有过不去的坎！下面还需要加快进度，对search部分的placemark还没有将细节弄清楚，节后1天搞清楚，尽快将task给finish了。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2012/01/01/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81%E4%BA%8C)/'>http://timbao.github.io/blog/2012/01/01/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81%E4%BA%8C)/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -526,53 +585,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2011/12/16/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C%EF%BC%88%E4%BA%8C%EF%BC%89/">记录我的新工作（二）</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2011-12-16T05:47:00+08:00'><span class='date'><span class='date-month'>Dec</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2011</span></span> <span class='time'>5:47 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>2011.12.15  晴 大风</p>
-
-<p>今天总体来说还是非常不错的。早上在麦大叔哪里吃了早餐，发现一条新的路线，竟然还能提前10分钟到公司，哈哈，不错的开始。</p>
-
-<p>上午给自己订了下计划，将oc前7章再看一遍，对一些细节在VM中验证，花费了数个小时终于在下午3：30分时完成了学习，并且将疑问都已经解决，顺带还学习了很多XCode的使用。R也在快下班时指导了我重点，我有加了将近一个小时的班，将重点内容全部看完，收获颇大。还学习了新的版本管理工具P4V，这个东东感觉跟SVN基本一样，还好有SVN的经验，至少在理解方面没有啥问题。</p>
-
-<p>再有就是今天连接了打印机，搞清了请假流程。原来还有带薪假一天办理手续的，还挺人性的。哈哈。通过老J，将MSN的人都导全了，部门人也认全了，嘿嘿，虽然还不都认识，但是名字至少是记住了。下班前老大发了一封email，对项目的总结，竟然没有怎么通过金山就看明白了，哈哈，这两天的培养已经有一定感觉啦，这个事情最让我激动了。</p>
-
-<p>还有就是竟然还有熟人，只能无限感慨这个世界真是太小了。</p>
-
-<p>下班就剩我和老J了，老J跟我介绍了下部门人员情况，还解答了几个我的问题。很好的一天！周末好好好整理下，下周就有自己的MAC和测试IPHONE喽！</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2011/12/16/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C%EF%BC%88%E4%BA%8C%EF%BC%89/'>http://timbao.github.io/blog/2011/12/16/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C%EF%BC%88%E4%BA%8C%EF%BC%89/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/10">&larr; Older</a>
@@ -594,6 +606,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/07/Summary%20Reports/">2015-04-07 Summary Reports</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
       </li>
     
@@ -609,10 +625,6 @@
         <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -624,7 +636,7 @@
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
-<li class='category'><a href='/blog/categories/ios/'>ios (1)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (2)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>

@@ -9,7 +9,8 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="Item 4：避免无用的缺省构造函数 没有缺省构造函数会导致： 1.无法创建该类的数组形式。 2.无法在许多基于模板的容器类里使用。 设计虚基类时所面临的要提供缺省构造函数还是不提供缺省构造函数的两难决策： 1.不提供缺省构造函数的虚基类，很难与其进行合作。 &hellip;">
+  <meta name="description" content="Item 5：谨慎定义类型转换函数 隐式类型转换时在编译期间由编译器来执行的。除了C/C++默认的基本类型的隐式类型转换外，用户自定义类型的隐式转换方式有两种： 1.定义隐式类型转换运算符 2.单参数构造函数或者多参数构造函数，但第一个参数以后的参数都有默认值。 隐式类型转换运算符例子： 1
+2 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +67,133 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B05/">More Effective C++读书笔记5</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-05T20:18:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>8:18 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 5：谨慎定义类型转换函数</h2>
+
+<p>隐式类型转换时在编译期间由编译器来执行的。除了C/C++默认的基本类型的隐式类型转换外，用户自定义类型的隐式转换方式有两种：</p>
+
+<p>1.定义隐式类型转换运算符</p>
+
+<p>2.单参数构造函数或者多参数构造函数，但第一个参数以后的参数都有默认值。</p>
+
+<p>隐式类型转换运算符例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>class Rational
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Rational（int numerator = 0, int denominator = 1）；
+</span><span class='line'>    operator double() const;   //不需要返回类型，函数名称就是返回类型
+</span><span class='line'>};
+</span><span class='line'>Rational r（1， 2）；
+</span><span class='line'>double d = 0.5 * r; //r 转换为double类型</span></code></pre></td></tr></table></div></figure>
+
+
+<p>标题是要谨慎定义类型转换函数，为什么要谨慎呢，就是说这些定义的类型转换函数有可能会产生不是你想要的结果，比如你不想进行转换的时候，却给你转换了。如下情况：</p>
+
+<p>cout &lt;&lt; r；  //Rational并没有定义operator &lt;&lt; 运算符，但是，编译器会找到operator double()转换函数，将r转换为double输出。但这并不是你想要的结果。</p>
+
+<p>解决方法是用不使用语法关键字的等同的函数来替代转换运算符。如定义一个toDouble()函数来代替operator double()转换函数。STL中的string就提供了一个c_str()函数来转换到char*。</p>
+
+<p>通过单参数构造函数进行隐式类型转换更难消除。而且在很多情况下这些函数所导致的问题要甚于隐式类型转换运算符。</p>
+
+<p>我们来看一个例子：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>temlplate&lt;typename T&gt;;
+</span><span class='line'>class Array
+</span><span class='line'>{
+</span><span class='line'>public:
+</span><span class='line'>    Array(int lowBound, int hightBound);
+</span><span class='line'>    Array(int size);
+</span><span class='line'>    T& operator[](int index);
+</span><span class='line'>};
+</span><span class='line'>Array&lt;int&gt;; a(10);
+</span><span class='line'>Array&lt;int&gt;; b(10);
+</span><span class='line'>for (int i = 0; i &lt; 10; ++i)
+</span><span class='line'>{
+</span><span class='line'>    if (a == b[i]) // 哎呦! "a" 应该是 "a[i]"
+</span><span class='line'>    {
+</span><span class='line'>        do something for when
+</span><span class='line'>        a[i] and b[i] are equal;
+</span><span class='line'>    }
+</span><span class='line'>    else
+</span><span class='line'>    {
+</span><span class='line'>        do something for when they're not;
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>我们的编译器注意到它能通过调用 Array<int>;构造函数能转换 int 类型到 Array<int>;类型，这个构造函数只有一个 int 类型的参数。然后编译器如此去编译，生成的代码就象这样：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>if (a == static_cast&lt; Array&lt;int&gt;; &gt;;(b[i]))</span></code></pre></td></tr></table></div></figure>
+
+
+<p>解决方案是利用一个最新编译器的特性，explicit 关键字。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B05/'>http://timbao.github.io/blog/2013/01/05/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B05/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -580,157 +708,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/22/delete%E5%AF%B9%E8%B1%A1%E5%90%8E%E5%88%B0%E5%BA%95%E8%A6%81%E4%B8%8D%E8%A6%81%E5%B0%86%E5%AF%B9%E8%B1%A1%E7%BD%AE%E4%B8%BANULL/">delete对象后到底要不要将对象置为NULL</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2012-11-22T22:31:00+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2012</span></span> <span class='time'>10:31 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>以下是我的一个美国同事丹尼尔对此的看法：</p>
-
-<blockquote><p> Member pointers do NOT have to be set to NULL in a destructor. A destructor, as its name implies, destroys an object and the object can’t be accessed after that. So accessing anything (even if it were a pointer set to NULL) is absolutely wrong. I usually take setting pointers to NULL out of destructors because it is not needed. If an object gets accessed after it is destroyed, in any form, than it has to be tracked down. But NOT by accessing any of its member variables.</p>
-
-<p>对象指针不需要设置为NULL在析构函数中。析构函数，顾名思义，销毁一个对象而之后该对象不在被使用到。所以存取任何东西（即使指针被设置为NULL）都是绝对的错误。我一般都将设置指针为NULL的语句从析构函数中移除，因为它并不被需要。如果一个对象能够在它被销毁后存取，那么这将能被追查出。但是不是因为存取它里面的任何成员。</p></blockquote>
-
-<p>对此他还写了个小程序来证明他的观点：</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class A
-</span><span class='line'>{
-</span><span class='line'>public:
-</span><span class='line'>    // Constructor
-</span><span class='line'>    A()
-</span><span class='line'>    {
-</span><span class='line'>        m_pMember = new int;
-</span><span class='line'>    }
-</span><span class='line'>    // Destructor
-</span><span class='line'>    ~A()
-</span><span class='line'>    {
-</span><span class='line'>        delete m_pMember;
-</span><span class='line'>        // UNNECESSARY: You can't access that pointer after the destructor!
-</span><span class='line'>        m_pMember = NULL;
-</span><span class='line'>    } int* m_pMember;
-</span><span class='line'>};
-</span><span class='line'>int _tmain(int argc, _TCHAR* argv[])
-</span><span class='line'>{
-</span><span class='line'>    // Instantiate
-</span><span class='line'>    A* pA = new A;
-</span><span class='line'>    // Destroy, destructor gets called!
-</span><span class='line'>    delete pA;
-</span><span class='line'>    // THIS IS WRONG, you can't access m_pMember anymore. You can't even check if for NULL!
-</span><span class='line'>    // This probably won't crash in 99%  of the cases, but it can crash!
-</span><span class='line'>    if (pA-&gt;;m_pMember)
-</span><span class='line'>    {
-</span><span class='line'>        // Do something
-</span><span class='line'>    }
-</span><span class='line'>      return 0;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>看起来他的程序的确能证明他的观点。但是他忘记了一点，关于对象的copying。如果对象pA在delete之前copying给了其他对象，那么结果可是大不一样啊！让我们稍微改动下程序再看看效果:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class A
-</span><span class='line'>{
-</span><span class='line'>public:
-</span><span class='line'>    A() { m_pMember = new int;}
-</span><span class='line'>    ~A() {
-</span><span class='line'>        delete m_pMember;
-</span><span class='line'>    }
-</span><span class='line'>    int* m_pMember;
-</span><span class='line'>};
-</span><span class='line'>int _tmain(int argc, _TCHAR* argv[])
-</span><span class='line'>{
-</span><span class='line'>    A* pA = new A();
-</span><span class='line'>    A* pB = pA;
-</span><span class='line'>    delete pA;
-</span><span class='line'>    if (pB-&gt;;m_pMember)
-</span><span class='line'>    {
-</span><span class='line'>        int temp = *pB-&gt;;m_pMember; //Crash
-</span><span class='line'>    }
-</span><span class='line'>    return 0;
-</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
-
-
-<p>这还只是个简单的情况，如果涉及到多线程或者多模块如多个dll之间传递对象，那么就极有可能因为某一对象已经销毁后，没有设置为NULL导致程序Crash。在这里还是建议各位一定要谨慎处理指针问题，避免引起不必要的奇怪问题。</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2012/11/22/delete%E5%AF%B9%E8%B1%A1%E5%90%8E%E5%88%B0%E5%BA%95%E8%A6%81%E4%B8%8D%E8%A6%81%E5%B0%86%E5%AF%B9%E8%B1%A1%E7%BD%AE%E4%B8%BANULL/'>http://timbao.github.io/blog/2012/11/22/delete%E5%AF%B9%E8%B1%A1%E5%90%8E%E5%88%B0%E5%BA%95%E8%A6%81%E4%B8%8D%E8%A6%81%E5%B0%86%E5%AF%B9%E8%B1%A1%E7%BD%AE%E4%B8%BANULL/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/5">&larr; Older</a>
@@ -752,6 +729,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/07/Summary%20Reports/">2015-04-07 Summary Reports</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
       </li>
     
@@ -767,10 +748,6 @@
         <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/03/19/Android%20NDK%E5%B8%AE%E5%8A%A9%E6%96%87%E6%A1%A3%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B0%8F%E9%94%99%E8%AF%AF/">Android NDK帮助文档的一个小错误</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -782,7 +759,7 @@
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
-<li class='category'><a href='/blog/categories/ios/'>ios (1)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (2)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>
