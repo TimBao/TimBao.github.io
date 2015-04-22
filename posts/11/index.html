@@ -9,7 +9,10 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="“谁是天生什么都会的，不会学啊！” “人是逼出来的。在压力下，有的人会创造出更好的成绩，有的人只会逃避和失败。” “报最大的希望，做最好的努力，做最坏的打算。心态问题&hellip;&hellip;” 原文地址: http://timbao.github.io/blog/2010/08/10/% &hellip;">
+  <meta name="description" content="1、在Dialog类的头文件中增加定时器消息处理函数： 1
+afx_msg void OnTimer(UINT nIDEvent); 2、在Dialog类的CPP文件的消息映射中增加WM_TIMER消息处理 1
+ON_WM_TIMER() 3、启动定时器 1
+UINT uiTimerID = &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +69,89 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/08/18/MFC%20Timer%E5%AE%9E%E7%8E%B0/">MFC Timer实现</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2010-08-18T00:46:00+08:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>18</span><span class='date-suffix'>th</span>, <span class='date-year'>2010</span></span> <span class='time'>12:46 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1、在Dialog类的头文件中增加定时器消息处理函数：</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>afx_msg void OnTimer(UINT nIDEvent);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2、在Dialog类的CPP文件的消息映射中增加WM_TIMER消息处理</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ON_WM_TIMER()</span></code></pre></td></tr></table></div></figure>
+
+
+<p>3、启动定时器</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>UINT uiTimerID = SetTiemr(1/*nIDEvent*/, 1000/*时间间隔*/, NULL);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>4、杀死定时器</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>KillTiemr(uiTimerID );</span></code></pre></td></tr></table></div></figure>
+
+
+<p>4、定时器处理函数</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>void CTestDlg::OnTimer(UINT nIDEvent)
+</span><span class='line'>{
+</span><span class='line'>    switch (nIDEvent)
+</span><span class='line'>    {
+</span><span class='line'>    case 1:
+</span><span class='line'>        //你的消息处理函数
+</span><span class='line'>        break;
+</span><span class='line'>    }
+</span><span class='line'>    CDialog::OnTimer(nIDEvent);
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2010/08/18/MFC%20Timer%E5%AE%9E%E7%8E%B0/'>http://timbao.github.io/blog/2010/08/18/MFC%20Timer%E5%AE%9E%E7%8E%B0/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -418,7 +504,7 @@
 
 <p>关于作者</p>
 
-<p>温昱。架构设计师，技术咨询顾问，松耦合空间网站创办人。擅长面向对象、架构和框架设计，对设计模式、UML、RUP和软件工程有深入研究。曾在金融、航空、多媒体、网络管理、中间件平台等领域负责和参与多个大型系统的设计和开发。发表《拥抱变化：敏捷设计从理论到实践》、《随需而变的RUP》等文章数十篇，目前译著有《应用框架的设计与实现&ndash;.NET平台》一书。可以通过<a href="&#109;&#x61;&#105;&#x6c;&#x74;&#111;&#58;&#x77;&#101;&#110;&#121;&#117;&#x40;&#99;&#104;&#x69;&#110;&#x61;&#46;&#99;&#111;&#109;&#x3f;&#99;&#x63;&#x3d;&#xe4;&#184;&#142;&#230;&#xb8;&#169;&#xe6;&#x98;&#xb1;&#xe8;&#129;&#x94;&#231;&#179;&#xbb;&#227;&#128;&#130;">&#119;&#101;&#110;&#x79;&#117;&#64;&#x63;&#104;&#105;&#110;&#97;&#x2e;&#99;&#x6f;&#109;&#63;&#99;&#x63;&#61;&#xe4;&#184;&#x8e;&#230;&#184;&#xa9;&#230;&#x98;&#177;&#232;&#x81;&#x94;&#xe7;&#179;&#xbb;&#227;&#128;&#x82;</a></p>
+<p>温昱。架构设计师，技术咨询顾问，松耦合空间网站创办人。擅长面向对象、架构和框架设计，对设计模式、UML、RUP和软件工程有深入研究。曾在金融、航空、多媒体、网络管理、中间件平台等领域负责和参与多个大型系统的设计和开发。发表《拥抱变化：敏捷设计从理论到实践》、《随需而变的RUP》等文章数十篇，目前译著有《应用框架的设计与实现&ndash;.NET平台》一书。可以通过<a href="&#x6d;&#x61;&#x69;&#108;&#x74;&#111;&#58;&#119;&#101;&#110;&#x79;&#117;&#x40;&#x63;&#x68;&#x69;&#110;&#x61;&#46;&#x63;&#111;&#109;&#x3f;&#x63;&#x63;&#61;&#228;&#xb8;&#142;&#xe6;&#184;&#xa9;&#xe6;&#x98;&#xb1;&#232;&#129;&#148;&#xe7;&#179;&#187;&#227;&#128;&#x82;">&#x77;&#x65;&#x6e;&#121;&#117;&#x40;&#x63;&#x68;&#105;&#110;&#97;&#x2e;&#99;&#111;&#109;&#63;&#99;&#99;&#x3d;&#xe4;&#184;&#x8e;&#xe6;&#184;&#xa9;&#230;&#152;&#xb1;&#232;&#129;&#x94;&#231;&#179;&#187;&#227;&#128;&#x82;</a></p>
 
 <p class='post-footer'>
              原文地址:
@@ -614,55 +700,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2010/05/04/CMMI%E4%B9%8B%E5%9F%B9%E8%AE%AD-TQM%E6%80%9D%E6%83%B3%E7%AE%80%E4%BB%8B/">CMMI之培训-TQM思想简介</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2010-05-04T06:14:00+08:00'><span class='date'><span class='date-month'>May</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2010</span></span> <span class='time'>6:14 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>随着公司规模的逐步扩大，公司终于要从小作坊向正规军转变了；首先就是对软件开发的管理改进。刚毕业时进入的第一家公司（美资）就宣称自己过了cmm2级，那时自己还小小的嘲笑了一番，才2级就开始吹牛，呵呵。现在看来自己真是无知。</p>
-
-<p>公司专门联系了一家北京的咨询公司，给我们几个骨干进行CMMI洗脑。呵呵，你别说听专业人士的讲解还真是不一样啊！以前很多的做法得到了根据，又学会了好多实用的方法及流程。心里小小的欢喜了一把。学习的很带劲呢。</p>
-
-<p>CMMI的起源思想是TQM思想，TQM的思想是关注客户获得价值的全部过程，每一个过程都做到满足客户需要，从而达到客户满意（而不是产品满意）。这就需要：客户的全面满意->;组织给客户创造价值的所有过程高质量->;实现所有过程的人员都必须关注质量。</p>
-
-<p>TQM强调建立以过程为核心的组织文化；以为客户创造价值为核心，识别组织内部的所有过程。</p>
-
-<p>TQM强调过程的不断优化；跟强调预防而不是质量控制。</p>
-
-<p>TQM的效用是对传统管理的变更而不是改进。</p>
-
-<p>实践上发现，简单的将组织传统的管理习惯过程化，并不能起到作用。因为传统管理职能和体现建立在自身的效率和优化基础上，而不是以客户为核心的价值创造过程。</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2010/05/04/CMMI%E4%B9%8B%E5%9F%B9%E8%AE%AD-TQM%E6%80%9D%E6%83%B3%E7%AE%80%E4%BB%8B/'>http://timbao.github.io/blog/2010/05/04/CMMI%E4%B9%8B%E5%9F%B9%E8%AE%AD-TQM%E6%80%9D%E6%83%B3%E7%AE%80%E4%BB%8B/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/12">&larr; Older</a>
@@ -684,6 +721,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/22/xcode_plugin_VVDcoumentor-Xcode_modify_shortcut_key/">2015-04-22 VVDocuemnter-Xcode Plugin Could Not Work Correctly</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/07/Summary%20Reports/">2015-04-07 Summary Reports</a>
       </li>
     
@@ -699,10 +740,6 @@
         <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -714,7 +751,7 @@
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
-<li class='category'><a href='/blog/categories/ios/'>ios (2)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (3)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>

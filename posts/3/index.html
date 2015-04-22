@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="Item 16：牢记 80－20 准则（80－20 rule） 80－20 准则说的是大约 20％的代码使用了 80％的程序资源；大约 20%的代码耗用了大约 80％的运行时间；大约 20％的代码使用了 80％的内存；大约 20％的代码执行 80％的磁盘访问；80％的维护投入于大约 20％的代码上 &hellip;">
+  <meta name="description" content="Item 17：考虑使用lazy evaluation（懒惰计算法） 首先说说使用lazy evaluation的优点，主要是能提高程序效率。延时计算，有可能避免不必要的计算，或者是只需用计算部分结果，而不需要全部结果，这些都可以称为lazy evaluation。C++本身是early &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,69 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/16/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B016/">More Effective C++读书笔记16</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2013-01-16T18:13:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>6:13 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h2>Item 17：考虑使用lazy evaluation（懒惰计算法）</h2>
+
+<blockquote><p> 首先说说使用lazy evaluation的优点，主要是能提高程序效率。延时计算，有可能避免不必要的计算，或者是只需用计算部分结果，而不需要全部结果，这些都可以称为lazy evaluation。C++本身是early evaluation，它需要程序员自己实现lazy evaluation，这样大大增加了程序员的灵活性，可以根据实际情况使用lazy evaluation。</p></blockquote>
+
+<p>  书中提到可以在具体4个地方使用lazy evaluation：</p>
+
+<p>1.引用计数</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  class string {};
+</span><span class='line'>  string s1 = "hello";
+</span><span class='line'>  string s2 = s1;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>  s2=s1，这句应该调用string的拷贝构造函数，通过重新分配内存，拷贝字符串到s2实现。但是有可能s2根本不会被修改，只是用作输出，这样就可以使用lazy evaluatin，不用分配内存和拷贝字符串，而只要将s2指向s1同一个内存空间即可。</p>
+
+<p>2.区别对待读取和写入</p>
+
+<p>  同上一个例子</p>
+
+<p>3.Lazy Fetching（懒惰提取）</p>
+
+<p>  如一个类有很多成员，不一定要在构造函数中获取全部的成员变量的初值，尤其是需要I/O操作的成员，延后到使用时在读取不失为一个提高效率的解决方案。</p>
+
+<p>4.Lazy Expression Evaluation(懒惰表达式计算)</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2013/01/16/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B016/'>http://timbao.github.io/blog/2013/01/16/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B016/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -1027,98 +1090,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/06/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B06/">More Effective C++读书笔记6</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2013-01-06T17:22:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>6</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>5:22 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Item 6：自增(increment)、自减(decrement)操作符前缀形式与后缀形式的区别</h2>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>class UPInt
-</span><span class='line'>{
-</span><span class='line'>public:
-</span><span class='line'>    ...
-</span><span class='line'>    UPInt& operator++();         //前缀形式
-</span><span class='line'>    const UPInt operator++(int); //后缀形式
-</span><span class='line'>    UPInt& operator--();         //前缀形式
-</span><span class='line'>    const UPInt operator--(int); //后缀形式
-</span><span class='line'>};
-</span><span class='line'>UPInt& UPInt::operator++()
-</span><span class='line'>{
-</span><span class='line'>    *this += 1；
-</span><span class='line'>    return *this；
-</span><span class='line'>}
-</span><span class='line'>const UPInt UPInt::operator++(int)
-</span><span class='line'>{
-</span><span class='line'>    UPInt temp = *this;
-</span><span class='line'>    ++(*this);
-</span><span class='line'>    return temp;
-</span><span class='line'>}
-</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
-
-
-<p>从代码中可以看到，</p>
-
-<ol>
-<li><p>前缀是先增加再返回，而后缀是先返回再增加。</p></li>
-<li><p>前缀和后缀在表现形式上就有所不同，是通过参数来区分的，这是C++语言规范规定的区别标准。</p></li>
-<li><p>二者在返回值上也不相同，前缀形式返回类型的引用，而后缀则返回const 类型。为什么二者返回类型不相同，是为了防止出现 UPInt u； u++++；（在基础类型中不合法）。为了保持和基础类型一致而采取的考虑。</p></li>
-<li><p>不管是前缀形式还是后缀形式，二者最终行为都是一致的（即增1），后缀实现采用前缀实现，这样就缩小改变，只需用改变前缀的实现就可以二者都改变。</p></li>
-<li><p>从实现上可以看出，后缀形式比前缀形式多了一个临时对象temp，而临时对象会造成构造和析构的时间开销，空间方面也会有开销，这就导致前缀形式的效率会比后缀要高，所以能使用前缀形式就要使用前缀形式。</p></li>
-</ol>
-
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2013/01/06/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B06/'>http://timbao.github.io/blog/2013/01/06/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B06/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/4">&larr; Older</a>
@@ -1140,6 +1111,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/22/xcode_plugin_VVDcoumentor-Xcode_modify_shortcut_key/">2015-04-22 VVDocuemnter-Xcode Plugin Could Not Work Correctly</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/07/Summary%20Reports/">2015-04-07 Summary Reports</a>
       </li>
     
@@ -1155,10 +1130,6 @@
         <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -1170,7 +1141,7 @@
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
-<li class='category'><a href='/blog/categories/ios/'>ios (2)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (3)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>

@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="截止4月3日，我来到新公司的第一个项目在一片混乱和加班声中落下了帷幕。这可能是我参加工作至今参加的最最混乱的一个项目。所以有必要整理下思路，将项目中的有缺点(主要是缺点:）)总结纪录下，为自己也为他人提供一个参考。 我将问题分为几类，按照软件工程来分吧，反正每个阶段都有一些问题。 一、 &hellip;">
+  <meta name="description" content="VVDocuemnter-Xcode plugin 是xcode上非常好用的一个插件，尤其适合做sdk接口的lazy programer。最为一个标准的懒人，必备之神器之一。但是当我安装完后却发现无法使用。怪哉，奇哉！ google 了一圈下来，没有任何收获。索性自己看看源码，再不济也可以调试下 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,63 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/04/22/xcode_plugin_VVDcoumentor-Xcode_modify_shortcut_key/">2015-04-22 VVDocuemnter-Xcode Plugin Could Not Work Correctly</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-04-22'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p><code>VVDocuemnter-Xcode</code> plugin 是xcode上非常好用的一个插件，尤其适合做sdk接口的lazy programer。最为一个标准的<code>懒人</code>，必备之神器之一。但是当我安装完后却发现无法使用。怪哉，奇哉！</p></blockquote>
+
+<p>google 了一圈下来，没有任何收获。索性自己看看源码，再不济也可以调试下。（开源的好处在这时候体现的淋漓尽致.）</p>
+
+<ul>
+<li><p>运行自带Test, 没有问题。</p></li>
+<li><p>打印Log，发现生成comments正常。</p></li>
+<li><p>调试，终于发现了问题，下面三行代码，注意看comments <strong>Cmd+V, paste</strong>, 看到这里我突然想起来，我把paste的快捷键改成control＋V了，再往下看keyCode支持<code>command</code>, <code>alt</code>, <code>shift</code>, <code>control</code>四种组合键，默认为<code>command</code>， 修改为我自定义的<code>control</code>后，重新安装，重启xcode，果然okay。</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='Objective-C'><span class='line'><span class="c1">//Cmd+V, paste (If it is Dvorak layout, use &#39;.&#39;, which is corresponding the key &#39;V&#39; in a QWERTY layout)</span>
+</span><span class='line'><span class="bp">NSInteger</span> <span class="n">kKeyVCode</span> <span class="o">=</span> <span class="p">[[</span><span class="n">VVDocumenterSetting</span> <span class="n">defaultSetting</span><span class="p">]</span> <span class="n">useDvorakLayout</span><span class="p">]</span> <span class="o">?</span> <span class="nl">kVK_ANSI_Period</span> <span class="p">:</span> <span class="n">kVK_ANSI_V</span><span class="p">;</span>
+</span><span class='line'><span class="p">[</span><span class="n">kes</span> <span class="nl">sendKeyCode</span><span class="p">:</span><span class="n">kKeyVCode</span> <span class="nl">withModifierCommand</span><span class="p">:</span><span class="nb">NO</span> <span class="nl">alt</span><span class="p">:</span><span class="nb">NO</span> <span class="nl">shift</span><span class="p">:</span><span class="nb">NO</span> <span class="nl">control</span><span class="p">:</span><span class="nb">YES</span><span class="p">];</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<blockquote><p>通过解决这个插件的问题，我知道了plugin的结构，了解了如何调试plugin，最终也解决了自己的问题。所获丰富，有时候问题是使自身进步最好的导火线！珍惜错误把！</p></blockquote>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2015/04/22/xcode_plugin_VVDcoumentor-Xcode_modify_shortcut_key/'>http://timbao.github.io/blog/2015/04/22/xcode_plugin_VVDcoumentor-Xcode_modify_shortcut_key/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -658,43 +715,6 @@ IDE
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/11/01/%E5%AF%B9%E6%AF%94%E5%9B%BD%E5%86%85%E5%A4%96%E7%9A%84git%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/">对比国内外的git开源项目</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2013-11-01T04:53:00+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2013</span></span> <span class='time'>4:53 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p> 最近看到CSDN也有了自己的code(git)，而且开源中国比之还早有git@ocs，这两个基本是跟github差不多，或者说是copy github。这里不说他们到底是谁copy谁，只单单谈谈里面到项目。浏览里一边C/C++的项目，发现CSDN到大多说都是垃圾项目，而且基本都不怎么维护，着实让人失望。相比ocs到还好一点，但多数项目也是为了凑数，维护人员基本都没有维护，真是很可惜。开源在中国这个土壤上说的比做的好，唱的比干到好！失望！失望！</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2013/11/01/%E5%AF%B9%E6%AF%94%E5%9B%BD%E5%86%85%E5%A4%96%E7%9A%84git%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/'>http://timbao.github.io/blog/2013/11/01/%E5%AF%B9%E6%AF%94%E5%9B%BD%E5%86%85%E5%A4%96%E7%9A%84git%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -714,6 +734,10 @@ IDE
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/04/22/xcode_plugin_VVDcoumentor-Xcode_modify_shortcut_key/">2015-04-22 VVDocuemnter-Xcode Plugin Could Not Work Correctly</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/07/Summary%20Reports/">2015-04-07 Summary Reports</a>
       </li>
     
@@ -729,10 +753,6 @@ IDE
         <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/10/30/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%85%B3%E5%87%BD%E6%95%B0%E6%95%B4%E7%90%86/">字符串相关函数整理</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -744,7 +764,7 @@ IDE
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
-<li class='category'><a href='/blog/categories/ios/'>ios (2)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (3)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>
