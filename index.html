@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="VVDocuemnter-Xcode plugin 是xcode上非常好用的一个插件，尤其适合做sdk接口的lazy programer。最为一个标准的懒人，必备之神器之一。但是当我安装完后却发现无法使用。怪哉，奇哉！ google 了一圈下来，没有任何收获。索性自己看看源码，再不济也可以调试下 &hellip;">
+  <meta name="description" content="NSTimer 在使用中需要注意的几个问题： NSTimer在UITableViewCell中使用是，需要将timer加到runLoop中。 countDownTimer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2015/06/05/use%20NSTimer%20attention/">2015-06-05 Use NSTimer Attention</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-06-05'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>NSTimer 在使用中需要注意的几个问题：</h3>
+
+<ul>
+<li><p>NSTimer在UITableViewCell中使用是，需要将timer加到runLoop中。</p>
+
+<pre><code class="``objc">
+  countDownTimer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(countDown:) userInfo:nil repeats:YES];
+  NSRunLoop *currentRunLoop = [NSRunLoop currentRunLoop];
+  [currentRunLoop addTimer:countDownTimer forMode:NSRunLoopCommonModes];
+</code></pre></li>
+<li><p>同一个timer在重复使用之前必需invalidate, 否则会造成之前的timer无法停掉，两个timer同时存在。导致的现象就是timer同时更新两次。</p></li>
+</ul>
+
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2015/06/05/use%20NSTimer%20attention/'>http://timbao.github.io/blog/2015/06/05/use%20NSTimer%20attention/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -676,45 +725,6 @@ IDE
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/01/16/%E5%BC%80%E6%BA%90%E5%B0%8F%E6%B8%B8%E6%88%8F-%E5%9F%BA%E4%BA%8Eandroid%20sample%20snake/">开源小游戏-基于android Sample Snake</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-01-16T00:51:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>12:51 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>  最近利用业余时间学校android应用的开发，发现android sdk的sample中有个snake的小游戏，感觉不错，但是由于该游戏不能在触摸屏上玩，所以就萌生了自己动手的想法。利用2天时间又增加了用户排名和帮助等功能。程序已经托管到github上面，咱也玩吧开源。
-  <a href="https://github.com/TimBao/Android_Snake">地址:https://github.com/TimBao/Android_Snake</a>
-  有感兴趣的朋友可以一同开发噢！</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2014/01/16/%E5%BC%80%E6%BA%90%E5%B0%8F%E6%B8%B8%E6%88%8F-%E5%9F%BA%E4%BA%8Eandroid%20sample%20snake/'>http://timbao.github.io/blog/2014/01/16/%E5%BC%80%E6%BA%90%E5%B0%8F%E6%B8%B8%E6%88%8F-%E5%9F%BA%E4%BA%8Eandroid%20sample%20snake/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -734,6 +744,10 @@ IDE
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/06/05/use%20NSTimer%20attention/">2015-06-05 Use NSTimer Attention</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/22/xcode_plugin_VVDcoumentor-Xcode_modify_shortcut_key/">2015-04-22 VVDocuemnter-Xcode Plugin Could Not Work Correctly</a>
       </li>
     
@@ -749,10 +763,6 @@ IDE
         <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -764,7 +774,7 @@ IDE
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
-<li class='category'><a href='/blog/categories/ios/'>ios (3)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (4)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>

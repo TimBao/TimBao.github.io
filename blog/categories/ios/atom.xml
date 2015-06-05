@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Ios | 逝水流年]]></title>
   <link href="http://timbao.github.io/blog/categories/ios/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2015-04-22T11:40:32+08:00</updated>
+  <updated>2015-06-05T10:34:08+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Tim Bao]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[2015-06-05 Use NSTimer Attention]]></title>
+    <link href="http://timbao.github.io/blog/2015/06/05/use%20NSTimer%20attention/"/>
+    <updated>2015-06-05T00:00:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2015/06/05/use NSTimer attention</id>
+    <content type="html"><![CDATA[<h3>NSTimer 在使用中需要注意的几个问题：</h3>
+
+<ul>
+<li><p>NSTimer在UITableViewCell中使用是，需要将timer加到runLoop中。</p>
+
+<pre><code class="``objc">
+  countDownTimer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(countDown:) userInfo:nil repeats:YES];
+  NSRunLoop *currentRunLoop = [NSRunLoop currentRunLoop];
+  [currentRunLoop addTimer:countDownTimer forMode:NSRunLoopCommonModes];
+</code></pre></li>
+<li><p>同一个timer在重复使用之前必需invalidate, 否则会造成之前的timer无法停掉，两个timer同时存在。导致的现象就是timer同时更新两次。</p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[2015-04-22 VVDocuemnter-Xcode Plugin Could Not Work Correctly]]></title>

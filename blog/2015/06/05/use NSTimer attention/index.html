@@ -5,12 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>关于老外程序员的看法 - 逝水流年</title>
+  <title>2015-06-05 Use NSTimer Attention - 逝水流年</title>
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="关于老外程序员的看法">
-  <meta name="keywords" content="记事">
+  <meta name="description" content="iOS 经验总结">
+  <meta name="keywords" content="iOS">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://timbao.github.io/blog/2012/11/09/%E5%85%B3%E4%BA%8E%E8%80%81%E5%A4%96%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E7%9C%8B%E6%B3%95">
+  <link rel="canonical" href="http://timbao.github.io/blog/2015/06/05/use%20NSTimer%20attention">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="逝水流年" type="application/atom+xml">
@@ -69,7 +69,7 @@
   
   <header>
     
-      <h1 class="entry-title">关于老外程序员的看法</h1>
+      <h1 class="entry-title">2015-06-05 Use NSTimer Attention</h1>
     
     
       <p class="meta">
@@ -78,18 +78,30 @@
 
 
 
-<time class='entry-date' datetime='2012-11-09T05:24:00+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>5:24 am</span></time>
+<time class='entry-date' datetime='2015-06-05'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><blockquote><p>这里只写一个一直给我们review code 的谢尔盖，一个年轻的俄罗斯人。给我留下的印象是对待技术比较认真，对待每个review都非常仔细。连变量命名的大小写都没有放过。尤其是在一些功能的实现上面，如果有更好的实现，他一定会告诉你。但是你跟他矫情下，他也一定会放过你，真是一个非常有意思的人。我的一个review来来回回review了三四遍，才顺利通过。虽然费了半天劲，但是效果还是蛮好的。</p></blockquote>
+<div class="entry-content"><h3>NSTimer 在使用中需要注意的几个问题：</h3>
+
+<ul>
+<li><p>NSTimer在UITableViewCell中使用是，需要将timer加到runLoop中。</p>
+
+<pre><code class="``objc">
+  countDownTimer = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(countDown:) userInfo:nil repeats:YES];
+  NSRunLoop *currentRunLoop = [NSRunLoop currentRunLoop];
+  [currentRunLoop addTimer:countDownTimer forMode:NSRunLoopCommonModes];
+</code></pre></li>
+<li><p>同一个timer在重复使用之前必需invalidate, 否则会造成之前的timer无法停掉，两个timer同时存在。导致的现象就是timer同时更新两次。</p></li>
+</ul>
+
 
 <p class='post-footer'>
              原文地址:
-             <a href='http://timbao.github.io/blog/2012/11/09/%E5%85%B3%E4%BA%8E%E8%80%81%E5%A4%96%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E7%9C%8B%E6%B3%95/'>http://timbao.github.io/blog/2012/11/09/%E5%85%B3%E4%BA%8E%E8%80%81%E5%A4%96%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E7%9C%8B%E6%B3%95/</a><br/>
+             <a href='http://timbao.github.io/blog/2015/06/05/use%20NSTimer%20attention/'>http://timbao.github.io/blog/2015/06/05/use%20NSTimer%20attention/</a><br/>
              written by <a href='http://timbao.github.io'>Tim Bao</a>
              &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
              </p>
@@ -109,12 +121,12 @@
 
 
 
-<time class='entry-date' datetime='2012-11-09T05:24:00+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>5:24 am</span></time>
+<time class='entry-date' datetime='2015-06-05'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2015</span></span> <span class='time'>12:00 am</span></time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/ji-shi/'>记事</a>
+    <a class='category' href='/blog/categories/ios/'>ios</a>
   
 </span>
 
@@ -123,7 +135,7 @@
     
       <!--<div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://timbao.github.io/blog/2012/11/09/%E5%85%B3%E4%BA%8E%E8%80%81%E5%A4%96%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E7%9C%8B%E6%B3%95/" data-via="" data-counturl="http://timbao.github.io/blog/2012/11/09/%E5%85%B3%E4%BA%8E%E8%80%81%E5%A4%96%E7%A8%8B%E5%BA%8F%E5%91%98%E7%9A%84%E7%9C%8B%E6%B3%95/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://timbao.github.io/blog/2015/06/05/use%20NSTimer%20attention/" data-via="" data-counturl="http://timbao.github.io/blog/2015/06/05/use%20NSTimer%20attention/" >Tweet</a>
   
   
   
@@ -145,10 +157,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2012/09/17/%E8%B0%88%E7%A8%8B%E5%BA%8F%E5%91%98%E5%BA%94%E8%AF%A5%E5%A6%82%E4%BD%95%E5%AE%8C%E6%88%90%E4%BB%BB%E5%8A%A1/" title="Previous Post: 谈程序员应该如何完成任务">&laquo; 谈程序员应该如何完成任务</a>
+        <a class="basic-alignment left" href="/blog/2015/04/22/xcode_plugin_VVDcoumentor-Xcode_modify_shortcut_key/" title="Previous Post: 2015-04-22 VVDocuemnter-Xcode plugin could not work correctly">&laquo; 2015-04-22 VVDocuemnter-Xcode plugin could not work correctly</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2012/11/15/ListBox%E5%88%B7%E6%96%B0%E9%97%AA%E7%83%81%E9%97%AE%E9%A2%98/" title="Next Post: ListBox刷新闪烁问题">ListBox刷新闪烁问题 &raquo;</a>
       
     </p>
   </footer>

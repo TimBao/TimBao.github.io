@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="今天很兴奋，帮助同事改进了程序的算法，将Filter时间提高了将近5倍。 原来的程序采用循环对list进行判断，防止重复push数据，而且是循环嵌套循环，时间复杂度0(n2)，而改用list::sort()和list::unique()后，效率得到了很大的提高。 看来《STL源码分析》木有白看啊 &hellip;">
+  <meta name="description" content="前一阵子看了gzshun的一篇文章《自己动手编写CSDN博客备份工具-blogspider》，恰巧当时正在学习python，遂萌发了用python写一个类似的备份工具。由于当时项目太忙，导致这个想法一直被搁置到项目尾声，正好这几天bug不多，《python核心编程》基础部分也都看完了， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,76 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/11/27/python%E7%89%88CSDN%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD%E5%B7%A5%E5%85%B7/">python版CSDN博客备份工具</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-11-27T18:44:00+08:00'><span class='date'><span class='date-month'>Nov</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>6:44 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>前一阵子看了gzshun的一篇文章《自己动手编写CSDN博客备份工具-blogspider》，恰巧当时正在学习python，遂萌发了用python写一个类似的备份工具。由于当时项目太忙，导致这个想法一直被搁置到项目尾声，正好这几天bug不多，《python核心编程》基础部分也都看完了，于是就有了这个程序。</p>
+
+<p>这里只记录下程序实现中遇到的问题，全部程序会上传到下载中，希望对python学习者能有所帮助。</p>
+
+<p>第一个问题是http库的使用的问题，最初我选择了urllib库，因为其接口简单明确，使用起来非常方便，但是就是无法访问CSDN博客，估计是csdn blog对类似spider进行了过滤。没办法只能退而求其次使用urllib2库，指定request的headers就可以顺利访问csdn blog了。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">i_headers</span> <span class="o">=</span> <span class="p">{</span><span class="s">&quot;User-Agent&quot;</span><span class="p">:</span> <span class="s">&quot;Mozilla/5.0 (Windows; U; Windows NT 6.0; zh-CN; rv:1.9.1) Gecko/20090624 Firefox/3.5&quot;</span><span class="p">}</span>
+</span><span class='line'><span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s">&#39;http://blog.csdn.net/goof&#39;</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</span><span class='line'><span class="n">page</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+</span><span class='line'><span class="n">page</span><span class="o">.</span><span class="n">read</span><span class="p">()</span> <span class="c">#我的blog的主页内容</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>第二个问题是对字符串中特殊字符过滤问题，由于名字可能会有一些特殊字符，会导致无法创建文件或文件夹，所以必须要对字符串进行过滤。必须是对unicode的字符串的过滤。</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='python'><span class='line'><span class="n">not_letters_or_digits</span> <span class="o">=</span> <span class="s">u&#39;!&quot;#%</span><span class="se">\&#39;</span><span class="s">()*,-./:;&lt;=&gt;;?@[\]^_`{|}~ </span><span class="se">\n\r</span><span class="s">&#39;</span>
+</span><span class='line'><span class="n">translate_table</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">((</span><span class="nb">ord</span><span class="p">(</span><span class="n">char</span><span class="p">),</span> <span class="s">u&#39;&#39;</span><span class="p">)</span> <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">not_letters_or_digits</span><span class="p">)</span>
+</span><span class='line'><span class="n">mystring</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">translate_table</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>第三个问题是html parser，最初使用的是python自带的HTMLParser库，结果遇到当html body过大无法处理的问题，最后选择了第三方的Beautifulsoup库，一个强大而又方便使用的库。</p>
+
+<p>最后的遗憾是在对正则表达式的使用上，自己还是非常的生疏，一遍查找资料一遍测试，最终虽然勉强完成了功能，但是还是对程序的机构和效率方面不慎满意。不过这也是个好事，可以继续升级维护这个工具，让它慢慢完美！</p>
+
+<p><a href="http://download.csdn.net/detail/goof/4805444">完整程序的下载地址</a>
+希望大家多批评指导。ps：python2.7.3 beautifulsoup-3.2.1</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2012/11/27/python%E7%89%88CSDN%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD%E5%B7%A5%E5%85%B7/'>http://timbao.github.io/blog/2012/11/27/python%E7%89%88CSDN%E5%8D%9A%E5%AE%A2%E5%A4%87%E4%BB%BD%E5%B7%A5%E5%85%B7/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -841,52 +911,6 @@ msg.attach(file_msg)
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/07/04/%E5%B0%86win32%E7%9A%84lib%E5%BA%93%E7%9B%B4%E6%8E%A5%E8%BD%AC%E4%B8%BAwinRT%E9%9D%99%E6%80%81%E5%BA%93/">将win32的lib库直接转为winRT静态库</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2012-07-04T22:38:00+08:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>10:38 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>将win32的lib库直接转为winRT静态库需要注意三点</p>
-
-<p>1、打开/ZW开关，关闭/GM开关</p>
-
-<p>2、忽略OLE32.LIB</p>
-
-<p>3、手动使用命令/AI包含Windows.winmd(从工程中add new references无效)
-/FU Platform.winmd /FU Windows.winmd /AI &ldquo;$(VCInstallDir)vcpackages&rdquo; /AI &ldquo;$(WindowsSDK_MetadataPath)&rdquo;</p>
-
-<p>剩余的工作就是修改编译错误了</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2012/07/04/%E5%B0%86win32%E7%9A%84lib%E5%BA%93%E7%9B%B4%E6%8E%A5%E8%BD%AC%E4%B8%BAwinRT%E9%9D%99%E6%80%81%E5%BA%93/'>http://timbao.github.io/blog/2012/07/04/%E5%B0%86win32%E7%9A%84lib%E5%BA%93%E7%9B%B4%E6%8E%A5%E8%BD%AC%E4%B8%BAwinRT%E9%9D%99%E6%80%81%E5%BA%93/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/6">&larr; Older</a>
@@ -908,6 +932,10 @@ msg.attach(file_msg)
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/06/05/use%20NSTimer%20attention/">2015-06-05 Use NSTimer Attention</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/04/22/xcode_plugin_VVDcoumentor-Xcode_modify_shortcut_key/">2015-04-22 VVDocuemnter-Xcode Plugin Could Not Work Correctly</a>
       </li>
     
@@ -923,10 +951,6 @@ msg.attach(file_msg)
         <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
       </li>
     
-      <li class="post">
-        <a href="/blog/2014/11/06/%E5%B7%A5%E6%AC%B2%E5%96%84%E5%85%B6%E4%BA%8B%EF%BC%8C%E5%BF%85%E5%85%88%E5%88%A9%E5%85%B6%E5%99%A8/">工欲善其事，必先利其器</a>
-      </li>
-    
   </ul>
 </section>
 <section>
@@ -938,7 +962,7 @@ msg.attach(file_msg)
 <li class='category'><a href='/blog/categories/c--技术/'>c++技术 (38)</a></li>
 <li class='category'><a href='/blog/categories/cmmi实施/'>cmmi实施 (3)</a></li>
 <li class='category'><a href='/blog/categories/cstring--string-h-函数介绍/'>cstring (string.h)函数介绍 (2)</a></li>
-<li class='category'><a href='/blog/categories/ios/'>ios (3)</a></li>
+<li class='category'><a href='/blog/categories/ios/'>ios (4)</a></li>
 <li class='category'><a href='/blog/categories/iphone-objective-c/'>iphone/objective-c (4)</a></li>
 <li class='category'><a href='/blog/categories/mfc学习/'>mfc学习 (2)</a></li>
 <li class='category'><a href='/blog/categories/python/'>python (3)</a></li>
