@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="当delete不完整类类型对象的时候，不会调用对象的析构函数，导致内存泄漏。所以要避免delete 不确定类型。 首先解释下不完整类类型Imcomplete class type：只见声明不见定义的类、结构体或是联合体；相对应的就是complete type，就是编译器可以确定的类型。 &hellip;">
+  <meta name="description" content="除了checked_delete外，今天还学习了两点内容： 1、char strdup(char s); 函数，使用malloc方法，拷贝一个新的s，返回，需要使用free释放；还有类似的strndup等。 2、bundle：Iphone开发中bundle是一个目录，其中包含了程序会使用到的资源， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,47 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/02/01/20120130%E5%B7%A5%E4%BD%9C%E5%B0%8F%E7%BB%93/">20120130工作小结</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-02-01T04:56:00+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>1</span><span class='date-suffix'>st</span>, <span class='date-year'>2012</span></span> <span class='time'>4:56 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>除了checked_delete外，今天还学习了两点内容：</p>
+
+<p>1、char<em> strdup(char</em> s); 函数，使用malloc方法，拷贝一个新的s，返回，需要使用free释放；还有类似的strndup等。</p>
+
+<p>2、bundle：Iphone开发中bundle是一个目录，其中包含了程序会使用到的资源，这些资源包括了图像，声音，编译好的代码，nib文件（用户也会把bundle称为plug-in），cocoa框架提供了NSBundle类来对其进行操作。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2012/02/01/20120130%E5%B7%A5%E4%BD%9C%E5%B0%8F%E7%BB%93/'>http://timbao.github.io/blog/2012/02/01/20120130%E5%B7%A5%E4%BD%9C%E5%B0%8F%E7%BB%93/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -728,43 +769,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/01/07/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81%E5%9B%9B)/">记录我的新工作(十四)</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2012-01-07T17:16:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>7</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>5:16 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近两天由于太忙了，昨天公司又年会，回家太晚所以没有更新。对于工作系列打算写到这篇为止，不再继续更新。后面将会按照技术内容进行更新，希望能跟大家分享更多更好的技术，共同探讨问题，提升技术水平。</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2012/01/07/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81%E5%9B%9B)/'>http://timbao.github.io/blog/2012/01/07/%E8%AE%B0%E5%BD%95%E6%88%91%E7%9A%84%E6%96%B0%E5%B7%A5%E4%BD%9C(%E5%8D%81%E5%9B%9B)/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/9">&larr; Older</a>
@@ -786,6 +790,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/12/31/The%20Last%20Day%20of%202015/">The Last Day of 2015</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/06/05/use%20NSTimer%20attention/">2015-06-05 Use NSTimer Attention</a>
       </li>
     
@@ -799,10 +807,6 @@
     
       <li class="post">
         <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
       </li>
     
   </ul>

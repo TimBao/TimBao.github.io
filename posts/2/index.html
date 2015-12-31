@@ -9,7 +9,12 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="最近利用业余时间学校android应用的开发，发现android sdk的sample中有个snake的小游戏，感觉不错，但是由于该游戏不能在触摸屏上玩，所以就萌生了自己动手的想法。利用2天时间又增加了用户排名和帮助等功能。程序已经托管到github上面，咱也玩吧开源。 地址:https:// &hellip;">
+  <meta name="description" content="这里只介绍笔者开发过的几个平台（iPhone, Android, Windows phone, Blackberry）。将从以下几个角度进行介绍：
+. 开发语言
+. IDE
+. 模拟器
+. 编译及调试
+*. 开发成本 开发语言 ● iPhone：Object-C, C/C++ ● Android &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +71,102 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/">浅析移动开发</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-03-02T05:14:00+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2014</span></span> <span class='time'>5:14 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>   这里只介绍笔者开发过的几个平台（iPhone, Android, Windows phone, Blackberry）。将从以下几个角度进行介绍：
+<em>. 开发语言
+</em>. IDE
+<em>. 模拟器
+</em>. 编译及调试
+*. 开发成本</p>
+
+<p>   开发语言</p>
+
+<p>   ● <code>iPhone</code>：Object-C, C/C++</p>
+
+<p>   ● <code>Android</code>：XML, java, C/C++(NDK)</p>
+
+<p>   ● <code>WP</code>：XAML, C#, C++/CX</p>
+
+<p>   ● <code>BlackBerry</code>：KML, C/C++</p>
+
+<pre><code>可以分成两类：
+
+一是iPhone；
+
+二是其他三种。前者是完全native开发，并且只能在Mac OS X下开发（尽管现在有Xamarin但其跟官方API同步问题是个大问题）；而其他三类，可以看出来，前端都使用类XML的语言开发UI，后端采用各自的开发语言，当然也可以使用native开发，但从目前来看对native的支持都不如原生语言支持的好。
+
+IDE
+</code></pre>
+
+<p>   ● <code>iPhone</code>： 首推<code>XCode</code>。</p>
+
+<p>   ● <code>Android</code>：<code>Eclipse</code>目前还是主流；谷歌目前推出的<code>Adroid Studio</code>市场还未打开，以后不好说。</p>
+
+<p>   ● <code>Widnows Phone</code>：<code>Visual Studio</code>是不二人选啊！</p>
+
+<p>   ● <code>BlackBerry</code>：自带IED，是将<code>Eclipse</code>及所需插件打包到一起的一个IDE，可以归到<code>Eclipse</code>一类。</p>
+
+<pre><code> 从IDE的易用性和功能性来看，Visual Studio是当之无愧的第一名，xcode应该说是紧随其后，两个IDE都非常强大，但是xcode会有随机的crash，稳定性上还是不如Visual Studio，而且VS可以调试C#和C/C++，而eclipse调试native上非常麻烦，不是三言两语可以说明白的，有感兴趣的童鞋可以去网上找找。至于BlackBerry的IDE集成的插件还可以，调试native代码也还行，功能也比较强大，但是在调试的速度上实在是无法忍受。
+</code></pre>
+
+<p>   模拟器
+    xcode的模拟器和WP的模拟器安装都是随SDK安装的，使用起来非常方便。而android的模拟器和Blackberry的模拟器笔者没用过，但是BlackBerry的模拟器安装却非常麻烦，又得折腾VM使用起来还经常断开，所以说在后两者上有条件还是真机调试的比较好。
+   编译及调试</p>
+
+<p>   ● <code>XCode</code>：可以同时调试<code>Objective-C</code>和<code>C/C++</code>，编译速度还算比较快。</p>
+
+<p>   ● <code>Visual Studio</code>：如此强大的IDE，同时调试<code>C#</code>和<code>C/C++</code>。</p>
+
+<p>   ● <code>Android</code>：如果是java代码，速度和调试都挺方便的，但是如果想编译和调试native代码，那就需要有足够的耐心了，尤其是调试，配置之麻烦当属第一。</p>
+
+<p>   ● <code>BlackBerry</code>：编译速度十分慢，调试启动也很慢，但是启动后调试还可以接受的，比起android来，省去了很多配置的麻烦。</p>
+
+<p>   开发成本</p>
+
+<p>   ● iPhone：投资比较大，光是注册开发者账号就需要99刀，而且还需要一台苹果设备，属于高富帅玩法。</p>
+
+<p>   ● Windows Phone：投资一般，只用花注册的钱（如果要是用盗版VS的话），光VS的投资也不是小数。</p>
+
+<p>   ● Adnroid：投资小，只需要一台PC和一台Android手机即可。可谓是专门给屌丝开发者准备的。</p>
+
+<p>   ● BlackBerry：不熟悉，目前国内做的太少，而且BB10也没有在国内发售呢。</p>
+
+<p>   总的来说，做为一名移动开发者来说，如果没有一定的经济实力的话还是选择iPhone开发比较好，至少在经济收入上更可观一些；但是目前的情形上来说，安卓的市场是越来越大，说明做安卓的开发前途至少会越来越光明。至于WP，目前还需要观望；至于BB，就算了吧。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/'>http://timbao.github.io/blog/2014/03/02/%E6%B5%85%E6%9E%90%E7%A7%BB%E5%8A%A8%E5%BC%80%E5%8F%91/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -606,76 +707,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/20/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B018/">More Effective C++读书笔记18</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2013-01-20T00:29:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>20</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>12:29 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Item 20：协助完成返回值优化</h2>
-
-<p>  返回对象时的开销会比较大，会调用对象的构造和析构函数，但是当一个函数必须要返回对象时，这种构造和析构造成的开销是无法消除的。那么还能优化么？
-  以某种方法返回对象，能让编译器消除临时对象的开销，这样编写函数通常是很普遍的。这种技巧是返回constructor argument而不是直接返回对象。你可以这样做：</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='C++'><span class='line'><span class="k">const</span> <span class="n">Rational</span> <span class="k">operator</span><span class="o">*</span><span class="p">(</span><span class="k">const</span> <span class="n">Rational</span><span class="o">&amp;</span> <span class="n">lhs</span><span class="p">,</span> <span class="k">const</span> <span class="n">Rational</span><span class="o">&amp;</span> <span class="n">rhs</span><span class="p">)</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">Rational</span><span class="p">(</span><span class="n">lhs</span><span class="p">.</span><span class="n">numerator</span><span class="p">()</span> <span class="o">*</span> <span class="n">rhs</span><span class="p">.</span><span class="n">numerator</span><span class="p">(),</span>
-</span><span class='line'>                  <span class="n">lhs</span><span class="p">.</span><span class="n">denominator</span><span class="p">()</span> <span class="o">*</span> <span class="n">rhs</span><span class="p">.</span><span class="n">denominator</span><span class="p">());</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<pre><code>仔细观察被返回的表达式。它看上去好象正在调用Rational的构造函数，实际上确是这样。你通过这个表达式建立一个临时的Rational对象，Rational(lhs.numerator() * rhs.numerator(),  lhs.denominator() * rhs.denominator()); 并且这是一个临时对象，函数把它拷贝给函数的返回值。返回constructor argument而不出现局部对象，这种方法还会给你带来很多开销，因为你仍旧必须为在函数内临时对象的构造和释放而付出代价，你仍旧必须为函数返回对象的构造和释放而付出代价。但是你已经获得了好处。C++规则允许编译器优化不出现的临时对象（temporary objects out of existence）。因此如果你在如下的环境里调用operator*：
-</code></pre>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='C++'><span class='line'><span class="n">Rational</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'><span class="n">Rational</span> <span class="nf">b</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
-</span><span class='line'><span class="n">Rational</span> <span class="n">c</span> <span class="o">=</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span><span class="p">;</span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span> <span class="err"> </span><span class="c1">// 在这里调用operator*</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<pre><code>编译器就会被允许消除在operator*内的临时变量和operator*返回的临时变量。它们能在为目标c分配的内存里构造return表达式定义的对象。如果你的编译器这样去做，调用operator*的临时对象的开销就是零：没有建立临时对象。你的代价就是调用一个构造函数――建立c时调用的构造函数。而且你不能比这做得更好了，因为c是命名对象，命名对象不能被消除（参见条款M22）。不过你还可以通过把函数声明为inline来消除operator*的调用开销。
-
-看完这篇突然认识到，理解编译器优化是非常重要的，对编译器了解构思，代码的效率自然有保证。路漫漫其修远兮，吾将上下而求索！
-</code></pre>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2013/01/20/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B018/'>http://timbao.github.io/blog/2013/01/20/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B018/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/3">&larr; Older</a>
@@ -697,6 +728,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2015/12/31/The%20Last%20Day%20of%202015/">The Last Day of 2015</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/06/05/use%20NSTimer%20attention/">2015-06-05 Use NSTimer Attention</a>
       </li>
     
@@ -710,10 +745,6 @@
     
       <li class="post">
         <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/02/10/%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BB%8E%E4%B8%80%E4%B8%AA%E8%88%92%E9%80%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E7%8E%AF%E5%A2%83%E7%A6%BB%E5%BC%80/">2015-02-10 为什么要从一个舒适的工作环境中离开</a>
       </li>
     
   </ul>

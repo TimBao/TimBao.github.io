@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://timbao.github.io/blog/2015/12/31/The%20Last%20Day%20of%202015/</loc>
+    <lastmod>2015-12-31T00:00:00+08:00</lastmod>
+  </url>
+  <url>
     <loc>http://timbao.github.io/blog/2015/06/05/use%20NSTimer%20attention/</loc>
     <lastmod>2015-06-05T00:00:00+08:00</lastmod>
   </url>
@@ -462,14 +466,104 @@
   </url>
   <url>
     <loc>http://timbao.github.io/blog/archives/</loc>
-    <lastmod>2015-06-05T10:34:08+08:00</lastmod>
   </url>
   <url>
     <loc>http://timbao.github.io/</loc>
-    <lastmod>2015-06-05T10:34:08+08:00</lastmod>
   </url>
   <url>
     <loc>http://timbao.github.io/about/</loc>
-    <lastmod>2015-06-05T10:34:08+08:00</lastmod>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/ji-shi/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/bcbxue-xi/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/she-ji-mo-shi-xue-xi/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/cmmishi-shi/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/du-shu-bi-ji/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/mfcxue-xi/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/qi-ta-ji-zhu-wen-ti/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/c-plus-plus-ji-zhu/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/xiang-mu-guan-li/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/iphone-slash-objective-c/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/cstring-string-dot-h-han-shu-jie-shao/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/windows-8/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/zhong-gou-ji-zhu/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/python/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/vim/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/android/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/yi-dong-kai-fa/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/android-ndk/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/gan-wu/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/blog/categories/ios/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/posts/2/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/posts/3/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/posts/4/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/posts/5/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/posts/6/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/posts/7/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/posts/8/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/posts/9/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/posts/10/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/posts/11/</loc>
+  </url>
+  <url>
+    <loc>http://timbao.github.io/posts/12/</loc>
   </url>
 </urlset>
