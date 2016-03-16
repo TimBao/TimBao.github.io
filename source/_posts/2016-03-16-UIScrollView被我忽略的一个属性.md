@@ -1,4 +1,15 @@
-#### UIScrollView被我忽略的一个属性
+---
+layout: post
+title: "UIScrollView被我忽略的一个属性"
+date: 2016-03-16
+comments: true
+categories: [iOS]
+tags: [iOS tips]
+description: "iOS 经验总结"
+keywords: iOS
+---
+
+### UIScrollView被我忽略的一个属性
 
 > 最近在使用UIScrollView的时候，突然发现横屏滑动时没有按页滑动，停留的位置不满足要求。
 
