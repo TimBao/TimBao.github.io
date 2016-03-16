@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="今天的工作： 1、现场调试软件，给甲方演示。                    8：30 ~ 16：00 2、修改项目中的BUG，提交测试。                 16：30 ~ 21：10 3、CMMI会议，检查CMMI文档及问题。          未完成 4、现场问题反馈处理 &hellip;">
+  <meta name="description" content="1、new对象后，要马上判断是否创建成功。 2、delete对象前，一定要判断对象是否已经被释放。 3、写的每行代码都要遵循代码规范，不要因为是简单的测试代码就放松对自己的要求。 4、Do it right at first time.(第一次就把事情做好！) 5、if之后马上加上{}， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2010/06/05/%E7%BC%96%E7%A8%8B%E6%96%B0%E6%89%8B%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/">编程新手编写代码注意事项</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2010-06-05T23:05:00+08:00'><span class='date'><span class='date-month'>Jun</span> <span class='date-day'>5</span><span class='date-suffix'>th</span>, <span class='date-year'>2010</span></span> <span class='time'>11:05 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>1、new对象后，要马上判断是否创建成功。</p>
+
+<p>2、delete对象前，一定要判断对象是否已经被释放。</p>
+
+<p>3、写的每行代码都要遵循代码规范，不要因为是简单的测试代码就放松对自己的要求。</p>
+
+<p>4、Do it right at first time.(第一次就把事情做好！)</p>
+
+<p>5、if之后马上加上{}，防止if之后不经意的加上；号。这样的错误找起来非常麻烦。</p>
+
+<p>记得自己的第一份工作，再培训的时候Leader一再强调做任何事情都要</p>
+
+<p>第一次就把事情做好，当时给我们举的例子好像是：两个人在规定的时间写代码，第一个由于时间比较紧就没按照规范写，而是怎么规范就怎么写；测试没问题后再根据规范修改代码；第二个人写的时候就遵照规范来写；结果当然是第二个人先完成，并且代码质量高，规范好；而第一个人就有没有改到的地方。</p>
+
+<p>联想到最近带的一个新人，写代码就想上面的第一个人那样；出现的很多错误都是因为最简单的几个原因。看来看似最基本的东西，最重要。：）</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2010/06/05/%E7%BC%96%E7%A8%8B%E6%96%B0%E6%89%8B%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/'>http://timbao.github.io/blog/2010/06/05/%E7%BC%96%E7%A8%8B%E6%96%B0%E6%89%8B%E7%BC%96%E5%86%99%E4%BB%A3%E7%A0%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -370,6 +421,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/03/16/UIScrollView%E8%A2%AB%E6%88%91%E5%BF%BD%E7%95%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7/">Uiscrollview被我忽略的一个属性</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/12/31/The%20Last%20Day%20of%202015/">The Last Day of 2015</a>
       </li>
     
@@ -383,10 +438,6 @@
     
       <li class="post">
         <a href="/blog/2015/04/07/Summary%20Reports/">2015-04-07 Summary Reports</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
       </li>
     
   </ul>
@@ -454,7 +505,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Tim Bao -
+  Copyright &copy; 2016 - Tim Bao -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

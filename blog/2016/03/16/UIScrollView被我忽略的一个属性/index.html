@@ -1,0 +1,15 @@
+<h4>UIScrollView被我忽略的一个属性</h4>
+
+<blockquote><p>最近在使用UIScrollView的时候，突然发现横屏滑动时没有按页滑动，停留的位置不满足要求。</p></blockquote>
+
+<p>刚开始觉得可能是scrollViewDidScroll里面计算页数不对，查了下发现不是这的问题。翻看头文件发现一个属性<strong>pagingEnabled</strong>，竟然跟page相关，难到是？试试设置为YES, 果然解决问题。</p>
+
+<p>通过这个问题发现自己还是很多细节不够了解，一些属性和函数没有认真去研究过。之后需要主意下。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2016/03/16/UIScrollView%E8%A2%AB%E6%88%91%E5%BF%BD%E7%95%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7/'>http://timbao.github.io/blog/2016/03/16/UIScrollView%E8%A2%AB%E6%88%91%E5%BF%BD%E7%95%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+

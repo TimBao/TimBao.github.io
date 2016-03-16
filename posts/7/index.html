@@ -9,7 +9,8 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="inserter、back_inserter、front_inserter 分别返回三种类型的iterator：insert_iterator,back_insert_iterator,front_insert_iterator。这三种iterator被设计成允许不同的算法重写elements( &hellip;">
+  <meta name="description" content="原型 1
+size_t strxfrm ( char * destination, const char * source, size_t num ); 功能： 根据num长度拷贝前num个字符到目的字符串中，并返回源字符串长度。 同时，该函数还可以自作为返回字符串长度，这时num=0， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +67,105 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/28/strxfrm%E5%87%BD%E6%95%B0/">Strxfrm函数</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2012-04-28T19:24:00+08:00'><span class='date'><span class='date-month'>Apr</span> <span class='date-day'>28</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>7:24 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>原型</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>size_t strxfrm ( char * destination, const char * source, size_t num );</span></code></pre></td></tr></table></div></figure>
+
+
+<p>功能：</p>
+
+<p>根据num长度拷贝前num个字符到目的字符串中，并返回源字符串长度。</p>
+
+<p>同时，该函数还可以自作为返回字符串长度，这时num=0，destination允许传入NULL。</p>
+
+<p>参数：</p>
+
+<p>destination 指向目的字符数组的指针，当num为0时，可以传NULL。</p>
+
+<p>source 要拷贝的源字符串，以‘\0’结尾。</p>
+
+<p>num 最大要拷贝到目的数组的字符的长度。</p>
+
+<p>返回值：</p>
+
+<p>返回source字符串的长度，不包含‘\0’。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>#include &lt;cstring&gt;;
+</span><span class='line'>#include &lt;iostream&gt;;
+</span><span class='line'>#include &lt;windows.h&gt;;
+</span><span class='line'>int main(int argc, char* argv[])
+</span><span class='line'>{
+</span><span class='line'>    char* source = "1234567890 abc";
+</span><span class='line'>    char des[100];
+</span><span class='line'>    size_t len = strxfrm(des, source, 50);
+</span><span class='line'>    std::cout &lt;&lt; "len:" &lt;&lt; len &lt;&lt;std::endl;
+</span><span class='line'>    std::cout &lt;&lt; "des:" &lt;&lt; des &lt;&lt;std::endl;
+</span><span class='line'>    return 0;
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>output:
+len:14
+des:1234567890 abc</p>
+
+<p>这里举这个例子要说明的是num长度大于源字符串长度的原因，涉及到strxfrm函数的具体实现了。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>strncpy(_string1, _string2, _count);
+</span><span class='line'>return strlen(_string2);</span></code></pre></td></tr></table></div></figure>
+
+
+<p>vs平台下该函数的实现非常简单，除了必要的验证外，只是调用了同是cstring的库函数中的两个基本函数。这也说明了为什么num长度超过源串后为什么没有问题，因为strncpy函数自动截取字符串到&#8217;\0&#8217;。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2012/04/28/strxfrm%E5%87%BD%E6%95%B0/'>http://timbao.github.io/blog/2012/04/28/strxfrm%E5%87%BD%E6%95%B0/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -633,43 +733,6 @@
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/02/04/%E5%B9%B4%E5%90%8E%E5%B0%8F%E8%81%9A/">年后小聚</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2012-02-04T07:01:00+08:00'><span class='date'><span class='date-month'>Feb</span> <span class='date-day'>4</span><span class='date-suffix'>th</span>, <span class='date-year'>2012</span></span> <span class='time'>7:01 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>很开心！好久没有这么畅快的谈心了！ 过去的日子，有一般好友陪伴，真的很幸运。</p>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2012/02/04/%E5%B9%B4%E5%90%8E%E5%B0%8F%E8%81%9A/'>http://timbao.github.io/blog/2012/02/04/%E5%B9%B4%E5%90%8E%E5%B0%8F%E8%81%9A/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/8">&larr; Older</a>
@@ -691,6 +754,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/03/16/UIScrollView%E8%A2%AB%E6%88%91%E5%BF%BD%E7%95%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7/">Uiscrollview被我忽略的一个属性</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/12/31/The%20Last%20Day%20of%202015/">The Last Day of 2015</a>
       </li>
     
@@ -704,10 +771,6 @@
     
       <li class="post">
         <a href="/blog/2015/04/07/Summary%20Reports/">2015-04-07 Summary Reports</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
       </li>
     
   </ul>
@@ -775,7 +838,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Tim Bao -
+  Copyright &copy; 2016 - Tim Bao -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

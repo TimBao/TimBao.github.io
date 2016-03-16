@@ -4,7 +4,7 @@
   <title><![CDATA[逝水流年]]></title>
   <link href="http://timbao.github.io/atom.xml" rel="self"/>
   <link href="http://timbao.github.io/"/>
-  <updated>2015-12-31T21:49:59+08:00</updated>
+  <updated>2016-03-16T14:58:30+08:00</updated>
   <id>http://timbao.github.io/</id>
   <author>
     <name><![CDATA[Tim Bao]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Uiscrollview被我忽略的一个属性]]></title>
+    <link href="http://timbao.github.io/blog/2016/03/16/UIScrollView%E8%A2%AB%E6%88%91%E5%BF%BD%E7%95%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7/"/>
+    <updated>2016-03-16T00:00:00+08:00</updated>
+    <id>http://timbao.github.io/blog/2016/03/16/UIScrollView被我忽略的一个属性</id>
+    <content type="html"><![CDATA[<h4>UIScrollView被我忽略的一个属性</h4>
+
+<blockquote><p>最近在使用UIScrollView的时候，突然发现横屏滑动时没有按页滑动，停留的位置不满足要求。</p></blockquote>
+
+<p>刚开始觉得可能是scrollViewDidScroll里面计算页数不对，查了下发现不是这的问题。翻看头文件发现一个属性<strong>pagingEnabled</strong>，竟然跟page相关，难到是？试试设置为YES, 果然解决问题。</p>
+
+<p>通过这个问题发现自己还是很多细节不够了解，一些属性和函数没有认真去研究过。之后需要主意下。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2016/03/16/UIScrollView%E8%A2%AB%E6%88%91%E5%BF%BD%E7%95%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7/'>http://timbao.github.io/blog/2016/03/16/UIScrollView%E8%A2%AB%E6%88%91%E5%BF%BD%E7%95%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The Last Day of 2015]]></title>
@@ -795,53 +818,6 @@ IDE
 <p class='post-footer'>
              原文地址:
              <a href='http://timbao.github.io/blog/2013/03/13/%E9%98%85%E8%AF%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95/'>http://timbao.github.io/blog/2013/03/13/%E9%98%85%E8%AF%BB%E4%BB%A3%E7%A0%81%E7%9A%84%E6%96%B9%E6%B3%95/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[More Effective C++读书笔记19]]></title>
-    <link href="http://timbao.github.io/blog/2013/01/27/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B019/"/>
-    <updated>2013-01-27T01:51:00+08:00</updated>
-    <id>http://timbao.github.io/blog/2013/01/27/More Effective C++读书笔记19</id>
-    <content type="html"><![CDATA[<h2>Item 21：通过重载避免隐式类型转换</h2>
-
-<pre><code>如果是自定义类型进行隐式的类型转换，肯定会调用构造和析构函数，这样就一定会有一定的开销，那么如何避免这类隐式类型转换呢？21小节给出一个方式就是通过重载函数避免进行隐式类型转换。
-</code></pre>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='C++'><span class='line'><span class="k">class</span> <span class="nc">UInt</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">public</span><span class="o">:</span>
-</span><span class='line'>        <span class="k">const</span> <span class="n">UInt</span> <span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span> <span class="n">UInt</span><span class="o">&amp;</span> <span class="n">lrs</span><span class="p">,</span> <span class="k">const</span> <span class="n">UInt</span><span class="o">&amp;</span> <span class="n">hrs</span><span class="p">);</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'><span class="n">UInt</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">;</span>
-</span><span class='line'><span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">10</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<pre><code>在计算b+10的时候，编译器会将10隐式的转为UInt类型进行计算，这种情况下可以通过重载操作法来避免出现隐式转换的开销。当然是必要时候才会采取这种方法，如果不是性能瓶颈，那么有可能造成重载函数过多，而维护起来会很不方便。
-
-注意一种情况const UPInt operator+(int lhs, int rhs);   这种情况是错误的。在C++中有一条规则是每一个重载的operator必须带有一个用户定义类型（user-defined type）的参数。
-</code></pre>
-
-<h2>Item 22：考虑用运算符的赋值形式（op=）取代其单独形式（op）</h2>
-
-<pre><code>在这一小节我个人来说学到了一点，那就是操作符重载中尽量能让实现能“集成”，不要所有实现都重新实现一遍，这样可以减少维护费用。
-</code></pre>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2013/01/27/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B019/'>http://timbao.github.io/blog/2013/01/27/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B019/</a><br/>
              written by <a href='http://timbao.github.io'>Tim Bao</a>
              &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
              </p>

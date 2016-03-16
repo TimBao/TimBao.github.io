@@ -9,7 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="2015年的最后一天 最后一天在公司加班度过。等待最终迁移证书的开始。在等待中，解决了项目中的很多bug；同时也在新笔记本上把blog给部署成功；下面会继续阅读《Growth Hacking》. 2016年希望能在多个方面有所成长。 原文地址: http://timbao.github.io/ &hellip;">
+  <meta name="description" content="UIScrollView被我忽略的一个属性 最近在使用UIScrollView的时候，突然发现横屏滑动时没有按页滑动，停留的位置不满足要求。 刚开始觉得可能是scrollViewDidScroll里面计算页数不对，查了下发现不是这的问题。翻看头文件发现一个属性pagingEnabled， &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -66,6 +66,49 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2016/03/16/UIScrollView%E8%A2%AB%E6%88%91%E5%BF%BD%E7%95%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7/">Uiscrollview被我忽略的一个属性</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2016-03-16T00:00:00+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>16</span><span class='date-suffix'>th</span>, <span class='date-year'>2016</span></span> <span class='time'>12:00 am</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h4>UIScrollView被我忽略的一个属性</h4>
+
+<blockquote><p>最近在使用UIScrollView的时候，突然发现横屏滑动时没有按页滑动，停留的位置不满足要求。</p></blockquote>
+
+<p>刚开始觉得可能是scrollViewDidScroll里面计算页数不对，查了下发现不是这的问题。翻看头文件发现一个属性<strong>pagingEnabled</strong>，竟然跟page相关，难到是？试试设置为YES, 果然解决问题。</p>
+
+<p>通过这个问题发现自己还是很多细节不够了解，一些属性和函数没有认真去研究过。之后需要主意下。</p>
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2016/03/16/UIScrollView%E8%A2%AB%E6%88%91%E5%BF%BD%E7%95%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7/'>http://timbao.github.io/blog/2016/03/16/UIScrollView%E8%A2%AB%E6%88%91%E5%BF%BD%E7%95%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -621,53 +664,6 @@ chr意思应该是character。</p></blockquote></li>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2014-03-09T18:35:00+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>6:35 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><blockquote><p>故事的背景是这样的，我的一个朋友跟我聊天中说到他前几天加班到凌晨，手都疼了。我就问问加班干什么呢？他说就光<code>Ctrl-C</code>和<code>Ctrl-V</code>的弄了3000多次！我的天啊！怪不得手指头都疼了呢！</p></blockquote>
-
-<p>  真正的程序员真的不是代码工人，是靠脑力而不是靠体力，是赚智慧的钱，而不是赚苦力的钱。那么真正的程序员应该怎么做呢？</p>
-
-<ul>
-<li><p>避免重复劳动，遇到类似需要大量<code>Ctrl-C</code>和<code>Ctrl-V</code>的情况，一定是程序架构出了问题，该做的公司是要思考为什么会出现这种不合理的情况？要从根本上杜绝这类情况的出现。</p></li>
-<li><p>善于利用脚本，脚本语言的简单和易用性是程序员工作中不可缺少的好帮手。善于用脚本创造各种工具来帮助程序员提高工作效率。上述情况完全可以写个脚本来做这些重复的工作。而且后期可以将脚本完善，做成个通用的工具，分享给同事，即利己也利团队，更可以增加你在领导眼里的不可替代性。</p>
-
-<p>现在的程序员门槛已经非常低了，但是不能因为门槛低就对自己要求降低。程序员不是码农，不是代码蓝领！我们是在改变世界，是高科技工程师！让我们做真正的程序员，而不是代码操作工！</p></li>
-</ul>
-
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/'>http://timbao.github.io/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -687,6 +683,10 @@ chr意思应该是character。</p></blockquote></li>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/03/16/UIScrollView%E8%A2%AB%E6%88%91%E5%BF%BD%E7%95%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7/">Uiscrollview被我忽略的一个属性</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/12/31/The%20Last%20Day%20of%202015/">The Last Day of 2015</a>
       </li>
     
@@ -700,10 +700,6 @@ chr意思应该是character。</p></blockquote></li>
     
       <li class="post">
         <a href="/blog/2015/04/07/Summary%20Reports/">2015-04-07 Summary Reports</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
       </li>
     
   </ul>
@@ -771,7 +767,7 @@ chr意思应该是character。</p></blockquote></li>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Tim Bao -
+  Copyright &copy; 2016 - Tim Bao -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 

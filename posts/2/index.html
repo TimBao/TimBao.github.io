@@ -9,12 +9,7 @@
   <meta name="author" content="Tim Bao">
 
   
-  <meta name="description" content="这里只介绍笔者开发过的几个平台（iPhone, Android, Windows phone, Blackberry）。将从以下几个角度进行介绍：
-. 开发语言
-. IDE
-. 模拟器
-. 编译及调试
-*. 开发成本 开发语言 ● iPhone：Object-C, C/C++ ● Android &hellip;">
+  <meta name="description" content="故事的背景是这样的，我的一个朋友跟我聊天中说到他前几天加班到凌晨，手都疼了。我就问问加班干什么呢？他说就光Ctrl-C和Ctrl-V的弄了3000多次！我的天啊！怪不得手指头都疼了呢！ 真正的程序员真的不是代码工人，是靠脑力而不是靠体力，是赚智慧的钱，而不是赚苦力的钱。那么真正的程序员应该怎么做呢 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -71,6 +66,53 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/">程序员不是操作工</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2014-03-09T18:35:00+08:00'><span class='date'><span class='date-month'>Mar</span> <span class='date-day'>9</span><span class='date-suffix'>th</span>, <span class='date-year'>2014</span></span> <span class='time'>6:35 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><blockquote><p>故事的背景是这样的，我的一个朋友跟我聊天中说到他前几天加班到凌晨，手都疼了。我就问问加班干什么呢？他说就光<code>Ctrl-C</code>和<code>Ctrl-V</code>的弄了3000多次！我的天啊！怪不得手指头都疼了呢！</p></blockquote>
+
+<p>  真正的程序员真的不是代码工人，是靠脑力而不是靠体力，是赚智慧的钱，而不是赚苦力的钱。那么真正的程序员应该怎么做呢？</p>
+
+<ul>
+<li><p>避免重复劳动，遇到类似需要大量<code>Ctrl-C</code>和<code>Ctrl-V</code>的情况，一定是程序架构出了问题，该做的公司是要思考为什么会出现这种不合理的情况？要从根本上杜绝这类情况的出现。</p></li>
+<li><p>善于利用脚本，脚本语言的简单和易用性是程序员工作中不可缺少的好帮手。善于用脚本创造各种工具来帮助程序员提高工作效率。上述情况完全可以写个脚本来做这些重复的工作。而且后期可以将脚本完善，做成个通用的工具，分享给同事，即利己也利团队，更可以增加你在领导眼里的不可替代性。</p>
+
+<p>现在的程序员门槛已经非常低了，但是不能因为门槛低就对自己要求降低。程序员不是码农，不是代码蓝领！我们是在改变世界，是高科技工程师！让我们做真正的程序员，而不是代码操作工！</p></li>
+</ul>
+
+
+<p class='post-footer'>
+             原文地址:
+             <a href='http://timbao.github.io/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/'>http://timbao.github.io/blog/2014/03/09/%E7%A8%8B%E5%BA%8F%E5%91%98%E4%B8%8D%E6%98%AF%E6%93%8D%E4%BD%9C%E5%B7%A5/</a><br/>
+             written by <a href='http://timbao.github.io'>Tim Bao</a>
+             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
+             </p>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -640,73 +682,6 @@ IDE
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/01/27/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B019/">More Effective C++读书笔记19</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2013-01-27T01:51:00+08:00'><span class='date'><span class='date-month'>Jan</span> <span class='date-day'>27</span><span class='date-suffix'>th</span>, <span class='date-year'>2013</span></span> <span class='time'>1:51 am</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h2>Item 21：通过重载避免隐式类型转换</h2>
-
-<pre><code>如果是自定义类型进行隐式的类型转换，肯定会调用构造和析构函数，这样就一定会有一定的开销，那么如何避免这类隐式类型转换呢？21小节给出一个方式就是通过重载函数避免进行隐式类型转换。
-</code></pre>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='C++'><span class='line'><span class="k">class</span> <span class="nc">UInt</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="k">public</span><span class="o">:</span>
-</span><span class='line'>        <span class="k">const</span> <span class="n">UInt</span> <span class="k">operator</span><span class="o">+</span><span class="p">(</span><span class="k">const</span> <span class="n">UInt</span><span class="o">&amp;</span> <span class="n">lrs</span><span class="p">,</span> <span class="k">const</span> <span class="n">UInt</span><span class="o">&amp;</span> <span class="n">hrs</span><span class="p">);</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'><span class="n">UInt</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">;</span>
-</span><span class='line'><span class="n">a</span> <span class="o">=</span> <span class="n">b</span> <span class="o">+</span> <span class="mi">10</span><span class="p">;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<pre><code>在计算b+10的时候，编译器会将10隐式的转为UInt类型进行计算，这种情况下可以通过重载操作法来避免出现隐式转换的开销。当然是必要时候才会采取这种方法，如果不是性能瓶颈，那么有可能造成重载函数过多，而维护起来会很不方便。
-
-注意一种情况const UPInt operator+(int lhs, int rhs);   这种情况是错误的。在C++中有一条规则是每一个重载的operator必须带有一个用户定义类型（user-defined type）的参数。
-</code></pre>
-
-<h2>Item 22：考虑用运算符的赋值形式（op=）取代其单独形式（op）</h2>
-
-<pre><code>在这一小节我个人来说学到了一点，那就是操作符重载中尽量能让实现能“集成”，不要所有实现都重新实现一遍，这样可以减少维护费用。
-</code></pre>
-
-<p class='post-footer'>
-             原文地址:
-             <a href='http://timbao.github.io/blog/2013/01/27/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B019/'>http://timbao.github.io/blog/2013/01/27/More%20Effective%20C++%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B019/</a><br/>
-             written by <a href='http://timbao.github.io'>Tim Bao</a>
-             &nbsp;posted at <a href='http://timbao.github.io'>http://timbao.github.io</a>
-             </p>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/3">&larr; Older</a>
@@ -728,6 +703,10 @@ IDE
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2016/03/16/UIScrollView%E8%A2%AB%E6%88%91%E5%BF%BD%E7%95%A5%E7%9A%84%E4%B8%80%E4%B8%AA%E5%B1%9E%E6%80%A7/">Uiscrollview被我忽略的一个属性</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2015/12/31/The%20Last%20Day%20of%202015/">The Last Day of 2015</a>
       </li>
     
@@ -741,10 +720,6 @@ IDE
     
       <li class="post">
         <a href="/blog/2015/04/07/Summary%20Reports/">2015-04-07 Summary Reports</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2015/03/06/Solve%20Jenkins%20build%20xcodeproject%20could%20not%20found%20provision%20issue/">2015-03-06 Solve Jenkins Build Xcode Project Could Not Found Provision Issue</a>
       </li>
     
   </ul>
@@ -812,7 +787,7 @@ IDE
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2015 - Tim Bao -
+  Copyright &copy; 2016 - Tim Bao -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
 </p>
 
